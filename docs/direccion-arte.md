@@ -52,6 +52,8 @@ Todas tienen licencia OFL (incluida en la carpeta).
 
 Las medidas están en píxeles del escenario de referencia (1280 × 590). Pasa estos valores a variables CSS en `src/ui/estilos/`.
 
+> **Desde el 10 de octubre de 2026 el juego es vertical (390 × 844).** Tintas, letra y piezas siguen igual; la maquetación de las pantallas cambia y las medidas se reducen en proporción. El marcador muestra solo los números (sin amarracos) y el órdago se tira manteniéndolo pulsado. Ver `docs/decisiones.md`, «Cambio a vertical».
+
 **Paneles.** Fondo papel, borde de 3 px negro de humo, radio de 6–8 px. Los paneles importantes llevan una sombra dura desplazada (3–4 px abajo a la derecha, negro de humo, sin difuminar). Nunca degradados ni sombras suaves en la interfaz.
 
 **Botones de apuesta.** Alfa Slab One de 20–24 px, borde de 3 px, radio de 10 px y sombra dura de 3 px.

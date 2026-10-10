@@ -32,7 +32,7 @@
   display: none;
 }
 
-@media (orientation: portrait) and (pointer: coarse) {
+@media (orientation: landscape) and (pointer: coarse) and (max-height: 600px) {
   .aviso-girar {
     position: fixed;
     inset: 0;
@@ -114,44 +114,40 @@
   cursor: default;
 }
 
-/* ——— ¡Órdago! ——— */
-
-.ordago {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.ordago__carril {
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  height: 70px;
-  border-left: 4px dashed var(--papel);
-  transform: translateX(-2px);
-  pointer-events: none;
-}
+/* ——— ¡Órdago! (se mantiene pulsado un segundo) ——— */
 
 .boton-ordago {
-  width: 100%;
-  padding: 12px 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 48px;
+  padding: 0 12px;
   font-family: var(--letra-grito);
-  font-size: 30px;
-  line-height: 1.1;
+  font-size: 18px;
+  line-height: 1;
   color: var(--papel);
   background: var(--almagre);
   border: var(--borde);
   outline: 2px solid var(--almagre);
-  outline-offset: 3px;
+  outline-offset: 2px;
   border-radius: var(--radio-boton);
-  box-shadow: var(--sombra-dura-grande);
-  cursor: grab;
+  box-shadow: var(--sombra-dura);
+  cursor: pointer;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
-.boton-ordago:active:not(:disabled) {
-  cursor: grabbing;
+.boton-ordago__relleno {
+  position: absolute;
+  inset: 0;
+  background: var(--tinta);
+  opacity: 0.45;
+  transform-origin: left;
+}
+
+.boton-ordago__texto {
+  position: relative;
 }
 
 .boton-ordago:focus-visible {
@@ -159,15 +155,9 @@
 }
 
 .boton-ordago:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
+  box-shadow: none;
   cursor: default;
-}
-
-.ordago__pista {
-  font-style: italic;
-  font-size: 16px;
-  color: var(--papel);
-  text-align: center;
 }
 
 /* ——— Lances ——— */
@@ -395,15 +385,17 @@
   font-size: 19px;
 }
 
+/* La cola apunta hacia arriba, al retrato. */
 .bocadillo__cola {
   position: absolute;
-  left: -21px;
-  top: 41px;
+  left: 50%;
+  top: -21px;
   width: 0;
   height: 0;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  border-right: 20px solid var(--tinta);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 20px solid var(--tinta);
+  transform: translateX(-50%);
 }
 
 /* ——— Etiqueta de nombre ——— */
@@ -428,8 +420,8 @@
 }
 
 .carta--mano {
-  width: 106px;
-  height: 192px;
+  width: 70px;
+  height: 126px;
   filter: drop-shadow(3px 4px 0 rgba(35, 25, 21, 0.45));
 }
 
@@ -449,10 +441,10 @@
 
 .retrato {
   position: absolute;
-  left: 470px;
-  top: -6px;
-  width: 340px;
-  height: 374px;
+  left: 60px;
+  top: 158px;
+  width: 270px;
+  height: 270px;
 }
 
 .retrato__marcador {

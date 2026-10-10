@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" font-family="Georgia, serif">
+  <rect width="390" height="844" fill="#2A1F18"/>
+  <!-- Marcador y lances arriba -->
+  <rect x="12" y="14" width="366" height="56" rx="8" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="24" y="36" font-size="13" fill="#231915">RUPERTO</text>
+  <circle cx="110" cy="31" r="8" fill="#E2A527" stroke="#231915" stroke-width="2"/>
+  <text x="140" y="36" font-size="15" font-weight="bold">7</text>
+  <text x="24" y="60" font-size="13">TÚ</text>
+  <circle cx="110" cy="55" r="8" fill="#E2A527" stroke="#231915" stroke-width="2"/>
+  <circle cx="128" cy="55" r="8" fill="#E2A527" stroke="#231915" stroke-width="2"/>
+  <text x="140" y="60" font-size="15" font-weight="bold">11</text>
+  <text x="200" y="36" font-size="13" fill="#8C7F6A" text-decoration="line-through">Grande</text>
+  <text x="262" y="36" font-size="13" fill="#231915">Chica</text>
+  <rect x="262" y="40" width="34" height="3" fill="#B02A23"/>
+  <text x="306" y="36" font-size="13">Pares · Juego</text>
+  <text x="200" y="60" font-size="12" fill="#2C54A0">eres mano</text>
+  <!-- Rival grande -->
+  <rect x="70" y="84" width="250" height="250" rx="12" fill="rgba(140,86,41,0.18)" stroke="#B02A23" stroke-width="3" stroke-dasharray="10 7"/>
+  <text x="195" y="214" text-anchor="middle" font-size="13" fill="#B02A23" font-family="sans-serif" font-weight="bold">ARTE PENDIENTE</text>
+  <rect x="40" y="96" width="120" height="28" rx="5" fill="#E2A527" stroke="#231915" stroke-width="3" transform="rotate(-4 100 110)"/>
+  <text x="56" y="116" font-size="15" font-weight="bold" transform="rotate(-4 100 110)">RUPERTO</text>
+  <text x="195" y="300" text-anchor="middle" font-size="16" font-style="italic" fill="#F2E8D2">se rasca la barba</text>
+  <!-- Bocadillo -->
+  <rect x="40" y="344" width="310" height="62" rx="14" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="56" y="370" font-size="20" font-weight="bold" fill="#B02A23">ENVIDO DOS</text>
+  <text x="56" y="394" font-size="14" font-style="italic">«Aquí se envida como se forja.»</text>
+  <!-- Tapete con cartas rival -->
+  <ellipse cx="195" cy="560" rx="260" ry="150" fill="#3E7A36" stroke="#8C5629" stroke-width="10"/>
+  <g fill="#B02A23" stroke="#231915" stroke-width="2">
+    <rect x="140" y="426" width="24" height="40" rx="3"/><rect x="168" y="424" width="24" height="40" rx="3"/>
+    <rect x="196" y="424" width="24" height="40" rx="3"/><rect x="224" y="426" width="24" height="40" rx="3"/>
+  </g>
+  <!-- En juego + Cara -->
+  <rect x="20" y="478" width="170" height="50" rx="8" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="32" y="498" font-size="11">EN JUEGO A LA CHICA</text>
+  <text x="32" y="520" font-size="18" font-weight="bold">2 piedras</text>
+  <rect x="200" y="478" width="170" height="50" rx="8" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="212" y="496" font-size="11">TU CARA · 60</text>
+  <rect x="212" y="504" width="146" height="14" rx="5" fill="#D6E3C6" stroke="#231915" stroke-width="2"/>
+  <rect x="212" y="504" width="51" height="14" rx="5" fill="#B02A23"/>
+  <rect x="263" y="504" width="37" height="14" fill="#E2A527"/>
+  <!-- Mano del jugador -->
+  <g stroke="#231915" stroke-width="2" fill="#F2E8D2">
+    <rect x="40" y="548" width="74" height="132" rx="6" transform="rotate(-9 77 614)"/>
+    <rect x="118" y="540" width="74" height="132" rx="6" transform="rotate(-3 155 606)"/>
+    <rect x="198" y="540" width="74" height="132" rx="6" transform="rotate(3 235 606)"/>
+    <rect x="276" y="548" width="74" height="132" rx="6" transform="rotate(9 313 614)"/>
+  </g>
+  <text x="70" y="580" font-size="16" font-weight="bold">12</text><text x="128" y="572" font-size="16" font-weight="bold">12</text>
+  <text x="208" y="572" font-size="16" font-weight="bold">11</text><text x="290" y="580" font-size="16" font-weight="bold">4</text>
+  <!-- Botones abajo -->
+  <rect x="16" y="700" width="112" height="48" rx="10" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="72" y="731" text-anchor="middle" font-size="16" font-weight="bold">QUIERO</text>
+  <rect x="139" y="700" width="112" height="48" rx="10" fill="#F2E8D2" stroke="#231915" stroke-width="3" stroke-dasharray="6 4"/>
+  <text x="195" y="731" text-anchor="middle" font-size="15" font-weight="bold">NO QUIERO</text>
+  <rect x="262" y="700" width="112" height="48" rx="10" fill="#E2A527" stroke="#231915" stroke-width="3"/>
+  <text x="318" y="731" text-anchor="middle" font-size="15" font-weight="bold">DOS MÁS</text>
+  <rect x="16" y="760" width="358" height="56" rx="10" fill="#B02A23" stroke="#231915" stroke-width="3"/>
+  <text x="195" y="796" text-anchor="middle" font-size="24" font-weight="bold" fill="#F2E8D2">¡ÓRDAGO!</text>
+  <text x="195" y="834" text-anchor="middle" font-size="12" font-style="italic" fill="#F2E8D2">desliza hacia arriba para tirarlo</text>
+</svg>

@@ -134,6 +134,25 @@ Aquí queda lo que el documento de diseño no dejaba claro y cómo se ha resuelt
     - Un jugador que envida en todos los lances, lleve lo que lleve, gana entre el 48 % y el 62 %, y la Cara le acaba en torno a 70. No rompe el juego, pero contra Doña Engracia y Don Anselmo funciona demasiado bien.
     - El documento ordena a los rivales de menos a más difíciles. Contra un bot que no lee tics no se nota tanto; hay que comprobarlo jugando.
 
+## Cambio a vertical (10 de octubre de 2026)
+
+*Decidido por David.* El juego pasa a jugarse con el móvil en vertical, al estilo de Clash Royale. La gira se hará más adelante como sus arenas: un camino vertical de comarcas.
+
+- **Escenario de 390 × 844** (un móvil). En ordenador se ve centrado, con bandas. Si giras el móvil en horizontal, sale un aviso para ponerlo en vertical.
+- **De arriba abajo:**
+  - la comarca y los botones Rival y Depurar;
+  - el marcador;
+  - la Cara en una barra fina;
+  - el rival grande, con su nombre y sus tics;
+  - su bocadillo;
+  - el tapete con sus cartas, lo que está en juego y las dos últimas líneas de la crónica;
+  - tu mano;
+  - la barra de acciones.
+- **Marcador solo con los números** (opción A): el rival a la izquierda, tú a la derecha y en medio la fila de lances. Los amarracos desaparecen del marcador.
+- **Barra de acciones al estilo Offsuit.** Abajo, en una fila, solo los botones que tocan en cada momento: PASO · ENVIDO, NO QUIERO · QUIERO · MÁS, CORTO · MUS… Al pulsar ENVIDO o MÁS se abre encima un selector con las cantidades (2, 3, 5 y 10).
+- **El órdago, pequeño y aparte** en la esquina de la barra. Se tira **manteniéndolo pulsado un segundo** mientras se llena; si lo sueltas antes, no pasa nada. Con teclado, manteniendo Intro o Espacio.
+- Las referencias de `referencias/pantallas/` siguen valiendo para el estilo (tintas, letra, piezas), pero no para la maquetación.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes.

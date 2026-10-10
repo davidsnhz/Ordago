@@ -1,4 +1,8 @@
-/* La mesa (referencias/pantallas/03_mesa.html), en píxeles del escenario de 1280 × 590. */
+/*
+ * La mesa en vertical, en píxeles del escenario de 390 × 844 (un móvil):
+ * arriba el marcador y la Cara; en medio el rival, su bocadillo y el tapete;
+ * abajo tu mano y la barra de acciones.
+ */
 
 .mesa {
   position: absolute;
@@ -11,186 +15,40 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 1280px;
-  height: 240px;
-  background-image: repeating-linear-gradient(90deg, rgba(140, 86, 41, 0.16) 0 2px, transparent 2px 64px);
+  width: 390px;
+  height: 520px;
+  background-image: repeating-linear-gradient(90deg, rgba(140, 86, 41, 0.16) 0 2px, transparent 2px 48px);
 }
 
 .mesa__luz {
   position: absolute;
-  left: 500px;
-  top: 10px;
-  width: 280px;
-  height: 280px;
+  left: 75px;
+  top: 190px;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(226, 165, 39, 0.35) 0%, rgba(226, 165, 39, 0) 68%);
 }
 
-.mesa__madera {
-  position: absolute;
-  left: -80px;
-  top: 214px;
-  width: 1440px;
-  height: 560px;
-  border-radius: 50% / 34%;
-  background: var(--nogal);
-  border: var(--borde);
-}
+/* ——— Arriba: comarca, marcador y Cara ——— */
 
-.mesa__tapete {
+.mesa__arriba {
   position: absolute;
-  left: -64px;
-  top: 228px;
-  width: 1408px;
-  height: 540px;
-  border-radius: 50% / 34%;
-  background-color: var(--verde);
-  background-image: var(--punteado-tapete);
-  background-size: 5px 5px;
-  border: var(--borde);
-}
-
-.mesa__nombre {
-  left: 470px;
-  top: 98px;
+  left: 12px;
+  right: 12px;
+  top: 8px;
   display: flex;
-  align-items: center;
-}
-
-.mesa__enfado {
-  margin-left: 8px;
-  padding: 0 6px;
-  font-size: 13px;
-  color: var(--papel);
-  background: var(--almagre);
-  border-radius: 4px;
-}
-
-.mesa__bocadillo {
-  left: 762px;
-  top: 52px;
-}
-
-.mesa__cartas-rival {
-  position: absolute;
-  left: 546px;
-  top: 282px;
-  width: 188px;
-  height: 90px;
-}
-
-/* ——— La mano del jugador ——— */
-
-.mesa__mano {
-  position: absolute;
-  left: 418px;
-  top: 384px;
-  width: 450px;
-  height: 200px;
-}
-
-.mesa__carta {
-  position: absolute;
-  transition: transform 0.15s ease-out;
-}
-
-.mesa__carta-boton {
-  position: absolute;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.15s ease-out;
-}
-
-.mesa__carta-boton--elegida .carta--mano {
-  filter: drop-shadow(3px 4px 0 rgba(35, 25, 21, 0.45)) drop-shadow(0 0 0 var(--almagre));
-  outline: 3px solid var(--almagre);
-  outline-offset: -3px;
-  border-radius: 8px;
-}
-
-.mesa__dicho {
-  position: absolute;
-  left: 276px;
-  top: 446px;
-  width: 126px;
-  padding: 4px 8px 6px;
-  font-family: var(--letra-grito);
-  font-size: 16px;
-  line-height: 1.1;
-  background: var(--papel);
-  border: var(--borde);
-  border-radius: var(--radio-panel);
-  box-shadow: var(--sombra-dura);
-  transform: rotate(-2deg);
-}
-
-.mesa__dicho .rotulo {
-  display: block;
-  font-size: 13px;
-}
-
-/* ——— Columna izquierda ——— */
-
-.mesa__lances {
-  position: absolute;
-  left: 24px;
-  top: 20px;
-}
-
-.mesa__marcador {
-  position: absolute;
-  left: 24px;
-  top: 82px;
-}
-
-.mesa__cara {
-  position: absolute;
-  left: 24px;
-  bottom: 98px;
-}
-
-.mesa__cronica {
-  position: absolute;
-  left: 884px;
-  top: 412px;
-  width: 140px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-style: italic;
-  font-size: 15px;
-  line-height: 1.2;
-  color: var(--papel);
-  text-shadow: 1px 1px 0 var(--tinta);
-}
-
-.mesa__cronica li {
-  margin-bottom: 4px;
-  opacity: 0.55;
-}
-
-.mesa__cronica li:last-child,
-.mesa__cronica li:nth-last-child(2) {
-  opacity: 1;
-}
-
-/* ——— Arriba a la derecha ——— */
-
-.mesa__arriba-derecha {
-  position: absolute;
-  right: 24px;
-  top: 20px;
-  display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .mesa__titulo-duelo {
-  padding: 4px 12px;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px 10px;
   font-family: var(--letra-rotulo);
-  font-size: 17px;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--gualda);
   background: var(--tinta);
   border: 2px solid var(--gualda);
@@ -198,9 +56,9 @@
 }
 
 .mesa__boton-pequeno {
-  padding: 4px 12px;
+  padding: 4px 10px;
   font-family: var(--letra-rotulo);
-  font-size: 17px;
+  font-size: 15px;
   color: var(--tinta);
   background: var(--papel);
   border: 2px solid var(--tinta);
@@ -214,219 +72,177 @@
   border-color: var(--gualda);
 }
 
-/* ——— Columna derecha: lo que está en juego y los botones ——— */
-
-.mesa__derecha {
+.mesa__marcador {
   position: absolute;
-  right: 24px;
-  top: 150px;
-  bottom: 14px;
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.mesa__derecha .ordago {
-  margin-top: auto;
-}
-
-.mesa__botones {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.en-juego {
-  padding: 6px 12px;
-  text-align: center;
-}
-
-.en-juego__rotulo {
-  font-size: 15px;
-}
-
-.en-juego__principal {
-  font-family: var(--letra-grito);
-  font-size: 26px;
-  line-height: 1.1;
-}
-
-.en-juego__principal--largo {
-  font-size: 19px;
-}
-
-.en-juego__piensa {
-  font-style: italic;
-  font-size: 15px;
-  color: var(--nogal);
-}
-
-.cantidades {
-  display: flex;
-  justify-content: space-between;
+  left: 12px;
+  right: 12px;
+  top: 46px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
   gap: 6px;
+  padding: 6px 12px;
 }
 
-.cantidad {
-  width: 48px;
-  height: 44px;
-  font-family: var(--letra-grito);
-  font-size: 18px;
-  color: var(--tinta);
-  background: var(--papel);
-  border: 2px solid var(--tinta);
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.cantidad--elegida {
-  color: var(--gualda);
-  background: var(--tinta);
-}
-
-/* ——— Recuento, órdago y fin del duelo ——— */
-
-.mesa__velo {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(20, 14, 11, 0.55);
-}
-
-.final {
+.marcador-simple__lado {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 560px;
-  padding: 16px 22px 20px;
+  align-items: flex-start;
+  gap: 1px;
 }
 
-.final--ordago {
-  color: var(--papel);
-  background: var(--almagre);
+.marcador-simple__lado--tu {
+  align-items: flex-end;
 }
 
-.final__titulo {
+.marcador-simple__lado .rotulo {
+  font-size: 13px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.marcador-simple__numero {
   font-family: var(--letra-grito);
-  font-size: 28px;
-  line-height: 1.1;
-  text-align: center;
+  font-size: 34px;
+  line-height: 1;
 }
 
-.final--ordago .final__titulo {
-  font-size: 40px;
-  text-shadow: 4px 4px 0 var(--tinta);
-}
-
-.final__manos {
-  display: flex;
-  gap: 28px;
-}
-
-.final__mano {
+.marcador-simple__centro {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
 }
 
-.final__cartas {
-  display: flex;
-  gap: 6px;
-}
-
-.final__cobros {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 17px;
-}
-
-.final__cobros li {
-  display: flex;
-  justify-content: space-between;
-  padding: 2px 0;
-  border-bottom: 1px dotted var(--tachado);
-}
-
-.final__cobros .final__cobro--sin-cobrar {
+.marcador-simple__centro > .rotulo {
+  font-size: 12px;
   color: var(--tachado);
-  text-decoration: line-through;
 }
 
-.final__marcador {
+.mesa__marcador .fila-lances {
+  gap: 6px;
+  padding: 0;
+  font-size: 13px;
+  background: none;
+  border: 0;
+}
+
+.mesa__marcador .fila-lances__lance--actual {
+  border-bottom-width: 3px;
+}
+
+.mesa__marcador .insignia {
+  font-size: 12px;
+}
+
+.mesa__cara {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 128px;
+}
+
+.mesa__cara .cara {
+  width: 100%;
+  padding: 2px 12px 4px;
+}
+
+.mesa__cara .cara__titulo {
+  height: 24px;
+}
+
+.mesa__cara .cara__marca {
+  top: 2px;
+}
+
+.mesa__cara .cara__barra {
+  height: 14px;
+}
+
+.mesa__cara .cara__zonas {
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.mesa__expuesto {
+  position: absolute;
+  right: 10px;
+  top: 4px;
+  padding: 0 6px;
   font-family: var(--letra-rotulo);
-  font-size: 18px;
-  letter-spacing: 1px;
+  font-size: 12px;
+  color: var(--papel);
+  background: var(--almagre);
+  border: 2px solid var(--tinta);
+  border-radius: 4px;
 }
 
-.final__resultado {
-  font-family: var(--letra-grito);
-  font-size: 26px;
-  line-height: 1.1;
+.mesa__aviso-cara {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 74px;
+  z-index: 12;
+  padding: 4px 10px;
+  font-style: italic;
+  font-size: 14px;
   text-align: center;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: var(--radio-panel);
+  box-shadow: var(--sombra-dura);
+  animation: aviso 2.6s ease-in-out forwards;
+}
+
+.mesa__aviso-cara strong {
+  font-family: var(--letra-grito);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--verde);
+}
+
+.mesa__aviso-cara--baja strong {
   color: var(--almagre);
 }
 
-.final--ordago .final__resultado {
-  color: var(--gualda);
-  text-shadow: 2px 2px 0 var(--tinta);
-}
+/* ——— El rival ——— */
 
-.final__motivo {
-  display: block;
-  font-family: var(--letra-texto);
-  font-style: italic;
-  font-size: 17px;
-  color: inherit;
-  opacity: 0.85;
-}
-
-.final__boton {
-  width: 260px;
-}
-
-/* ——— Depuración ——— */
-
-/* Entre el marcador y la Cara, donde irá el compañero. */
-.depuracion {
-  position: absolute;
-  left: 24px;
+.mesa .retrato {
+  left: 85px;
   top: 206px;
-  z-index: 10;
   width: 220px;
-  max-height: 158px;
-  overflow: auto;
-  padding: 8px;
-  font: 12px/1.35 ui-monospace, Consolas, monospace;
+  height: 220px;
+}
+
+.mesa .retrato__acotacion {
+  left: -60px;
+  right: -60px;
+  top: 150px;
+}
+
+.mesa__nombre {
+  left: 18px;
+  top: 214px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.mesa__enfado {
+  margin-left: 8px;
+  padding: 0 6px;
+  font-size: 12px;
   color: var(--papel);
-  background: rgba(35, 25, 21, 0.9);
-  border: 1px solid var(--gualda);
-  border-radius: 6px;
+  background: var(--almagre);
+  border-radius: 4px;
 }
-
-.depuracion > div + div {
-  margin-top: 4px;
-}
-
-.depuracion__titulo {
-  font-weight: 700;
-  color: var(--gualda);
-}
-
-/* ——— Mirar al rival ——— */
 
 .mesa__zona-mirar {
   position: absolute;
-  left: 520px;
-  top: 0;
-  width: 230px;
+  left: 85px;
+  top: 206px;
+  width: 220px;
   height: 210px;
   padding: 0;
   background: transparent;
@@ -446,71 +262,188 @@
 
 .mesa--mirando .retrato {
   z-index: 30;
-  transform: scale(1.3);
-  transform-origin: 50% 25%;
+  transform: scale(1.45);
+  transform-origin: 50% 40%;
 }
 
 .mesa__penumbra {
   position: absolute;
   inset: 0;
   z-index: 29;
-  background: rgba(10, 7, 5, 0.72);
+  background: rgba(10, 7, 5, 0.75);
   pointer-events: none;
 }
 
-/* ——— La Cara: avisos ——— */
-
-.mesa__expuesto {
-  position: absolute;
-  right: 10px;
-  top: -12px;
-  padding: 1px 8px;
-  font-family: var(--letra-rotulo);
-  font-size: 14px;
-  letter-spacing: 1px;
-  color: var(--papel);
-  background: var(--almagre);
-  border: 2px solid var(--tinta);
-  border-radius: 4px;
+.mesa__bocadillo {
+  left: 22px;
+  top: 434px;
+  width: 314px;
+  padding: 8px 14px;
 }
 
-.mesa__aviso-cara {
+.mesa__bocadillo .bocadillo__accion {
+  font-size: 22px;
+}
+
+.mesa__bocadillo .bocadillo__frase {
+  margin-top: 2px;
+  font-size: 16px;
+}
+
+/* ——— El tapete ——— */
+
+.mesa__madera {
   position: absolute;
-  left: 252px;
-  top: 6px;
-  width: 150px;
-  padding: 4px 8px 6px;
+  left: -70px;
+  top: 512px;
+  width: 530px;
+  height: 420px;
+  border-radius: 50%;
+  background: var(--nogal);
+  border: var(--borde);
+}
+
+.mesa__tapete {
+  position: absolute;
+  left: -56px;
+  top: 524px;
+  width: 502px;
+  height: 400px;
+  border-radius: 50%;
+  background-color: var(--verde);
+  background-image: var(--punteado-tapete);
+  background-size: 5px 5px;
+  border: var(--borde);
+}
+
+.mesa__cartas-rival {
+  position: absolute;
+  left: 131px;
+  top: 528px;
+  width: 128px;
+  height: 62px;
+}
+
+.mesa .carta--rival {
+  width: 32px;
+  height: 58px;
+}
+
+.en-juego {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  top: 590px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 10px 4px;
+  text-align: center;
+}
+
+.en-juego__rotulo {
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.en-juego__principal {
+  font-family: var(--letra-grito);
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.en-juego__principal--explicacion {
+  font-family: var(--letra-texto);
   font-style: italic;
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+.en-juego__piensa {
+  font-style: italic;
+  font-size: 13px;
+  color: var(--nogal);
+}
+
+.mesa__cronica {
+  position: absolute;
+  right: 10px;
+  top: 532px;
+  width: 112px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.15;
+  color: var(--papel);
+  text-shadow: 1px 1px 0 var(--tinta);
+}
+
+.mesa__cronica li + li {
+  margin-top: 3px;
+}
+
+/* ——— Tu mano ——— */
+
+.mesa__mano {
+  position: absolute;
+  left: 61px;
+  top: 640px;
+  width: 268px;
+  height: 160px;
+}
+
+.mesa__carta {
+  position: absolute;
+  transition: transform 0.15s ease-out;
+}
+
+.mesa__carta-boton {
+  position: absolute;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease-out;
+}
+
+.mesa__carta-boton--elegida .carta--mano {
+  outline: 3px solid var(--almagre);
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+.mesa__dicho {
+  position: absolute;
+  left: 10px;
+  top: 534px;
+  max-width: 112px;
+  padding: 2px 8px 4px;
+  font-family: var(--letra-grito);
   font-size: 14px;
   line-height: 1.15;
   background: var(--papel);
   border: var(--borde);
   border-radius: var(--radio-panel);
   box-shadow: var(--sombra-dura);
-  animation: aviso 2.6s ease-in-out forwards;
+  transform: rotate(-2deg);
 }
 
-.mesa__aviso-cara strong {
+.mesa__dicho .rotulo {
   display: block;
-  font-family: var(--letra-grito);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  color: var(--verde);
-}
-
-.mesa__aviso-cara--baja strong {
-  color: var(--almagre);
+  font-size: 11px;
 }
 
 .mesa__se-te-nota {
   position: absolute;
-  left: 276px;
-  top: 404px;
-  width: 126px;
-  padding: 3px 6px;
+  left: 10px;
+  top: 584px;
+  width: 112px;
+  padding: 2px 6px;
   font-family: var(--letra-rotulo);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.15;
   color: var(--papel);
   background: var(--almagre);
@@ -534,17 +467,187 @@
   }
 }
 
-/* ——— El trato y la elección de rival ——— */
+/* ——— Barra de acciones (abajo, limpia, el órdago aparte) ——— */
 
-.en-juego__principal--explicacion {
-  font-family: var(--letra-texto);
-  font-style: italic;
+.botonera {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 12px;
+  z-index: 15;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.botonera__acciones {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.botonera__acciones .boton-apuesta {
+  flex: 1;
+  min-height: 50px;
+  padding: 0 4px;
+  font-size: 17px;
+}
+
+.botonera .boton-ordago {
+  flex: 0 0 104px;
+  padding: 0 6px;
   font-size: 15px;
-  line-height: 1.2;
+}
+
+.cantidades {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 62px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+.cantidades__fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.cantidades .cantidad {
+  min-height: 48px;
+  font-size: 17px;
+}
+
+.cantidades__cancelar {
+  min-height: 36px;
+  padding: 0 14px;
+  font-family: var(--letra-rotulo);
+  font-size: 15px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ——— Recuento, órdago y fin del duelo ——— */
+
+.mesa__velo {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(20, 14, 11, 0.6);
 }
 
 .mesa__velo--encima {
   z-index: 40;
+}
+
+.final {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: 14px 14px 18px;
+  box-sizing: border-box;
+}
+
+.final--ordago {
+  color: var(--papel);
+  background: var(--almagre);
+}
+
+.final__titulo {
+  font-family: var(--letra-grito);
+  font-size: 24px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.final--ordago .final__titulo {
+  font-size: 32px;
+  text-shadow: 3px 3px 0 var(--tinta);
+}
+
+.final__manos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.final__mano {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.final__cartas {
+  display: flex;
+  gap: 6px;
+}
+
+.final__cobros {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+}
+
+.final__cobros li {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+  border-bottom: 1px dotted var(--tachado);
+}
+
+.final__cobros .final__cobro--sin-cobrar {
+  color: var(--tachado);
+  text-decoration: line-through;
+}
+
+.final__marcador {
+  font-family: var(--letra-rotulo);
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+
+.final__resultado {
+  font-family: var(--letra-grito);
+  font-size: 22px;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--almagre);
+}
+
+.final--ordago .final__resultado {
+  color: var(--gualda);
+  text-shadow: 2px 2px 0 var(--tinta);
+}
+
+.final__motivo {
+  display: block;
+  font-family: var(--letra-texto);
+  font-style: italic;
+  font-size: 16px;
+  text-align: center;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.final__boton {
+  width: 240px;
 }
 
 .rivales {
@@ -565,7 +668,7 @@
   min-height: 44px;
   padding: 0 12px;
   font-family: var(--letra-rotulo);
-  font-size: 17px;
+  font-size: 16px;
   color: var(--tinta);
   background: var(--papel);
   border: 2px solid var(--tinta);
@@ -583,6 +686,33 @@
 }
 
 .final--ordago .rivales__rival--actual {
+  color: var(--gualda);
+}
+
+/* ——— Depuración ——— */
+
+.depuracion {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 206px;
+  z-index: 25;
+  max-height: 220px;
+  overflow: auto;
+  padding: 8px;
+  font: 12px/1.35 ui-monospace, Consolas, monospace;
+  color: var(--papel);
+  background: rgba(35, 25, 21, 0.92);
+  border: 1px solid var(--gualda);
+  border-radius: 6px;
+}
+
+.depuracion > div + div {
+  margin-top: 4px;
+}
+
+.depuracion__titulo {
+  font-weight: 700;
   color: var(--gualda);
 }
 

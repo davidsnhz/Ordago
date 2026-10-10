@@ -1,82 +1,77 @@
-import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import { useEscala } from './Escenario';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
-/** Distancia (en píxeles del escenario) que hay que deslizar hacia arriba para tirarlo. */
-const RECORRIDO = 70;
+/** Lo que hay que mantenerlo pulsado para tirarlo. */
+const DURACION = 1000;
 
 /**
- * ¡ÓRDAGO! no se pulsa: se tira deslizando hacia arriba, para que nunca salga sin querer y
- * se sienta como un gesto. Con teclado, la flecha arriba hace lo mismo.
+ * ¡ÓRDAGO! no se pulsa: se mantiene pulsado un segundo mientras se llena, para que nunca
+ * salga sin querer y se sienta como un gesto. Si se suelta antes, no pasa nada.
+ * Con teclado, mantener Intro o Espacio hace lo mismo.
  */
-export function BotonOrdago({
-  activo,
-  onTirar,
-  texto,
-  pista,
-  ayuda,
-}: {
-  activo: boolean;
-  onTirar: () => void;
-  texto: string;
-  pista: string;
-  ayuda: string;
-}) {
-  const escala = useEscala();
-  const inicio = useRef<number | null>(null);
-  const [subida, setSubida] = useState(0);
+export function BotonOrdago({ activo, onTirar, texto, ayuda }: { activo: boolean; onTirar: () => void; texto: string; ayuda: string }) {
+  const [inicio, setInicio] = useState<number | null>(null);
+  const [progreso, setProgreso] = useState(0);
+  const tirado = useRef(false);
 
+  useEffect(() => {
+    if (inicio === null) return;
+    let cuadro = 0;
+    const avanzar = () => {
+      const p = Math.min(1, (performance.now() - inicio) / DURACION);
+      setProgreso(p);
+      if (p >= 1 && !tirado.current) {
+        tirado.current = true;
+        setInicio(null);
+        setProgreso(0);
+        onTirar();
+        return;
+      }
+      cuadro = requestAnimationFrame(avanzar);
+    };
+    cuadro = requestAnimationFrame(avanzar);
+    // Por si el navegador no dibuja (pestaña en segundo plano), el reloj también lo tira.
+    const reloj = setTimeout(avanzar, DURACION + 20);
+    return () => {
+      cancelAnimationFrame(cuadro);
+      clearTimeout(reloj);
+    };
+  }, [inicio, onTirar]);
+
+  const empezar = () => {
+    if (!activo || inicio !== null) return;
+    tirado.current = false;
+    setInicio(performance.now());
+  };
   const soltar = () => {
-    inicio.current = null;
-    setSubida(0);
+    setInicio(null);
+    setProgreso(0);
   };
-  const alPulsar = (e: PointerEvent<HTMLButtonElement>) => {
-    if (!activo) return;
-    inicio.current = e.clientY;
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    } catch {
-      // Algún navegador no deja capturar el puntero: el deslizamiento funciona igual.
-    }
-  };
-  const alMover = (e: PointerEvent<HTMLButtonElement>) => {
-    if (inicio.current === null) return;
-    const dy = (e.clientY - inicio.current) / escala;
-    setSubida(Math.max(-RECORRIDO * 1.2, Math.min(0, dy)));
-  };
-  // La distancia se mide con el propio evento: en un deslizamiento rápido el estado
-  // todavía no se ha actualizado al soltar.
-  const alSoltar = (e: PointerEvent<HTMLButtonElement>) => {
-    if (inicio.current === null) return;
-    const tirado = (e.clientY - inicio.current) / escala <= -RECORRIDO;
-    soltar();
-    if (tirado && activo) onTirar();
-  };
-  const alTeclear = (e: KeyboardEvent<HTMLButtonElement>) => {
-    if (activo && e.key === 'ArrowUp') {
+  const teclaAbajo = (e: KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      onTirar();
+      if (!e.repeat) empezar();
     }
+  };
+  const teclaArriba = (e: KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') soltar();
   };
 
-  const progreso = Math.min(1, -subida / RECORRIDO);
   return (
-    <div className="ordago">
-      <div className="ordago__carril" aria-hidden="true" style={{ opacity: activo ? 0.25 + progreso * 0.75 : 0 }} />
-      <button
-        type="button"
-        className="boton-ordago"
-        disabled={!activo}
-        aria-label={ayuda}
-        style={{ transform: `translateY(${subida}px)` }}
-        onPointerDown={alPulsar}
-        onPointerMove={alMover}
-        onPointerUp={alSoltar}
-        onPointerCancel={soltar}
-        onKeyDown={alTeclear}
-      >
-        {texto}
-      </button>
-      <div className="ordago__pista">{pista}</div>
-    </div>
+    <button
+      type="button"
+      className="boton-ordago"
+      disabled={!activo}
+      aria-label={ayuda}
+      onPointerDown={empezar}
+      onPointerUp={soltar}
+      onPointerLeave={soltar}
+      onPointerCancel={soltar}
+      onKeyDown={teclaAbajo}
+      onKeyUp={teclaArriba}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      <span className="boton-ordago__relleno" style={{ transform: `scaleX(${progreso})` }} />
+      <span className="boton-ordago__texto">{texto}</span>
+    </button>
   );
 }

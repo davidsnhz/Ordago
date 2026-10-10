@@ -19,31 +19,29 @@ import {
   clases,
   EtiquetaNombre,
   FilaLances,
-  MarcadorPiedras,
-  Panel,
 } from '../componentes/piezas';
 import { Retrato } from '../componentes/Retrato';
 import './mesa.css';
 
 const M = ES.mesa;
 const CANTIDADES = [2, 3, 5, 10];
-/** Abanico de la mano (referencias/pantallas/03_mesa): posición y giro de cada carta. */
+/** Abanico de la mano: posición y giro de cada carta (escenario vertical de 390 × 844). */
 const ABANICO = [
-  { left: 0, top: 14, giro: -9 },
-  { left: 112, top: 2, giro: -3 },
-  { left: 224, top: 2, giro: 3 },
-  { left: 336, top: 14, giro: 9 },
+  { left: 0, top: 8, giro: -9 },
+  { left: 66, top: 2, giro: -3 },
+  { left: 132, top: 2, giro: 3 },
+  { left: 198, top: 8, giro: 9 },
 ];
 const ABANICO_RIVAL = [
-  { left: 0, top: 4, giro: -8 },
-  { left: 46, top: 0, giro: -3 },
-  { left: 92, top: 0, giro: 3 },
-  { left: 138, top: 4, giro: 8 },
+  { left: 0, top: 3, giro: -8 },
+  { left: 32, top: 0, giro: -3 },
+  { left: 64, top: 0, giro: 3 },
+  { left: 96, top: 3, giro: 8 },
 ];
 /** Lo que hay que mantener pulsado el retrato para empezar a mirar. */
 const PULSACION_LARGA = 250;
 
-/** La mesa: un duelo contra uno de los cinco rivales. */
+/** La mesa: un duelo contra uno de los cinco rivales, en vertical. */
 export function Mesa() {
   const { estado, jugar, nuevoDuelo, mirar, mirando, setMirando, cambiarCara, rivalPiensa } = useDuelo();
   const [depuracion, alternarDepuracion] = useDepuracion();
@@ -55,7 +53,6 @@ export function Mesa() {
   const puedo = (tipo: OpcionDuelo['tipo']) => quienActua === 'jugador' && opciones.some((o) => o.tipo === tipo);
 
   const [seleccion, setSeleccion] = useState<string[]>([]);
-  const [cantidad, setCantidad] = useState(2);
   useEffect(() => setSeleccion([]), [duelo.fase, duelo.numeroMano, duelo.rondasMus]);
 
   const descartando = puedo('descartar');
@@ -73,6 +70,19 @@ export function Mesa() {
       <div className={clases('mesa', mirando && 'mesa--mirando')}>
         <div className="mesa__pared" />
         <div className="mesa__luz" />
+
+        <div className="mesa__arriba">
+          <div className="mesa__titulo-duelo">{textos.comarca}</div>
+          <button type="button" className="mesa__boton-pequeno" onClick={() => setEligiendoRival(true)}>
+            {M.rival}
+          </button>
+          <button type="button" className="mesa__boton-pequeno" aria-pressed={depuracion} onClick={alternarDepuracion}>
+            {M.depurar}
+          </button>
+        </div>
+        <Marcador duelo={duelo} textos={textos} />
+        <ColumnaCara estado={estado} />
+
         <Retrato
           id={partida.rivalId}
           nombre={textos.titulo}
@@ -82,8 +92,6 @@ export function Mesa() {
           textoPendiente={M.artePendiente}
         />
         {mirando && <div className="mesa__penumbra" />}
-        <div className="mesa__madera" />
-        <div className="mesa__tapete" />
         <ZonaMirar
           nombre={textos.nombre}
           onEmpieza={() => setMirando(true)}
@@ -92,7 +100,6 @@ export function Mesa() {
             mirar(segundos);
           }}
         />
-
         <EtiquetaNombre className="mesa__nombre">
           {textos.etiqueta}
           {partida.memoria.manosEnfadado > 0 && <span className="mesa__enfado">{M.enfadado}</span>}
@@ -103,17 +110,20 @@ export function Mesa() {
           frase={rivalPiensa ? undefined : estado.bocadillo.frase}
         />
 
+        <div className="mesa__madera" />
+        <div className="mesa__tapete" />
         <div className="mesa__cartas-rival" aria-label={M.susCartas(textos.nombre)}>
           {ABANICO_RIVAL.map((p, i) => (
             <CartaReverso key={i} className="carta--rival" style={{ left: p.left, top: p.top, transform: `rotate(${p.giro}deg)` }} />
           ))}
         </div>
+        <EnJuego duelo={duelo} textos={textos} rivalPiensa={rivalPiensa} />
+        <Cronica lineas={estado.cronica} />
 
         <ManoDelJugador cartas={duelo.cartas.jugador} seleccionables={descartando} seleccion={seleccion} onAlternar={alternarCarta} />
         {estado.delJugador && (
           <div className="mesa__dicho" aria-live="polite">
-            <span className="rotulo">{M.tu}</span>
-            {estado.delJugador}
+            <span className="rotulo">{M.tu}</span> {estado.delJugador}
           </div>
         )}
         {estado.seTeNota && (
@@ -122,30 +132,7 @@ export function Mesa() {
           </div>
         )}
 
-        <ColumnaIzquierda estado={estado} textos={textos} />
-        <Cronica lineas={estado.cronica} />
-
-        <div className="mesa__arriba-derecha">
-          <div className="mesa__titulo-duelo">{M.tituloDuelo(textos.comarca)}</div>
-          <button type="button" className="mesa__boton-pequeno" onClick={() => setEligiendoRival(true)}>
-            {M.rival}
-          </button>
-          <button type="button" className="mesa__boton-pequeno" aria-pressed={depuracion} onClick={alternarDepuracion}>
-            {M.depurar}
-          </button>
-        </div>
-
-        <ColumnaDerecha
-          duelo={duelo}
-          textos={textos}
-          rivalPiensa={rivalPiensa}
-          puedo={puedo}
-          cantidad={cantidad}
-          onCantidad={setCantidad}
-          seleccion={seleccion}
-          onAccion={jugar}
-          opciones={opciones}
-        />
+        <Botonera duelo={duelo} puedo={puedo} seleccion={seleccion} onAccion={jugar} opciones={opciones} />
 
         {depuracion && <PanelDepuracion estado={estado} textos={textos} onCara={cambiarCara} />}
         <PanelFinal
@@ -160,6 +147,54 @@ export function Mesa() {
         )}
       </div>
     </Escenario>
+  );
+}
+
+/** Marcador de arriba: solo los números, el rival a la izquierda y tú a la derecha. */
+function Marcador({ duelo, textos }: { duelo: EstadoDuelo; textos: TextosRival }) {
+  const esManoJugador = duelo.quienEsMano === 'jugador';
+  const jugados = new Set(duelo.lances.map((l) => l.lance));
+  const terminada = duelo.fase === 'finMano' || duelo.fase === 'finDuelo' || duelo.fase === 'trato';
+  const hayPunto = jugados.has('punto') || duelo.lanceActual === 'punto';
+  const fila = (['grande', 'chica', 'pares', hayPunto ? 'punto' : 'juego'] as Lance[]).map((lance) => ({
+    etiqueta: ES.lances[lance],
+    estado: (duelo.lanceActual === lance && !terminada ? 'actual' : jugados.has(lance) || terminada ? 'jugado' : 'pendiente') as
+      | 'actual'
+      | 'jugado'
+      | 'pendiente',
+  }));
+  return (
+    <div className="panel mesa__marcador" aria-label={`${textos.nombre} ${duelo.marcador.rival}, tú ${duelo.marcador.jugador}`}>
+      <div className="marcador-simple__lado">
+        <span className="rotulo">{textos.nombre}</span>
+        <span className="marcador-simple__numero">{duelo.marcador.rival}</span>
+        {!esManoJugador && <span className="insignia">{M.esMano}</span>}
+      </div>
+      <div className="marcador-simple__centro">
+        <span className="rotulo">{M.marcador}</span>
+        <FilaLances lances={fila} />
+      </div>
+      <div className="marcador-simple__lado marcador-simple__lado--tu">
+        <span className="rotulo">{M.tu}</span>
+        <span className="marcador-simple__numero">{duelo.marcador.jugador}</span>
+        {esManoJugador && <span className="insignia insignia--anil">{M.eresMano}</span>}
+      </div>
+    </div>
+  );
+}
+
+function ColumnaCara({ estado }: { estado: EstadoMesa }) {
+  const { partida, avisoCara } = estado;
+  return (
+    <div className="mesa__cara">
+      <BarraCara valor={partida.caraJugador} titulo={M.tuCara} zonas={M.zonasCara} />
+      {partida.expuesto && <span className="mesa__expuesto">{M.expuesto}</span>}
+      {avisoCara && (
+        <div key={avisoCara.clave} className={clases('mesa__aviso-cara', avisoCara.delta < 0 && 'mesa__aviso-cara--baja')} role="status">
+          <strong>{M.cambioCara(avisoCara.delta)}</strong> {avisoCara.motivos.join(' · ')}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -239,88 +274,20 @@ function ManoDelJugador({
   );
 }
 
-function ColumnaIzquierda({ estado, textos }: { estado: EstadoMesa; textos: TextosRival }) {
-  const { partida, avisoCara } = estado;
-  const duelo = partida.duelo;
-  const jugados = new Set(duelo.lances.map((l) => l.lance));
-  const terminada = duelo.fase === 'finMano' || duelo.fase === 'finDuelo' || duelo.fase === 'trato';
-  const hayPunto = jugados.has('punto') || duelo.lanceActual === 'punto';
-  const fila = (['grande', 'chica', 'pares', hayPunto ? 'punto' : 'juego'] as Lance[]).map((lance) => ({
-    etiqueta: ES.lances[lance],
-    estado: (duelo.lanceActual === lance && !terminada ? 'actual' : jugados.has(lance) || terminada ? 'jugado' : 'pendiente') as
-      | 'actual'
-      | 'jugado'
-      | 'pendiente',
-  }));
-  const esManoJugador = duelo.quienEsMano === 'jugador';
-  return (
-    <>
-      <div className="mesa__lances">
-        <FilaLances lances={fila} />
-      </div>
-      <div className="mesa__marcador">
-        <MarcadorPiedras
-          titulo={M.marcador}
-          insignia={{ texto: esManoJugador ? M.eresMano : M.esMano, destacada: esManoJugador }}
-          filas={[
-            { nombre: textos.nombre, piedras: duelo.marcador.rival },
-            { nombre: M.tu, piedras: duelo.marcador.jugador },
-          ]}
-        />
-      </div>
-      <div className="mesa__cara">
-        <BarraCara valor={partida.caraJugador} titulo={M.tuCara} zonas={M.zonasCara} />
-        {partida.expuesto && <span className="mesa__expuesto">{M.expuesto}</span>}
-        {avisoCara && (
-          <div key={avisoCara.clave} className={clases('mesa__aviso-cara', avisoCara.delta < 0 && 'mesa__aviso-cara--baja')} role="status">
-            <strong>{M.cambioCara(avisoCara.delta)}</strong>
-            {avisoCara.motivos.join(' · ')}
-          </div>
-        )}
-      </div>
-    </>
-  );
-}
-
 function Cronica({ lineas }: { lineas: string[] }) {
   if (lineas.length === 0) return null;
   return (
     <ol className="mesa__cronica" aria-label="Lo último">
-      {lineas.map((linea, i) => (
+      {lineas.slice(-2).map((linea, i) => (
         <li key={`${i}-${linea}`}>{linea}</li>
       ))}
     </ol>
   );
 }
 
-function ColumnaDerecha({
-  duelo,
-  textos,
-  rivalPiensa,
-  puedo,
-  cantidad,
-  onCantidad,
-  seleccion,
-  onAccion,
-  opciones,
-}: {
-  duelo: EstadoDuelo;
-  textos: TextosRival;
-  rivalPiensa: boolean;
-  puedo: (tipo: OpcionDuelo['tipo']) => boolean;
-  cantidad: number;
-  onCantidad: (n: number) => void;
-  seleccion: string[];
-  onAccion: (a: AccionDuelo) => void;
-  opciones: OpcionDuelo[];
-}) {
-  const yo: Lado = 'jugador';
+/** Lo que está en juego, sobre el tapete. */
+function EnJuego({ duelo, textos, rivalPiensa }: { duelo: EstadoDuelo; textos: TextosRival; rivalPiensa: boolean }) {
   const envite = duelo.envite;
-  const minimo = (tipo: 'envido' | 'mas') => {
-    const opcion = opciones.find((o) => o.tipo === tipo);
-    return opcion && 'minimo' in opcion ? opcion.minimo : 2;
-  };
-
   let rotulo = '';
   let principal = '';
   if (duelo.fase === 'mus') {
@@ -338,110 +305,110 @@ function ColumnaDerecha({
   } else {
     rotulo = M.mano(duelo.numeroMano);
   }
-
-  const elegir = (
-    <div className="cantidades" role="radiogroup" aria-label={M.cantidad}>
-      {CANTIDADES.map((n) => (
-        <button
-          key={n}
-          type="button"
-          role="radio"
-          aria-checked={cantidad === n}
-          className={clases('cantidad', cantidad === n && 'cantidad--elegida')}
-          onClick={() => onCantidad(n)}
-        >
-          {n}
-        </button>
-      ))}
+  return (
+    <div className="panel en-juego">
+      <span className="rotulo en-juego__rotulo">{rotulo}</span>
+      {principal && <span className={clases('en-juego__principal', principal.length > 40 && 'en-juego__principal--explicacion')}>{principal}</span>}
+      {rivalPiensa && <span className="en-juego__piensa">{M.piensa(textos.nombre)}</span>}
     </div>
   );
+}
+
+/**
+ * Barra de acciones de abajo, limpia: los botones que tocan en cada momento en una fila y el
+ * órdago aparte, pequeño. Envidar o subir abre encima un selector de cantidad.
+ */
+function Botonera({
+  duelo,
+  puedo,
+  seleccion,
+  onAccion,
+  opciones,
+}: {
+  duelo: EstadoDuelo;
+  puedo: (tipo: OpcionDuelo['tipo']) => boolean;
+  seleccion: string[];
+  onAccion: (a: AccionDuelo) => void;
+  opciones: OpcionDuelo[];
+}) {
+  const yo: Lado = 'jugador';
+  const [eligiendo, setEligiendo] = useState<'envido' | 'mas' | null>(null);
+  useEffect(() => setEligiendo(null), [duelo.fase, duelo.lanceActual, duelo.turno]);
+  const minimo = (tipo: 'envido' | 'mas') => {
+    const opcion = opciones.find((o) => o.tipo === tipo);
+    return opcion && 'minimo' in opcion ? opcion.minimo : 2;
+  };
+  const tirarOrdago = useCallback(() => onAccion({ tipo: 'ordago', lado: yo }), [onAccion]);
 
   return (
-    <div className="mesa__derecha">
-      <Panel className="en-juego">
-        <div className="rotulo en-juego__rotulo">{rotulo}</div>
-        {principal && (
-          <div
-            className={clases(
-              'en-juego__principal',
-              principal.length > 11 && 'en-juego__principal--largo',
-              principal.length > 40 && 'en-juego__principal--explicacion',
-            )}
-          >
-            {principal}
+    <div className="botonera">
+      {eligiendo && (
+        <div className="panel panel--sombra cantidades" role="group" aria-label={M.cantidad}>
+          <span className="rotulo">{M.cantidad}</span>
+          <div className="cantidades__fila">
+            {CANTIDADES.filter((n) => n >= minimo(eligiendo)).map((n) => (
+              <BotonApuesta
+                key={n}
+                variante="gualda"
+                className="cantidad"
+                onClick={() => onAccion(eligiendo === 'envido' ? { tipo: 'envido', lado: yo, piedras: n } : { tipo: 'mas', lado: yo, piedras: n })}
+              >
+                {eligiendo === 'envido' ? M.botones.envido(n) : M.botones.mas(n)}
+              </BotonApuesta>
+            ))}
           </div>
-        )}
-        {rivalPiensa && <div className="en-juego__piensa">{M.piensa(textos.nombre)}</div>}
-      </Panel>
-
-      <div className="mesa__botones">
+          <button type="button" className="cantidades__cancelar" onClick={() => setEligiendo(null)}>
+            {M.cancelar}
+          </button>
+        </div>
+      )}
+      <div className="botonera__acciones">
         {puedo('mus') && (
           <>
+            <BotonApuesta onClick={() => onAccion({ tipo: 'corto', lado: yo })}>{M.botones.corto}</BotonApuesta>
             <BotonApuesta variante="gualda" onClick={() => onAccion({ tipo: 'mus', lado: yo })}>
               {M.botones.mus}
             </BotonApuesta>
-            <BotonApuesta onClick={() => onAccion({ tipo: 'corto', lado: yo })}>{M.botones.corto}</BotonApuesta>
           </>
         )}
         {puedo('descartar') && (
           <BotonApuesta
             variante="gualda"
             disabled={seleccion.length === 0}
-            onClick={() => {
-              const cartas = duelo.cartas.jugador.filter((c) => seleccion.includes(idCarta(c)));
-              onAccion({ tipo: 'descartar', lado: yo, cartas });
-            }}
+            onClick={() => onAccion({ tipo: 'descartar', lado: yo, cartas: duelo.cartas.jugador.filter((c) => seleccion.includes(idCarta(c))) })}
           >
             {M.botones.descartar(seleccion.length)}
           </BotonApuesta>
         )}
         {puedo('trato') && (
           <>
-            <BotonApuesta variante="gualda" onClick={() => onAccion({ tipo: 'trato', lado: yo, acepta: true })}>
-              {M.botones.aceptarTrato}
-            </BotonApuesta>
             <BotonApuesta variante="rendirse" onClick={() => onAccion({ tipo: 'trato', lado: yo, acepta: false })}>
               {M.botones.rechazarTrato}
             </BotonApuesta>
-          </>
-        )}
-        {puedo('quiero') && (
-          <>
-            <BotonApuesta onClick={() => onAccion({ tipo: 'quiero', lado: yo })}>{M.botones.quiero}</BotonApuesta>
-            <BotonApuesta variante="rendirse" onClick={() => onAccion({ tipo: 'noQuiero', lado: yo })}>
-              {M.botones.noQuiero}
+            <BotonApuesta variante="gualda" onClick={() => onAccion({ tipo: 'trato', lado: yo, acepta: true })}>
+              {M.botones.aceptarTrato}
             </BotonApuesta>
           </>
         )}
+        {puedo('noQuiero') && (
+          <BotonApuesta variante="rendirse" onClick={() => onAccion({ tipo: 'noQuiero', lado: yo })}>
+            {M.botones.noQuiero}
+          </BotonApuesta>
+        )}
+        {puedo('quiero') && <BotonApuesta onClick={() => onAccion({ tipo: 'quiero', lado: yo })}>{M.botones.quiero}</BotonApuesta>}
         {puedo('mas') && (
-          <>
-            <BotonApuesta variante="gualda" onClick={() => onAccion({ tipo: 'mas', lado: yo, piedras: Math.max(cantidad, minimo('mas')) })}>
-              {M.botones.mas(Math.max(cantidad, minimo('mas')))}
-            </BotonApuesta>
-            {elegir}
-          </>
+          <BotonApuesta variante="gualda" aria-expanded={eligiendo === 'mas'} onClick={() => setEligiendo(eligiendo === 'mas' ? null : 'mas')}>
+            {M.botones.masCorto}
+          </BotonApuesta>
         )}
         {puedo('paso') && <BotonApuesta onClick={() => onAccion({ tipo: 'paso', lado: yo })}>{M.botones.paso}</BotonApuesta>}
         {puedo('envido') && (
-          <>
-            <BotonApuesta
-              variante="gualda"
-              onClick={() => onAccion({ tipo: 'envido', lado: yo, piedras: Math.max(cantidad, minimo('envido')) })}
-            >
-              {M.botones.envido(Math.max(cantidad, minimo('envido')))}
-            </BotonApuesta>
-            {elegir}
-          </>
+          <BotonApuesta variante="gualda" aria-expanded={eligiendo === 'envido'} onClick={() => setEligiendo(eligiendo === 'envido' ? null : 'envido')}>
+            {M.botones.envidoCorto}
+          </BotonApuesta>
         )}
       </div>
-
-      <BotonOrdago
-        activo={puedo('ordago')}
-        onTirar={() => onAccion({ tipo: 'ordago', lado: yo })}
-        texto={M.botones.ordago}
-        pista={M.deslizaOrdago}
-        ayuda={M.ayudaOrdago}
-      />
+      <BotonOrdago activo={puedo('ordago')} onTirar={tirarOrdago} texto={M.botones.ordago} ayuda={M.ayudaOrdago} />
     </div>
   );
 }

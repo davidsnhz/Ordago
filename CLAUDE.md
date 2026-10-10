@@ -1,22 +1,22 @@
 # Órdago — instrucciones del proyecto
 
-Órdago es un roguelike de duelos de mus 1 contra 1 para móvil en horizontal, sin conexión. El jugador recorre los pueblos de Castilla desafiando a rivales con personalidad. Se gana leyendo sus tics, envidando, aceptando y faroleando.
+Órdago es un roguelike de duelos de mus 1 contra 1 para móvil en vertical, sin conexión. El jugador recorre los pueblos de Castilla desafiando a rivales con personalidad. Se gana leyendo sus tics, envidando, aceptando y faroleando.
 
 ## Documentos (léelos antes de escribir código)
 
 - `docs/diseno-juego.md` — **reglas y sistemas**: mus a 8 reyes y a 20 piedras, apuestas, la Cara, tics, Libreta, compañeros, objetos, los 5 rivales, la IA y el plan de prototipo. Es la fuente de verdad del diseño de juego.
 - `docs/direccion-arte.md` — **aspecto visual**: tintas, tipografías, piezas de mesa y pantallas. Manda sobre cualquier mención al arte en el otro documento.
-- `referencias/pantallas/*.png` y `*.html` — cómo debe verse cada pantalla. Los HTML son la especificación exacta de medidas y colores, a 1280 × 590.
+- `referencias/pantallas/*.png` y `*.html` — estilo de cada pantalla (tintas, letra, piezas). Se hicieron en horizontal (1280 × 590); desde el 10 de octubre de 2026 el juego es **vertical** y la maquetación se adapta (ver `docs/decisiones.md`, «Cambio a vertical»).
 - `assets/` — baraja definitiva, palos, logotipo y fuentes.
 
 Si algo de los documentos es ambiguo o contradictorio, no lo inventes en silencio: elige la opción más fiel al mus tradicional, anótala en `docs/decisiones.md` y avísame.
 
 ## Tecnología
 
-- **Plataforma: navegador.** Debe funcionar en Chrome, Safari y Firefox de escritorio y de móvil, con orientación horizontal. Más adelante se empaquetará para móvil (por ejemplo con Capacitor), así que nada debe depender de APIs exclusivas de escritorio.
+- **Plataforma: navegador.** Debe funcionar en Chrome, Safari y Firefox de escritorio y de móvil, con orientación vertical. Más adelante se empaquetará para móvil (por ejemplo con Capacitor), así que nada debe depender de APIs exclusivas de escritorio.
 - **TypeScript estricto + Vite + React.** La interfaz se hace con componentes React y CSS, reproduciendo los HTML de `referencias/pantallas/`.
 - **Animación:** CSS y Framer Motion para la interfaz. Los retratos y tics de los personajes van con hojas de sprites o secuencias WebP en un componente propio. No hace falta canvas ni motor de juego salvo que haya un motivo claro; si lo hay, propónlo antes.
-- **Escalado:** el escenario mide 1280 × 590 y se escala entero para encajar en la ventana, con bandas si sobra espacio. Si el móvil está en vertical, se muestra un aviso para girarlo. Zonas táctiles de al menos 44 px y márgenes seguros para el notch.
+- **Escalado:** el escenario es vertical, de 390 × 844, y se escala entero para encajar en la ventana, con bandas si sobra espacio (en ordenador se ve centrado, como un móvil). Si el móvil está en horizontal, se muestra un aviso para girarlo. Zonas táctiles de al menos 44 px y márgenes seguros para el notch.
 - **Sin conexión:** PWA con service worker que precachea todo. Sin servidor, sin anuncios y sin cuentas.
 - **Guardado:** `localStorage` o IndexedDB, en JSON versionado, al final de cada mano. Si falla el almacenamiento, el juego sigue funcionando.
 - **Pruebas** con **Vitest**. Toda la lógica de reglas e IA es TypeScript puro y se prueba sin interfaz.

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="250" viewBox="0 0 390 250" font-family="Georgia, serif">
+  <rect width="390" height="250" fill="#2A1F18"/>
+  <text x="16" y="22" font-size="12" fill="#E2A527">A · SOLO EL NÚMERO</text>
+  <rect x="12" y="30" width="366" height="64" rx="8" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="30" y="58" font-size="13" letter-spacing="2">RUPERTO</text>
+  <text x="30" y="84" font-size="30" font-weight="bold">7</text>
+  <text x="195" y="70" text-anchor="middle" font-size="12" fill="#8C7F6A">a 20</text>
+  <text x="360" y="58" text-anchor="end" font-size="13" letter-spacing="2">TÚ</text>
+  <text x="360" y="84" text-anchor="end" font-size="30" font-weight="bold">13</text>
+
+  <text x="16" y="128" font-size="12" fill="#E2A527">B · NÚMERO Y 4 MARCAS (una por cada 5 piedras)</text>
+  <rect x="12" y="136" width="366" height="84" rx="8" fill="#F2E8D2" stroke="#231915" stroke-width="3"/>
+  <text x="30" y="164" font-size="13" letter-spacing="2">RUPERTO</text>
+  <text x="30" y="192" font-size="30" font-weight="bold">7</text>
+  <g stroke="#231915" stroke-width="2">
+    <rect x="30" y="202" width="26" height="7" rx="3" fill="#E2A527"/>
+    <rect x="60" y="202" width="26" height="7" rx="3" fill="#E2A527" opacity="0.4"/>
+    <rect x="90" y="202" width="26" height="7" rx="3" fill="#F2E8D2"/>
+    <rect x="120" y="202" width="26" height="7" rx="3" fill="#F2E8D2"/>
+  </g>
+  <text x="195" y="178" text-anchor="middle" font-size="12" fill="#8C7F6A">a 20</text>
+  <text x="360" y="164" text-anchor="end" font-size="13" letter-spacing="2">TÚ</text>
+  <text x="360" y="192" text-anchor="end" font-size="30" font-weight="bold">13</text>
+  <g stroke="#231915" stroke-width="2">
+    <rect x="244" y="202" width="26" height="7" rx="3" fill="#E2A527"/>
+    <rect x="274" y="202" width="26" height="7" rx="3" fill="#E2A527"/>
+    <rect x="304" y="202" width="26" height="7" rx="3" fill="#E2A527" opacity="0.4"/>
+    <rect x="334" y="202" width="26" height="7" rx="3" fill="#F2E8D2"/>
+  </g>
+  <text x="195" y="242" text-anchor="middle" font-size="11" font-style="italic" fill="#F2E8D2">marca llena = 5 piedras · a medio color = empezada</text>
+</svg>

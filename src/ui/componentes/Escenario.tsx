@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 
-/** El escenario mide 1280 × 590 y se escala entero para caber en la ventana, con bandas. */
-export const ANCHO = 1280;
-export const ALTO = 590;
+/** El escenario es vertical, de 390 × 844 (un móvil), y se escala entero para caber en la ventana, con bandas. */
+export const ANCHO = 390;
+export const ALTO = 844;
 
 const ContextoEscala = createContext(1);
 

@@ -109,7 +109,7 @@ export function BarraCara({
       <div className="cara__titulo">
         <span className="rotulo">{titulo}</span>
       </div>
-      <div className="cara__marca" style={{ left: `calc(12px + ${valor / 100} * 206px - 18px)` }}>
+      <div className="cara__marca" style={{ left: `calc(12px + (100% - 24px) * ${valor / 100} - 18px)` }}>
         <span className="cara__numero">{valor}</span>
         <span className="cara__flecha" />
       </div>
