@@ -47,6 +47,12 @@ body {
   cursor: pointer;
 }
 
+.banco__aviso {
+  padding: 8px 12px;
+  border: 2px dashed #b02a23;
+  background: #fff8e8;
+}
+
 .banco__resumen {
   padding: 8px 12px;
   border: 2px solid #231915;

@@ -1,6 +1,6 @@
 import type { AccionEnvite } from '../nucleo/apuestas';
 import type { Carta, ModoReyes } from '../nucleo/carta';
-import type { PorLado } from '../nucleo/comun';
+import type { Lado, PorLado } from '../nucleo/comun';
 import type { EventoDuelo } from '../nucleo/eventos';
 import { analizarPares, puntos } from '../nucleo/mano';
 import { cartaCorta, ES } from '../textos/es';
@@ -9,6 +9,12 @@ import { cartaCorta, ES } from '../textos/es';
  * Registro legible de un duelo para el banco de pruebas. Es una herramienta de desarrollo:
  * sus frases no van en textos/es.ts, pero sí usa el vocabulario del juego que hay allí.
  */
+
+/**
+ * En el banco de pruebas no juega nadie de verdad: los dos asientos los ocupan bots que
+ * eligen jugadas al azar. Se llaman así para no confundirlos con el jugador.
+ */
+export const BOTS: Record<Lado, string> = { jugador: 'Bot A', rival: 'Bot B' };
 
 export interface ManoRegistrada {
   numero: number;
@@ -27,7 +33,7 @@ export function registrarDuelo(eventos: readonly EventoDuelo[], modo: ModoReyes 
 }
 
 export function describirEvento(evento: EventoDuelo, modo: ModoReyes = 8): string | null {
-  const quien = (lado: keyof typeof ES.lados) => ES.lados[lado];
+  const quien = (lado: Lado) => BOTS[lado];
   switch (evento.tipo) {
     case 'reparto':
       return `Es mano: ${quien(evento.quienEsMano)}. ${describirManos(evento.cartas, modo)}`;
@@ -79,7 +85,7 @@ function describirAccion(accion: AccionEnvite): string {
 function describirManos(cartas: PorLado<Carta[]>, modo: ModoReyes): string {
   const una = (lado: 'jugador' | 'rival') => {
     const pares = analizarPares(cartas[lado], modo).tipo;
-    return `${ES.lados[lado]}: ${listar(cartas[lado])} (${puntos(cartas[lado], modo)}, ${ES.pares[pares]})`;
+    return `${BOTS[lado]}: ${listar(cartas[lado])} (${puntos(cartas[lado], modo)}, ${ES.pares[pares]})`;
   };
   return `${una('jugador')} | ${una('rival')}.`;
 }
@@ -89,5 +95,5 @@ function listar(cartas: readonly Carta[]): string {
 }
 
 function marcador(m: PorLado<number>): string {
-  return `${ES.lados.jugador} ${m.jugador} – ${ES.lados.rival} ${m.rival}`;
+  return `${BOTS.jugador} ${m.jugador} – ${BOTS.rival} ${m.rival}`;
 }

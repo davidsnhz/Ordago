@@ -1,6 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react';
-import { ES } from '../textos/es';
-import { registrarDuelo } from './registro';
+import { BOTS, registrarDuelo } from './registro';
 import { simularDuelo } from './simular';
 import './banco.css';
 
@@ -36,10 +35,15 @@ export function BancoDePruebas() {
   return (
     <main className="banco">
       <h1>Órdago · banco de pruebas del motor</h1>
+      <p className="banco__aviso">
+        <strong>Aquí no juegas tú.</strong> Bot A y Bot B eligen cada jugada <strong>al azar</strong> entre las
+        permitidas: tiran reyes, aceptan con malas cartas o envidan sin nada. Es a propósito: sirve para comprobar
+        que el motor cuenta bien las piedras y respeta los turnos pase lo que pase, no para jugar bien. El rival con
+        cabeza (la IA) llega en las fases 2 y 3.
+      </p>
       <p>
-        Fase 1: dos jugadores que eligen al azar entre las jugadas legales se enfrentan con el motor de reglas. La
-        misma semilla repite exactamente el mismo duelo. Cartas: R rey, C caballo, S sota, A as; o oros, c copas, e
-        espadas, b bastos.
+        La misma semilla repite exactamente el mismo duelo. Cartas: R rey, C caballo, S sota, A as; o oros, c copas,
+        e espadas, b bastos.
       </p>
 
       <form onSubmit={simular} className="banco__mandos">
@@ -56,9 +60,9 @@ export function BancoDePruebas() {
 
       {duelo && (
         <p className="banco__resumen">
-          Gana <strong>{ES.lados[duelo.estado.ganador!]}</strong>{' '}
-          {duelo.estado.motivoFin === 'ordago' ? 'por órdago' : 'a piedras'} · {ES.lados.jugador}{' '}
-          {duelo.estado.marcador.jugador} – {ES.lados.rival} {duelo.estado.marcador.rival} · {duelo.estado.numeroMano}{' '}
+          Gana <strong>{BOTS[duelo.estado.ganador!]}</strong>{' '}
+          {duelo.estado.motivoFin === 'ordago' ? 'por órdago' : 'a piedras'} · {BOTS.jugador}{' '}
+          {duelo.estado.marcador.jugador} – {BOTS.rival} {duelo.estado.marcador.rival} · {duelo.estado.numeroMano}{' '}
           manos · {duelo.acciones.length} acciones
         </p>
       )}
