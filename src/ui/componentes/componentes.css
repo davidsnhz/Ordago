@@ -1,0 +1,566 @@
+/* Piezas de la guía de estilo. Medidas en píxeles del escenario de 1280 × 590. */
+
+/* ——— Escenario ——— */
+
+.escenario-marco {
+  position: fixed;
+  inset: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--bandas);
+}
+
+.escenario-hueco {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.escenario {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  overflow: hidden;
+  transform-origin: center;
+  color: var(--tinta);
+  font-family: var(--letra-texto);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.aviso-girar {
+  display: none;
+}
+
+@media (orientation: portrait) and (pointer: coarse) {
+  .aviso-girar {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+    background: var(--taberna);
+    color: var(--papel);
+    font-family: var(--letra-rotulo);
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .aviso-girar__icono {
+    font-size: 64px;
+    color: var(--gualda);
+  }
+}
+
+/* ——— Panel y rótulos ——— */
+
+.panel {
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: var(--radio-panel);
+}
+
+.panel--sombra {
+  box-shadow: var(--sombra-dura-grande);
+}
+
+.rotulo {
+  font-family: var(--letra-rotulo);
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+/* ——— Botones de apuesta ——— */
+
+.boton-apuesta {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 0;
+  font-family: var(--letra-grito);
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--tinta);
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: var(--radio-boton);
+  box-shadow: var(--sombra-dura);
+  cursor: pointer;
+  transition: transform 60ms ease-out;
+}
+
+.boton-apuesta--gualda {
+  background: var(--gualda);
+}
+
+/* NO QUIERO: rendirse no lleva sombra. */
+.boton-apuesta--rendirse {
+  border-style: dashed;
+  box-shadow: none;
+}
+
+.boton-apuesta:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.boton-apuesta:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* ——— ¡Órdago! ——— */
+
+.ordago {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ordago__carril {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  height: 70px;
+  border-left: 4px dashed var(--papel);
+  transform: translateX(-2px);
+  pointer-events: none;
+}
+
+.boton-ordago {
+  width: 100%;
+  padding: 12px 0;
+  font-family: var(--letra-grito);
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--papel);
+  background: var(--almagre);
+  border: var(--borde);
+  outline: 2px solid var(--almagre);
+  outline-offset: 3px;
+  border-radius: var(--radio-boton);
+  box-shadow: var(--sombra-dura-grande);
+  cursor: grab;
+  touch-action: none;
+}
+
+.boton-ordago:active:not(:disabled) {
+  cursor: grabbing;
+}
+
+.boton-ordago:focus-visible {
+  outline-color: var(--anil);
+}
+
+.boton-ordago:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ordago__pista {
+  font-style: italic;
+  font-size: 16px;
+  color: var(--papel);
+  text-align: center;
+}
+
+/* ——— Lances ——— */
+
+.fila-lances {
+  display: flex;
+  gap: 16px;
+  padding: 8px 14px;
+  font-family: var(--letra-rotulo);
+  font-size: 21px;
+}
+
+.fila-lances__lance--jugado {
+  color: var(--tachado);
+  text-decoration: line-through;
+}
+
+.fila-lances__lance--actual {
+  border-bottom: 4px solid var(--almagre);
+}
+
+/* ——— Marcador de piedras ——— */
+
+.marcador {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 236px;
+  padding: 10px 14px;
+}
+
+.marcador__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.insignia {
+  padding: 0 6px;
+  border-radius: 3px;
+  font-family: var(--letra-rotulo);
+  font-size: 15px;
+  color: var(--papel);
+  background: var(--tachado);
+}
+
+.insignia--anil {
+  background: var(--anil);
+}
+
+.piedras {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+}
+
+.piedras__nombre {
+  width: 74px;
+  font-size: 17px;
+}
+
+.amarraco {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gualda);
+  border: 2px solid var(--tinta);
+}
+
+.piedra {
+  width: 13px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--nogal);
+  border: 2px solid var(--tinta);
+}
+
+.piedras__numero {
+  margin-left: auto;
+  font-family: var(--letra-grito);
+  font-size: 20px;
+}
+
+/* ——— La Cara ——— */
+
+.cara {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 236px;
+  padding: 6px 12px 8px;
+}
+
+.cara__titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 34px;
+}
+
+.cara__titulo .rotulo {
+  padding-bottom: 6px;
+}
+
+.cara__marca {
+  position: absolute;
+  top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cara__numero {
+  padding: 0 5px;
+  font-family: var(--letra-grito);
+  font-size: 15px;
+  line-height: 1.3;
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 5px;
+}
+
+.cara__flecha {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid var(--tinta);
+}
+
+.cara__barra {
+  display: flex;
+  height: 20px;
+  overflow: hidden;
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 7px;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.cara__segmento {
+  flex: 1 1 0;
+  border-right: 1.5px solid var(--tinta);
+}
+
+.cara__segmento:nth-child(7),
+.cara__segmento:nth-child(14) {
+  border-right-width: 2.5px;
+}
+
+.cara__segmento:last-child {
+  border-right: 0;
+}
+
+.cara__segmento--almagre {
+  background: var(--almagre);
+}
+.cara__segmento--gualda {
+  background: var(--gualda);
+}
+.cara__segmento--verde {
+  background: var(--verde);
+}
+.cara__segmento--almagre.cara__segmento--claro {
+  background: var(--almagre-claro);
+}
+.cara__segmento--gualda.cara__segmento--claro {
+  background: var(--gualda-claro);
+}
+.cara__segmento--verde.cara__segmento--claro {
+  background: var(--verde-claro);
+}
+
+.cara__zonas {
+  display: flex;
+  margin-top: 5px;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+}
+
+.cara__zonas > span {
+  flex: 7 1 0;
+}
+
+.cara__zona--pillan {
+  color: var(--almagre);
+}
+
+.cara__zona--creen {
+  color: var(--gualda-oscuro);
+}
+
+.cara__zonas > .cara__zona--temen {
+  flex: 6 1 0;
+  color: var(--verde);
+  text-align: right;
+}
+
+/* ——— Bocadillo ——— */
+
+.bocadillo {
+  position: absolute;
+  width: 236px;
+  padding: 12px 16px;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: 14px;
+  box-shadow: var(--sombra-dura-grande);
+}
+
+.bocadillo__accion {
+  font-family: var(--letra-grito);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--almagre);
+}
+
+.bocadillo__frase {
+  margin-top: 4px;
+  font-style: italic;
+  font-size: 19px;
+}
+
+.bocadillo__cola {
+  position: absolute;
+  left: -21px;
+  top: 41px;
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 20px solid var(--tinta);
+}
+
+/* ——— Etiqueta de nombre ——— */
+
+.etiqueta-nombre {
+  position: absolute;
+  padding: 1px 10px;
+  font-family: var(--letra-grito);
+  font-size: 18px;
+  color: var(--tinta);
+  background: var(--gualda);
+  border: var(--borde);
+  border-radius: 6px;
+  box-shadow: var(--sombra-dura);
+  transform: rotate(-4deg);
+}
+
+/* ——— Cartas (512 × 925) ——— */
+
+.carta {
+  display: block;
+}
+
+.carta--mano {
+  width: 106px;
+  height: 192px;
+  filter: drop-shadow(3px 4px 0 rgba(35, 25, 21, 0.45));
+}
+
+.carta--rival {
+  position: absolute;
+  width: 46px;
+  height: 83px;
+}
+
+.carta--pequena {
+  width: 58px;
+  height: 105px;
+  filter: drop-shadow(2px 3px 0 rgba(35, 25, 21, 0.45));
+}
+
+/* ——— Retrato del rival ——— */
+
+.retrato {
+  position: absolute;
+  left: 470px;
+  top: -6px;
+  width: 340px;
+  height: 374px;
+}
+
+.retrato__marcador {
+  position: absolute;
+  inset: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(140, 86, 41, 0.18);
+  border: 3px dashed var(--almagre);
+  border-radius: 10px;
+  color: var(--almagre);
+  font: 700 13px system-ui, sans-serif;
+}
+
+/* Sin arte, el tic es una sacudida con un destello. */
+.retrato__marcador--tic {
+  animation: sacudida 0.7s ease-in-out;
+}
+
+.retrato__marcador--tic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gualda);
+  animation: destello 0.9s ease-out forwards;
+}
+
+.retrato__acotacion {
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  top: 172px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  animation: acotacion 2.2s ease-in-out forwards;
+  pointer-events: none;
+}
+
+.retrato__acotacion em {
+  font-size: 28px;
+  color: var(--papel);
+  text-shadow: 2px 2px 0 var(--tinta);
+}
+
+.retrato__depuracion {
+  padding: 1px 6px;
+  font: 12px ui-monospace, Consolas, monospace;
+  color: var(--gualda);
+  background: rgba(35, 25, 21, 0.85);
+  border-radius: 4px;
+}
+
+@keyframes sacudida {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  15% {
+    transform: translate(-6px, 2px) rotate(-1deg);
+  }
+  30% {
+    transform: translate(5px, -2px) rotate(1deg);
+  }
+  45% {
+    transform: translate(-4px, 1px) rotate(-0.5deg);
+  }
+  60% {
+    transform: translate(3px, -1px);
+  }
+  80% {
+    transform: translate(-1px, 0);
+  }
+}
+
+@keyframes destello {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes acotacion {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  12%,
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retrato__marcador--tic {
+    animation: none;
+  }
+  .boton-apuesta {
+    transition: none;
+  }
+}

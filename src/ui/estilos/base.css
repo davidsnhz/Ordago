@@ -1,0 +1,30 @@
+html,
+body,
+#raiz {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bandas);
+  color: var(--tinta);
+  font-family: var(--letra-texto);
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--anil);
+  outline-offset: 2px;
+}

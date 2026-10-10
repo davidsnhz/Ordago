@@ -1,0 +1,418 @@
+/* La mesa (referencias/pantallas/03_mesa.html), en píxeles del escenario de 1280 × 590. */
+
+.mesa {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--taberna);
+}
+
+.mesa__pared {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1280px;
+  height: 240px;
+  background-image: repeating-linear-gradient(90deg, rgba(140, 86, 41, 0.16) 0 2px, transparent 2px 64px);
+}
+
+.mesa__luz {
+  position: absolute;
+  left: 500px;
+  top: 10px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 165, 39, 0.35) 0%, rgba(226, 165, 39, 0) 68%);
+}
+
+.mesa__madera {
+  position: absolute;
+  left: -80px;
+  top: 214px;
+  width: 1440px;
+  height: 560px;
+  border-radius: 50% / 34%;
+  background: var(--nogal);
+  border: var(--borde);
+}
+
+.mesa__tapete {
+  position: absolute;
+  left: -64px;
+  top: 228px;
+  width: 1408px;
+  height: 540px;
+  border-radius: 50% / 34%;
+  background-color: var(--verde);
+  background-image: var(--punteado-tapete);
+  background-size: 5px 5px;
+  border: var(--borde);
+}
+
+.mesa__nombre {
+  left: 470px;
+  top: 98px;
+  display: flex;
+  align-items: center;
+}
+
+.mesa__enfado {
+  margin-left: 8px;
+  padding: 0 6px;
+  font-size: 13px;
+  color: var(--papel);
+  background: var(--almagre);
+  border-radius: 4px;
+}
+
+.mesa__bocadillo {
+  left: 762px;
+  top: 52px;
+}
+
+.mesa__cartas-rival {
+  position: absolute;
+  left: 546px;
+  top: 282px;
+  width: 188px;
+  height: 90px;
+}
+
+/* ——— La mano del jugador ——— */
+
+.mesa__mano {
+  position: absolute;
+  left: 418px;
+  top: 384px;
+  width: 450px;
+  height: 200px;
+}
+
+.mesa__carta {
+  position: absolute;
+  transition: transform 0.15s ease-out;
+}
+
+.mesa__carta-boton {
+  position: absolute;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease-out;
+}
+
+.mesa__carta-boton--elegida .carta--mano {
+  filter: drop-shadow(3px 4px 0 rgba(35, 25, 21, 0.45)) drop-shadow(0 0 0 var(--almagre));
+  outline: 3px solid var(--almagre);
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+.mesa__dicho {
+  position: absolute;
+  left: 276px;
+  top: 446px;
+  width: 126px;
+  padding: 4px 8px 6px;
+  font-family: var(--letra-grito);
+  font-size: 16px;
+  line-height: 1.1;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: var(--radio-panel);
+  box-shadow: var(--sombra-dura);
+  transform: rotate(-2deg);
+}
+
+.mesa__dicho .rotulo {
+  display: block;
+  font-size: 13px;
+}
+
+/* ——— Columna izquierda ——— */
+
+.mesa__lances {
+  position: absolute;
+  left: 24px;
+  top: 20px;
+}
+
+.mesa__marcador {
+  position: absolute;
+  left: 24px;
+  top: 82px;
+}
+
+.mesa__cara {
+  position: absolute;
+  left: 24px;
+  bottom: 98px;
+}
+
+.mesa__cronica {
+  position: absolute;
+  left: 884px;
+  top: 412px;
+  width: 140px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--papel);
+  text-shadow: 1px 1px 0 var(--tinta);
+}
+
+.mesa__cronica li {
+  margin-bottom: 4px;
+  opacity: 0.55;
+}
+
+.mesa__cronica li:last-child,
+.mesa__cronica li:nth-last-child(2) {
+  opacity: 1;
+}
+
+/* ——— Arriba a la derecha ——— */
+
+.mesa__arriba-derecha {
+  position: absolute;
+  right: 24px;
+  top: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.mesa__titulo-duelo {
+  padding: 4px 12px;
+  font-family: var(--letra-rotulo);
+  font-size: 17px;
+  color: var(--gualda);
+  background: var(--tinta);
+  border: 2px solid var(--gualda);
+  border-radius: 6px;
+}
+
+.mesa__boton-pequeno {
+  padding: 4px 12px;
+  font-family: var(--letra-rotulo);
+  font-size: 17px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mesa__boton-pequeno[aria-pressed='true'] {
+  color: var(--gualda);
+  background: var(--tinta);
+  border-color: var(--gualda);
+}
+
+/* ——— Columna derecha: lo que está en juego y los botones ——— */
+
+.mesa__derecha {
+  position: absolute;
+  right: 24px;
+  top: 150px;
+  bottom: 14px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mesa__derecha .ordago {
+  margin-top: auto;
+}
+
+.mesa__botones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.en-juego {
+  padding: 6px 12px;
+  text-align: center;
+}
+
+.en-juego__rotulo {
+  font-size: 15px;
+}
+
+.en-juego__principal {
+  font-family: var(--letra-grito);
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.en-juego__principal--largo {
+  font-size: 19px;
+}
+
+.en-juego__piensa {
+  font-style: italic;
+  font-size: 15px;
+  color: var(--nogal);
+}
+
+.cantidades {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.cantidad {
+  width: 48px;
+  height: 44px;
+  font-family: var(--letra-grito);
+  font-size: 18px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cantidad--elegida {
+  color: var(--gualda);
+  background: var(--tinta);
+}
+
+/* ——— Recuento, órdago y fin del duelo ——— */
+
+.mesa__velo {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 14, 11, 0.55);
+}
+
+.final {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 560px;
+  padding: 16px 22px 20px;
+}
+
+.final--ordago {
+  color: var(--papel);
+  background: var(--almagre);
+}
+
+.final__titulo {
+  font-family: var(--letra-grito);
+  font-size: 28px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.final--ordago .final__titulo {
+  font-size: 40px;
+  text-shadow: 4px 4px 0 var(--tinta);
+}
+
+.final__manos {
+  display: flex;
+  gap: 28px;
+}
+
+.final__mano {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.final__cartas {
+  display: flex;
+  gap: 6px;
+}
+
+.final__cobros {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 17px;
+}
+
+.final__cobros li {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+  border-bottom: 1px dotted var(--tachado);
+}
+
+.final__cobros .final__cobro--sin-cobrar {
+  color: var(--tachado);
+  text-decoration: line-through;
+}
+
+.final__marcador {
+  font-family: var(--letra-rotulo);
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.final__resultado {
+  font-family: var(--letra-grito);
+  font-size: 26px;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--almagre);
+}
+
+.final--ordago .final__resultado {
+  color: var(--gualda);
+  text-shadow: 2px 2px 0 var(--tinta);
+}
+
+.final__motivo {
+  display: block;
+  font-family: var(--letra-texto);
+  font-style: italic;
+  font-size: 17px;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.final__boton {
+  width: 260px;
+}
+
+/* ——— Depuración ——— */
+
+.depuracion {
+  position: absolute;
+  left: 270px;
+  top: 70px;
+  z-index: 10;
+  width: 190px;
+  padding: 8px;
+  font: 12px/1.35 ui-monospace, Consolas, monospace;
+  color: var(--papel);
+  background: rgba(35, 25, 21, 0.9);
+  border: 1px solid var(--gualda);
+  border-radius: 6px;
+}
+
+.depuracion > div + div {
+  margin-top: 4px;
+}
+
+.depuracion__titulo {
+  font-weight: 700;
+  color: var(--gualda);
+}

@@ -1,0 +1,41 @@
+/*
+ * Tokens de la guía de estilo (docs/direccion-arte.md y referencias/pantallas/00_guia_estilo).
+ * Medidas en píxeles del escenario de 1280 × 590.
+ */
+:root {
+  /* Tintas */
+  --almagre: #b02a23;
+  --gualda: #e2a527;
+  --anil: #2c54a0;
+  --verde: #3e7a36;
+  --nogal: #8c5629;
+  --tinta: #231915;
+  --papel: #f2e8d2;
+  --papel-fondo: #eadfc4;
+  --taberna: #2a1f18;
+  --tachado: #8c7f6a;
+
+  /* Secundarios que ya aparecen en las referencias */
+  --gualda-oscuro: #a3640a;
+  --gualda-claro: #f1e2b8;
+  --verde-claro: #d6e3c6;
+  /* Almagre claro: misma mezcla con papel que el gualda claro (decisión, no está en la guía). */
+  --almagre-claro: #e8ccb8;
+  --bandas: #140e0b;
+
+  /* Letra */
+  --letra-grito: 'Alfa Slab One', 'Rockwell', serif;
+  --letra-rotulo: 'IM Fell English SC', 'Georgia', serif;
+  --letra-texto: 'IM Fell English', 'Georgia', serif;
+
+  /* Piezas */
+  --borde: 3px solid var(--tinta);
+  --sombra-dura: 3px 3px 0 var(--tinta);
+  --sombra-dura-grande: 4px 4px 0 var(--tinta);
+  --radio-panel: 8px;
+  --radio-boton: 10px;
+
+  /* Texturas: punteado de 1 px cada 6 px */
+  --punteado-papel: radial-gradient(rgba(35, 25, 21, 0.07) 1px, transparent 1.3px);
+  --punteado-tapete: radial-gradient(rgba(35, 25, 21, 0.16) 1px, transparent 1.4px);
+}
