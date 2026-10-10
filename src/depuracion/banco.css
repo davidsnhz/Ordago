@@ -1,0 +1,78 @@
+/* Estilo mínimo del banco de pruebas: no es la interfaz del juego. */
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: #f2e8d2;
+  color: #231915;
+  font: 15px/1.45 system-ui, sans-serif;
+}
+
+.banco {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.banco h1 {
+  font-size: 22px;
+  margin: 8px 0;
+}
+
+.banco h2 {
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+
+.banco__mandos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.banco__mandos input {
+  width: 8em;
+  min-height: 32px;
+  font: inherit;
+}
+
+.banco__mandos button {
+  min-height: 44px;
+  padding: 0 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.banco__resumen {
+  padding: 8px 12px;
+  border: 2px solid #231915;
+  background: #fff8e8;
+}
+
+.banco__error {
+  color: #b02a23;
+  white-space: pre-wrap;
+}
+
+.banco__mano {
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-left: 3px solid #8c5629;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.banco__mano ol {
+  margin: 0;
+  padding-left: 24px;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 13px;
+}
+
+.banco__lance {
+  font-weight: bold;
+  margin-top: 4px;
+}
