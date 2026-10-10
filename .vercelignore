@@ -1,0 +1,11 @@
+# Vercel construye la web desde el código: no hace falta subir esto.
+node_modules
+dist
+coverage
+.vite
+# Originales del arte (la web usa las copias de public/arte) y capturas de referencia.
+assets
+referencias
+# Credenciales locales de Vercel
+.env*.local
+.vercel
