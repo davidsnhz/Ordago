@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { IA } from '../../datos/ia';
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
+import { ORDEN_RIVALES, type IdRival } from '../../datos/rivales';
 import { useDuelo } from '../../estado/useDuelo';
-import type { EstadoMesa } from '../../estado/mesa';
+import { textosDe, type EstadoMesa } from '../../estado/mesa';
 import { idCarta, type Carta } from '../../nucleo/carta';
 import type { Lado } from '../../nucleo/comun';
 import { accionesValidas, type AccionDuelo, type EstadoDuelo, type OpcionDuelo } from '../../nucleo/duelo';
 import { calcularFuerza } from '../../nucleo/ia/fuerza';
 import { LANCES, type Lance } from '../../nucleo/lances';
-import { cartaCorta, ES } from '../../textos/es';
+import { cartaCorta, ES, type TextosRival } from '../../textos/es';
 import { BotonOrdago } from '../componentes/BotonOrdago';
 import { Escenario } from '../componentes/Escenario';
 import {
@@ -26,7 +26,6 @@ import { Retrato } from '../componentes/Retrato';
 import './mesa.css';
 
 const M = ES.mesa;
-const RIVAL = ES.rivales.ruperto;
 const CANTIDADES = [2, 3, 5, 10];
 /** Abanico de la mano (referencias/pantallas/03_mesa): posición y giro de cada carta. */
 const ABANICO = [
@@ -41,12 +40,17 @@ const ABANICO_RIVAL = [
   { left: 92, top: 0, giro: 3 },
   { left: 138, top: 4, giro: 8 },
 ];
+/** Lo que hay que mantener pulsado el retrato para empezar a mirar. */
+const PULSACION_LARGA = 250;
 
-/** La mesa: un duelo contra Ruperto. */
+/** La mesa: un duelo contra uno de los cinco rivales. */
 export function Mesa() {
-  const { estado, jugar, nuevoDuelo, rivalPiensa } = useDuelo();
+  const { estado, jugar, nuevoDuelo, mirar, mirando, setMirando, cambiarCara, rivalPiensa } = useDuelo();
   const [depuracion, alternarDepuracion] = useDepuracion();
-  const duelo = estado.partida.duelo;
+  const [eligiendoRival, setEligiendoRival] = useState(false);
+  const { partida } = estado;
+  const duelo = partida.duelo;
+  const textos = textosDe(partida);
   const { lado: quienActua, opciones } = accionesValidas(duelo);
   const puedo = (tipo: OpcionDuelo['tipo']) => quienActua === 'jugador' && opciones.some((o) => o.tipo === tipo);
 
@@ -59,54 +63,73 @@ export function Mesa() {
     const id = idCarta(carta);
     setSeleccion((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
   };
-  const accion = (a: AccionDuelo) => jugar(a);
+  const elegirRival = (rival: IdRival) => {
+    setEligiendoRival(false);
+    nuevoDuelo(rival);
+  };
 
   return (
     <Escenario avisoGirar={M.girar}>
-      <div className="mesa">
+      <div className={clases('mesa', mirando && 'mesa--mirando')}>
         <div className="mesa__pared" />
         <div className="mesa__luz" />
         <Retrato
-          id="ruperto"
-          nombre={RIVAL.titulo}
+          id={partida.rivalId}
+          nombre={textos.titulo}
           tic={estado.tic}
-          acotacion={estado.tic ? (RIVAL.tics[estado.tic.id] ?? null) : null}
-          depuracion={depuracion && estado.tic ? M.depuracionTic(estado.tic.verdadero, RIVAL.significadoTics[estado.tic.id] ?? '') : null}
+          acotacion={estado.tic ? (textos.tics[estado.tic.id] ?? null) : null}
+          depuracion={depuracion && estado.tic ? M.depuracionTic(estado.tic.verdadero, textos.significadoTics[estado.tic.id] ?? '') : null}
           textoPendiente={M.artePendiente}
         />
+        {mirando && <div className="mesa__penumbra" />}
         <div className="mesa__madera" />
         <div className="mesa__tapete" />
+        <ZonaMirar
+          nombre={textos.nombre}
+          onEmpieza={() => setMirando(true)}
+          onTermina={(segundos) => {
+            setMirando(false);
+            mirar(segundos);
+          }}
+        />
 
         <EtiquetaNombre className="mesa__nombre">
-          {RIVAL.etiqueta}
-          {estado.partida.memoria.manosEnfadado > 0 && <span className="mesa__enfado">{M.enfadado}</span>}
+          {textos.etiqueta}
+          {partida.memoria.manosEnfadado > 0 && <span className="mesa__enfado">{M.enfadado}</span>}
         </EtiquetaNombre>
-        <Bocadillo className="mesa__bocadillo" accion={rivalPiensa ? '…' : estado.bocadillo.accion} frase={rivalPiensa ? undefined : estado.bocadillo.frase} />
+        <Bocadillo
+          className="mesa__bocadillo"
+          accion={rivalPiensa ? '…' : estado.bocadillo.accion}
+          frase={rivalPiensa ? undefined : estado.bocadillo.frase}
+        />
 
-        <div className="mesa__cartas-rival" aria-label={M.susCartas(RIVAL.nombre)}>
+        <div className="mesa__cartas-rival" aria-label={M.susCartas(textos.nombre)}>
           {ABANICO_RIVAL.map((p, i) => (
             <CartaReverso key={i} className="carta--rival" style={{ left: p.left, top: p.top, transform: `rotate(${p.giro}deg)` }} />
           ))}
         </div>
 
-        <ManoDelJugador
-          cartas={duelo.cartas.jugador}
-          seleccionables={descartando}
-          seleccion={seleccion}
-          onAlternar={alternarCarta}
-        />
+        <ManoDelJugador cartas={duelo.cartas.jugador} seleccionables={descartando} seleccion={seleccion} onAlternar={alternarCarta} />
         {estado.delJugador && (
           <div className="mesa__dicho" aria-live="polite">
             <span className="rotulo">{M.tu}</span>
             {estado.delJugador}
           </div>
         )}
+        {estado.seTeNota && (
+          <div key={estado.seTeNota} className="mesa__se-te-nota" role="status">
+            {M.seTeNota}
+          </div>
+        )}
 
-        <ColumnaIzquierda duelo={duelo} />
+        <ColumnaIzquierda estado={estado} textos={textos} />
         <Cronica lineas={estado.cronica} />
 
         <div className="mesa__arriba-derecha">
-          <div className="mesa__titulo-duelo">{M.tituloDuelo}</div>
+          <div className="mesa__titulo-duelo">{M.tituloDuelo(textos.comarca)}</div>
+          <button type="button" className="mesa__boton-pequeno" onClick={() => setEligiendoRival(true)}>
+            {M.rival}
+          </button>
           <button type="button" className="mesa__boton-pequeno" aria-pressed={depuracion} onClick={alternarDepuracion}>
             {M.depurar}
           </button>
@@ -114,19 +137,69 @@ export function Mesa() {
 
         <ColumnaDerecha
           duelo={duelo}
+          textos={textos}
           rivalPiensa={rivalPiensa}
           puedo={puedo}
           cantidad={cantidad}
           onCantidad={setCantidad}
           seleccion={seleccion}
-          onAccion={accion}
+          onAccion={jugar}
           opciones={opciones}
         />
 
-        {depuracion && <PanelDepuracion estado={estado} />}
-        <PanelFinal duelo={duelo} onSiguiente={() => accion({ tipo: 'siguienteMano' })} onOtroDuelo={nuevoDuelo} />
+        {depuracion && <PanelDepuracion estado={estado} textos={textos} onCara={cambiarCara} />}
+        <PanelFinal
+          duelo={duelo}
+          textos={textos}
+          rivalActual={partida.rivalId}
+          onSiguiente={() => jugar({ tipo: 'siguienteMano' })}
+          onOtroDuelo={elegirRival}
+        />
+        {eligiendoRival && (
+          <SelectorDeRival actual={partida.rivalId} onElegir={elegirRival} onCancelar={() => setEligiendoRival(false)} />
+        )}
       </div>
     </Escenario>
+  );
+}
+
+/**
+ * Mirar al rival: manteniendo pulsado el retrato se le ve de cerca y sus tics duran más.
+ * Mientras miras no puedes jugar, y algún rival se da cuenta si le miras demasiado.
+ */
+function ZonaMirar({ nombre, onEmpieza, onTermina }: { nombre: string; onEmpieza: () => void; onTermina: (segundos: number) => void }) {
+  const inicio = useRef<number | null>(null);
+  const reloj = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mirando = useRef(false);
+
+  const pulsar = (e: PointerEvent<HTMLButtonElement>) => {
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Algún navegador no deja capturar el puntero: la mirada funciona igual.
+    }
+    inicio.current = performance.now();
+    reloj.current = setTimeout(() => {
+      mirando.current = true;
+      onEmpieza();
+    }, PULSACION_LARGA);
+  };
+  const soltar = () => {
+    if (reloj.current) clearTimeout(reloj.current);
+    if (mirando.current && inicio.current !== null) onTermina((performance.now() - inicio.current) / 1000);
+    mirando.current = false;
+    inicio.current = null;
+  };
+  return (
+    <button
+      type="button"
+      className="mesa__zona-mirar"
+      aria-label={`Mirar a ${nombre}: mantén pulsado`}
+      onPointerDown={pulsar}
+      onPointerUp={soltar}
+      onPointerCancel={soltar}
+      onContextMenu={(e) => e.preventDefault()}
+    />
   );
 }
 
@@ -166,9 +239,11 @@ function ManoDelJugador({
   );
 }
 
-function ColumnaIzquierda({ duelo }: { duelo: EstadoDuelo }) {
+function ColumnaIzquierda({ estado, textos }: { estado: EstadoMesa; textos: TextosRival }) {
+  const { partida, avisoCara } = estado;
+  const duelo = partida.duelo;
   const jugados = new Set(duelo.lances.map((l) => l.lance));
-  const terminada = duelo.fase === 'finMano' || duelo.fase === 'finDuelo';
+  const terminada = duelo.fase === 'finMano' || duelo.fase === 'finDuelo' || duelo.fase === 'trato';
   const hayPunto = jugados.has('punto') || duelo.lanceActual === 'punto';
   const fila = (['grande', 'chica', 'pares', hayPunto ? 'punto' : 'juego'] as Lance[]).map((lance) => ({
     etiqueta: ES.lances[lance],
@@ -188,13 +263,20 @@ function ColumnaIzquierda({ duelo }: { duelo: EstadoDuelo }) {
           titulo={M.marcador}
           insignia={{ texto: esManoJugador ? M.eresMano : M.esMano, destacada: esManoJugador }}
           filas={[
-            { nombre: RIVAL.nombre, piedras: duelo.marcador.rival },
+            { nombre: textos.nombre, piedras: duelo.marcador.rival },
             { nombre: M.tu, piedras: duelo.marcador.jugador },
           ]}
         />
       </div>
       <div className="mesa__cara">
-        <BarraCara valor={IA.caraProvisional} titulo={M.tuCara} zonas={M.zonasCara} nota={M.caraProvisional} />
+        <BarraCara valor={partida.caraJugador} titulo={M.tuCara} zonas={M.zonasCara} />
+        {partida.expuesto && <span className="mesa__expuesto">{M.expuesto}</span>}
+        {avisoCara && (
+          <div key={avisoCara.clave} className={clases('mesa__aviso-cara', avisoCara.delta < 0 && 'mesa__aviso-cara--baja')} role="status">
+            <strong>{M.cambioCara(avisoCara.delta)}</strong>
+            {avisoCara.motivos.join(' · ')}
+          </div>
+        )}
       </div>
     </>
   );
@@ -213,6 +295,7 @@ function Cronica({ lineas }: { lineas: string[] }) {
 
 function ColumnaDerecha({
   duelo,
+  textos,
   rivalPiensa,
   puedo,
   cantidad,
@@ -222,6 +305,7 @@ function ColumnaDerecha({
   opciones,
 }: {
   duelo: EstadoDuelo;
+  textos: TextosRival;
   rivalPiensa: boolean;
   puedo: (tipo: OpcionDuelo['tipo']) => boolean;
   cantidad: number;
@@ -241,13 +325,16 @@ function ColumnaDerecha({
   let principal = '';
   if (duelo.fase === 'mus') {
     principal = M.musOCorto;
-    rotulo = duelo.turno === 'jugador' && duelo.quienEsMano === 'rival' ? M.pideMus(RIVAL.nombre) : M.mano(duelo.numeroMano);
+    rotulo = duelo.turno === 'jugador' && duelo.quienEsMano === 'rival' ? M.pideMus(textos.nombre) : M.mano(duelo.numeroMano);
   } else if (duelo.fase === 'descarte') {
     rotulo = M.mano(duelo.numeroMano);
     principal = M.tocaDescartar;
   } else if (duelo.fase === 'envite' && duelo.lanceActual && envite) {
     rotulo = M.enJuego(ES.alLance[duelo.lanceActual]);
     principal = envite.ordago ? M.dueloEntero : envite.apuesta > 0 ? M.piedras(envite.apuesta) : M.sinEnvite;
+  } else if (duelo.fase === 'trato') {
+    rotulo = M.trato;
+    principal = M.tratoExplica(textos.nombre);
   } else {
     rotulo = M.mano(duelo.numeroMano);
   }
@@ -255,7 +342,14 @@ function ColumnaDerecha({
   const elegir = (
     <div className="cantidades" role="radiogroup" aria-label={M.cantidad}>
       {CANTIDADES.map((n) => (
-        <button key={n} type="button" role="radio" aria-checked={cantidad === n} className={clases('cantidad', cantidad === n && 'cantidad--elegida')} onClick={() => onCantidad(n)}>
+        <button
+          key={n}
+          type="button"
+          role="radio"
+          aria-checked={cantidad === n}
+          className={clases('cantidad', cantidad === n && 'cantidad--elegida')}
+          onClick={() => onCantidad(n)}
+        >
           {n}
         </button>
       ))}
@@ -266,8 +360,18 @@ function ColumnaDerecha({
     <div className="mesa__derecha">
       <Panel className="en-juego">
         <div className="rotulo en-juego__rotulo">{rotulo}</div>
-        {principal && <div className={clases('en-juego__principal', principal.length > 11 && 'en-juego__principal--largo')}>{principal}</div>}
-        {rivalPiensa && <div className="en-juego__piensa">{M.piensa(RIVAL.nombre)}</div>}
+        {principal && (
+          <div
+            className={clases(
+              'en-juego__principal',
+              principal.length > 11 && 'en-juego__principal--largo',
+              principal.length > 40 && 'en-juego__principal--explicacion',
+            )}
+          >
+            {principal}
+          </div>
+        )}
+        {rivalPiensa && <div className="en-juego__piensa">{M.piensa(textos.nombre)}</div>}
       </Panel>
 
       <div className="mesa__botones">
@@ -291,6 +395,16 @@ function ColumnaDerecha({
             {M.botones.descartar(seleccion.length)}
           </BotonApuesta>
         )}
+        {puedo('trato') && (
+          <>
+            <BotonApuesta variante="gualda" onClick={() => onAccion({ tipo: 'trato', lado: yo, acepta: true })}>
+              {M.botones.aceptarTrato}
+            </BotonApuesta>
+            <BotonApuesta variante="rendirse" onClick={() => onAccion({ tipo: 'trato', lado: yo, acepta: false })}>
+              {M.botones.rechazarTrato}
+            </BotonApuesta>
+          </>
+        )}
         {puedo('quiero') && (
           <>
             <BotonApuesta onClick={() => onAccion({ tipo: 'quiero', lado: yo })}>{M.botones.quiero}</BotonApuesta>
@@ -310,7 +424,10 @@ function ColumnaDerecha({
         {puedo('paso') && <BotonApuesta onClick={() => onAccion({ tipo: 'paso', lado: yo })}>{M.botones.paso}</BotonApuesta>}
         {puedo('envido') && (
           <>
-            <BotonApuesta variante="gualda" onClick={() => onAccion({ tipo: 'envido', lado: yo, piedras: Math.max(cantidad, minimo('envido')) })}>
+            <BotonApuesta
+              variante="gualda"
+              onClick={() => onAccion({ tipo: 'envido', lado: yo, piedras: Math.max(cantidad, minimo('envido')) })}
+            >
               {M.botones.envido(Math.max(cantidad, minimo('envido')))}
             </BotonApuesta>
             {elegir}
@@ -329,10 +446,22 @@ function ColumnaDerecha({
   );
 }
 
-/** Al acabar la mano: el recuento. Al acabar el duelo: el órdago o el resultado. */
-function PanelFinal({ duelo, onSiguiente, onOtroDuelo }: { duelo: EstadoDuelo; onSiguiente: () => void; onOtroDuelo: () => void }) {
+/** Al acabar la mano: el recuento. Al acabar el duelo: el órdago o el resultado, y el siguiente rival. */
+function PanelFinal({
+  duelo,
+  textos,
+  rivalActual,
+  onSiguiente,
+  onOtroDuelo,
+}: {
+  duelo: EstadoDuelo;
+  textos: TextosRival;
+  rivalActual: IdRival;
+  onSiguiente: () => void;
+  onOtroDuelo: (rival: IdRival) => void;
+}) {
   if (duelo.fase !== 'finMano' && duelo.fase !== 'finDuelo') return null;
-  const nombre = (lado: Lado) => (lado === 'jugador' ? M.tu : RIVAL.nombre);
+  const nombre = (lado: Lado) => (lado === 'jugador' ? M.tu : textos.nombre);
   const ultimo = duelo.lances[duelo.lances.length - 1];
   const resultado = ultimo?.envite?.resultado;
   const porOrdago = duelo.fase === 'finDuelo' && duelo.motivoFin === 'ordago' && ultimo && resultado?.tipo === 'ordagoQuerido';
@@ -344,7 +473,7 @@ function PanelFinal({ duelo, onSiguiente, onOtroDuelo }: { duelo: EstadoDuelo; o
         {porOrdago ? (
           <>
             <div className="final__titulo">{M.ordagoA(ES.alLance[ultimo.lance])}</div>
-            <div className="rotulo">{M.tiraOrdago(resultado.lanzador === 'jugador' ? null : RIVAL.nombre)}</div>
+            <div className="rotulo">{M.tiraOrdago(resultado.lanzador === 'jugador' ? null : textos.nombre)}</div>
             <ManosVistas duelo={duelo} nombre={nombre} />
           </>
         ) : recuento ? (
@@ -369,16 +498,60 @@ function PanelFinal({ duelo, onSiguiente, onOtroDuelo }: { duelo: EstadoDuelo; o
         ) : null}
 
         <div className="final__marcador">
-          {RIVAL.nombre} {duelo.marcador.rival} · {M.tu} {duelo.marcador.jugador}
+          {textos.nombre} {duelo.marcador.rival} · {M.tu} {duelo.marcador.jugador}
         </div>
         {duelo.fase === 'finDuelo' && duelo.ganador && (
           <div className="final__resultado">
-            {duelo.ganador === 'jugador' ? M.hasGanado : M.teGana(RIVAL.nombre)}
+            {duelo.ganador === 'jugador' ? M.hasGanado : M.teGana(textos.nombre)}
             <span className="final__motivo">{duelo.motivoFin === 'ordago' ? M.porOrdago : M.aPiedras}</span>
           </div>
         )}
-        <BotonApuesta variante="gualda" className="final__boton" onClick={duelo.fase === 'finMano' ? onSiguiente : onOtroDuelo} autoFocus>
-          {duelo.fase === 'finMano' ? M.botones.siguienteMano : M.botones.otroDuelo}
+        {duelo.fase === 'finMano' ? (
+          <BotonApuesta variante="gualda" className="final__boton" onClick={onSiguiente} autoFocus>
+            {M.botones.siguienteMano}
+          </BotonApuesta>
+        ) : (
+          <>
+            <BotonApuesta variante="gualda" className="final__boton" onClick={() => onOtroDuelo(rivalActual)} autoFocus>
+              {M.botones.otroDuelo}
+            </BotonApuesta>
+            <ListaDeRivales actual={rivalActual} titulo={M.contra} onElegir={onOtroDuelo} />
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ListaDeRivales({ actual, titulo, onElegir }: { actual: IdRival; titulo: string; onElegir: (rival: IdRival) => void }) {
+  return (
+    <div className="rivales">
+      <div className="rotulo">{titulo}</div>
+      <div className="rivales__lista">
+        {ORDEN_RIVALES.map((id) => (
+          <button
+            key={id}
+            type="button"
+            className={clases('rivales__rival', id === actual && 'rivales__rival--actual')}
+            onClick={() => onElegir(id)}
+          >
+            {ES.rivales[id].nombre}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SelectorDeRival({ actual, onElegir, onCancelar }: { actual: IdRival; onElegir: (rival: IdRival) => void; onCancelar: () => void }) {
+  return (
+    <div className="mesa__velo mesa__velo--encima">
+      <div className="panel panel--sombra final" role="dialog" aria-modal="true" aria-label={M.elegirRival}>
+        <div className="final__titulo">{M.elegirRival}</div>
+        <div className="final__motivo">{M.elegirRivalNota}</div>
+        <ListaDeRivales actual={actual} titulo="" onElegir={onElegir} />
+        <BotonApuesta variante="rendirse" className="final__boton" onClick={onCancelar}>
+          {M.cancelar}
         </BotonApuesta>
       </div>
     </div>
@@ -402,8 +575,9 @@ function ManosVistas({ duelo, nombre }: { duelo: EstadoDuelo; nombre: (lado: Lad
   );
 }
 
-function PanelDepuracion({ estado }: { estado: EstadoMesa }) {
-  const duelo = estado.partida.duelo;
+function PanelDepuracion({ estado, textos, onCara }: { estado: EstadoMesa; textos: TextosRival; onCara: (delta: number) => void }) {
+  const { partida } = estado;
+  const duelo = partida.duelo;
   const cartas = duelo.cartas.rival;
   const clave = cartas.map(idCarta).join() + duelo.quienEsMano;
   const fuerza = useMemo(
@@ -420,21 +594,28 @@ function PanelDepuracion({ estado }: { estado: EstadoMesa }) {
         : decision?.tipo === 'descarte'
           ? 'descarta'
           : '—';
-  const m = estado.partida.memoria;
+  const m = partida.memoria;
   return (
     <div className="depuracion" aria-label={M.depuracionTitulo}>
       <div className="depuracion__titulo">{M.depuracionTitulo}</div>
       <div>
-        {M.depuracionCartas(RIVAL.nombre)}: {cartas.map(cartaCorta).join(' ')}
+        {M.depuracionCartas(textos.nombre)}: {cartas.map(cartaCorta).join(' ')}
       </div>
-      <div>
-        F ·{' '}
-        {LANCES.map((lance) => `${ES.lances[lance].slice(0, 3)} ${fuerza[lance].toFixed(2).replace('.', ',')}`).join(' · ')}
-      </div>
+      <div>F · {LANCES.map((lance) => `${ES.lances[lance].slice(0, 3)} ${fuerza[lance].toFixed(2).replace('.', ',')}`).join(' · ')}</div>
       <div>
         {M.depuracionUltima}: {motivo}
       </div>
       <div>{M.depuracionMemoria(m.envitesJugador, m.farolesDescubiertos, m.lancesPerdidosSeguidos, m.manosEnfadado)}</div>
+      <div>{M.depuracionReglas(m.penitencia, m.tratoUsado, m.cambioUsado, m.ofendidaHastaMano)}</div>
+      <div className="depuracion__cara">
+        {M.depuracionCara(partida.caraJugador, partida.expuesto)}
+        <button type="button" onClick={() => onCara(-10)}>
+          −10
+        </button>
+        <button type="button" onClick={() => onCara(10)}>
+          +10
+        </button>
+      </div>
     </div>
   );
 }

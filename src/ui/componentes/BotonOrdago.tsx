@@ -32,7 +32,11 @@ export function BotonOrdago({
   const alPulsar = (e: PointerEvent<HTMLButtonElement>) => {
     if (!activo) return;
     inicio.current = e.clientY;
-    e.currentTarget.setPointerCapture(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Algún navegador no deja capturar el puntero: el deslizamiento funciona igual.
+    }
   };
   const alMover = (e: PointerEvent<HTMLButtonElement>) => {
     if (inicio.current === null) return;

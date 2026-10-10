@@ -31,5 +31,9 @@ export type EventoDuelo =
       cartas: PorLado<Carta[]>;
       marcador: PorLado<number>;
     }
+  | { tipo: 'trato'; ofrece: Lado }
+  | { tipo: 'tratoResuelto'; lado: Lado; acepta: boolean }
+  /** Cambio secreto de una carta (regla especial). Lleva las cartas: no se enseña al jugador. */
+  | { tipo: 'cartaCambiada'; lado: Lado; sale: Carta; entra: Carta }
   | { tipo: 'finMano'; numeroMano: number; marcador: PorLado<number> }
   | { tipo: 'finDuelo'; ganador: Lado; motivo: MotivoFin; marcador: PorLado<number> };

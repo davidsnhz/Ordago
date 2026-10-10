@@ -1,3 +1,4 @@
+import { IA } from '../../datos/ia';
 import type { Reglas } from '../../datos/reglas';
 import type { PerfilRival } from '../../datos/rivales';
 import type { EstadoEnvite } from '../apuestas';
@@ -25,6 +26,7 @@ export interface VistaRival {
   envite: EstadoEnvite | null;
   marcador: PorLado<number>;
   reglas: Reglas;
+  numeroMano: number;
 }
 
 export function vistaDe(estado: EstadoDuelo, lado: Lado): VistaRival {
@@ -38,13 +40,22 @@ export function vistaDe(estado: EstadoDuelo, lado: Lado): VistaRival {
     envite: estado.envite ? structuredClone(estado.envite) : null,
     marcador: { ...estado.marcador },
     reglas: estado.reglas,
+    numeroMano: estado.numeroMano,
   };
 }
 
 export type DecisionRival =
   | { tipo: 'mus'; accion: AccionDuelo; mus: DecisionMus }
   | { tipo: 'descarte'; accion: AccionDuelo }
-  | { tipo: 'envite'; accion: AccionDuelo; envite: DecisionEnvite; fuerza: Fuerza; lance: Lance };
+  | {
+      tipo: 'envite';
+      accion: AccionDuelo;
+      envite: DecisionEnvite;
+      fuerza: Fuerza;
+      lance: Lance;
+      /** Fuerza con la que ha decidido: la del lance, corregida si te ha visto el tic (Cara a 0). */
+      fuerzaUsada: number;
+    };
 
 export interface ContextoRival {
   perfil: PerfilRival;
@@ -53,6 +64,8 @@ export interface ContextoRival {
   caraJugador: number;
   /** Ganan los empates del rival (normalmente, si es mano). */
   ganaEmpates?: boolean;
+  /** Cara a 0: si al jugador se le ha notado (o no) el tic en este lance. */
+  senal?: 'seNota' | 'noSeNota' | null;
 }
 
 export function decidirRival(vista: VistaRival, ctx: ContextoRival, azar: Azar): DecisionRival {
@@ -71,20 +84,26 @@ export function decidirRival(vista: VistaRival, ctx: ContextoRival, azar: Azar):
       const lance = vista.lanceActual;
       if (!lance || !vista.envite) throw new Error('Fase de envites sin lance');
       const fuerza = calcularFuerza(vista.cartas, ctx.ganaEmpates ?? vista.quienEsMano === lado, modo);
+      const ajuste =
+        ctx.senal === 'seNota' ? IA.exposicion.ajusteSiSeNota : ctx.senal === 'noSeNota' ? IA.exposicion.ajusteSiNo : 0;
+      const fuerzaUsada = Math.max(0, Math.min(1, fuerza[lance] + ajuste));
       const envite = decidirEnvite(
         {
-          F: fuerza[lance],
+          F: fuerzaUsada,
           envite: vista.envite,
           limites: limitesEnvite(vista.reglas),
           diferencia: vista.marcador[lado] - vista.marcador[otroLado(lado)],
           caraJugador: ctx.caraJugador,
           tFarol: proporcionFaroles(ctx.memoria),
           aceptaTodo: ctx.memoria.manosEnfadado > 0,
+          numeroMano: vista.numeroMano,
+          ordagoDesdeMano: ctx.perfil.ordagoDesdeMano,
+          siempreEnvida: ctx.perfil.siempreEnvidaA?.includes(lance) ?? false,
         },
         ctx.perfil.parametros,
         azar,
       );
-      return { tipo: 'envite', accion: { ...envite.accion, lado } as AccionDuelo, envite, fuerza, lance };
+      return { tipo: 'envite', accion: { ...envite.accion, lado } as AccionDuelo, envite, fuerza, lance, fuerzaUsada };
     }
     default:
       throw new Error(`El rival no actúa en la fase ${vista.fase}`);

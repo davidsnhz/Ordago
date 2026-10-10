@@ -7,7 +7,17 @@ import { ES } from '../src/textos/es';
 const base = () => mesaInicial(nuevaPartida('mesa').partida);
 const con = (eventos: EventoDuelo[], extra: Partial<Novedades> = {}): ResultadoPartida => ({
   partida: base().partida,
-  novedades: { eventos, tics: [], decision: null, seEnfada: false, ...extra },
+  novedades: {
+    eventos,
+    tics: [],
+    decision: null,
+    seEnfada: false,
+    imponePenitencia: false,
+    cambiosCara: [],
+    seTeNota: false,
+    seOfende: false,
+    ...extra,
+  },
 });
 
 describe('lo que enseña la mesa', () => {

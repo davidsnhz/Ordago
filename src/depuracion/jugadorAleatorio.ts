@@ -15,6 +15,7 @@ const PESOS: Record<OpcionDuelo['tipo'], number> = {
   quiero: 1,
   noQuiero: 1,
   ordago: 0.04,
+  trato: 1,
   siguienteMano: 1,
 };
 
@@ -30,6 +31,8 @@ export function accionAleatoria(estado: EstadoDuelo, azar: Azar): AccionDuelo {
       const cuantas = azar.entero(opcion.minimo, opcion.maximo);
       return { tipo: 'descartar', lado, cartas: azar.barajar(estado.cartas[lado]).slice(0, cuantas) };
     }
+    case 'trato':
+      return { tipo: 'trato', lado, acepta: azar.probabilidad(0.5) };
     case 'envido':
     case 'mas': {
       const piedras = opcion.minimo + (azar.probabilidad(0.7) ? 0 : azar.entero(1, 8));

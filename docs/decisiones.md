@@ -74,14 +74,72 @@ Aquí queda lo que el documento de diseño no dejaba claro y cómo se ha resuelt
 
 10. **Tamaño de los botones en el móvil.** Los 44 px mínimos se cumplen en píxeles del escenario. En un móvil pequeño en horizontal todo se escala a la mitad, y los botones quedan en unos 30 px reales. Si en las pruebas con el móvil cuesta pulsar, se agrandan.
 
+## Fase 3 · IA completa y la Cara (10 de octubre de 2026)
+
+1. **Qué mueve la Cara.** El juego decide solo qué fue un farol, con la misma regla que la memoria del rival (punto 4 de la fase 2): un envite, subida u órdago tuyo en un lance que tus cartas tenían menos de un 35 % de ganar.
+   - Farol al que el rival dice «no quiero»: **+8**. *Ejemplo: envidas a la Grande con A 4 5 6 y Ruperto no quiere.*
+   - Envite con buena mano que el rival quiere y pierde: **+4**. «Buena mano» es un 65 % o más de ganar ese lance; el documento no lo fijaba.
+   - Farol que el rival quiere: **−12**, porque en el recuento se ven las cartas. Cuenta aunque al final ganes el lance: te han visto.
+   - Órdago **tuyo** que pierdes: **−15**. Si además era de farol, −12 más. Perder un órdago que tiró el rival no te quita Cara.
+   - Aceptar un envite del rival nunca mueve tu Cara: el farol es de quien envida.
+
+2. **La Cara pasa de un duelo al siguiente.** Se guarda aunque cierres el navegador. Mientras no exista la era (fase 4), se puede subir o bajar a mano en el modo de depuración.
+
+3. **Cara a 0: «se te nota todo».** Durante ese duelo, aunque luego vuelvas a subir, el rival ve tu tic: te tiembla el pulso cuando llevas buena mano en el lance que se juega (acierta el 80 %).
+   - Si te lo ve, su fuerza baja 0,2: te cree fuerte. Si no te lo ve, sube 0,1.
+   - Tú también ves cuándo se te ha notado: aparece «Se te nota: te tiembla el pulso» junto a tu mano.
+
+4. **Tics de los cinco.** Todos salen el 60 % de las veces que se cumple su motivo, y en falso lo justo para acertar su fiabilidad.
+   - Los que dependen de las cartas salen al recibirlas, al declarar su lance y al envidar en su lance.
+   - «Mano fuerte» (el rosario de Doña Engracia, el sombrero de Fulgencio, el puro de Don Bonifacio) quiere decir duples, medias, 31, tres reyes o tres pitos.
+   - Los tics de farol (Don Anselmo mira al cielo, Fulgencio enseña el diente de oro) salen cuando decide envidar sin nada delante.
+   - «Te mira fijamente» (Doña Engracia) sale cuando responde a un envite tuyo y tu Cara está por debajo de 35.
+   - La vara de Fulgencio no significa nada. Sale el 15 % de las veces en cualquier momento; con el 25 % había tanto ruido que tapaba sus tics de verdad.
+
+5. **Doña Engracia.**
+   - No acepta un órdago antes de la tercera mano. Después, con su miedo (9 de 10), solo lo acepta con una mano casi perfecta.
+   - Si la miras más de 2 segundos, se da cuenta 7 de cada 10 veces (su Ojo es 7). Entonces se ofende y no hace tics en lo que queda de mano ni en la siguiente.
+
+6. **Don Anselmo.**
+   - Envida siempre a la Chica cuando habla sin envite delante, lleve lo que lleve: 2 piedras, o más si va fuerte.
+   - **Penitencia.** Si te pilla un farol, tu siguiente envite la paga: en el primer lance de las manos siguientes en que envides, si gana él, cobra 1 piedra más. Se gasta con ese envite, lo gane quien lo gane.
+
+7. **El trato de Fulgencio.**
+   - Una vez por duelo, antes del recuento y solo si hay envites queridos.
+   - Se retiran **todos** los envites queridos de la mano y sus piedras se reparten a medias. **La impar se la queda él**, que para eso es tratante.
+   - Lo que vale cada lance por sí mismo (pares, juego, punto, el paso) se cobra igual.
+   - Lo propone si, con sus cartas, espera perder esos envites, y además de farol 3 de cada 10 veces. Aceptar es otra apuesta: hay que leerle.
+   - *Ejemplo: hay cinco piedras queridas al Punto y aceptas: tú cobras 2 y él 3.*
+
+8. **Don Bonifacio.**
+   - **La Casa.** Es mano en el primer reparto y gana los empates a la Grande en todas las manos. El documento dice «en los empates del primer lance»; lo leo como la Grande de cada mano.
+   - **Cartas de la casa.** Una vez por duelo, al empezar la Grande, si ninguna de sus jugadas llega al 60 % de ganar, cambia en secreto su carta más baja por la más alta del mazo.
+   - De momento no se le puede pillar: hace falta el compañero o el objeto con Ojo de la fase 4.
+   - Tampoco lee aún tu Libreta, que llega en la fase 4.
+
+9. **Mirar al rival.** Se mantiene pulsado su retrato. Mientras miras, el rival espera, el resto de la mesa se oscurece y sus tics duran 1,6 veces más.
+
+10. **Elegir rival.** Con el botón «Rival» de arriba, o al acabar cada duelo. También con `?rival=engracia` en la dirección.
+
+11. **Equilibrio.** 300 duelos de cada rival contra un jugador sensato (la misma IA con una personalidad neutra, que no lee tics):
+
+    | Rival | Gana | Manos por duelo | Órdago suyo | Acepta tus envites |
+    | --- | --- | --- | --- | --- |
+    | Ruperto | 49 % | 3,4 | 17 % de manos | 32 % |
+    | Doña Engracia | 42 % | 4,4 | 6 % | 30 % |
+    | Don Anselmo | 41 % | 4,4 | 13 % | 21 % |
+    | Fulgencio | 60 % | 3,9 | 14 % | 21 % |
+    | Don Bonifacio | 57 % | 3,7 | 16 % | 15 % |
+
+    - Un jugador que envida en todos los lances, lleve lo que lleve, gana entre el 48 % y el 62 %, y la Cara le acaba en torno a 70. No rompe el juego, pero contra Doña Engracia y Don Anselmo funciona demasiado bien.
+    - El documento ordena a los rivales de menos a más difíciles. Contra un bot que no lee tics no se nota tanto; hay que comprobarlo jugando.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes.
 
 - **¿Un duelo a 20 piedras es corto?** En las simulaciones dura unas 3 manos, unos 2–3 minutos. El documento ya lo dejaba como pregunta abierta para estas pruebas.
-- **Qué cuenta como farol para la Cara y los reales.** La memoria del rival usa la definición del punto 4 de la fase 2. Falta decidir si un farol al que el rival dice «no quiero» cuenta como «farol no descubierto» para cobrar el real.
-- **«Envite con buena mano» (+4 de Cara).** Falta el umbral. Propuesta: F > 0,65, el mismo que usa la IA para envidar.
+- **El real por «farol no descubierto».** La Cara ya usa la definición de farol del punto 1 de la fase 3. Falta decidir si un farol al que el rival dice «no quiero» cuenta como «no descubierto» para cobrar el real (fase 4).
 - **Medalla de la Virgen.** «El órdago perdido solo cuesta 10 piedras»: ¿el rival suma 10, o pierdes 10 de las tuyas?
 - **El Veterano.** «Los dos reyes más altos» no tiene sentido a 8 reyes, donde todos los reyes son iguales. ¿Basta con llevar dos reyes?
 - **El Tahúr.** «Te pilla y pierdes la mano»: ¿cuántas piedras son?
-- **El trato de Fulgencio.** ¿Qué envite se retira si hay varios, y cómo se reparte un número impar de piedras?

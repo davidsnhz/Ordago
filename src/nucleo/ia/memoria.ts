@@ -1,4 +1,4 @@
-import { IA } from '../../datos/ia';
+import { CARA } from '../../datos/cara';
 import type { PerfilRival } from '../../datos/rivales';
 import type { ModoReyes } from '../carta';
 import type { Lado } from '../comun';
@@ -8,7 +8,7 @@ import { calcularFuerza } from './fuerza';
 
 /**
  * Lo que el rival recuerda del duelo: tus envites, tus faroles descubiertos y tus órdagos
- * (con ellos calcula t_farol), más la racha de lances perdidos para el enfado de Ruperto.
+ * (con ellos calcula t_farol), más lo que necesitan sus reglas especiales.
  */
 export interface MemoriaRival {
   envitesJugador: number;
@@ -21,6 +21,14 @@ export interface MemoriaRival {
   quienEsMano: Lado | null;
   /** Envites del jugador en la mano en curso, para juzgarlos al ver las cartas. */
   envitesDeLaMano: { lance: Lance; esMano: boolean }[];
+  /** Don Anselmo: tu próximo envite paga penitencia si lo gana él. */
+  penitencia: boolean;
+  /** Fulgencio ya ha propuesto su trato en este duelo. */
+  tratoUsado: boolean;
+  /** Don Bonifacio ya ha cambiado su carta en este duelo. */
+  cambioUsado: boolean;
+  /** Doña Engracia ofendida: no hace tics hasta esta mano, incluida (0 si no). */
+  ofendidaHastaMano: number;
 }
 
 export function memoriaInicial(): MemoriaRival {
@@ -32,6 +40,10 @@ export function memoriaInicial(): MemoriaRival {
     manosEnfadado: 0,
     quienEsMano: null,
     envitesDeLaMano: [],
+    penitencia: false,
+    tratoUsado: false,
+    cambioUsado: false,
+    ofendidaHastaMano: 0,
   };
 }
 
@@ -43,6 +55,8 @@ export interface CambiosMemoria {
   memoria: MemoriaRival;
   /** Se acaba de enfadar. */
   seEnfada: boolean;
+  /** Acaba de imponer penitencia (te ha pillado un farol). */
+  imponePenitencia: boolean;
 }
 
 /** Actualiza la memoria con los eventos de una acción. `rival` es el lado de la IA. */
@@ -55,6 +69,7 @@ export function recordar(
 ): CambiosMemoria {
   const m: MemoriaRival = { ...memoria, envitesDeLaMano: [...memoria.envitesDeLaMano] };
   let seEnfada = false;
+  let imponePenitencia = false;
 
   for (const evento of eventos) {
     switch (evento.tipo) {
@@ -71,19 +86,34 @@ export function recordar(
         m.envitesDeLaMano.push({ lance: evento.lance, esMano: m.quienEsMano !== null && m.quienEsMano !== rival });
         break;
       }
+      case 'trato':
+        if (evento.ofrece === rival) m.tratoUsado = true;
+        break;
+      case 'cartaCambiada':
+        if (evento.lado === rival) m.cambioUsado = true;
+        break;
       case 'recuento': {
+        // La penitencia se paga con tu primer envite tras imponerla (el recuento ya la ha cobrado).
+        if (m.penitencia && m.envitesDeLaMano.length > 0) m.penitencia = false;
+
         // Se ven las cartas: los envites del jugador con menos del 35 % de ganar eran faroles.
         const cartasJugador = rival === 'rival' ? evento.cartas.jugador : evento.cartas.rival;
         const fuerzas = new Map<boolean, ReturnType<typeof calcularFuerza>>();
+        let faroles = 0;
         for (const envite of m.envitesDeLaMano) {
           let fuerza = fuerzas.get(envite.esMano);
           if (!fuerza) {
             fuerza = calcularFuerza(cartasJugador, envite.esMano, modo);
             fuerzas.set(envite.esMano, fuerza);
           }
-          if (fuerza[envite.lance] < IA.umbralFarol) m.farolesDescubiertos++;
+          if (fuerza[envite.lance] < CARA.umbralFarol) faroles++;
         }
+        m.farolesDescubiertos += faroles;
         m.envitesDeLaMano = [];
+        if (perfil.penitencia && faroles > 0) {
+          m.penitencia = true;
+          imponePenitencia = true;
+        }
 
         // Enfado: primero se gasta el de manos anteriores, luego se mira la racha.
         if (m.manosEnfadado > 0) m.manosEnfadado--;
@@ -99,7 +129,9 @@ export function recordar(
         }
         break;
       }
+      default:
+        break;
     }
   }
-  return { memoria: m, seEnfada };
+  return { memoria: m, seEnfada, imponePenitencia };
 }

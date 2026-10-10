@@ -1,7 +1,7 @@
 import type { Reglas } from '../datos/reglas';
 import type { EstadoEnvite } from './apuestas';
 import type { Carta } from './carta';
-import { LADOS, type Lado, type PorLado } from './comun';
+import { LADOS, otroLado, type Lado, type PorLado } from './comun';
 import { ganadorLance, type Lance } from './lances';
 import { analizarPares, JUEGO_MINIMO, puntos, tieneJuego, tienePares } from './mano';
 
@@ -18,9 +18,11 @@ export interface LanceJugado {
   modo: ModoLance;
   /** Ronda de envites ya resuelta (solo en modo `envites`). */
   envite: EstadoEnvite | null;
+  /** Envite querido que se retiró por un trato: sus piedras se reparten. */
+  trato?: boolean;
 }
 
-export type ConceptoCobro = 'enPaso' | 'envite' | 'pares' | 'juego' | 'punto';
+export type ConceptoCobro = 'enPaso' | 'envite' | 'pares' | 'juego' | 'punto' | 'trato' | 'penitencia';
 
 export interface Cobro {
   lance: Lance;
@@ -35,6 +37,8 @@ export interface DatosRecuento {
   reglas: Reglas;
   /** Quién gana los empates en cada lance (normalmente la mano). */
   ganaEmpate: (lance: Lance) => Lado;
+  /** Quién propuso el trato, si lo hubo: se queda la piedra impar. */
+  ofreceTrato?: Lado | null;
 }
 
 export interface CobrosDeLaMano {
@@ -109,7 +113,14 @@ export function calcularCobros(datos: DatosRecuento): CobrosDeLaMano {
       case 'querido': {
         const ganador = ganadorLance(lance, cartas, datos.ganaEmpate(lance), modo);
         ganadores[lance] = ganador;
-        cobrar(lance, ganador, resultado.piedras, 'envite');
+        if (jugado.trato && datos.ofreceTrato) {
+          // Trato: se reparten el envite y quien lo propuso se queda la piedra impar.
+          const mitad = Math.floor(resultado.piedras / 2);
+          cobrar(lance, otroLado(datos.ofreceTrato), mitad, 'trato');
+          cobrar(lance, datos.ofreceTrato, resultado.piedras - mitad, 'trato');
+        } else {
+          cobrar(lance, ganador, resultado.piedras, 'envite');
+        }
         if (lance !== 'grande' && lance !== 'chica') {
           cobrar(lance, ganador, valorDe(lance, ganador), conceptoDelLance(lance));
         }

@@ -15,7 +15,14 @@ import { ErrorJugada, LADOS, otroLado, type Lado, type PorLado } from './comun';
 import type { EventoDuelo, MotivoFin } from './eventos';
 import { ganadorLance, type Lance } from './lances';
 import { tieneJuego, tienePares } from './mano';
-import { piedrasIniciales, quienGanaEmpate, rondasMusPermitidas, type Modificador } from './modificadores';
+import {
+  ajustarCobros,
+  piedrasIniciales,
+  quienGanaEmpate,
+  quienOfreceTrato,
+  rondasMusPermitidas,
+  type Modificador,
+} from './modificadores';
 import { aplicarCobros, calcularCobros, type Cobro, type CobrosDeLaMano, type LanceJugado } from './recuento';
 
 /**
@@ -29,9 +36,11 @@ import { aplicarCobros, calcularCobros, type Cobro, type CobrosDeLaMano, type La
  * El estado es JSON plano (incluye el del azar), así que se puede guardar y reanudar.
  */
 
-export const VERSION_ESTADO = 1;
+/** Sube cuando cambia la forma del estado: las partidas guardadas de otra versión se descartan. */
+export const VERSION_ESTADO = 2;
 
-export type Fase = 'mus' | 'descarte' | 'envite' | 'finMano' | 'finDuelo';
+/** `trato`: antes del recuento, uno propone retirar los envites queridos y el otro decide. */
+export type Fase = 'mus' | 'descarte' | 'envite' | 'trato' | 'finMano' | 'finDuelo';
 
 export interface RecuentoDeLaMano {
   cobros: Cobro[];
@@ -64,6 +73,8 @@ export interface EstadoDuelo {
   recuento: RecuentoDeLaMano | null;
   ganador: Lado | null;
   motivoFin: MotivoFin | null;
+  /** Trato propuesto en esta mano, si lo hay. */
+  trato: { ofrece: Lado } | null;
 }
 
 export type AccionDuelo =
@@ -76,6 +87,7 @@ export type AccionDuelo =
   | { tipo: 'quiero'; lado: Lado }
   | { tipo: 'noQuiero'; lado: Lado }
   | { tipo: 'ordago'; lado: Lado }
+  | { tipo: 'trato'; lado: Lado; acepta: boolean }
   | { tipo: 'siguienteMano' };
 
 export type OpcionDuelo =
@@ -83,6 +95,8 @@ export type OpcionDuelo =
   | { tipo: 'corto' }
   | { tipo: 'descartar'; minimo: number; maximo: number }
   | OpcionEnvite
+  /** Aceptar o rechazar el trato propuesto. */
+  | { tipo: 'trato' }
   | { tipo: 'siguienteMano' };
 
 export interface AccionesValidas {
@@ -141,6 +155,7 @@ export function crearDuelo(opciones: OpcionesDuelo): ResultadoAccion {
     recuento: null,
     ganador: null,
     motivoFin: null,
+    trato: null,
   };
   const ctx: Contexto = { e, azar, eventos: [], mods };
   nuevaMano(ctx);
@@ -173,6 +188,9 @@ export function aplicarAccion(
     case 'descartar':
       descartar(ctx, accion.lado, accion.cartas);
       break;
+    case 'trato':
+      responderTrato(ctx, accion.lado, accion.acepta);
+      break;
     default:
       envidar(ctx, accion.lado, aAccionEnvite(accion));
   }
@@ -193,7 +211,25 @@ export function accionesValidas(estado: EstadoDuelo): AccionesValidas {
       return { lado: estado.turno, opciones: [{ tipo: 'descartar', minimo: 1, maximo: CARTAS_POR_MANO }] };
     case 'envite':
       return { lado: estado.turno, opciones: opcionesEnvite(enviteEnCurso(estado), limitesEnvite(estado.reglas)) };
+    case 'trato':
+      return { lado: estado.turno, opciones: [{ tipo: 'trato' }] };
   }
+}
+
+/**
+ * Cambia en secreto una carta de la mano de `lado` por una del mazo (las «cartas de la casa»
+ * de Don Bonifacio). No es una jugada: la aplica la regla especial del rival.
+ */
+export function cambiarCarta(estado: EstadoDuelo, lado: Lado, sale: Carta, entra: Carta): ResultadoAccion {
+  if (estado.fase === 'finDuelo') throw new ErrorJugada('El duelo ya ha terminado');
+  const e = structuredClone(estado) as EstadoDuelo;
+  const enMano = e.cartas[lado].findIndex((c) => mismaCarta(c, sale));
+  const enMazo = e.mazo.cartas.findIndex((c) => mismaCarta(c, entra));
+  if (enMano < 0) throw new ErrorJugada('La carta que sale no está en la mano');
+  if (enMazo < 0) throw new ErrorJugada('La carta que entra no está en el mazo');
+  e.cartas[lado][enMano] = entra;
+  e.mazo.cartas[enMazo] = sale;
+  return { estado: e, eventos: [{ tipo: 'cartaCambiada', lado, sale, entra }] };
 }
 
 export function limitesEnvite(reglas: Reglas): LimitesEnvite {
@@ -211,6 +247,7 @@ function nuevaMano(ctx: Contexto): void {
   e.lanceActual = null;
   e.envite = null;
   e.recuento = null;
+  e.trato = null;
   emitir(ctx, { tipo: 'reparto', numeroMano: e.numeroMano, quienEsMano: e.quienEsMano, cartas: copiarCartas(e.cartas) });
   if (rondasMusPermitidas(ctx.mods, e) > 0) {
     e.fase = 'mus';
@@ -363,18 +400,47 @@ function pasarAlSiguienteLance(ctx: Contexto, lance: Lance): void {
   if (siguiente) {
     iniciarLance(ctx, siguiente);
   } else {
-    hacerRecuento(ctx);
+    antesDelRecuento(ctx);
   }
+}
+
+/** Si hay envites queridos y alguien propone un trato, se espera la respuesta del otro. */
+function antesDelRecuento(ctx: Contexto): void {
+  const { e } = ctx;
+  const hayQueridos = e.lances.some((l) => l.envite?.resultado?.tipo === 'querido');
+  const ofrece = hayQueridos ? quienOfreceTrato(ctx.mods, e) : null;
+  if (!ofrece) {
+    hacerRecuento(ctx);
+    return;
+  }
+  e.fase = 'trato';
+  e.trato = { ofrece };
+  e.turno = otroLado(ofrece);
+  emitir(ctx, { tipo: 'trato', ofrece });
+}
+
+function responderTrato(ctx: Contexto, lado: Lado, acepta: boolean): void {
+  const { e } = ctx;
+  exigirFase(e, 'trato', 'responder a un trato');
+  exigirTurno(e, lado);
+  if (acepta) {
+    e.lances = e.lances.map((l) => (l.envite?.resultado?.tipo === 'querido' ? { ...l, trato: true } : l));
+  }
+  emitir(ctx, { tipo: 'tratoResuelto', lado, acepta });
+  hacerRecuento(ctx);
 }
 
 function hacerRecuento(ctx: Contexto): void {
   const { e } = ctx;
-  const { cobros, ganadores } = calcularCobros({
+  const calculo = calcularCobros({
     lances: e.lances,
     cartas: e.cartas,
     reglas: e.reglas,
     ganaEmpate: (lance) => quienGanaEmpate(ctx.mods, lance, e),
+    ofreceTrato: e.trato?.ofrece ?? null,
   });
+  const { ganadores } = calculo;
+  const cobros = ajustarCobros(ctx.mods, calculo.cobros, e, ganadores);
   const resultado = aplicarCobros(e.marcador, cobros, e.reglas.piedrasParaGanar);
   e.marcador = resultado.marcador;
   e.recuento = { cobros, aplicados: resultado.aplicados.length, ganadores };
@@ -432,7 +498,7 @@ function copiarCartas(cartas: PorLado<Carta[]>): PorLado<Carta[]> {
   return { jugador: [...cartas.jugador], rival: [...cartas.rival] };
 }
 
-function aAccionEnvite(accion: Exclude<AccionDuelo, { tipo: 'mus' | 'corto' | 'descartar' | 'siguienteMano' }>): AccionEnvite {
+function aAccionEnvite(accion: Exclude<AccionDuelo, { tipo: 'mus' | 'corto' | 'descartar' | 'trato' | 'siguienteMano' }>): AccionEnvite {
   switch (accion.tipo) {
     case 'envido':
       return { tipo: 'envido', piedras: accion.piedras };

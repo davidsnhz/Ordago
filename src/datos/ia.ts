@@ -52,9 +52,33 @@ export const IA = {
   tics: {
     /** Probabilidad de hacer el tic cuando se cumple su disparador. */
     probabilidadSiCumple: 0.6,
+    /** Con qué frecuencia sale un tic que no significa nada (la vara de Fulgencio). */
+    probabilidadSinSentido: 0.15,
+    /**
+     * Proporción de momentos en que tu Cara está baja, para calibrar la «sospecha» de Doña
+     * Engracia (no sale de las cartas, así que se fija aquí).
+     */
+    tasaSospecha: 0.25,
+    /** Mirando al rival, los tics duran más en pantalla. */
+    duracionMirando: 1.6,
   },
-  /** Un envite es farol si las cartas tenían menos de esto de ganar el lance. */
-  umbralFarol: 0.35,
-  /** Cara del jugador mientras no exista el sistema de Cara (fase 3). */
-  caraProvisional: 60,
+  /**
+   * Cara a 0: «se te nota todo». Durante el duelo el rival ve uno de tus tics: te tiembla el
+   * pulso cuando llevas buena mano en el lance. Si lo ve, su fuerza baja; si no, sube.
+   */
+  exposicion: {
+    fuerzaJugador: 0.65,
+    fiabilidad: 0.8,
+    /** Proporción de lances en los que llevas buena mano (F es casi uniforme). */
+    tasaBase: 0.35,
+    ajusteSiSeNota: -0.2,
+    ajusteSiNo: 0.1,
+  },
+  /** Trato de Fulgencio: lo propone si espera perder los envites queridos… */
+  trato: {
+    /** …o, de farol, con esta probabilidad aunque espere ganarlos. */
+    farol: 0.3,
+  },
+  /** Mirar al rival: a partir de estos segundos se considera mirar demasiado. */
+  mirarDemasiado: 2,
 } as const;

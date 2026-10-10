@@ -17,5 +17,5 @@
     "noEmit": true,
     "types": ["node", "vite/client"]
   },
-  "include": ["src", "pruebas", "vite.config.ts"]
+  "include": ["src", "pruebas", "vite.config.ts", "vitest.equilibrio.config.ts"]
 }

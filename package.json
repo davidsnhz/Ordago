@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "tipos": "tsc --noEmit"
+    "tipos": "tsc --noEmit",
+    "equilibrio": "vitest run --config vitest.equilibrio.config.ts"
   },
   "dependencies": {
     "react": "^19.3.0",

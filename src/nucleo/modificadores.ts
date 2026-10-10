@@ -1,6 +1,7 @@
 import type { Lado } from './comun';
 import type { EstadoDuelo } from './duelo';
 import type { Lance } from './lances';
+import type { Cobro, CobrosDeLaMano } from './recuento';
 
 /**
  * Efecto de un compañero, un objeto o la regla especial de un rival que cambia las reglas
@@ -16,6 +17,13 @@ export interface Modificador {
   rondasMus?(rondas: number, estado: Readonly<EstadoDuelo>): number;
   /** Quién gana un empate, partiendo del valor anterior, que es la mano (p. ej. la Boina). */
   ganaEmpate?(lado: Lado, lance: Lance, estado: Readonly<EstadoDuelo>): Lado;
+  /**
+   * Antes del recuento, si hay envites queridos: quién propone retirarlos y repartirse las
+   * piedras (el trato de Fulgencio), o null. El otro decide si lo acepta.
+   */
+  ofreceTrato?(estado: Readonly<EstadoDuelo>): Lado | null;
+  /** Cambia los cobros del recuento antes de apuntarlos (p. ej. la Penitencia de Don Anselmo). */
+  ajustarCobros?(cobros: Cobro[], estado: Readonly<EstadoDuelo>, ganadores: CobrosDeLaMano['ganadores']): Cobro[];
 }
 
 export function piedrasIniciales(modificadores: readonly Modificador[], lado: Lado): number {
@@ -32,4 +40,21 @@ export function quienGanaEmpate(
   estado: Readonly<EstadoDuelo>,
 ): Lado {
   return modificadores.reduce((lado, m) => m.ganaEmpate?.(lado, lance, estado) ?? lado, estado.quienEsMano);
+}
+
+export function quienOfreceTrato(modificadores: readonly Modificador[], estado: Readonly<EstadoDuelo>): Lado | null {
+  for (const m of modificadores) {
+    const lado = m.ofreceTrato?.(estado);
+    if (lado) return lado;
+  }
+  return null;
+}
+
+export function ajustarCobros(
+  modificadores: readonly Modificador[],
+  cobros: Cobro[],
+  estado: Readonly<EstadoDuelo>,
+  ganadores: CobrosDeLaMano['ganadores'],
+): Cobro[] {
+  return modificadores.reduce((lista, m) => m.ajustarCobros?.(lista, estado, ganadores) ?? lista, cobros);
 }

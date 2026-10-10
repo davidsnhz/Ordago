@@ -394,12 +394,15 @@
 
 /* ——— Depuración ——— */
 
+/* Entre el marcador y la Cara, donde irá el compañero. */
 .depuracion {
   position: absolute;
-  left: 270px;
-  top: 70px;
+  left: 24px;
+  top: 206px;
   z-index: 10;
-  width: 190px;
+  width: 220px;
+  max-height: 158px;
+  overflow: auto;
   padding: 8px;
   font: 12px/1.35 ui-monospace, Consolas, monospace;
   color: var(--papel);
@@ -415,4 +418,181 @@
 .depuracion__titulo {
   font-weight: 700;
   color: var(--gualda);
+}
+
+/* ——— Mirar al rival ——— */
+
+.mesa__zona-mirar {
+  position: absolute;
+  left: 520px;
+  top: 0;
+  width: 230px;
+  height: 210px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: zoom-in;
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+
+.mesa__zona-mirar:focus-visible {
+  outline-offset: -6px;
+}
+
+.retrato {
+  transition: transform 0.25s ease-out;
+}
+
+.mesa--mirando .retrato {
+  z-index: 30;
+  transform: scale(1.3);
+  transform-origin: 50% 25%;
+}
+
+.mesa__penumbra {
+  position: absolute;
+  inset: 0;
+  z-index: 29;
+  background: rgba(10, 7, 5, 0.72);
+  pointer-events: none;
+}
+
+/* ——— La Cara: avisos ——— */
+
+.mesa__expuesto {
+  position: absolute;
+  right: 10px;
+  top: -12px;
+  padding: 1px 8px;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--papel);
+  background: var(--almagre);
+  border: 2px solid var(--tinta);
+  border-radius: 4px;
+}
+
+.mesa__aviso-cara {
+  position: absolute;
+  left: 252px;
+  top: 6px;
+  width: 150px;
+  padding: 4px 8px 6px;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.15;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: var(--radio-panel);
+  box-shadow: var(--sombra-dura);
+  animation: aviso 2.6s ease-in-out forwards;
+}
+
+.mesa__aviso-cara strong {
+  display: block;
+  font-family: var(--letra-grito);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--verde);
+}
+
+.mesa__aviso-cara--baja strong {
+  color: var(--almagre);
+}
+
+.mesa__se-te-nota {
+  position: absolute;
+  left: 276px;
+  top: 404px;
+  width: 126px;
+  padding: 3px 6px;
+  font-family: var(--letra-rotulo);
+  font-size: 13px;
+  line-height: 1.15;
+  color: var(--papel);
+  background: var(--almagre);
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  animation: aviso 2.6s ease-in-out forwards;
+}
+
+@keyframes aviso {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  10%,
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ——— El trato y la elección de rival ——— */
+
+.en-juego__principal--explicacion {
+  font-family: var(--letra-texto);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.mesa__velo--encima {
+  z-index: 40;
+}
+
+.rivales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.rivales__lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.rivales__rival {
+  min-height: 44px;
+  padding: 0 12px;
+  font-family: var(--letra-rotulo);
+  font-size: 17px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.rivales__rival--actual {
+  color: var(--gualda);
+  background: var(--tinta);
+}
+
+.final--ordago .rivales__rival {
+  color: var(--tinta);
+}
+
+.final--ordago .rivales__rival--actual {
+  color: var(--gualda);
+}
+
+.depuracion__cara button {
+  margin-left: 6px;
+  padding: 0 6px;
+  font: inherit;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 1px solid var(--gualda);
+  border-radius: 3px;
+  cursor: pointer;
 }

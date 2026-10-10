@@ -64,6 +64,12 @@ export function describirEvento(evento: EventoDuelo, modo: ModoReyes = 8): strin
       });
       return `Recuento: ${cobros.length ? cobros.join(' · ') : 'nada'}. ${describirManos(evento.cartas, modo)} ${marcador(evento.marcador)}`;
     }
+    case 'trato':
+      return `${quien(evento.ofrece)} propone un trato: retirar los envites queridos y repartirse las piedras`;
+    case 'tratoResuelto':
+      return `${quien(evento.lado)} ${evento.acepta ? 'acepta' : 'no acepta'} el trato`;
+    case 'cartaCambiada':
+      return `${quien(evento.lado)} cambia en secreto ${cartaCorta(evento.sale)} por ${cartaCorta(evento.entra)}`;
     case 'finMano':
       return null;
     case 'finDuelo':

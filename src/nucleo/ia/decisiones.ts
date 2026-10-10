@@ -22,6 +22,12 @@ export interface SituacionEnvite {
   tFarol: number;
   /** Regla especial de Ruperto: acepta todo. */
   aceptaTodo: boolean;
+  /** Número de la mano en curso. */
+  numeroMano?: number;
+  /** Doña Engracia: no acepta órdagos antes de esta mano. */
+  ordagoDesdeMano?: number;
+  /** Don Anselmo: en este lance, si habla sin envite delante, envida siempre. */
+  siempreEnvida?: boolean;
 }
 
 export interface DecisionEnvite {
@@ -67,6 +73,9 @@ export function decidirEnvite(s: SituacionEnvite, p: ParametrosRival, azar: Azar
   // Le han tirado un órdago.
   if (envite.ordago) {
     const limite = umbralOrdago(s, p);
+    if (s.ordagoDesdeMano && (s.numeroMano ?? 0) < s.ordagoDesdeMano) {
+      return { accion: { tipo: 'noQuiero' }, motivo: `no acepta órdagos antes de la mano ${s.ordagoDesdeMano}`, farol: false, umbral: limite };
+    }
     if (s.aceptaTodo) return { accion: { tipo: 'quiero' }, motivo: 'enfadado: acepta todo', farol: false, umbral: limite };
     const valor = valorParaAceptar(s, p, azar);
     return valor > limite
@@ -101,6 +110,10 @@ export function decidirEnvite(s: SituacionEnvite, p: ParametrosRival, azar: Azar
   if (s.F > umbral) {
     const piedras = Math.max(s.limites.enviteMinimo, cantidadEnvite(s.F, p));
     return { accion: { tipo: 'envido', piedras }, motivo: `envida ${piedras} (F ${fmt(s.F)} > ${fmt(umbral)})`, farol: false, umbral };
+  }
+  if (s.siempreEnvida) {
+    const piedras = Math.max(s.limites.enviteMinimo, cantidadEnvite(s.F, p));
+    return { accion: { tipo: 'envido', piedras }, motivo: `envida siempre aquí, lleve lo que lleve (F ${fmt(s.F)})`, farol, umbral };
   }
   if (farol && azar.probabilidad(IA.farol.porFaroleo * p.faroleo)) {
     const piedras = Math.max(s.limites.enviteMinimo, IA.farol.piedras);
