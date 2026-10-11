@@ -90,24 +90,31 @@ export function MarcadorPiedras({
   );
 }
 
-/** La Cara: 20 segmentos en tres zonas; los que pasan del valor se pintan en claro. */
+/**
+ * La Cara: 20 segmentos en tres zonas; los que pasan del valor se pintan en claro. El rótulo
+ * (y la etiqueta que lo acompañe) se va al lado contrario de la marca para que no se pisen.
+ */
 export function BarraCara({
   valor,
   titulo,
   zonas,
   nota,
+  etiqueta,
 }: {
   valor: number;
   titulo: string;
   zonas: { pillan: string; creen: string; temen: string };
   nota?: string;
+  /** Algo junto al rótulo, como «SE TE NOTA». */
+  etiqueta?: ReactNode;
 }) {
   const llenos = Math.ceil(Math.max(0, Math.min(100, valor)) / 5);
   const zona = (i: number) => (i < 7 ? 'almagre' : i < 14 ? 'gualda' : 'verde');
   return (
     <div className="panel cara" title={nota}>
-      <div className="cara__titulo">
+      <div className={clases('cara__titulo', valor < 50 && 'cara__titulo--derecha')}>
         <span className="rotulo">{titulo}</span>
+        {etiqueta}
       </div>
       <div className="cara__marca" style={{ left: `calc(12px + (100% - 24px) * ${valor / 100} - 18px)` }}>
         <span className="cara__numero">{valor}</span>

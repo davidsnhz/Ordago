@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { IA } from '../src/datos/ia';
 import { RIVALES } from '../src/datos/rivales';
 import { aplicarEnvite, iniciarEnvite, type AccionEnvite, type EstadoEnvite } from '../src/nucleo/apuestas';
 import { Azar } from '../src/nucleo/azar';
@@ -54,6 +55,27 @@ describe('fórmulas del documento', () => {
     expect(valorParaAceptar({ ...s, caraJugador: 10 }, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.93);
     // El ruido está entre −0,05 y +0,05.
     expect(valorParaAceptar(s, RUPERTO, azarFijo(0))).toBeCloseTo(0.63);
+  });
+
+  it('lo que se arriesga: sin peso no cambia nada; con peso, un envite pequeño se acepta más', () => {
+    // Cara 50 y t_farol 0,25: ni la Cara ni la memoria suman nada.
+    const s = situacion(0.4, conEnvite(), { caraJugador: 50, tFarol: 0.25 });
+    const sinCuota = valorParaAceptar(s, RUPERTO, azarFijo(0.5));
+    expect(sinCuota).toBeCloseTo(0.4);
+    const aceptar = IA.aceptar as { pesoCuota: number };
+    const antes = aceptar.pesoCuota;
+    try {
+      aceptar.pesoCuota = 1;
+      // Envido dos con deje 1: compensa aceptar con F > (2 − 1)/4 = 0,25, así que suma 0,5 − 0,25.
+      expect(valorParaAceptar(s, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.65);
+      // Dos más sobre dos aceptados (4 en juego, deje 2): (4 − 2)/8 = 0,25 también.
+      const subida = situacion(0.4, ronda({ tipo: 'envido', piedras: 2 }, { tipo: 'mas', piedras: 2 }), { caraJugador: 50, tFarol: 0.25 });
+      expect(valorParaAceptar(subida, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.65);
+      // Al órdago no se le aplica.
+      expect(valorParaAceptar(situacion(0.4, conOrdago(), { caraJugador: 50, tFarol: 0.25 }), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.4);
+    } finally {
+      aceptar.pesoCuota = antes;
+    }
   });
 
   it('aceptar un órdago: el umbral sube 0,04·M y baja 0,1 si va perdiendo de 8', () => {

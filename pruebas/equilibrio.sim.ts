@@ -5,6 +5,10 @@ import { Azar } from '../src/nucleo/azar';
 import type { AccionDuelo } from '../src/nucleo/duelo';
 import { memoriaInicial } from '../src/nucleo/ia/memoria';
 import { decidirRival, vistaDe } from '../src/nucleo/ia/rival';
+import { IA } from '../src/datos/ia';
+
+// Para probar otro peso de la cuota sin tocar datos/: PESO_CUOTA=0.5 npm run equilibrio
+if (process.env.PESO_CUOTA) (IA.aceptar as { pesoCuota: number }).pesoCuota = Number(process.env.PESO_CUOTA);
 
 /**
  * Equilibrio: cada rival contra un jugador sensato (la misma IA con una personalidad neutra).

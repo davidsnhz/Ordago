@@ -3,7 +3,7 @@ import { CARA } from '../datos/cara';
 import { IA } from '../datos/ia';
 import { ORDEN_RIVALES, type IdRival } from '../datos/rivales';
 import type { AccionDuelo } from '../nucleo/duelo';
-import { borrarPartida, cargarCara, cargarPartida, guardarCara, guardarPartida } from './guardado';
+import { borrarPartida, cargarPartida, guardarPartida } from './guardado';
 import { aplicarNovedades, mesaInicial, sacarTic, type EstadoMesa } from './mesa';
 import { ajustarCara, jugarJugador, jugarRival, leTocaAlRival, mirarAlRival, nuevaPartida } from './partida';
 
@@ -28,8 +28,9 @@ function rivalDeLaDireccion(): IdRival | null {
   return ORDEN_RIVALES.find((id) => id === pedido) ?? null;
 }
 
-function empezarDuelo(rival: IdRival, cara: number): EstadoMesa {
-  const inicio = nuevaPartida(semillaNueva(), rival, cara);
+/** Cada duelo empieza de cero, Cara incluida (hasta que haya gira, que la arrastrará). */
+function empezarDuelo(rival: IdRival): EstadoMesa {
+  const inicio = nuevaPartida(semillaNueva(), rival, CARA.inicial);
   return aplicarNovedades(mesaInicial(inicio.partida), inicio);
 }
 
@@ -37,7 +38,7 @@ function empezar(): EstadoMesa {
   const pedido = rivalDeLaDireccion();
   const guardada = cargarPartida();
   if (guardada && guardada.duelo.fase !== 'finDuelo' && (!pedido || pedido === guardada.rivalId)) return mesaInicial(guardada);
-  return empezarDuelo(pedido ?? 'ruperto', cargarCara() ?? CARA.inicial);
+  return empezarDuelo(pedido ?? 'ruperto');
 }
 
 export function useDuelo() {
@@ -56,10 +57,10 @@ export function useDuelo() {
     });
   }, []);
 
-  /** Duelo nuevo contra `rival` (o el mismo). La Cara se mantiene. */
+  /** Duelo nuevo contra `rival` (o el mismo), de cero. */
   const nuevoDuelo = useCallback((rival?: IdRival) => {
     borrarPartida();
-    setEstado((previo) => empezarDuelo(rival ?? previo.partida.rivalId, previo.partida.caraJugador));
+    setEstado((previo) => empezarDuelo(rival ?? previo.partida.rivalId));
   }, []);
 
   /** Termina una mirada al rival que ha durado `segundos`. */
@@ -67,7 +68,7 @@ export function useDuelo() {
     setEstado((previo) => aplicarNovedades(previo, mirarAlRival(previo.partida, segundos)));
   }, []);
 
-  /** Modo de depuración: subir o bajar la Cara a mano. */
+  /** Modo de pruebas: subir o bajar la Cara a mano. */
   const cambiarCara = useCallback((delta: number) => {
     setEstado((previo) => ({ ...previo, partida: ajustarCara(previo.partida, delta) }));
   }, []);
@@ -103,10 +104,9 @@ export function useDuelo() {
     return () => clearTimeout(reloj);
   }, [estado.avisoCara, estado.seTeNota]);
 
-  // Se guarda al final de cada mano; al acabar el duelo se borra (la Cara se queda).
+  // Se guarda al final de cada mano; al acabar el duelo se borra.
   const { fase, numeroMano } = partida.duelo;
   useEffect(() => {
-    guardarCara(partida.caraJugador);
     if (fase === 'finMano') guardarPartida(partida);
     if (fase === 'finDuelo') borrarPartida();
     // Solo al cambiar de fase o de mano: `partida` cambia en cada jugada.

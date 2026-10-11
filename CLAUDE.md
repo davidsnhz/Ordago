@@ -4,7 +4,8 @@
 
 ## Documentos (léelos antes de escribir código)
 
-- `docs/diseno-juego.md` — **reglas y sistemas**: mus a 8 reyes y a 20 piedras, apuestas, la Cara, tics, Libreta, compañeros, objetos, los 5 rivales, la IA y el plan de prototipo. Es la fuente de verdad del diseño de juego.
+- `docs/diseno-juego.md` — **reglas y sistemas**: mus a 8 reyes y a 20 piedras, apuestas, la Cara, tics, Libreta, compañeros, objetos, los 5 rivales, la IA y el plan de prototipo. Es la fuente de verdad del diseño de juego y **el documento que explica el proyecto**. Su versión en PDF es `docs/Órdago — Documento de diseño.pdf`.
+- **Regla fija:** cada cambio del proyecto (reglas, números, interfaz, fases) se refleja en `docs/diseno-juego.md` en la misma tarea, marcado con [nuevo] o [cambiado], y se regenera el PDF.
 - `docs/direccion-arte.md` — **aspecto visual**: tintas, tipografías, piezas de mesa y pantallas. Manda sobre cualquier mención al arte en el otro documento.
 - `referencias/pantallas/*.png` y `*.html` — estilo de cada pantalla (tintas, letra, piezas). Se hicieron en horizontal (1280 × 590); desde el 10 de octubre de 2026 el juego es **vertical** y la maquetación se adapta (ver `docs/decisiones.md`, «Cambio a vertical»).
 - `assets/` — baraja definitiva, palos, logotipo y fuentes.
@@ -39,7 +40,7 @@ src/
     gira/            # etapas, paradas, Honra, reales, Cara, Libreta
   datos/             # rivales, compañeros, objetos y equilibrio en JSON o TS de solo datos
   ui/
-    componentes/     # panel, botones, órdago deslizable, piedras, lances, Cara, bocadillo, carta
+    componentes/     # panel, botones, órdago de pulsación larga, lances, Cara, acta, carta
     pantallas/       # título, mapa, mesa, órdago, taberna
     estilos/         # tokens de la guía de estilo como variables CSS
   estado/            # estado global de la partida y conexión núcleo ↔ interfaz
@@ -56,7 +57,7 @@ pruebas/
 ## Arte
 
 - La **baraja** está terminada en `assets/cartas/`, con el nombre `NN_palo.webp` (WebP sin pérdida): 01–07, 10 = sota, 11 = caballo y 12 = rey, más `reverso_almagre` y `reverso_anil`. Úsala tal cual.
-- La interfaz debe reproducir `docs/direccion-arte.md`: paneles de papel con contorno de tinta y sombra dura, sin degradados. Construye primero los componentes reutilizables: panel, botón de apuesta, botón de órdago deslizable, marcador de piedras, fila de lances, barra de la Cara y bocadillo.
+- La interfaz debe reproducir `docs/direccion-arte.md`: paneles de papel con contorno de tinta y sombra dura, sin degradados. Construye primero los componentes reutilizables: panel, botón de apuesta, botón de órdago (se mantiene pulsado), marcador, fila de lances, barra de la Cara y acta de la mano.
 - **Los personajes y los iconos de objetos están pendientes.** Usa marcadores y deja el sistema de retratos y tics preparado para recibir arte después (ver el final de la dirección de arte). No generes ni copies arte de personajes.
 
 ## Orden de trabajo
@@ -69,6 +70,8 @@ Sigue el plan de prototipo del documento y no avances de fase sin que la anterio
 4. **Estructura de gira**: una comarca completa con taberna, 5 objetos y 2 compañeros.
 5. **Pantallas** de título, mapa, órdago y taberna, más sonido provisional.
 6. **Resto del contenido** y progresión.
+
+Los botones Rival y Depurar son herramientas del modo de pruebas (`npm run dev` o `?pruebas` en la dirección); el juego normal no los enseña.
 
 Al acabar cada fase, deja el juego funcionando con `npm run dev` en el navegador y resume qué funciona, qué falta y qué decisiones tomaste.
 

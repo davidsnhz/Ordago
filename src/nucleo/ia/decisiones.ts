@@ -57,7 +57,19 @@ export function valorParaAceptar(s: SituacionEnvite, p: ParametrosRival, azar: A
   const cara = (aceptar.caraNeutra - s.caraJugador) / aceptar.divisorCara;
   const memoria = (p.memoria / 10) * aceptar.pesoMemoria * (s.tFarol - aceptar.farolesEsperados);
   const ruido = (azar.siguiente() * 2 - 1) * aceptar.ruido;
-  return s.F + cara + memoria + ruido;
+  return s.F + cara + memoria + cuota(s) + ruido;
+}
+
+/**
+ * Lo que se arriesga: aceptar un envite pequeño cuesta poco si se pierde, y rechazarlo regala
+ * el «no quiero». Con apuesta X y deje d, aceptar compensa si F > (X − d) / 2X; este término
+ * acerca el umbral de 0,5 a ese punto en la medida de `pesoCuota` (0: sin efecto).
+ */
+function cuota(s: SituacionEnvite): number {
+  const X = s.envite.apuesta;
+  if (X <= 0 || s.envite.ordago) return 0;
+  const d = Math.max(s.envite.aceptado, s.limites.deje);
+  return IA.aceptar.pesoCuota * (IA.aceptar.umbral - (X - d) / (2 * X));
 }
 
 export function umbralOrdago(s: SituacionEnvite, p: ParametrosRival): number {

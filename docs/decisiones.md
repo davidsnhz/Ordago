@@ -153,12 +153,40 @@ Aquí queda lo que el documento de diseño no dejaba claro y cómo se ha resuelt
 - **El órdago, pequeño y aparte** en la esquina de la barra. Se tira **manteniéndolo pulsado un segundo** mientras se llena; si lo sueltas antes, no pasa nada. Con teclado, manteniendo Intro o Espacio.
 - Las referencias de `referencias/pantallas/` siguen valiendo para el estilo (tintas, letra, piezas), pero no para la maquetación.
 
+## Retoques y depuración antes de la fase 4 (11 de octubre de 2026)
+
+*Pedidos por David tras probarlo en el móvil.* La regla desde ahora: todo cambio se apunta también en `docs/diseno-juego.md` y se regenera el PDF (`npm run documento`).
+
+1. **Rival y Depurar solo en el modo de pruebas.** Salen con `npm run dev` o con `?pruebas` en la dirección. La tecla D y `?depuracion` solo funcionan en ese modo.
+2. **Fuera el nombre de la comarca** de arriba de la mesa. Volverá, si hace falta, en la pantalla de la gira.
+3. **El acta de la mano.** El bocadillo, el panel «En juego», la crónica y la etiqueta «Tú: …» decían lo mismo en cuatro sitios. Ahora hay un solo panel bajo el retrato:
+   - arriba, el lance y lo que hay en juego;
+   - debajo, las tres últimas líneas: lo que dice el rival (almagre, con su frase), lo que dices tú (añil) y lo que pasa en la mesa (cursiva);
+   - lo último marcado y lo anterior apagado;
+   - «Toda la mano» la abre entera.
+   - Cerrada nunca pisa las cartas del rival: si no cabe, se corta lo más antiguo.
+   - Lo que pasa en la mesa lleva el lance delante (*Pares: cobras 1 por el «no quiero»*), porque cuando aparece ya se está jugando el lance siguiente.
+4. **La mano.** Funcionaba bien (cambia en cada mano; lo cubren las pruebas). Para que se entienda: la insignia MANO va bajo el marcador de quien lo es y cada mano empieza en el acta con *Mano 2: eres mano*; en la primera, con la explicación.
+5. **Cuánto envidar, al estilo Offsuit.** Dos botones rápidos (dos y tres) y una barra del 4 al 19, con − y +. El selector sale sobre el tapete para no tapar tu mano. Al subir, recuerda lo que ya hay en juego.
+6. **Al acabar el duelo.** REVANCHA contra el mismo rival y, debajo, los otros cuatro. **Cada duelo empieza de cero, con la Cara en 60.** Antes la Cara pasaba de un duelo al siguiente; eso es de la gira, y todavía no hay gira.
+7. **Mientras piensa el rival**, la barra de acciones dice *Le toca a Ruperto…* en vez de quedarse vacía.
+8. **Fallos encontrados y corregidos** (con un recorrido automático que juega duelos enteros contra los cinco rivales en un navegador a tamaño de móvil, más las pruebas de los momentos raros: trato, ofensa, tics y «se te nota»):
+   - la mesa podía desplazarse hacia abajo al abrir el selector (el tapete se sale por abajo); ahora no se puede desplazar;
+   - si tocabas ENVIDO justo cuando te llegaba el turno, el selector se cerraba solo;
+   - con la Cara baja, el número tapaba el rótulo «Tu Cara» y chocaba con «SE TE NOTA»;
+   - con tres respuestas (NO QUIERO · QUIERO · MÁS), «NO QUIERO» se partía en dos líneas;
+   - faltaba el icono de la pestaña y el navegador daba un error 404.
+9. **El farolero** (el jugador que abre con «envido dos» en todos los lances). Medido otra vez con `pruebas/farolero.sim.ts`: gana 9 puntos más que el sensato contra Doña Engracia y Don Anselmo, 13 contra Fulgencio y 6 contra Don Bonifacio.
+   - Subir el peso de la memoria (`pesoMemoria` 1,5, 2,5 y 4, y bajar el 25 % esperado a 10–15 %) no lo arregla: el farolero farolea en el 27 % de sus envites, cerca de lo que la fórmula da por normal.
+   - Lo que lo arregla es que el rival mire lo que arriesga al aceptar: con apuesta X y deje d, aceptar compensa si F > (X − d)/2X (un «envido dos» se debería querer con F > 0,25). Queda en `IA.aceptar.pesoCuota`: con 0,75 el farolero ya no gana más que el sensato y al sensato le va igual; con 1, igual pero algo más fuerte.
+   - El precio: todos aceptan más envites pequeños (Doña Engracia, del 30 % al 47 %). Como cambia su carácter, **está preparado pero apagado (0) hasta que David decida**.
+
 ## Dudas para fases posteriores
 
-No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes.
+No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).
 
-- **¿Un duelo a 20 piedras es corto?** En las simulaciones dura unas 3 manos, unos 2–3 minutos. El documento ya lo dejaba como pregunta abierta para estas pruebas.
-- **El real por «farol no descubierto».** La Cara ya usa la definición de farol del punto 1 de la fase 3. Falta decidir si un farol al que el rival dice «no quiero» cuenta como «no descubierto» para cobrar el real (fase 4).
-- **Medalla de la Virgen.** «El órdago perdido solo cuesta 10 piedras»: ¿el rival suma 10, o pierdes 10 de las tuyas?
-- **El Veterano.** «Los dos reyes más altos» no tiene sentido a 8 reyes, donde todos los reyes son iguales. ¿Basta con llevar dos reyes?
-- **El Tahúr.** «Te pilla y pierdes la mano»: ¿cuántas piedras son?
+- **¿Un duelo a 20 piedras es corto?** En las simulaciones dura unas 3–4 manos, unos 2–3 minutos. El documento ya lo dejaba como pregunta abierta para estas pruebas.
+- **El real por «farol no descubierto».** Propuesta: cuenta el farol al que el rival dice «no quiero», como ya hace la Cara.
+- **Medalla de la Virgen.** Propuesta: el rival suma 10; tus piedras no bajan.
+- **El Veterano.** Propuesta: basta con llevar dos reyes cualesquiera (los treses cuentan).
+- **El Tahúr.** Propuesta: si te pillan, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras.

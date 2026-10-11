@@ -220,25 +220,25 @@ export const ES = {
   } satisfies Record<Lance, string>,
 
   mesa: {
-    tituloDuelo: (comarca: string) => `${comarca} · duelo de prueba`,
-    marcador: 'Marcador · a 20',
-    eresMano: 'eres mano',
-    esMano: 'él es mano',
+    marcador: 'A 20 piedras',
+    esMano: 'mano',
+    ayudaMano: 'Es mano: habla primero y gana los empates',
     tu: 'Tú',
     tuCara: 'Tu Cara',
     zonasCara: { pillan: 'te pillan', creen: 'te creen', temen: 'te temen' },
-    enJuego: (alLance: string) => `En juego ${alLance}`,
-    sinEnvite: 'sin envite',
-    piedras: (n: number) => `${n} ${n === 1 ? 'piedra' : 'piedras'}`,
-    dueloEntero: 'el duelo entero',
-    musOCorto: '¿Mus o corto?',
-    pideMus: (nombre: string) => `${nombre} pide mus`,
-    tocaDescartar: 'Toca las cartas que tiras',
-    piensa: (nombre: string) => `${nombre} se lo piensa…`,
+    /** Cabecera del acta: en qué estamos y qué hay en juego. */
+    fases: { mus: 'Mus', descarte: 'Descarte', trato: 'Trato', recuento: 'Recuento' },
+    sinEnvite: 'Sin envite',
+    enJuego: (n: number) => `${n} ${n === 1 ? 'piedra' : 'piedras'} en juego`,
+    dueloEntero: '¡El duelo entero!',
+    leToca: (nombre: string) => `Le toca a ${nombre}`,
+    eligeCartas: 'TOCA LAS QUE TIRAS',
+    verMano: 'Toda la mano',
+    cerrarMano: 'Cerrar',
     botones: {
       mus: 'MUS',
       corto: 'CORTO',
-      descartar: (n: number) => (n > 0 ? `TIRAR ${letras(n).toUpperCase()}` : 'TIRAR'),
+      descartar: (n: number) => `TIRAR ${letras(n).toUpperCase()}`,
       paso: 'PASO',
       envido: (n: number) => `ENVIDO ${letras(n).toUpperCase()}`,
       mas: (n: number) => `${letras(n).toUpperCase()} MÁS`,
@@ -246,13 +246,17 @@ export const ES = {
       noQuiero: 'NO QUIERO',
       ordago: '¡ÓRDAGO!',
       siguienteMano: 'SIGUIENTE MANO',
-      otroDuelo: 'OTRO DUELO',
+      revancha: 'REVANCHA',
       aceptarTrato: 'ACEPTO',
       envidoCorto: 'ENVIDO',
       masCorto: 'MÁS',
       rechazarTrato: 'NO HAY TRATO',
     },
-    cantidad: 'Cuánto',
+    /** Selector de cantidad, al estilo Offsuit: dos, tres o la barra del 4 al 19. */
+    envidar: (alLance: string) => `Envidar ${alLance}`,
+    subir: (alLance: string) => `Subir ${alLance}`,
+    menos: 'Uno menos',
+    unoMas: 'Uno más',
     ayudaOrdago: '¡Órdago! Mantén pulsado un segundo para tirarlo',
     recuento: 'RECUENTO',
     susCartas: (nombre: string) => `Las cartas de ${nombre}`,
@@ -270,13 +274,11 @@ export const ES = {
     depurar: 'Depurar',
     rival: 'Rival',
     elegirRival: 'ELIGE RIVAL',
-    elegirRivalNota: 'Empieza un duelo nuevo. Tu Cara se mantiene.',
+    elegirRivalNota: 'Empieza un duelo nuevo, de cero.',
     cancelar: 'Cancelar',
-    contra: 'Otro duelo contra',
-    trato: 'Trato',
-    tratoExplica: (nombre: string) =>
-      `${nombre} propone retirar los envites queridos y repartiros sus piedras. La impar, para él.`,
-    /** Acciones que salen en el bocadillo por reglas especiales. */
+    contra: 'O juega contra otro',
+    tratoExplica: (nombre: string) => `Si aceptas, las piedras queridas se reparten a medias; la impar, para ${nombre}.`,
+    /** Lo que dice el rival por sus reglas especiales. */
     enfadado: '¡ENFADADO!',
     ofendida: '¡QUÉ DESCARO!',
     penitencia: 'PENITENCIA',
@@ -294,33 +296,33 @@ export const ES = {
     cambioCara: (delta: number) => `${delta > 0 ? '+' : ''}${delta}`,
     seTeNota: 'Se te nota: te tiembla el pulso',
     expuesto: 'SE TE NOTA',
-    /** Líneas de la crónica. `rival` es el nombre del rival, o null si lo hizo el jugador. */
-    cronica: {
-      declara: (rival: string | null, lance: string, tiene: boolean) =>
-        `${rival ?? 'Tú'}: ${lance.toLowerCase()} ${tiene ? 'sí' : 'no'}`,
+    /**
+     * Lo que pasa en la mesa, en el acta de la mano. `rival` es el nombre del rival, o null
+     * si va por el jugador.
+     */
+    acta: {
+      reparto: (n: number, rival: string | null, explicar: boolean) =>
+        `Mano ${n}: ${rival ? `es mano ${rival}` : 'eres mano'}${explicar ? ' (habla primero y gana los empates)' : ''}`,
       soloUno: (rival: string | null, lance: string) =>
-        rival ? `Solo ${rival} lleva ${lance.toLowerCase()}` : `Solo tú llevas ${lance.toLowerCase()}`,
+        rival ? `Solo ${rival} lleva ${lance.toLowerCase()}: no se envida` : `Solo tú llevas ${lance.toLowerCase()}: no se envida`,
       nadie: (lance: string) => `Nadie lleva ${lance.toLowerCase()}`,
-      deje: (rival: string | null, n: number) =>
-        rival ? `${rival} cobra ${n} por el «no quiero»` : `Cobras ${n} por el «no quiero»`,
-      descarta: (rival: string | null, n: number) => (rival ? `${rival} cambia ${letras(n)}` : `Cambias ${letras(n)}`),
-      mus: (rival: string | null, mus: boolean) => `${rival ?? 'Tú'}: ${mus ? 'mus' : 'corto'}`,
-      envite: (rival: string | null, texto: string) => `${rival ?? 'Tú'}: ${texto.toLowerCase()}`,
-      cara: (delta: number, motivo: string) => `Cara ${delta > 0 ? '+' : ''}${delta}: ${motivo}`,
-      trato: (rival: string) => `${rival} propone un trato`,
-      tratoResuelto: (acepta: boolean) => (acepta ? 'Aceptas el trato' : 'No hay trato'),
-      penitencia: (rival: string) => `${rival} te impone penitencia`,
-      ofendida: (rival: string) => `${rival} se ofende: no hará tics`,
-      seTeNota: 'Se te nota el pulso',
+      enPaso: (lance: string) => `${lance} en paso: se cobra en el recuento`,
+      querido: (lance: string, n: number) => `${lance}: ${n} ${n === 1 ? 'piedra querida' : 'piedras queridas'}, se ven en el recuento`,
+      deje: (rival: string | null, n: number, lance: string) =>
+        rival ? `${lance}: ${rival} cobra ${n} por el «no quiero»` : `${lance}: cobras ${n} por el «no quiero»`,
+      cara: (delta: number, motivo: string) => `Tu Cara ${delta > 0 ? '+' : ''}${delta}: ${motivo}`,
+      enfadado: (rival: string) => `${rival} se ha enfadado: dos manos aceptándolo todo`,
+      penitencia: 'Si gana él tu próximo envite, cobra una piedra más',
+      ofendida: (rival: string) => `${rival} se ofende: no hará tics esta mano ni la siguiente`,
+      seTeNota: 'Se te ha notado el pulso',
     },
-    /** Lo que dice el jugador, en su etiqueta junto a la mano. */
-    cambio: (n: number) => `CAMBIO ${letras(n).toUpperCase()}`,
-    cartasRival: (n: number) => `${letras(n).toUpperCase()} ${n === 1 ? 'CARTA' : 'CARTAS'}`,
+    /** Lo que se pide al descartar: «DOS CARTAS». */
+    cartas: (n: number) => `${letras(n).toUpperCase()} ${n === 1 ? 'CARTA' : 'CARTAS'}`,
     declaracion: (lance: string, tiene: boolean) => `${lance.toUpperCase()}: ${tiene ? 'SÍ' : 'NO'}`,
     ganoYo: '¡GANO YO!',
     meHasGanado: 'ME HAS GANADO',
     mano: (n: number) => `Mano ${n}`,
-    depuracionTitulo: 'Depuración',
+    depuracionTitulo: 'Pruebas',
     depuracionCartas: (nombre: string) => `Cartas de ${nombre}`,
     depuracionUltima: 'Última decisión',
     depuracionMemoria: (envites: number, faroles: number, racha: number, enfado: number) =>

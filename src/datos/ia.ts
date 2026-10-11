@@ -26,6 +26,8 @@ export const IA = {
     divisorCara: 200,
     pesoMemoria: 0.6,
     farolesEsperados: 0.25,
+    /** Cuánto mira lo que arriesga al aceptar (0: nada, como dice el documento). */
+    pesoCuota: 0,
   },
   ordago: {
     /**

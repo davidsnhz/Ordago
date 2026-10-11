@@ -50,28 +50,6 @@ export function borrarPartida(almacen: Almacen | null = almacenDelNavegador()): 
   }
 }
 
-const CLAVE_CARA = 'ordago.cara';
-
-/** La Cara pasa de un duelo al siguiente, aunque el duelo acabado ya no se guarde. */
-export function guardarCara(cara: number, almacen: Almacen | null = almacenDelNavegador()): void {
-  try {
-    almacen?.setItem(CLAVE_CARA, String(cara));
-  } catch {
-    // Sin almacenamiento, la Cara vuelve a empezar.
-  }
-}
-
-export function cargarCara(almacen: Almacen | null = almacenDelNavegador()): number | null {
-  try {
-    const texto = almacen?.getItem(CLAVE_CARA);
-    if (texto === null || texto === undefined) return null;
-    const cara = Number(texto);
-    return Number.isFinite(cara) && cara >= 0 && cara <= 100 ? cara : null;
-  } catch {
-    return null;
-  }
-}
-
 function esPartida(valor: unknown): valor is Partida {
   if (!valor || typeof valor !== 'object') return false;
   const p = valor as Partial<Partida>;
