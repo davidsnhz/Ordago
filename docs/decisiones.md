@@ -208,7 +208,7 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 
 1. **Pestaña y ficha.** El lance va en una pestaña negra encima del panel (*LA CHICA*, *MUS · MANO 2*…) y lo que hay en juego en una ficha roja en la esquina (*6 en juego*; *TODO · el duelo* con un órdago). Sin envite no hay ficha.
 2. **La partida contada.** Lo tuyo en pasado y en cursiva azul (*Has envidado dos.*, *Llevas pares.*, *Has pedido una carta.*); lo del rival en presente, en versalitas rojas y con su frase debajo (*Ruperto sube cuatro más*); lo de la mesa en letra corriente. Dentro del acta ya no se usa la letra gruesa (Alfa Slab): queda para botones, cifras y gritos.
-3. **Tres líneas como mucho**, y si una frase larga no deja sitio se esconde entera la más antigua, nunca a medias. Todo sigue en «Toda la mano».
+3. **Tres líneas como mucho**, y si una frase larga no deja sitio se esconde entera la más antigua, nunca a medias. Todo sigue en «Toda la mano», que sale siempre que haya algo escondido (al principio no salía si el acta tenía pocas líneas, y con el saludo largo de Doña Engracia se perdía la de quién es mano). El panel admite unos 140 px de líneas sin pisar las cartas del rival.
 4. **El aviso de la Cara tapaba la cara del rival** (salía debajo de la barra, encima del retrato, donde están los tics). Ahora la cifra sube un momento junto a la marca de la barra y el motivo se lee en el acta. «Se te nota» hace parpadear la etiqueta SE TE NOTA en vez de sacar otro aviso.
 
 ## La cabecera y la ayuda de la Cara (12 de octubre de 2026)

@@ -259,7 +259,7 @@ function Acta({ duelo, acta }: { duelo: EstadoDuelo; acta: LineaActa[] }) {
           <span>{ficha.pie}</span>
         </span>
       )}
-      {acta.length > LINEAS_VISIBLES && (
+      {(abierta || desde > 0) && (
         <button type="button" className="acta__ver" aria-expanded={abierta} onClick={() => setAbierta((a) => !a)}>
           {abierta ? `▴ ${M.cerrarMano}` : `≡ ${M.verMano}`}
         </button>

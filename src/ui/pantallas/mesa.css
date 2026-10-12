@@ -509,7 +509,7 @@
   justify-content: flex-end;
   gap: 3px;
   /* Cerrada nunca pisa las cartas del rival: si no cabe, se esconde lo más antiguo (Mesa.tsx). */
-  max-height: 116px;
+  max-height: 140px;
   overflow: hidden;
   margin: 0;
   padding: 0;
