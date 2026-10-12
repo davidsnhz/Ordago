@@ -228,6 +228,7 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - El tapete empieza en 563 px (844 − 281), así que ocupa justo el tercio de abajo, con la barra de botones dentro.
 - Tus cartas pasan de 70 × 126 a 80 × 145 px (un 15 % más), con el abanico algo más abierto. Las del rival, de 32 × 58 a 30 × 54, para que quepan en la parte de arriba del tapete.
 - El selector de cantidad sube con la mano para no taparla, y el acta gana algo de sitio por abajo.
+- *Después, a petición de David:* las cartas del rival quedaban pegadas a las tuyas, así que suben 18 px con el tapete (empieza en 545 px). Quedan unos 15 px de aire entre unas y otras, y el acta sigue sin pisarlas.
 
 ## Dudas para fases posteriores
 
