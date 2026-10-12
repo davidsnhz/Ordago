@@ -16,7 +16,7 @@ Sale con la moneda de oros, a pantalla completa y en vertical.
 
 ## Cómo está ahora mismo
 
-Ahora se pueden jugar **duelos sueltos contra los cinco rivales**, cada uno con su arte, sus tics y sus manías. Lo siguiente es la gira: los pueblos uno detrás de otro, la taberna con sus objetos, los compañeros, la Libreta y la Honra. Todo eso está ya pensado en el [documento de diseño](docs/diseno-juego.md) (también en [PDF](<docs/Órdago — Documento de diseño.pdf>)), pero todavía no está en el juego.
+Ahora se pueden jugar **duelos sueltos contra los cinco rivales**, cada uno con su arte, sus tics y sus manías. Lo siguiente es la gira: cinco arenas, cada una con cuatro niveles (tres secuaces y su jefe), la taberna con sus objetos, los compañeros, la Libreta y la Honra. Todo eso está ya pensado en el [documento de diseño](docs/diseno-juego.md) (también en [PDF](<docs/Órdago — Documento de diseño.pdf>)), pero todavía no está en el juego.
 
 ## Cómo se juega
 
@@ -121,6 +121,6 @@ Dónde está cada cosa:
 - `src/estado/`: la partida y el guardado.
 - `src/ui/`: la mesa y sus piezas.
 - `src/textos/es.ts`: todos los textos del juego.
-- `docs/`: el [documento de diseño](docs/diseno-juego.md), la [dirección de arte](docs/direccion-arte.md) y las [decisiones](docs/decisiones.md) que he ido tomando por el camino.
+- `docs/`: el [documento de diseño](docs/diseno-juego.md), [la gira](docs/gira.md) (las arenas, los rivales, los objetos y los compañeros, con todas las ideas), la [dirección de arte](docs/direccion-arte.md) y las [decisiones](docs/decisiones.md) que he ido tomando por el camino.
 
 Las fuentes (Alfa Slab One e IM Fell) tienen licencia OFL; las licencias están en `public/arte/fuentes/`.

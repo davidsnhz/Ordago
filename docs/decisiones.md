@@ -238,11 +238,35 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - Hay un manifiesto (`public/manifest.webmanifest`): al añadir la web a la pantalla de inicio se abre a pantalla completa, en vertical y con el nombre *Órdago*. Todavía no funciona sin conexión: falta el *service worker*, que va con el resto del modo sin conexión.
 - Además, el tapete sube otros 16 px (empieza en 529) para dejar margen por encima de las cartas del rival.
 
+## La visión y la gira en arenas (12 de octubre de 2026)
+
+*Decidido por David* después de escribir su visión del juego:
+
+- **El orden:** primero la gira y comprobar que es divertida; luego el pulido a fondo (animaciones, arte de los rivales como en un juego profesional), en la fase 5. No tiene que enseñárselo a nadie todavía.
+- **Cada arena tiene cuatro niveles, como en Balatro:** tres secuaces y su jefe, que es el cuarto. Los cinco rivales que ya hay son los jefes.
+- **Honra: tres vidas.** Se queda como estaba, porque el reparto pesa mucho.
+- **Un solo compañero a la vez**, que se compra y se cambia en la taberna a medida que avanzas.
+- **Objetos que van contra el rival**, además de los que te ayudan.
+- **La «partida corta» es cada duelo a 20 piedras**, no la gira.
+- Su texto de visión va ordenado al principio del documento de diseño.
+
+*Propuesto por mí,* en el documento nuevo `docs/gira.md` (con su PDF, que se genera con `npm run documento` junto al de diseño), para que David lo cambie a su gusto:
+
+- **15 secuaces**, tres por arena. El tercero de cada arena es la mano derecha del jefe y su manía anuncia la regla del jefe (*Nicasio se pica como Ruperto; Fermina no acepta órdagos en la primera mano*). Algunos secuaces conectan con su jefe: *si Eusebio, el monaguillo, te pilla un farol, se chiva y empiezas el duelo con Don Anselmo con la penitencia puesta*.
+- **El orden de los niveles es fijo** (de menos a más), en lugar de elegir el orden de los dos parroquianos, para que la dificultad suba como en las ciegas de Balatro.
+- **Perder contra un secuaz:** −1 de Honra y no cobras, pero sigues al siguiente nivel.
+- **Reales por duelo según el nivel:** 4, 5, 6 y 10 el jefe (antes, 5 cualquier parroquiano y 10 el cacique).
+- **Premio del jefe:** a elegir entre un compañero, su objeto raro o +1 de Honra.
+- **La taberna, al estilo de Balatro:** cuatro cosas a la venta, «otra ronda» para cambiarlas y vender por la mitad.
+- **Objetos nuevos:** jugarretas (de un uso, contra el rival), amuletos contra el rival, bebidas nuevas y los objetos raros de los jefes. *Invitar a una ronda* pasa de las bebidas a las jugarretas.
+- **Tres compañeros nuevos:** la Cotilla, el Alguacil y el Dulzainero.
+- La plaza y la era se quedan como paradas, y la plaza tiene ya ideas de eventos.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).
 
-- **¿Un duelo a 20 piedras es corto?** En las simulaciones dura unas 3–4 manos, unos 2–3 minutos. El documento ya lo dejaba como pregunta abierta para estas pruebas.
+- **¿Un duelo a 20 piedras es corto? Decidido:** es la «partida corta» del juego. En las simulaciones dura unas 3–4 manos, unos 2–3 minutos; falta comprobarlo jugando.
 - **El real por «farol no descubierto»: decidido.** Cuenta el farol al que el rival dice «no quiero», como ya hace la Cara.
 - **El Veterano: decidido.** Basta con llevar dos reyes cualesquiera; los treses son reyes.
 - **El Tahúr: decidido.** Su seña cambia en secreto la carta que quieras por un rey del mazo (si no queda ninguno, no se puede usar). Si te pillan, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras.

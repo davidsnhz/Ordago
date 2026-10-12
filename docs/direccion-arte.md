@@ -13,7 +13,7 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Piezas de mesa: botones, piedras, lances, Cara, paneles | **Cerradas** | esta guía + `00_guia_estilo` |
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
 | Rivales (los cinco caciques) | **Cerrado el estilo**; faltan poses de algunos tics | `assets/personajes/` → `npm run personajes` |
-| Compañeros, parroquianos y tabernera | **PENDIENTE** | usar marcadores |
+| Compañeros, secuaces y tabernera | **PENDIENTE** | usar marcadores |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
 | Mapa ilustrado | Provisional | `referencias/pantallas/img/mapa.webp` |
 
