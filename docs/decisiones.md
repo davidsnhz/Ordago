@@ -230,6 +230,14 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - El selector de cantidad sube con la mano para no taparla, y el acta gana algo de sitio por abajo.
 - *Después, a petición de David:* las cartas del rival quedaban pegadas a las tuyas, así que suben 18 px con el tapete (empieza en 545 px). Quedan unos 15 px de aire entre unas y otras, y el acta sigue sin pisarlas.
 
+## Icono de la aplicación (12 de octubre de 2026)
+
+*Pedido por David:* la moneda de oros como icono de la aplicación en el móvil.
+
+- El icono necesita fondo opaco (en el iPhone lo transparente sale negro), así que va sobre el marrón de la taberna.
+- Hay un manifiesto (`public/manifest.webmanifest`): al añadir la web a la pantalla de inicio se abre a pantalla completa, en vertical y con el nombre *Órdago*. Todavía no funciona sin conexión: falta el *service worker*, que va con el resto del modo sin conexión.
+- Además, el tapete sube otros 16 px (empieza en 529) para dejar margen por encima de las cartas del rival.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

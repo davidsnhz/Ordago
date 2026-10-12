@@ -85,6 +85,14 @@ Las medidas están en píxeles del escenario de referencia (1280 × 590). Pasa e
 - Las del rival van boca abajo, pequeñas y también en abanico.
 - Al seleccionarlas para el descarte suben unos 20 px.
 
+## Icono de la aplicación (12 de octubre de 2026)
+
+La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (`#2A1F18`), en un cuadrado. `npm run iconos` (`scripts/iconos.mjs`) escribe en `public/iconos/`:
+
+- `icono-180.png` para el iPhone (iOS le redondea las esquinas) y `icono-192.png` e `icono-512.png` para Android, con la moneda ocupando el 80 %;
+- `icono-512-mascara.png`, el adaptable de Android, con la moneda al 62 % para que ningún recorte (círculo, gota, cuadrado) la corte;
+- `icono-32.png`, la pestaña del navegador, sin fondo.
+
 ## Pantallas (ver `referencias/pantallas/`)
 
 1. **Título** (`01_titulo`): papel, doble marco de tinta, logotipo grande y los cuatro reyes en abanico. Botones: NUEVA GIRA (gualda), Continuar, Libreta y Ajustes.

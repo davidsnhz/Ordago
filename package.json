@@ -13,7 +13,8 @@
     "tipos": "tsc --noEmit",
     "equilibrio": "vitest run --config vitest.equilibrio.config.ts",
     "documento": "node scripts/documento.mjs",
-    "personajes": "node scripts/personajes.mjs"
+    "personajes": "node scripts/personajes.mjs",
+    "iconos": "node scripts/iconos.mjs"
   },
   "dependencies": {
     "react": "^19.3.0",
