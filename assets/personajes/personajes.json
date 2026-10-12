@@ -1,0 +1,1201 @@
+{
+  "_nota": "Cómo sale cada animación de las hojas (assets/personajes/<id>/hoja.webp; se usa la ampliada hoja_x4.webp si está). recorte = [x, y, ancho, alto] en píxeles de la hoja ORIGINAL, alrededor de la figura entera con los pies (se mide de la cabeza a los pies para que los tics encajen con el reposo); cabeza = x del centro de la cabeza; borrar = zonas que se quitan; escala y ajuste = [dx, dy] corrigen el encuadre. base \"reposo\" = parte del reposo; retoques = cambios pintados (ver scripts/personajes/retoques.mjs), en píxeles del fotograma (660 × 660 = 220 × 220 px de pantalla); fotogramas = una lista de retoques por fotograma, con fps. efecto + punto = un efecto de la mesa encima del reposo. Después: npm run personajes.",
+  "marco": {
+    "lado": 660,
+    "pixelesPorPunto": 3,
+    "cabeza": [
+      330,
+      40
+    ],
+    "escala": 1.925
+  },
+  "personajes": {
+    "ruperto": {
+      "reposo": {
+        "recorte": [
+          0,
+          80,
+          328,
+          600
+        ],
+        "cabeza": 172
+      },
+      "animaciones": {
+        "parpadeo": {
+          "base": "reposo",
+          "fps": 18,
+          "fotogramas": [
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  303,
+                  163,
+                  15.5,
+                  10,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  327,
+                  150
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  360,
+                  163,
+                  15,
+                  10,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  327,
+                  150
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  303,
+                  163,
+                  15.5,
+                  10,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  327,
+                  150
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  360,
+                  163,
+                  15,
+                  10,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  327,
+                  150
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  303,
+                  163,
+                  15.5,
+                  10,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  327,
+                  150
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  360,
+                  163,
+                  15,
+                  10,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  327,
+                  150
+                ]
+              }
+            ]
+          ]
+        },
+        "tic_rascaBarba": {
+          "recorte": [
+            1505,
+            460,
+            110,
+            262
+          ],
+          "cabeza": 1549,
+          "escala": 0.93
+        },
+        "tic_arremanga": {
+          "recorte": [
+            1616,
+            460,
+            113,
+            262
+          ],
+          "cabeza": 1660,
+          "escala": 0.93
+        }
+      }
+    },
+    "engracia": {
+      "reposo": {
+        "recorte": [
+          0,
+          80,
+          300,
+          600
+        ],
+        "cabeza": 165
+      },
+      "animaciones": {
+        "parpadeo": {
+          "base": "reposo",
+          "fps": 18,
+          "fotogramas": [
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  308.5,
+                  191,
+                  27,
+                  12,
+                  12
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  355,
+                  180
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  389,
+                  208,
+                  22,
+                  10,
+                  -3
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  355,
+                  180
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  308.5,
+                  191,
+                  27,
+                  12,
+                  12
+                ],
+                "cierre": 1,
+                "piel": [
+                  355,
+                  180
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  389,
+                  208,
+                  22,
+                  10,
+                  -3
+                ],
+                "cierre": 1,
+                "piel": [
+                  355,
+                  180
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  308.5,
+                  191,
+                  27,
+                  12,
+                  12
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  355,
+                  180
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  389,
+                  208,
+                  22,
+                  10,
+                  -3
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  355,
+                  180
+                ]
+              }
+            ]
+          ]
+        },
+        "tic_rosario": {
+          "recorte": [
+            1499,
+            460,
+            105,
+            255
+          ],
+          "cabeza": 1548,
+          "escala": 0.93
+        },
+        "tic_miraFijamente": {
+          "base": "reposo",
+          "retoques": [
+            {
+              "tipo": "parpado",
+              "ojo": [
+                308.5,
+                191,
+                27,
+                12,
+                12
+              ],
+              "cierre": 0.32,
+              "piel": [
+                355,
+                180
+              ]
+            },
+            {
+              "tipo": "parpado",
+              "ojo": [
+                389,
+                208,
+                22,
+                10,
+                -3
+              ],
+              "cierre": 0.32,
+              "piel": [
+                355,
+                180
+              ]
+            },
+            {
+              "tipo": "acercar",
+              "centro": [
+                345,
+                230
+              ],
+              "factor": 1.06
+            }
+          ]
+        }
+      }
+    },
+    "anselmo": {
+      "reposo": {
+        "recorte": [
+          0,
+          80,
+          328,
+          600
+        ],
+        "cabeza": 165
+      },
+      "animaciones": {
+        "parpadeo": {
+          "base": "reposo",
+          "fps": 18,
+          "fotogramas": [
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  294,
+                  182,
+                  21,
+                  13,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  335,
+                  150
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  369.5,
+                  180.5,
+                  16,
+                  11,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  335,
+                  150
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  294,
+                  182,
+                  21,
+                  13,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  335,
+                  150
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  369.5,
+                  180.5,
+                  16,
+                  11,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  335,
+                  150
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  294,
+                  182,
+                  21,
+                  13,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  335,
+                  150
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  369.5,
+                  180.5,
+                  16,
+                  11,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  335,
+                  150
+                ]
+              }
+            ]
+          ]
+        },
+        "tic_miraAlCielo": {
+          "recorte": [
+            1500,
+            460,
+            111,
+            262
+          ],
+          "cabeza": 1540,
+          "escala": 0.93,
+          "ajuste": [
+            -22,
+            0
+          ]
+        }
+      }
+    },
+    "fulgencio": {
+      "reposo": {
+        "recorte": [
+          0,
+          80,
+          310,
+          600
+        ],
+        "cabeza": 178,
+        "retoques": [
+          {
+            "tipo": "plantilla",
+            "nombre": "diente"
+          },
+          {
+            "tipo": "plantilla",
+            "nombre": "vara"
+          }
+        ]
+      },
+      "animaciones": {
+        "parpadeo": {
+          "base": "reposo",
+          "fps": 18,
+          "fotogramas": [
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  323,
+                  190,
+                  19,
+                  10,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  178
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  372,
+                  191,
+                  9,
+                  7,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  178
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  323,
+                  190,
+                  19,
+                  10,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  345,
+                  178
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  372,
+                  191,
+                  9,
+                  7,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  345,
+                  178
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  323,
+                  190,
+                  19,
+                  10,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  178
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  372,
+                  191,
+                  9,
+                  7,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  178
+                ]
+              }
+            ]
+          ]
+        },
+        "tic_dienteDeOro": {
+          "base": "reposo",
+          "retoques": [
+            {
+              "tipo": "parpado",
+              "ojo": [
+                323,
+                190,
+                19,
+                10,
+                0
+              ],
+              "cierre": 0.3,
+              "piel": [
+                345,
+                178
+              ]
+            },
+            {
+              "tipo": "parpado",
+              "ojo": [
+                372,
+                191,
+                9,
+                7,
+                0
+              ],
+              "cierre": 0.25,
+              "piel": [
+                345,
+                178
+              ]
+            }
+          ],
+          "efecto": "destello",
+          "punto": [
+            348,
+            252
+          ]
+        },
+        "tic_quitaSombrero": {
+          "base": "reposo",
+          "fps": 10,
+          "fotogramas": [
+            [
+              {
+                "tipo": "mover",
+                "zona": [
+                  [
+                    58,
+                    262
+                  ],
+                  [
+                    72,
+                    175
+                  ],
+                  [
+                    128,
+                    128
+                  ],
+                  [
+                    185,
+                    110
+                  ],
+                  [
+                    215,
+                    95
+                  ],
+                  [
+                    240,
+                    62
+                  ],
+                  [
+                    295,
+                    38
+                  ],
+                  [
+                    345,
+                    34
+                  ],
+                  [
+                    410,
+                    38
+                  ],
+                  [
+                    463,
+                    55
+                  ],
+                  [
+                    472,
+                    95
+                  ],
+                  [
+                    468,
+                    150
+                  ],
+                  [
+                    456,
+                    200
+                  ],
+                  [
+                    440,
+                    214
+                  ],
+                  [
+                    428,
+                    168
+                  ],
+                  [
+                    412,
+                    128
+                  ],
+                  [
+                    362,
+                    100
+                  ],
+                  [
+                    312,
+                    116
+                  ],
+                  [
+                    262,
+                    148
+                  ],
+                  [
+                    220,
+                    184
+                  ],
+                  [
+                    182,
+                    236
+                  ],
+                  [
+                    158,
+                    282
+                  ],
+                  [
+                    128,
+                    292
+                  ],
+                  [
+                    100,
+                    285
+                  ]
+                ],
+                "d": [
+                  -1,
+                  -8
+                ],
+                "giro": -3,
+                "centro": [
+                  300,
+                  110
+                ],
+                "relleno": "<g><ellipse cx=\"335\" cy=\"134\" rx=\"98\" ry=\"52\" fill=\"#2f1f17\"/><path d=\"M248 156 Q300 98 382 102\" stroke=\"#5a3b28\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M268 166 Q322 114 404 124\" stroke=\"#4a3020\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M298 116 Q342 92 412 112\" stroke=\"#6b4630\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></g>"
+              }
+            ],
+            [
+              {
+                "tipo": "mover",
+                "zona": [
+                  [
+                    58,
+                    262
+                  ],
+                  [
+                    72,
+                    175
+                  ],
+                  [
+                    128,
+                    128
+                  ],
+                  [
+                    185,
+                    110
+                  ],
+                  [
+                    215,
+                    95
+                  ],
+                  [
+                    240,
+                    62
+                  ],
+                  [
+                    295,
+                    38
+                  ],
+                  [
+                    345,
+                    34
+                  ],
+                  [
+                    410,
+                    38
+                  ],
+                  [
+                    463,
+                    55
+                  ],
+                  [
+                    472,
+                    95
+                  ],
+                  [
+                    468,
+                    150
+                  ],
+                  [
+                    456,
+                    200
+                  ],
+                  [
+                    440,
+                    214
+                  ],
+                  [
+                    428,
+                    168
+                  ],
+                  [
+                    412,
+                    128
+                  ],
+                  [
+                    362,
+                    100
+                  ],
+                  [
+                    312,
+                    116
+                  ],
+                  [
+                    262,
+                    148
+                  ],
+                  [
+                    220,
+                    184
+                  ],
+                  [
+                    182,
+                    236
+                  ],
+                  [
+                    158,
+                    282
+                  ],
+                  [
+                    128,
+                    292
+                  ],
+                  [
+                    100,
+                    285
+                  ]
+                ],
+                "d": [
+                  -3,
+                  -18
+                ],
+                "giro": -7,
+                "centro": [
+                  300,
+                  110
+                ],
+                "relleno": "<g><ellipse cx=\"335\" cy=\"134\" rx=\"98\" ry=\"52\" fill=\"#2f1f17\"/><path d=\"M248 156 Q300 98 382 102\" stroke=\"#5a3b28\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M268 166 Q322 114 404 124\" stroke=\"#4a3020\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M298 116 Q342 92 412 112\" stroke=\"#6b4630\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></g>"
+              }
+            ]
+          ]
+        },
+        "tic_golpeaVara": {
+          "base": "figura",
+          "fps": 10,
+          "fotogramas": [
+            [
+              {
+                "tipo": "plantilla",
+                "nombre": "diente"
+              },
+              {
+                "tipo": "plantilla",
+                "nombre": "vara",
+                "d": [
+                  0,
+                  -14
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "plantilla",
+                "nombre": "diente"
+              },
+              {
+                "tipo": "plantilla",
+                "nombre": "vara",
+                "d": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "tipo": "desplazar",
+                "d": [
+                  0,
+                  3
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "plantilla",
+                "nombre": "diente"
+              },
+              {
+                "tipo": "plantilla",
+                "nombre": "vara",
+                "d": [
+                  0,
+                  -10
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "plantilla",
+                "nombre": "diente"
+              },
+              {
+                "tipo": "plantilla",
+                "nombre": "vara",
+                "d": [
+                  0,
+                  0
+                ]
+              },
+              {
+                "tipo": "desplazar",
+                "d": [
+                  0,
+                  3
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "plantilla",
+                "nombre": "diente"
+              },
+              {
+                "tipo": "plantilla",
+                "nombre": "vara",
+                "d": [
+                  0,
+                  0
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "plantillas": {
+        "diente": [
+          {
+            "tipo": "dibujo",
+            "svg": "<rect x=\"344.3\" y=\"248\" width=\"6.6\" height=\"9.6\" rx=\"2.2\" fill=\"#D9A21E\" stroke=\"#5a3a10\" stroke-width=\"0.9\"/><rect x=\"345.4\" y=\"249.6\" width=\"1.8\" height=\"5.2\" rx=\"0.9\" fill=\"#FBE7A0\"/>"
+          }
+        ],
+        "vara": [
+          {
+            "tipo": "dibujo",
+            "svg": "<g><line x1=\"142\" y1=\"322\" x2=\"178\" y2=\"730\" stroke=\"#231915\" stroke-width=\"16\" stroke-linecap=\"round\"/><line x1=\"142\" y1=\"322\" x2=\"178\" y2=\"730\" stroke=\"#6b4426\" stroke-width=\"10.5\" stroke-linecap=\"round\"/><line x1=\"139.6\" y1=\"332\" x2=\"175\" y2=\"730\" stroke=\"#9a6a3e\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"141\" cy=\"317\" r=\"10.5\" fill=\"#231915\"/><circle cx=\"141\" cy=\"317\" r=\"7.6\" fill=\"#7a4e2b\"/><circle cx=\"138.6\" cy=\"314.4\" r=\"2.6\" fill=\"#b07c4a\"/></g>",
+            "excepto": [
+              [
+                150,
+                598
+              ],
+              [
+                168,
+                597
+              ],
+              [
+                182,
+                609
+              ],
+              [
+                192,
+                628
+              ],
+              [
+                194,
+                660
+              ],
+              [
+                186,
+                676
+              ],
+              [
+                172,
+                684
+              ],
+              [
+                150,
+                684
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "bonifacio": {
+      "reposo": {
+        "recorte": [
+          0,
+          80,
+          318,
+          600
+        ],
+        "cabeza": 160
+      },
+      "animaciones": {
+        "parpadeo": {
+          "base": "reposo",
+          "fps": 18,
+          "fotogramas": [
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  329,
+                  167,
+                  18,
+                  8,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  145
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  389,
+                  174,
+                  12,
+                  7,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  145
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  329,
+                  167,
+                  18,
+                  8,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  345,
+                  145
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  389,
+                  174,
+                  12,
+                  7,
+                  0
+                ],
+                "cierre": 1,
+                "piel": [
+                  345,
+                  145
+                ]
+              }
+            ],
+            [
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  329,
+                  167,
+                  18,
+                  8,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  145
+                ]
+              },
+              {
+                "tipo": "parpado",
+                "ojo": [
+                  389,
+                  174,
+                  12,
+                  7,
+                  0
+                ],
+                "cierre": 0.55,
+                "piel": [
+                  345,
+                  145
+                ]
+              }
+            ]
+          ]
+        },
+        "tic_rascaBarba": {
+          "recorte": [
+            1499,
+            460,
+            113,
+            262
+          ],
+          "cabeza": 1543,
+          "escala": 0.93
+        },
+        "tic_arremanga": {
+          "recorte": [
+            1614,
+            460,
+            110,
+            262
+          ],
+          "cabeza": 1658,
+          "escala": 0.93
+        },
+        "tic_bebeVino": {
+          "recorte": [
+            1834,
+            460,
+            146,
+            262
+          ],
+          "cabeza": 1878,
+          "borrar": [
+            [
+              1834,
+              596,
+              18,
+              36
+            ]
+          ],
+          "escala": 0.8,
+          "ajuste": [
+            -44,
+            88
+          ]
+        },
+        "tic_miraAlCielo": {
+          "base": "reposo",
+          "retoques": [
+            {
+              "tipo": "mirada",
+              "ojo": [
+                329,
+                167,
+                18,
+                8,
+                0
+              ],
+              "iris": [
+                328.75,
+                165.5,
+                4.6
+              ],
+              "hacia": [
+                0,
+                -4
+              ]
+            },
+            {
+              "tipo": "mirada",
+              "ojo": [
+                389,
+                174,
+                12,
+                7,
+                0
+              ],
+              "iris": [
+                386,
+                174,
+                4.2
+              ],
+              "hacia": [
+                0,
+                -3.5
+              ]
+            },
+            {
+              "tipo": "girar",
+              "pivote": [
+                330,
+                300
+              ],
+              "zona": [
+                335,
+                170,
+                125
+              ],
+              "angulo": -4
+            }
+          ]
+        },
+        "tic_humoPuro": {
+          "efecto": "humo",
+          "punto": [
+            484,
+            220
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 # Órdago — Documento de diseño
 
-11 de octubre de 2026 · @david · *versión 3: retoques y depuración antes de la fase 4*
+12 de octubre de 2026 · @david · *versión 6: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5) y el acta narrada (v6)*
 
-> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Ruperto) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. Los cambios respecto a la versión anterior van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
+> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Ruperto) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. **Los cinco rivales ya tienen su arte** en la mesa, con varios de sus tics dibujados. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. Los cambios de las versiones 4 a 6 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
 
 ## Visión y esencia
 
@@ -47,24 +47,30 @@ La gira propuesta recorre comarcas reales, cada una con su identidad visual y su
 
 ### Arte
 
-> **Esta sección está sustituida por `docs/direccion-arte.md`.** El pixel art se descartó: la interfaz y la baraja usan el estilo de naipe impreso, y el estilo de los personajes está pendiente.
+> **Esta sección está sustituida por `docs/direccion-arte.md`.** El pixel art se descartó: la interfaz y la baraja usan el estilo de naipe impreso. **[cambiado]** Los personajes son ilustraciones en 3D de estilo de animación (las hojas de personaje de David) **pasadas por la imprenta** para que casen con la mesa: tonos planos, tinta en lugar de negro, papel en lugar de blanco, grano de impresión, contorno de tinta y sombra dura, como los paneles.
 
 - **La mesa en el centro.** Vista frontal: el rival sentado enfrente, ocupando el centro de la pantalla vertical. Tus cartas abajo y los botones al pie, al alcance del pulgar.
 - **Maquetación vertical:** escenario de 390 × 844, como un móvil. En ordenador se ve centrado con bandas, y si giras el móvil sale un aviso para ponerlo en vertical. De arriba abajo:
-  1. **El marcador, solo con números:** el rival a la izquierda, tú a la derecha y en medio la fila de lances (Grande · Chica · Pares · Juego). Los amarracos ya no salen en el marcador. Quien es mano lleva debajo la insignia MANO. **[cambiado]** Arriba ya no sale el nombre de la comarca.
-  2. **Tu Cara**, en una barra fina. Su rótulo se aparta al lado contrario de la marca para que no se pisen. **[cambiado]**
-  3. **El rival**, grande y centrado, con su nombre y sus tics.
-  4. **El acta de la mano [nuevo]:** un solo panel bajo el retrato, con la cola apuntando al rival, donde está todo lo que se dice y pasa. Sustituye al bocadillo, al panel «En juego», a la crónica y a la etiqueta de lo que dijiste, que repetían lo mismo en cuatro sitios.
-     - **Arriba:** en qué lance estamos y qué hay en juego (*Grande · 5 piedras en juego*, *Chica · Sin envite*, *¡El duelo entero!*).
-     - **Debajo, las tres últimas cosas:** lo que dice el rival en almagre y con su frase, lo que dices tú en añil, y lo que pasa en la mesa en cursiva (*Grande en paso: se cobra en el recuento*, *Pares: cobras 1 por el «no quiero»*).
-     - Lo último va bien marcado y lo anterior, apagado.
-     - Cada mano empieza diciendo quién es mano; en la primera, además, qué significa: *Mano 1: eres mano (habla primero y gana los empates)*.
-     - **«Toda la mano»** la abre entera, para repasar lo que ha pasado.
-  5. **El tapete:** las cartas del rival, boca abajo.
-  6. **Tu mano**, en abanico.
-  7. **La barra de acciones** (ver controles). Cuando le toca al rival dice *Le toca a Ruperto…* en vez de quedarse vacía. **[cambiado]**
-- **Herramientas de pruebas [nuevo]:** los botones Rival y Depurar son solo para probar el juego mientras se hace. Salen en desarrollo o con `?pruebas` en la dirección (*ordago-game.vercel.app/?pruebas*); en el juego normal no están.
+  1. **La cabecera [cambiado]**, en un solo panel bajito (opción «H3 · Tu careto», en versión compacta, elegida por David entre prototipos que están en `referencias/prototipos-cabecera/`):
+     - **Arriba**, los nombres (el rival a la izquierda, tú a la derecha) y en medio *a 20 piedras*.
+     - **En medio**, los dos números grandes, la insignia **MANO** junto al de quien lo es y **los lances como pasos**: los jugados con ✓ y apagados, el que se juega relleno de rojo y los que faltan con borde de puntos (*✓ Grande · Chica · Pares · Juego*). Si nadie tiene juego, el último paso es *Punto*.
+     - **Abajo, tu Cara:** tu **careto** de tinta (sudando si te pillan, serio si te creen, con media sonrisa si te temen), qué significa ahora en pocas palabras (*te creen: a veces cuela*), su número, una barra fina de tres zonas con la marca y el botón **«?»**. Arriba ya no sale el nombre de la comarca.
+     - **Cuando la Cara cambia**, la cifra (*+8*, *−12*) sube un momento sobre la marca y se va; el motivo queda apuntado en el acta. Antes salía un aviso debajo de la barra que tapaba la cara del rival, justo donde están sus tics. Cuando se te nota el pulso, la etiqueta *SE TE NOTA* parpadea.
+     - **«?»** abre una ficha corta: qué es la Cara (*lo que te creen en la mesa*), qué la mueve (+8, +4, −12, −15) y qué hace cada zona, con la tuya resaltada. Mientras está abierta, el rival espera.
+  2. **El rival**, grande y centrado, con sus tics. **[cambiado]** Ya no lleva al lado el cartel con su nombre, que sobraba (su nombre está en el marcador); en ese sitio solo sale, mientras dura, una etiqueta con su estado: *¡ENFADADO!* (Ruperto) u *OFENDIDA* (Doña Engracia). Se ve de cintura para arriba, recortado sobre la pared de la taberna, con la luz del quinqué detrás; el acta tapa el corte de la figura y su cola le apunta.
+  3. **El acta de la mano [cambiado]:** un solo panel bajo el retrato, con la cola apuntando al rival, donde está todo lo que se dice y pasa. **Cuenta la partida con frases normales** (opción «D3 · Narrado», elegida por David entre varios prototipos que están en `referencias/prototipos-acta/`).
+     - **La pestaña** de arriba dice en qué estamos: *LA GRANDE*, *LA CHICA*, *PARES*, *EL JUEGO*, *EL PUNTO*, o *MUS · MANO 2*, *DESCARTE*, *TRATO*.
+     - **La ficha roja** de la esquina dice lo que hay en juego cuando hay envite: *6 en juego*, o *TODO · el duelo* si es un órdago.
+     - **Dentro, las tres últimas cosas, contadas:** lo tuyo en cursiva azul y en pasado (*Has envidado dos.*); lo del rival en versalitas rojas y en presente, con su frase debajo (*Ruperto sube cuatro más* · *«¡Más leña al fuego!»*); y lo que pasa en la mesa en letra corriente (*Grande en paso: se cobra en el recuento*). Ya no se usa la letra gruesa dentro del acta.
+     - Lo último va bien marcado y lo anterior, algo apagado. Si una frase larga no deja sitio, lo más antiguo se esconde entero (nunca se corta a medias).
+     - Cada mano empieza diciendo quién es mano; en la primera, además, qué significa: *Mano 1: eres mano (habla primero y gana los empates)*. Al empezar el duelo, *Ruperto se sienta a la mesa* con su saludo.
+     - **«Toda la mano»**, debajo del panel, la abre entera para repasar lo que ha pasado.
+  4. **El tapete:** las cartas del rival, boca abajo.
+  5. **Tu mano**, en abanico.
+  6. **La barra de acciones** (ver controles). Cuando le toca al rival dice *Le toca a Ruperto…* en vez de quedarse vacía.
+- **Herramientas de pruebas:** los botones Rival, Depurar y **Tics [nuevo]** son solo para probar el juego mientras se hace. Tics enseña seguidos todos los tics del rival, para revisar su arte sin esperar a que salgan jugando. Salen en desarrollo o con `?pruebas` en la dirección (*ordago-game.vercel.app/?pruebas*); en el juego normal no están.
 - **El rival es lo más importante de la pantalla** porque es donde están los tics. Necesita animaciones sutiles: parpadeo, respiración, manos, mirada. Cada tic es una animación propia.
+  - **Lo que ya hay [nuevo]:** el rival **respira** (se ensancha un pelo y vuelve, cada 4 segundos) y **parpadea** cada pocos segundos. Cada tic dibujado es un **cambio de pose con un fundido**: *Ruperto se lleva la mano a la barba* y, pasado el tic, vuelve a su postura. Algunos se mueven en varios fotogramas (*Fulgencio levanta el sombrero*, *golpea dos veces con la vara*) y otros llevan un efecto encima (*le brilla el diente de oro*, *el puro de Don Bonifacio echa humo*). Los gestos de ojos van pintados sobre el retrato: *Doña Engracia entorna los ojos y se inclina hacia ti*, *Don Bonifacio pone los ojos en blanco hacia arriba*.
 - **Cada comarca tiñe el ambiente** (azulado en la montaña, vinoso en la Ribera).
 - **Detalles de taberna**: porrón, vasos de chato, un perro durmiendo, parroquianos de fondo que reaccionan a los órdagos.
 
@@ -200,7 +206,7 @@ Las piedras son del duelo. Los **reales** son la moneda de la gira y se cobran a
 | Ganar un duelo contra un parroquiano | 5 |
 | Ganar un duelo contra un cacique | 10 |
 | Cada envite aceptado y ganado | +1 |
-| Cada farol que el rival no descubre | +1 |
+| Cada farol que el rival no descubre (**[cambiado]** cuenta el farol al que el rival dice «no quiero») | +1 |
 | Ganar un órdago | +5 |
 | Perder un duelo | 2 de consolación |
 
@@ -235,7 +241,17 @@ Cada tic tiene tres propiedades:
 | Fiabilidad | Porcentaje de veces que es verdad | 80 %: a veces lo hace sin motivo |
 | Excepción | Cuándo cambia su significado | Si va perdiendo de 8 o más, lo usa para farolear |
 
-**Cómo salen:** si se cumple su disparador, el tic sale el 60 % de las veces; en falso sale lo justo para que, de todas las veces que lo ves, acierte su fiabilidad (comprobado con 150.000 manos). Salen al recibir cartas (reparto y tras descartar), al declarar su lance y al decidir un envite de su lance. Mientras no haya dibujos, el retrato se sacude, destella y aparece una acotación con el gesto («se rasca la barba»); lo que significa cada tic solo se ve en el modo de pruebas.
+**Cómo salen:** si se cumple su disparador, el tic sale el 60 % de las veces; en falso sale lo justo para que, de todas las veces que lo ves, acierte su fiabilidad (comprobado con 150.000 manos). Salen al recibir cartas (reparto y tras descartar), al declarar su lance y al decidir un envite de su lance. **[cambiado]** Si el tic tiene dibujo, se ve sin texto: el rival cambia de pose. Si todavía no lo tiene, el rival se sacude y aparece una acotación con el gesto («se rasca la barba»). Lo que significa cada tic solo se ve en el modo de pruebas.
+
+**Tics con dibujo [nuevo]** (los demás esperan a que haya arte):
+
+| Rival | Con dibujo | Sin dibujo todavía |
+| --- | --- | --- |
+| Ruperto | Se rasca la barba, se arremanga | — |
+| Doña Engracia | El rosario, te mira fijamente | — |
+| Don Anselmo | Mira al cielo | Bebe vino (no lleva vaso), junta las manos |
+| Fulgencio | El diente de oro, se quita el sombrero, golpea la vara | — |
+| Don Bonifacio | Se rasca la barba, se arremanga, bebe vino, mira al cielo, el humo del puro | Junta las manos |
 
 Ningún tic es 100 % fiable. Si lo fueran, el juego sería memorizar. Con un 70–85 % hay que decidir con riesgo, que es lo que hace divertido el mus.
 
@@ -264,7 +280,7 @@ Tu Cara es un medidor de 0 a 100 que representa lo creíble que eres en la mesa.
 
 **Qué es un farol para el juego:** un envite, subida u órdago en un lance en el que tus cartas tenían menos de un 35 % de probabilidad de ganar. El juego lo calcula solo; no hay que declararlo. «Buena mano» es un 65 % o más. A Pares solo cuentan las manos rivales con pares, al Juego las que tienen juego y al Punto las que no. *Ejemplo: envidas cinco a la Grande con C 6 C 6: sin reyes, esa Grande gana menos del 35 % de las veces, así que cuenta como farol.*
 
-**[cambiado]** Mientras no haya gira, **cada duelo empieza de cero, con la Cara en 60**: al acabar un duelo, la revancha o el duelo contra otro rival no arrastran la Cara del anterior. Con la gira (fase 4), la Cara pasará de un duelo al siguiente dentro de la misma gira. En el modo de pruebas se puede subir o bajar a mano.
+Mientras no haya gira, **cada duelo empieza de cero, con la Cara en 60**: al acabar un duelo, la revancha o el duelo contra otro rival no arrastran la Cara del anterior. Con la gira (fase 4), la Cara pasará de un duelo al siguiente dentro de la misma gira. En el modo de pruebas se puede subir o bajar a mano.
 
 **Qué hace la Cara:**
 
@@ -285,11 +301,11 @@ Llevas un compañero por gira, elegido al principio entre los desbloqueados. Al 
 | --- | --- | --- | --- | --- |
 | El Pastor | La Libreta se rellena el doble de rápido | Te enseña una carta del rival (1) | Lectura y observación | Disponible desde el inicio |
 | La Tabernera | +2 reales por duelo ganado | Si ganas el próximo órdago, cobras el triple de reales (1) | Economía y órdagos | Disponible desde el inicio |
-| El Tahúr | Una ronda de mus extra por mano | Cambias una carta en secreto; si el rival tiene «Ojo» alto, te pilla y pierdes la mano (2) | Riesgo y manipulación | Ganar 3 faroles en un mismo duelo |
+| El Tahúr | Una ronda de mus extra por mano | **[cambiado]** Cambias en secreto la carta que quieras por un rey del mazo. Si el rival tiene «Ojo» alto, te pilla: la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (2) | Riesgo y manipulación | Ganar 3 faroles en un mismo duelo |
 | El Abuelo | Los faroles descubiertos te quitan la mitad de Cara | «Ya me lo sé»: te dice si el rival lleva juego o no (1) | Faroleo seguro | Llegar a la Ribera del Duero |
 | La Moza del Molino | Empiezas cada duelo con 2 piedras | Distrae al rival: no hace tics durante una mano, pero tampoco puede leerte a ti (2) | Agresivo y rápido | Ganar un duelo sin perder ningún lance |
 | El Sacristán | Ves cuándo el rival va a farolear (el retrato se oscurece un instante), con 60 % de fiabilidad | Repites el reparto de una mano (1) | Defensivo | Vencer a Don Anselmo |
-| El Veterano | Tus envites aceptados y ganados dan +1 piedra | «Órdago a la grande»: si llevas los dos reyes más altos, el órdago a la grande no se puede rechazar (1) | Golpes grandes | Ganar 10 órdagos en total |
+| El Veterano | Tus envites aceptados y ganados dan +1 piedra | «Órdago a la grande»: **[cambiado]** si llevas dos reyes (cualesquiera: los treses son reyes), tu órdago a la Grande no se puede rechazar (1) | Golpes grandes | Ganar 10 órdagos en total |
 | El Forastero | La Cara nunca baja de 30 | Cambia el lance en el que se juega el órdago después de que el rival lo acepte (1) | Caos | Completar una gira |
 
 La idea es que cada compañero empuje a un estilo distinto, para que dos giras no se jueguen igual. Combinado con los objetos, salen las sinergias propias de un roguelike: Tahúr con objetos de descarte, Tabernera con objetos de órdago, Pastor con objetos de lectura.
@@ -320,7 +336,7 @@ Los objetos se compran con reales en la taberna y son la segunda capa de constru
 | --- | --- | --- |
 | Boina de la suerte | Ganas los empates aunque no seas mano | 8 reales |
 | Navaja de Albacete | Los órdagos que ganas dan +1 de Honra (máximo 3) | 12 reales |
-| Medalla de la Virgen | El primer órdago perdido de cada duelo solo cuesta 10 piedras | 10 reales |
+| Medalla de la Virgen | **[cambiado]** Descartada tal como estaba («el primer órdago perdido solo cuesta 10 piedras»): David no le ve sentido. El hueco queda libre; hay una propuesta en «Preguntas abiertas» | — |
 | Pañuelo de hierbas | Ves si el rival tiene pares antes de que lo declare | 9 reales |
 | Reloj de bolsillo | Los rivales tardan más en decidir y sus tics duran más | 7 reales |
 | Gafas de culo de vaso | +1 nota automática en la Libreta por duelo | 6 reales |
@@ -359,7 +375,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 1. Ruperto, el Herrero (Tierra de Campos)
 
-**Aspecto:** grandote, delantal de cuero, brazos negros de hollín, bigote enorme. Golpea la mesa al envidar.
+**Aspecto [cambiado]:** grandote, barba enorme y rizada, pañuelo rojo al cuello, delantal de cuero con tirantes y muñequeras. Golpea la mesa al envidar.
 
 **Personalidad:** bruto y directo. Cuando lleva cartas, se le ve en todo. Envida fuerte, sube mucho y casi nunca farolea. Acepta los órdagos por orgullo.
 
@@ -380,9 +396,9 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 2. Doña Engracia, la Viuda (Montaña Palentina)
 
-**Aspecto:** de negro, con mantilla y un rosario entre los dedos. Mirada de rayos X.
+**Aspecto [cambiado]:** de negro, con mantón morado de flecos, moño gris, pendientes de oro, bastón y un rosario entre los dedos. Mirada de rayos X.
 
-**Personalidad:** paciente y desconfiada. Casi nunca farolea, rechaza muchos envites y nunca acepta un órdago antes de la tercera mano. Cuando envida ella, lleva cartas.
+**Personalidad:** paciente y desconfiada. Casi nunca farolea, rechaza muchos envites y nunca acepta un órdago antes de la tercera mano. Cuando envida ella, lleva cartas. **[cambiado]** Con el ajuste de equilibrio (ver «El farolero»), los envites pequeños los quiere más que antes: acepta casi la mitad de tus envites, frente al 30 % de antes. Sigue sin farolear y sin aceptar órdagos pronto.
 
 **Tics:**
 
@@ -399,7 +415,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 3. Don Anselmo, el Cura (Ribera del Duero)
 
-**Aspecto:** sotana, gafas redondas, mofletes colorados, un vaso de vino de la Ribera siempre al lado.
+**Aspecto [cambiado]:** sotana, solideo, estola morada, cruz de oro y mofletes colorados. Falta dibujarle el vaso de vino de la Ribera, que necesita su tic.
 
 **Personalidad:** equilibrado y astuto, con una manía: envida siempre a la Chica, lleve lo que lleve. Es el primer rival con buena memoria: si le faroleas dos veces, deja de creerte.
 
@@ -421,7 +437,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 4. Fulgencio, el Tratante (Feria de ganado)
 
-**Aspecto:** sombrero de ala ancha, blusón de tratante, vara en la mano, sonrisa de diente de oro.
+**Aspecto [cambiado]:** sombrero de ala ancha con pluma roja, chaleco bordado, manta al hombro, aro de oro en la oreja, diente de oro y vara de tratante en la mano (estos dos, pintados sobre su dibujo porque los usan sus tics).
 
 **Personalidad:** mentiroso profesional. Farolea más que nadie y tira órdagos sin nada. Es un espejo del jugador: te enseña lo que se siente al otro lado.
 
@@ -448,7 +464,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 5. Don Bonifacio, el Cacique (Casino de la capital)
 
-**Aspecto:** traje de tres piezas, cadena de reloj de oro, puro, anillo con sello. Sentado en un sillón más alto que el tuyo.
+**Aspecto [cambiado]:** levita granate bordada en oro, chaleco de brocado, cadena de reloj, puro, anillos y bastón de puño dorado. Sentado en un sillón más alto que el tuyo.
 
 **Personalidad:** lo sabe todo de ti. Lee tu Libreta: conoce los tics de los rivales que has anotado y juega al revés de lo que esperas. Adapta su estilo al tuyo durante el duelo.
 
@@ -535,19 +551,19 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
 ### Equilibrio medido
 
-300 duelos de cada rival contra un jugador sensato (la misma IA con personalidad neutra, que no lee tics):
+**[cambiado]** 300 duelos de cada rival contra un jugador sensato (la misma IA con personalidad neutra, que no lee tics), ya con la cuota activada (`pesoCuota` 0,75):
 
-| Rival | Gana | Manos por duelo | Órdago suyo | Acepta tus envites |
+| Rival | Gana | Manos por duelo | Órdago suyo | Acepta tus envites (antes) |
 | --- | --- | --- | --- | --- |
-| Ruperto | 49 % | 3,4 | 17 % de manos | 32 % |
-| Doña Engracia | 42 % | 4,4 | 6 % | 30 % |
-| Don Anselmo | 41 % | 4,4 | 13 % | 21 % |
-| Fulgencio | 60 % | 3,9 | 14 % | 21 % |
-| Don Bonifacio | 57 % | 3,7 | 16 % | 15 % |
+| Ruperto | 52 % | 3,3 | 18 % de manos | 51 % (32 %) |
+| Doña Engracia | 43 % | 4,2 | 6 % | 47 % (30 %) |
+| Don Anselmo | 44 % | 4,2 | 13 % | 34 % (21 %) |
+| Fulgencio | 55 % | 3,7 | 12 % | 41 % (21 %) |
+| Don Bonifacio | 56 % | 3,5 | 16 % | 29 % (15 %) |
 
 - Contra un bot que no lee tics no se nota tanto el orden de dificultad; hay que comprobarlo jugando.
 
-**El farolero [cambiado]** (medido de nuevo, 300 duelos por rival; `pruebas/farolero.sim.ts`). Es un jugador que abre con «envido dos» en todos los lances, lleve lo que lleve, y responde con sentido a los envites del rival. Farolea en el 27 % de sus envites; el sensato, en el 6 %.
+**El farolero** (medido de nuevo, 300 duelos por rival; `pruebas/farolero.sim.ts`). Es un jugador que abre con «envido dos» en todos los lances, lleve lo que lleve, y responde con sentido a los envites del rival. Farolea en el 27 % de sus envites; el sensato, en el 6 %.
 
 | Rival | Gana el sensato | Gana el farolero |
 | --- | --- | --- |
@@ -559,8 +575,22 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
 - **Por qué pasa:** el rival acepta solo si su mano gana más de la mitad de las veces, sin mirar lo que arriesga. Pero aceptar un «envido dos» y perderlo cuesta 2 piedras, y no quererlo regala 1. *Ejemplo: Doña Engracia lleva una Grande que gana 4 de cada 10 veces. Si quiere, de media gana algo (4 veces gana 2, 6 veces pierde 2: pierde 0,4 piedras por vez); si no quiere, pierde 1 seguro. Le conviene querer, y no quiere.*
 - **Subir la memoria no lo arregla.** Se probó: el farolero farolea en una proporción parecida a la que la fórmula da por normal (25 %), así que la memoria apenas le castiga, y en cambio al jugador honrado le cree todavía más.
-- **Lo que sí lo arregla:** que el rival mire lo que arriesga (`IA.aceptar.pesoCuota`). Con 0,75, el farolero gana lo mismo que el sensato contra los cinco y al sensato le va igual que antes. A cambio, todos aceptan más envites pequeños: Doña Engracia pasa de aceptar el 30 % de tus envites al 47 %, y deja de ser «la que rechaza mucho».
-- **Pendiente de decidir (David).** De momento está preparado pero apagado (`pesoCuota` = 0): el juego se comporta como dice la fórmula del documento.
+- **Lo que sí lo arregla:** que el rival mire lo que arriesga (`IA.aceptar.pesoCuota`). A cambio, todos aceptan más envites pequeños: Doña Engracia pasa de aceptar el 30 % de tus envites al 47 %.
+- **[cambiado] Activado, con 0,75** (decidido por David). La fórmula para aceptar un envite queda así, con X lo que hay en juego y d lo que se cobra por el «no quiero»:
+
+<p class="formula">F + (50 − Cara) / 200 + (Me / 10) · 0,6 · (t<sub>farol</sub> − 0,25) + 0,75 · (0,5 − (X − d) / 2X) + ε &gt; 0,5</p>
+
+  *Ejemplo: a un «envido dos» (X = 2, d = 1) el término nuevo suma 0,75 · (0,5 − 0,25) ≈ 0,19: con tu Cara en 50, Doña Engracia ya lo quiere con una mano que gane algo más de 3 de cada 10 veces (antes necesitaba más de 5). A un envite de diez sobre dos ya queridos (X = 10, d = 2) suma solo 0,075: los envites grandes se siguen respetando.* Al órdago no se le aplica.
+
+| Rival | Gana el sensato | Gana el farolero |
+| --- | --- | --- |
+| Ruperto | 38 % | 37 % |
+| Doña Engracia | 53 % | 51 % |
+| Don Anselmo | 62 % | 67 % |
+| Fulgencio | 43 % | 44 % |
+| Don Bonifacio | 47 % | 45 % |
+
+  Con la cuota, envidar dos en todos los lances ya no compensa: el farolero gana lo mismo o menos que el sensato, salvo un poco contra Don Anselmo (5 puntos, que con 300 duelos está cerca del ruido de la medida).
 
 ## Progresión, plataforma y prototipo
 
@@ -575,13 +605,13 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 ### Plataforma y controles
 
 - **Plataforma:** de momento, **navegador** (móvil en vertical; en escritorio se ve centrado) y sin conexión, como PWA. Publicado en https://ordago-game.vercel.app. Más adelante se empaquetará para móvil.
-- **Tecnología:** TypeScript + React + Vite, con un motor puro y reproducible (cada partida sale de una semilla) y 271 pruebas automáticas. Sustituye a Godot.
+- **Tecnología:** TypeScript + React + Vite, con un motor puro y reproducible (cada partida sale de una semilla) y 291 pruebas automáticas. Sustituye a Godot.
 - **Controles:**
   - Tocar una carta para marcarla en el descarte.
   - **Barra de acciones abajo, al estilo Offsuit:** en una fila, solo los botones que tocan en cada momento (MUS · CORTO, PASO · ENVIDO, NO QUIERO · QUIERO · MÁS). Cada botón ocupa lo que pide su texto.
-  - **Cuánto envidar, al estilo Offsuit [cambiado]:** al pulsar ENVIDO o MÁS se abre, sobre el tapete y sin tapar tu mano, un selector con dos botones rápidos (*ENVIDO DOS* y *ENVIDO TRES*, o *DOS MÁS* y *TRES MÁS*) y una barra para elegir **cualquier cantidad del 4 al 19**, con − y + para afinar y el número encima del tirador. El botón de abajo confirma (*ENVIDO SIETE*). Al subir, el selector recuerda lo que ya hay en juego. Sustituye a las cuatro fichas de 2, 3, 5 y 10.
+  - **Cuánto envidar, al estilo Offsuit:** al pulsar ENVIDO o MÁS se abre, sobre el tapete y sin tapar tu mano, un selector con dos botones rápidos (*ENVIDO DOS* y *ENVIDO TRES*, o *DOS MÁS* y *TRES MÁS*) y una barra para elegir **cualquier cantidad del 4 al 19**, con − y + para afinar y el número encima del tirador. El botón de abajo confirma (*ENVIDO SIETE*). Al subir, el selector recuerda lo que ya hay en juego. Sustituye a las cuatro fichas de 2, 3, 5 y 10.
   - **El botón de Órdago, pequeño y aparte en la esquina:** se tira manteniéndolo pulsado un segundo mientras se llena (con teclado, manteniendo Intro o Espacio), para que nunca se pulse sin querer y tirarlo se sienta como un gesto. Sustituye al deslizar hacia arriba.
-  - **Al acabar el duelo [cambiado]:** sale el resultado con **REVANCHA** (el mismo rival, de cero) y debajo los otros rivales. El botón «Rival» de arriba es solo del modo de pruebas.
+  - **Al acabar el duelo:** sale el resultado con **REVANCHA** (el mismo rival, de cero) y debajo los otros rivales. El botón «Rival» de arriba es solo del modo de pruebas.
   - Mantener pulsado el retrato del rival para mirarle.
   - Partidas guardadas automáticamente al final de cada mano, cuando aparece el recuento con las cartas de los dos.
 
@@ -593,7 +623,7 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 2. ✅ **Hecho. Un duelo jugable:** interfaz fea, el Herrero con sus 2 tics como rectángulos que parpadean, envites y órdago. **Esta es la prueba clave:** si un duelo de 5 minutos ya es divertido, hay juego.
 3. ✅ **Hecho. IA completa y la Cara:** los 5 parámetros, la memoria y el medidor de Cara, con los cinco rivales y sus reglas. Además, la mesa se ha pasado a vertical.
 4. ⏭️ **Siguiente. Estructura de gira:** una comarca completa con 2 parroquianos, cacique, taberna con 5 objetos y 2 compañeros, la gira en vertical como las arenas, la Libreta, los reales y la Honra.
-5. **Arte y sonido de la primera comarca:** retratos animados, mesa, cartas propias, música. Esto sirve como demo vertical.
+5. **Arte y sonido de la primera comarca:** retratos animados, mesa, cartas propias, música. Esto sirve como demo vertical. **[cambiado]** Adelantado: los cinco rivales ya tienen retrato y parte de sus tics (ver «Los tics del rival»).
 6. **Resto del contenido:** las otras 4 etapas, todos los compañeros y objetos, progresión y dificultades.
 
 ### Preguntas abiertas
@@ -601,15 +631,18 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - ¿Habrá un modo 2 contra 2 con un compañero que juegue cartas? Se descarta para la primera versión por complejidad, pero encaja como modo extra.
 - ¿Modelo de negocio: pago único o gratis con demo? Un pago único sin anuncios encaja mejor con un roguelike sin conexión.
 - ¿El duelo a 20 piedras se siente corto o largo? En las simulaciones dura unas 3–4 manos, unos 2–3 minutos. Falta comprobarlo jugando.
-**Para la fase 4 [cambiado]** (explicadas con ejemplos; cada una lleva una propuesta):
+**Para la fase 4 [cambiado]** (decididas por David el 11 de octubre de 2026):
 
-- **El real por farol.** La tabla de reales da +1 real por «cada farol que el rival no descubre». *Ejemplo: llevas A 4 5 6 (nada a la Grande), envidas a la Grande y Ruperto dice «no quiero».* El farol te ha salido bien, pero en el recuento se enseñan todas las cartas y Ruperto acaba viendo que no llevabas nada. ¿Cobras el real? **Propuesta: sí.** Cuenta como «no descubierto» el farol al que el rival se retira, porque es justo el que te ha salido bien; la Cara ya lo trata así (+8).
-- **La Medalla de la Virgen.** Dice que el primer órdago perdido de cada duelo «solo cuesta 10 piedras» en vez del duelo entero. *Ejemplo: vas 12 a 8 y pierdes un órdago.* ¿Ruperto suma 10 y se pone con 18, o tú pierdes 10 y te quedas con 2? **Propuesta: el rival suma 10.** En el mus las piedras nunca se restan, solo se suman.
-- **El Veterano.** Su seña dice que si llevas «los dos reyes más altos», tu órdago a la Grande no se puede rechazar. Pero jugamos a 8 reyes: todos los reyes (y los treses, que cuentan como reyes) valen igual, así que no hay dos reyes «más altos» que otros. **Propuesta: basta con llevar dos reyes cualesquiera** (vale un tres). *Ejemplo: con R 3 5 6, el rival tiene que aceptar tu órdago a la Grande.*
-- **El Tahúr.** Su seña cambia una carta en secreto, pero si el rival tiene mucho Ojo te pilla y «pierdes la mano». ¿Qué es perder la mano en piedras? **Propuesta:** la mano se acaba en el momento, nadie cobra nada de ella y el rival se lleva 5 piedras. Es lo mismo que ganas tú si pillas a Don Bonifacio cambiando carta, así que queda parejo.
+- **El real por farol: sí.** El farol al que el rival dice «no quiero» cuenta como «no descubierto» y da +1 real, aunque en el recuento acabe viendo tus cartas. *Ejemplo: envidas a la Grande con A 4 5 6 y Ruperto no quiere: +1 real.*
+- **El Veterano: dos reyes cualesquiera.** Todos los reyes valen igual y los treses son reyes. *Ejemplo: con R 3 5 6, el rival tiene que aceptar tu órdago a la Grande.*
+- **El Tahúr: cambias la carta que quieras por un rey.** Si el rival tiene mucho Ojo y te pilla, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (lo mismo que ganas tú si pillas a Don Bonifacio). El rey sale del mazo; si no queda ninguno, la seña no se puede usar en esa mano.
+- **La Medalla de la Virgen: descartada tal como estaba.** Pendiente de decidir si se sustituye. **Propuesta:** que proteja el farol, que es el pilar del juego: *«La primera vez en cada duelo que te pillan un farol, tu Cara no baja.»* Así uno se puede atrever a un farol arriesgado sin hundir su temple. Mismo precio, 10 reales.
 
 ## Historial de versiones
 
 - **Versión 1 (9 de octubre de 2026).** El documento original: móvil en horizontal, Godot, órdago deslizando hacia arriba.
 - **Versión 2 (11 de octubre de 2026).** Lo decidido en las fases 1–3 (aclaraciones de reglas, cómo salen los tics, qué mueve la Cara, las reglas de cada rival, el órdago de la IA a 0,03·A, la subida y el equilibrio medido) y el cambio a vertical: maquetación de arriba abajo, marcador con números, barra de acciones al estilo Offsuit, órdago con pulsación larga, gira como las arenas de Clash Royale y la web en vez de Godot.
 - **Versión 3 (11 de octubre de 2026).** Retoques y depuración antes de la fase 4: el acta de la mano en lugar de bocadillo, «En juego», crónica y etiqueta; Rival y Depurar solo en el modo de pruebas; fuera el nombre de la comarca; selector de envite con dos, tres y la barra del 4 al 19; revancha al acabar y cada duelo de cero con la Cara en 60; la insignia MANO y su explicación; medido a fondo el problema del farolero, con una solución preparada y pendiente de decidir; y los fallos encontrados con un recorrido automático por los cinco rivales. Las cuatro dudas de la fase 4 quedan explicadas con ejemplos y una propuesta cada una.
+- **Versión 4 (11 de octubre de 2026).** Los cinco rivales tienen arte: las hojas de personaje de David, en 3D, ampliadas ×4 con IA para que se vean nítidas en el móvil y pasadas por la imprenta (tonos planos, tinta y papel, grano, contorno y sombra dura) para que casen con la mesa. El rival respira y parpadea; sus tics son un cambio de pose con fundido, a veces en varios fotogramas o con un efecto (el humo del puro, el brillo del diente de oro). Pintados sobre sus dibujos: los parpadeos, las miradas de Doña Engracia y Don Bonifacio, el sombrero, la vara y el diente de oro de Fulgencio. Los tres gestos de brazos que no hay en las hojas siguen con sacudida y acotación. Botón Tics en el modo de pruebas. El aspecto de cada rival se ajusta a su dibujo.
+- **Versión 5 (11 de octubre de 2026).** Fuera el cartel con el nombre del rival junto al retrato (en su lugar, solo su estado cuando toca: ¡ENFADADO! u OFENDIDA). Activado el ajuste de equilibrio contra el farolero: el rival mira lo que arriesga al aceptar (`pesoCuota` 0,75). Decididas las dudas del real por farol, el Veterano y el Tahúr (que cambia la carta que quieras por un rey); la Medalla de la Virgen, descartada tal como estaba, con una propuesta de sustituta.
+- **Versión 6 (12 de octubre de 2026).** El acta narrada: David vio cuatro prototipos del panel central (etiquetas y bote, bocadillos, pizarra y acta ligera) y luego cuatro letras para el acta ligera, y eligió la narrada (pestaña con el lance, ficha con lo que hay en juego y la partida contada con frases). La cifra de la Cara sube junto a su marca en lugar de un aviso que tapaba la cara del rival. La cabecera, en un solo panel compacto (elegida entre cuatro prototipos: carrera a 20, reloj, careto y tira): números, MANO, los lances como pasos y la Cara con careto, una frase con lo que significa y «?», que abre una ficha corta que la explica.

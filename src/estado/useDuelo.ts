@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CARA } from '../datos/cara';
 import { IA } from '../datos/ia';
-import { ORDEN_RIVALES, type IdRival } from '../datos/rivales';
+import { ORDEN_RIVALES, RIVALES, type IdRival } from '../datos/rivales';
 import type { AccionDuelo } from '../nucleo/duelo';
 import { borrarPartida, cargarPartida, guardarPartida } from './guardado';
 import { aplicarNovedades, mesaInicial, sacarTic, type EstadoMesa } from './mesa';
@@ -44,6 +44,8 @@ function empezar(): EstadoMesa {
 export function useDuelo() {
   const [estado, setEstado] = useState(empezar);
   const [mirando, setMirando] = useState(false);
+  /** Algo tapa la mesa (la ayuda de la Cara): el rival espera. */
+  const [pausa, setPausa] = useState(false);
   const { partida } = estado;
 
   const jugar = useCallback((accion: AccionDuelo) => {
@@ -73,15 +75,25 @@ export function useDuelo() {
     setEstado((previo) => ({ ...previo, partida: ajustarCara(previo.partida, delta) }));
   }, []);
 
+  /** Modo de pruebas: enseña seguidos todos los tics que puede hacer el rival, para revisar su arte. */
+  const ensayarTics = useCallback(() => {
+    setEstado((previo) => {
+      const perfil = RIVALES[previo.partida.rivalId];
+      const tics = [...perfil.tics, ...(perfil.fasesDeTics ?? []).flatMap((fase) => fase.tics)];
+      const ids = [...new Set(tics.map((tic) => tic.id))];
+      return { ...previo, colaTics: [...previo.colaTics, ...ids.map((id) => ({ id, verdadero: true }))] };
+    });
+  }, []);
+
   // El rival habla cuando le toca, con una pausa para que se le pueda seguir. Mientras le
-  // miras, espera.
+  // miras, o mientras lees una ayuda, espera.
   useEffect(() => {
-    if (!leTocaAlRival(partida) || mirando) return;
+    if (!leTocaAlRival(partida) || mirando || pausa) return;
     const reloj = setTimeout(() => {
       setEstado((previo) => (leTocaAlRival(previo.partida) ? aplicarNovedades(previo, jugarRival(previo.partida)) : previo));
     }, RITMO.rival);
     return () => clearTimeout(reloj);
-  }, [partida, mirando]);
+  }, [partida, mirando, pausa]);
 
   // Los tics salen de uno en uno; mirando al rival duran más.
   useEffect(() => {
@@ -120,6 +132,8 @@ export function useDuelo() {
     mirando,
     setMirando,
     cambiarCara,
-    rivalPiensa: leTocaAlRival(partida) && !mirando,
+    ensayarTics,
+    setPausa,
+    rivalPiensa: leTocaAlRival(partida) && !mirando && !pausa,
   };
 }

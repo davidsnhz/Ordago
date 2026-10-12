@@ -8,24 +8,6 @@ import './componentes.css';
 
 const clases = (...nombres: (string | false | null | undefined)[]) => nombres.filter(Boolean).join(' ');
 
-export function Panel({
-  children,
-  sombra = false,
-  className,
-  style,
-}: {
-  children: ReactNode;
-  sombra?: boolean;
-  className?: string;
-  style?: CSSProperties;
-}) {
-  return (
-    <div className={clases('panel', sombra && 'panel--sombra', className)} style={style}>
-      {children}
-    </div>
-  );
-}
-
 type VarianteBoton = 'papel' | 'gualda' | 'rendirse';
 
 /** PASO y QUIERO en papel; ENVIDO en gualda; NO QUIERO discontinuo y sin sombra, porque es rendirse. */
@@ -37,117 +19,68 @@ export function BotonApuesta({
   return <button type="button" className={clases('boton-apuesta', `boton-apuesta--${variante}`, className)} {...props} />;
 }
 
-/** Fila «Grande · Chica · Pares · Juego»: el actual subrayado en almagre, los jugados tachados. */
-export function FilaLances({ lances }: { lances: { etiqueta: string; estado: 'jugado' | 'actual' | 'pendiente' }[] }) {
+export type EstadoPaso = 'hecho' | 'actual' | 'falta';
+
+/** Los lances de la mano como pasos: los jugados con ✓, el que se juega en almagre, los que faltan a puntos. */
+export function PasosLances({ pasos }: { pasos: { etiqueta: string; estado: EstadoPaso }[] }) {
   return (
-    <div className="panel fila-lances">
-      {lances.map(({ etiqueta, estado }) => (
-        <span key={etiqueta} className={`fila-lances__lance fila-lances__lance--${estado}`} aria-current={estado === 'actual' || undefined}>
-          {etiqueta}
-        </span>
+    <ol className="pasos">
+      {pasos.map(({ etiqueta, estado }, i) => (
+        <li key={etiqueta} className="pasos__item">
+          {i > 0 && <span className="pasos__raya" aria-hidden="true" />}
+          <span className={`pasos__paso pasos__paso--${estado}`} aria-current={estado === 'actual' ? 'step' : undefined}>
+            {estado === 'hecho' && '✓ '}
+            {etiqueta}
+          </span>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
-/** Amarracos (5 piedras) y piedras sueltas, con el número a la derecha. */
-export function FilaPiedras({ nombre, piedras }: { nombre: string; piedras: number }) {
-  const amarracos = Math.floor(piedras / 5);
-  const sueltas = piedras % 5;
-  return (
-    <div className="piedras" aria-label={`${nombre}: ${piedras}`}>
-      <span className="piedras__nombre">{nombre}</span>
-      {Array.from({ length: amarracos }, (_, i) => (
-        <span key={`a${i}`} className="amarraco" />
-      ))}
-      {Array.from({ length: sueltas }, (_, i) => (
-        <span key={`p${i}`} className="piedra" />
-      ))}
-      <span className="piedras__numero">{piedras}</span>
-    </div>
-  );
-}
-
-export function MarcadorPiedras({
-  titulo,
-  insignia,
-  filas,
-}: {
-  titulo: string;
-  insignia: { texto: string; destacada: boolean } | null;
-  filas: { nombre: string; piedras: number }[];
-}) {
-  return (
-    <div className="panel marcador">
-      <div className="marcador__cabecera">
-        <span className="rotulo">{titulo}</span>
-        {insignia && <span className={clases('insignia', insignia.destacada && 'insignia--anil')}>{insignia.texto}</span>}
-      </div>
-      {filas.map((fila) => (
-        <FilaPiedras key={fila.nombre} {...fila} />
-      ))}
-    </div>
-  );
-}
+export type ZonaCara = 'nota' | 'pillan' | 'creen' | 'temen';
 
 /**
- * La Cara: 20 segmentos en tres zonas; los que pasan del valor se pintan en claro. El rótulo
- * (y la etiqueta que lo acompañe) se va al lado contrario de la marca para que no se pisen.
+ * La Cara en una barra fina de tres zonas (te pillan, te creen, te temen) con su marca; lo que
+ * pasa de la marca, apagado. `children` va encima, a la altura de la marca (la cifra que sube).
  */
-export function BarraCara({
-  valor,
-  titulo,
-  zonas,
-  nota,
-  etiqueta,
-}: {
-  valor: number;
-  titulo: string;
-  zonas: { pillan: string; creen: string; temen: string };
-  nota?: string;
-  /** Algo junto al rótulo, como «SE TE NOTA». */
-  etiqueta?: ReactNode;
-}) {
-  const llenos = Math.ceil(Math.max(0, Math.min(100, valor)) / 5);
-  const zona = (i: number) => (i < 7 ? 'almagre' : i < 14 ? 'gualda' : 'verde');
+export function BarraCara({ valor, etiqueta, children }: { valor: number; etiqueta: string; children?: ReactNode }) {
+  const v = Math.max(0, Math.min(100, valor));
   return (
-    <div className="panel cara" title={nota}>
-      <div className={clases('cara__titulo', valor < 50 && 'cara__titulo--derecha')}>
-        <span className="rotulo">{titulo}</span>
-        {etiqueta}
-      </div>
-      <div className="cara__marca" style={{ left: `calc(12px + (100% - 24px) * ${valor / 100} - 18px)` }}>
-        <span className="cara__numero">{valor}</span>
-        <span className="cara__flecha" />
-      </div>
-      <div className="cara__barra" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={valor} aria-label={titulo}>
-        {Array.from({ length: 20 }, (_, i) => (
-          <span key={i} className={clases('cara__segmento', `cara__segmento--${zona(i)}`, i >= llenos && 'cara__segmento--claro')} />
-        ))}
-      </div>
-      <div className="cara__zonas">
-        <span className="cara__zona--pillan">{zonas.pillan}</span>
-        <span className="cara__zona--creen">{zonas.creen}</span>
-        <span className="cara__zona--temen">{zonas.temen}</span>
-      </div>
+    <div className="barra-cara" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={valor} aria-label={etiqueta}>
+      <span className="barra-cara__zonas" aria-hidden="true">
+        <span className="barra-cara__zona barra-cara__zona--pillan" />
+        <span className="barra-cara__zona barra-cara__zona--creen" />
+        <span className="barra-cara__zona barra-cara__zona--temen" />
+        <span className="barra-cara__apagado" style={{ left: `${v}%` }} />
+      </span>
+      <span className="barra-cara__marca" style={{ left: `${v}%` }} aria-hidden="true" />
+      {children}
     </div>
   );
 }
 
-/** Bocadillo del rival: la acción en Alfa Slab almagre y la frase en cursiva, con cola hacia el retrato. */
-export function Bocadillo({ accion, frase, className }: { accion: string; frase?: string; className?: string }) {
+/** Tu cara, dibujada en tinta: sudando si te pillan, seria si te creen, con media sonrisa si te temen. */
+export function Careto({ zona, tamano = 30 }: { zona: ZonaCara; tamano?: number }) {
+  const boca = {
+    nota: 'M11 25 q3 -4 6 0 q3 4 6 0',
+    pillan: 'M11 25 q3 -3 6 0 q3 3 6 0',
+    creen: 'M11 24 h12',
+    temen: 'M11 23 q7 5 13 -2',
+  }[zona];
   return (
-    <div className={clases('bocadillo', className)} role="status" aria-live="polite">
-      <div className="bocadillo__accion">{accion}</div>
-      {frase && <div className="bocadillo__frase">{frase}</div>}
-      <span className="bocadillo__cola" aria-hidden="true" />
-    </div>
+    <svg className="careto" viewBox="0 0 34 34" width={tamano} height={tamano} aria-hidden="true">
+      <circle cx="17" cy="17" r="15" fill="var(--gualda-claro)" stroke="var(--tinta)" strokeWidth="2.5" />
+      <circle cx="12" cy="15" r="2" fill="var(--tinta)" />
+      <circle cx="22" cy="15" r="2" fill="var(--tinta)" />
+      {zona === 'temen' && <path d="M20 11 l6 -2" stroke="var(--tinta)" strokeWidth="2.2" strokeLinecap="round" />}
+      <path d={boca} fill="none" stroke="var(--tinta)" strokeWidth="2.4" strokeLinecap="round" />
+      {(zona === 'pillan' || zona === 'nota') && (
+        <path d="M28 9 q3 5 0 7 q-3 -2 0 -7z" fill="var(--anil)" stroke="var(--tinta)" strokeWidth="1.2" />
+      )}
+      {zona === 'nota' && <path d="M6 9 q-3 5 0 7 q3 -2 0 -7z" fill="var(--anil)" stroke="var(--tinta)" strokeWidth="1.2" />}
+    </svg>
   );
-}
-
-/** Nombre del rival en gualda, girado −4°. */
-export function EtiquetaNombre({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={clases('etiqueta-nombre', className)}>{children}</div>;
 }
 
 export function CartaVista({ carta, className, style }: { carta: Carta; className?: string; style?: CSSProperties }) {

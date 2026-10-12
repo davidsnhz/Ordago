@@ -179,14 +179,54 @@ Aquí queda lo que el documento de diseño no dejaba claro y cómo se ha resuelt
 9. **El farolero** (el jugador que abre con «envido dos» en todos los lances). Medido otra vez con `pruebas/farolero.sim.ts`: gana 9 puntos más que el sensato contra Doña Engracia y Don Anselmo, 13 contra Fulgencio y 6 contra Don Bonifacio.
    - Subir el peso de la memoria (`pesoMemoria` 1,5, 2,5 y 4, y bajar el 25 % esperado a 10–15 %) no lo arregla: el farolero farolea en el 27 % de sus envites, cerca de lo que la fórmula da por normal.
    - Lo que lo arregla es que el rival mire lo que arriesga al aceptar: con apuesta X y deje d, aceptar compensa si F > (X − d)/2X (un «envido dos» se debería querer con F > 0,25). Queda en `IA.aceptar.pesoCuota`: con 0,75 el farolero ya no gana más que el sensato y al sensato le va igual; con 1, igual pero algo más fuerte.
-   - El precio: todos aceptan más envites pequeños (Doña Engracia, del 30 % al 47 %). Como cambia su carácter, **está preparado pero apagado (0) hasta que David decida**.
+   - El precio: todos aceptan más envites pequeños (Doña Engracia, del 30 % al 47 %). **David lo aprobó: activado con 0,75.** Medido con la cuota: el farolero gana lo mismo o menos que el sensato contra todos, salvo 5 puntos contra Don Anselmo (cerca del ruido con 300 duelos).
+10. **Fuera el cartel con el nombre del rival** junto al retrato (*David: «siento que sobra»*). Su nombre ya está en el marcador. En ese sitio solo sale, mientras dura, una etiqueta de estado: *¡ENFADADO!* (antes iba dentro del cartel) y, nueva, *OFENDIDA* para Doña Engracia.
+
+## Personajes (11 de octubre de 2026)
+
+David mandó las hojas de personaje de los cinco rivales (3D de estilo de animación: cinco vistas, seis expresiones y cinco poses cada una) y pidió **conservar su estilo** y «pasarlos por la imprenta» para que casen con la mesa, sin redibujarlos en estilo naipe.
+
+1. **La imprenta.** Script `npm run personajes`: recorte, encuadre, tonos planos, tinta y papel, grano, contorno de 3 px y sombra dura de 4 px. Detalle en `direccion-arte.md`, «Personajes». Las hojas originales quedan en `assets/personajes/` (no se suben a la web).
+2. **Encuadre.** De cintura para arriba y sacado de la **vista de frente**, que es la de más resolución: las caras de las expresiones van recortadas al borde de su casilla y no tienen brazos, y los tics son de manos. Cuadro de 220 × 220 px en la mesa, con el borde de abajo detrás del acta.
+3. **Tics provisionales.** Salen de las miniaturas de «poses». Correspondencias:
+   - Ruperto: *Beard scratch* → se rasca la barba; *Rolled sleeves* → se arremanga.
+   - Doña Engracia: *Rosary quickens* → el rosario. (*Piercing gaze* se usó al principio para «te mira fijamente», pero también lleva las cartas en la mano y se confundía con el rosario: ahora va pintado, ver el punto 9.)
+   - Don Anselmo: su *Beard scratch* (la mano en la barbilla y **los ojos hacia arriba**) → mira al cielo. Su *Victory* también señala al cielo, pero es demasiado aparatosa para un tic que debe ser discreto.
+   - Don Bonifacio: *Beard scratch* y *Rolled sleeves* (los tics del Herrero); *Victory*, que levanta una copa de vino, → bebe vino; el humo del puro es un efecto dibujado encima.
+   - Las demás poses (*Table slam*, *Victory*…) no corresponden a ningún tic y no se usan.
+4. **Tics sin dibujo:** beber vino y juntar las manos de Don Anselmo, y juntar las manos de Don Bonifacio. Siguen como antes, con sacudida y acotación. Con arte, la acotación solo sale si el tic no tiene dibujo.
+5. **Parpadeo** para los cinco, pintado sobre el reposo (ver el punto 9).
+6. **El aspecto de cada rival** en el documento de diseño se ajusta a su dibujo (barba de Ruperto, mantón de Doña Engracia, sin gafas en Don Anselmo, pluma y chaleco en Fulgencio, levita en Don Bonifacio). Lo que necesitan sus tics y no está dibujado (el vaso de Don Anselmo, la vara y el diente de oro de Fulgencio) queda anotado como pendiente de arte.
+7. **Botón Tics** en el modo de pruebas, para ver todos los tics de un rival seguidos.
+8. **Más resolución.** David pidió acabado profesional: las hojas (1983 px de ancho) se han ampliado ×4 con Real-ESRGAN (modelo para ilustración). Los tics de las miniaturas pasan de borrosos a nítidos. La silueta se sigue sacando de la hoja original, porque la ampliada deja un halo claro en los bordes. Fotogramas de 660 px (220 de pantalla ×3).
+9. **Animaciones pintadas sobre el dibujo** (no hay generador de imágenes, así que se pinta y se deforma sobre el reposo): parpadeos de los cinco; Doña Engracia entorna los ojos y se inclina para «te mira fijamente»; Don Bonifacio pone los ojos en blanco y ladea la cabeza para «mira al cielo»; Fulgencio lleva diente de oro y vara (su ficha los pedía), le brilla el diente, levanta el sombrero y golpea la vara.
+10. **Juntar las manos deformando el dibujo, descartado:** se probó a llevar las manos de Don Anselmo al centro y la cruz se derretía y la estola se doblaba. Mejor la acotación que una imagen rota; queda pedida una pose.
+
+## El acta narrada (12 de octubre de 2026)
+
+*Elegida por David entre prototipos.* Primero vio cuatro maneras de enseñar la conversación (etiquetas y bote al estilo Offsuit, bocadillos de cómic, pizarra de taberna y acta ligera) y se quedó con el acta ligera; después, cuatro letras para ella, y eligió la **narrada**. Las imágenes están en `referencias/prototipos-acta/`.
+
+1. **Pestaña y ficha.** El lance va en una pestaña negra encima del panel (*LA CHICA*, *MUS · MANO 2*…) y lo que hay en juego en una ficha roja en la esquina (*6 en juego*; *TODO · el duelo* con un órdago). Sin envite no hay ficha.
+2. **La partida contada.** Lo tuyo en pasado y en cursiva azul (*Has envidado dos.*, *Llevas pares.*, *Has pedido una carta.*); lo del rival en presente, en versalitas rojas y con su frase debajo (*Ruperto sube cuatro más*); lo de la mesa en letra corriente. Dentro del acta ya no se usa la letra gruesa (Alfa Slab): queda para botones, cifras y gritos.
+3. **Tres líneas como mucho**, y si una frase larga no deja sitio se esconde entera la más antigua, nunca a medias. Todo sigue en «Toda la mano».
+4. **El aviso de la Cara tapaba la cara del rival** (salía debajo de la barra, encima del retrato, donde están los tics). Ahora la cifra sube un momento junto a la marca de la barra y el motivo se lee en el acta. «Se te nota» hace parpadear la etiqueta SE TE NOTA en vez de sacar otro aviso.
+
+## La cabecera y la ayuda de la Cara (12 de octubre de 2026)
+
+*Elegida por David entre prototipos* (`referencias/prototipos-cabecera/`): carrera a 20, reloj de aguja, careto y tira compacta. Se quedó con el **careto, en versión compacta como la tira**, y con la ficha de «?», pidiendo el texto más corto y directo.
+
+1. **Un solo panel** en lugar de dos (marcador y Cara): ocupa unos 112 px en vez de 150.
+2. **Los lances como pasos** (✓ jugados, el actual en rojo, los que faltan a puntos) en vez de la fila tachada y subrayada.
+3. **La Cara se explica sola:** careto según la zona y una frase corta (*te pillan: no cuela nada*, *te creen: a veces cuela*, *te temen: tus faroles cuelan*, *se te nota todo* a 0). Las zonas salen de `CARA.zonas` (35 y 70).
+4. **«?»** abre una ficha corta con lo que la mueve y lo que hace cada zona (la tuya resaltada). Los números salen de `datos/cara.ts`, así que no se desajustan si se cambian. **Mientras está abierta, el rival espera** (como cuando le miras).
+5. **Limpieza:** fuera las piezas que ya no se usaban (bocadillo, marcador de piedras, Cara de 20 segmentos, fila de lances y etiqueta de nombre) y sus estilos.
 
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).
 
 - **¿Un duelo a 20 piedras es corto?** En las simulaciones dura unas 3–4 manos, unos 2–3 minutos. El documento ya lo dejaba como pregunta abierta para estas pruebas.
-- **El real por «farol no descubierto».** Propuesta: cuenta el farol al que el rival dice «no quiero», como ya hace la Cara.
-- **Medalla de la Virgen.** Propuesta: el rival suma 10; tus piedras no bajan.
-- **El Veterano.** Propuesta: basta con llevar dos reyes cualesquiera (los treses cuentan).
-- **El Tahúr.** Propuesta: si te pillan, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras.
+- **El real por «farol no descubierto»: decidido.** Cuenta el farol al que el rival dice «no quiero», como ya hace la Cara.
+- **El Veterano: decidido.** Basta con llevar dos reyes cualesquiera; los treses son reyes.
+- **El Tahúr: decidido.** Su seña cambia en secreto la carta que quieras por un rey del mazo (si no queda ninguno, no se puede usar). Si te pillan, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras.
+- **Medalla de la Virgen: descartada tal como estaba** (David no le ve sentido). Propuesta de sustituta, pendiente: «la primera vez en cada duelo que te pillan un farol, tu Cara no baja».

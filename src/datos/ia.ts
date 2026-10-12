@@ -26,8 +26,13 @@ export const IA = {
     divisorCara: 200,
     pesoMemoria: 0.6,
     farolesEsperados: 0.25,
-    /** Cuánto mira lo que arriesga al aceptar (0: nada, como dice el documento). */
-    pesoCuota: 0,
+    /**
+     * Cuánto mira lo que arriesga al aceptar: acerca el umbral de 0,5 al punto en que aceptar
+     * compensa, F > (X − d) / 2X. Con 0 (la fórmula original del documento) un jugador que
+     * envidaba dos en todos los lances ganaba más que uno sensato; con 0,75 ya no
+     * (docs/decisiones.md, aprobado por David el 11 de octubre de 2026).
+     */
+    pesoCuota: 0.75,
   },
   ordago: {
     /**

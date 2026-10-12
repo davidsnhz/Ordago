@@ -45,7 +45,7 @@ src/
     estilos/         # tokens de la guía de estilo como variables CSS
   estado/            # estado global de la partida y conexión núcleo ↔ interfaz
 public/
-  arte/              # cartas, palos, marca, fuentes, personajes (marcadores por ahora)
+  arte/              # cartas, palos, marca, fuentes y personajes (estos los genera npm run personajes)
 pruebas/
 ```
 
@@ -58,7 +58,8 @@ pruebas/
 
 - La **baraja** está terminada en `assets/cartas/`, con el nombre `NN_palo.webp` (WebP sin pérdida): 01–07, 10 = sota, 11 = caballo y 12 = rey, más `reverso_almagre` y `reverso_anil`. Úsala tal cual.
 - La interfaz debe reproducir `docs/direccion-arte.md`: paneles de papel con contorno de tinta y sombra dura, sin degradados. Construye primero los componentes reutilizables: panel, botón de apuesta, botón de órdago (se mantiene pulsado), marcador, fila de lances, barra de la Cara y acta de la mano.
-- **Los personajes y los iconos de objetos están pendientes.** Usa marcadores y deja el sistema de retratos y tics preparado para recibir arte después (ver el final de la dirección de arte). No generes ni copies arte de personajes.
+- **Los cinco rivales tienen arte:** las hojas de personaje de David están en `assets/personajes/` (con su versión ampliada ×4, `hoja_x4.webp`) y `npm run personajes` las pasa por la imprenta (recorte, retoques pintados, tonos planos, tinta y papel, contorno y sombra dura) a `public/arte/personajes/`. Qué zona de la hoja es cada pose y qué retoques lleva cada animación va en `assets/personajes/personajes.json`. Ver «Personajes» en la dirección de arte, con la lista de poses que faltan.
+- **Compañeros, parroquianos, tabernera e iconos de objetos siguen pendientes:** usa marcadores. El arte de un personaje sale siempre de las hojas de David: se puede ampliar, recortar y retocar (párpados, miradas, objetos que pide su ficha), pero no inventar un personaje.
 
 ## Orden de trabajo
 

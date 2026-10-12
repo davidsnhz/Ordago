@@ -7,8 +7,8 @@ import { ES, type TextosRival } from '../textos/es';
 import type { Partida, ResultadoPartida } from './partida';
 
 /**
- * Una línea del acta de la mano: lo que dice cada uno («ENVIDO DOS») o lo que pasa en la
- * mesa («La Grande queda en paso»).
+ * Una línea del acta de la mano, contada: lo que hace cada uno («Has envidado dos.», «Ruperto
+ * sube cuatro más») o lo que pasa en la mesa («Grande en paso: se cobra en el recuento»).
  */
 export interface LineaActa {
   /** Quién habla; `null` para lo que pasa en la mesa. */
@@ -33,7 +33,7 @@ export interface EstadoMesa {
   tic: (TicDisparado & { clave: number }) | null;
   /** Última decisión del rival, para el modo de pruebas. */
   decision: DecisionRival | null;
-  /** Último cambio de Cara, para enseñarlo junto a la barra. */
+  /** Último cambio de Cara, para enseñarlo junto a la marca de la barra. */
   avisoCara: { delta: number; motivos: string[]; clave: number } | null;
   /** Cara a 0: se te acaba de notar el tic. */
   seTeNota: number | null;
@@ -53,7 +53,7 @@ export function mesaInicial(partida: Partida): EstadoMesa {
   const { saludo } = textosDe(partida);
   return {
     partida,
-    acta: [{ quien: 'rival', texto: saludo.accion, frase: saludo.frase }],
+    acta: [{ quien: 'rival', texto: M.narra.saludo(textosDe(partida).nombre), frase: saludo.frase }],
     colaTics: [],
     tic: null,
     decision: null,
@@ -65,20 +65,21 @@ export function mesaInicial(partida: Partida): EstadoMesa {
   };
 }
 
-export function textoEnvite(accion: AccionEnvite): string {
+/** Un envite contado: «Has envidado dos.» si es tuyo, «Ruperto sube cuatro más» si es suyo. */
+export function narrarEnvite(accion: AccionEnvite, rival: string | null): string {
   switch (accion.tipo) {
     case 'paso':
-      return M.botones.paso;
+      return M.narra.paso(rival);
     case 'envido':
-      return M.botones.envido(accion.piedras);
+      return M.narra.envido(rival, accion.piedras);
     case 'mas':
-      return M.botones.mas(accion.piedras);
+      return M.narra.mas(rival, accion.piedras);
     case 'quiero':
-      return M.botones.quiero;
+      return M.narra.quiero(rival);
     case 'noQuiero':
-      return M.botones.noQuiero;
+      return M.narra.noQuiero(rival);
     case 'ordago':
-      return M.botones.ordago;
+      return M.narra.ordago(rival);
   }
 }
 
@@ -115,16 +116,16 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
         break;
       }
       case 'mus':
-        dice(evento.lado, evento.quiereMus ? M.botones.mus : M.botones.corto, frase(evento.quiereMus ? 'mus' : 'corto'));
+        dice(evento.lado, M.narra.mus(nombre(evento.lado), evento.quiereMus), frase(evento.quiereMus ? 'mus' : 'corto'));
         break;
       case 'descarte':
-        dice(evento.lado, M.cartas(evento.descartadas.length), frase('descarte'));
+        dice(evento.lado, M.narra.descarte(nombre(evento.lado), evento.descartadas.length), frase('descarte'));
         break;
       case 'declaracion':
-        dice(evento.lado, M.declaracion(ES.lances[evento.lance], evento.tiene), frase('declara'));
+        dice(evento.lado, M.narra.declara(nombre(evento.lado), ES.lances[evento.lance], evento.tiene), frase('declara'));
         break;
       case 'envite':
-        dice(evento.lado, textoEnvite(evento.accion), frase(evento.accion.tipo));
+        dice(evento.lado, narrarEnvite(evento.accion, nombre(evento.lado)), frase(evento.accion.tipo));
         break;
       case 'deje':
         pasa(M.acta.deje(nombre(evento.lado), evento.piedras, ES.lances[evento.lance]));
@@ -143,20 +144,20 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
       }
       case 'trato':
         if (evento.ofrece === 'rival') {
-          dice('rival', M.pideTrato, textos.frases.trato);
+          dice('rival', M.narra.trato(textos.nombre), textos.frases.trato);
           pasa(M.tratoExplica(textos.nombre));
         }
         break;
       case 'tratoResuelto':
-        dice(evento.lado, evento.acepta ? M.botones.aceptarTrato : M.botones.rechazarTrato);
         if (evento.lado === 'jugador') {
-          if (evento.acepta) dice('rival', M.tratoHecho, textos.frases.tratoAceptado);
-          else dice('rival', M.sinTrato, textos.frases.tratoRechazado);
+          dice('jugador', M.narra.respuestaTrato(evento.acepta));
+          if (evento.acepta) dice('rival', M.narra.tratoHecho(textos.nombre), textos.frases.tratoAceptado);
+          else dice('rival', M.narra.sinTrato(textos.nombre), textos.frases.tratoRechazado);
         }
         break;
       case 'finDuelo':
-        if (evento.ganador === 'rival') dice('rival', M.ganoYo, textos.frases.gana);
-        else dice('rival', M.meHasGanado, textos.frases.pierde);
+        if (evento.ganador === 'rival') dice('rival', M.narra.gana(textos.nombre), textos.frases.gana);
+        else dice('rival', M.narra.pierde(textos.nombre), textos.frases.pierde);
         break;
       default:
         break;
@@ -164,16 +165,16 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
   }
 
   if (novedades.seEnfada) {
-    dice('rival', M.enfadado, textos.frases.enfado);
-    pasa(M.acta.enfadado(textos.nombre));
+    dice('rival', M.narra.enfado(textos.nombre), textos.frases.enfado);
+    pasa(M.acta.enfadado);
   }
   if (novedades.imponePenitencia) {
-    dice('rival', M.penitencia, textos.frases.penitencia);
+    dice('rival', M.narra.penitencia(textos.nombre), textos.frases.penitencia);
     pasa(M.acta.penitencia);
   }
   if (novedades.seOfende) {
-    dice('rival', M.ofendida, textos.frases.ofendida);
-    pasa(M.acta.ofendida(textos.nombre));
+    dice('rival', M.narra.ofendida(textos.nombre), textos.frases.ofendida);
+    pasa(M.acta.ofendida);
   }
   if (novedades.seTeNota) {
     pasa(M.acta.seTeNota);

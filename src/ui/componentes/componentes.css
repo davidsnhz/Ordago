@@ -162,42 +162,57 @@
   cursor: default;
 }
 
-/* ——— Lances ——— */
+/* ——— Pasos de los lances ——— */
 
-.fila-lances {
+.pasos {
   display: flex;
-  gap: 16px;
-  padding: 8px 14px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pasos__item {
+  display: flex;
+  align-items: center;
+}
+
+.pasos__raya {
+  width: 3px;
+  height: 2px;
+  background: var(--tachado);
+}
+
+.pasos__paso {
+  padding: 0 5px;
   font-family: var(--letra-rotulo);
-  font-size: 21px;
-}
-
-.fila-lances__lance--jugado {
-  color: var(--tachado);
-  text-decoration: line-through;
-}
-
-.fila-lances__lance--actual {
-  border-bottom: 4px solid var(--almagre);
-}
-
-/* ——— Marcador de piedras ——— */
-
-.marcador {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 236px;
-  padding: 10px 14px;
-}
-
-.marcador__cabecera {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 6px;
+  font-size: 12px;
+  line-height: 1.5;
   white-space: nowrap;
+  border: 1.5px solid var(--tinta);
+  border-radius: 10px;
 }
+
+.pasos__paso--hecho {
+  color: var(--tachado);
+  background: var(--papel-fondo);
+  border-color: var(--tachado);
+}
+
+.pasos__paso--actual {
+  font-size: 13px;
+  color: var(--papel);
+  background: var(--almagre);
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.pasos__paso--falta {
+  color: var(--tachado);
+  border-color: var(--tachado);
+  border-style: dashed;
+}
+
+/* ——— Insignias (MANO) ——— */
 
 .insignia {
   padding: 0 6px;
@@ -212,212 +227,60 @@
   background: var(--anil);
 }
 
-.piedras {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 26px;
-}
+/* ——— La Cara: barra fina de tres zonas con su marca ——— */
 
-.piedras__nombre {
-  width: 74px;
-  font-size: 17px;
-}
-
-.amarraco {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--gualda);
-  border: 2px solid var(--tinta);
-}
-
-.piedra {
-  width: 13px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--nogal);
-  border: 2px solid var(--tinta);
-}
-
-.piedras__numero {
-  margin-left: auto;
-  font-family: var(--letra-grito);
-  font-size: 20px;
-}
-
-/* ——— La Cara ——— */
-
-.cara {
+.barra-cara {
   position: relative;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  width: 236px;
-  padding: 6px 12px 8px;
+  height: 12px;
 }
 
-.cara__titulo {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  height: 34px;
-}
-
-/* Con la marca en la mitad izquierda, el rótulo se va a la derecha. */
-.cara__titulo--derecha {
-  flex-direction: row-reverse;
-}
-
-.cara__titulo .rotulo {
-  padding-bottom: 6px;
-}
-
-.cara__marca {
+.barra-cara__zonas {
   position: absolute;
-  top: 6px;
+  inset: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cara__numero {
-  padding: 0 5px;
-  font-family: var(--letra-grito);
-  font-size: 15px;
-  line-height: 1.3;
-  background: var(--papel);
-  border: 2px solid var(--tinta);
-  border-radius: 5px;
-}
-
-.cara__flecha {
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 7px solid var(--tinta);
-}
-
-.cara__barra {
-  display: flex;
-  height: 20px;
   overflow: hidden;
-  background: var(--papel);
   border: 2px solid var(--tinta);
-  border-radius: 7px;
-  box-shadow: 2px 2px 0 var(--tinta);
+  border-radius: 6px;
 }
 
-.cara__segmento {
-  flex: 1 1 0;
-  border-right: 1.5px solid var(--tinta);
-}
-
-.cara__segmento:nth-child(7),
-.cara__segmento:nth-child(14) {
-  border-right-width: 2.5px;
-}
-
-.cara__segmento:last-child {
-  border-right: 0;
-}
-
-.cara__segmento--almagre {
+.barra-cara__zona--pillan {
+  width: 35%;
   background: var(--almagre);
 }
-.cara__segmento--gualda {
+
+.barra-cara__zona--creen {
+  width: 35%;
   background: var(--gualda);
 }
-.cara__segmento--verde {
+
+.barra-cara__zona--temen {
+  width: 30%;
   background: var(--verde);
 }
-.cara__segmento--almagre.cara__segmento--claro {
-  background: var(--almagre-claro);
-}
-.cara__segmento--gualda.cara__segmento--claro {
-  background: var(--gualda-claro);
-}
-.cara__segmento--verde.cara__segmento--claro {
-  background: var(--verde-claro);
-}
 
-.cara__zonas {
-  display: flex;
-  margin-top: 5px;
-  font-family: var(--letra-rotulo);
-  font-size: 14px;
-}
-
-.cara__zonas > span {
-  flex: 7 1 0;
-}
-
-.cara__zona--pillan {
-  color: var(--almagre);
-}
-
-.cara__zona--creen {
-  color: var(--gualda-oscuro);
-}
-
-.cara__zonas > .cara__zona--temen {
-  flex: 6 1 0;
-  color: var(--verde);
-  text-align: right;
-}
-
-/* ——— Bocadillo ——— */
-
-.bocadillo {
+/* Lo que pasa de la marca, apagado con papel. */
+.barra-cara__apagado {
   position: absolute;
-  width: 236px;
-  padding: 12px 16px;
-  background: var(--papel);
-  border: var(--borde);
-  border-radius: 14px;
-  box-shadow: var(--sombra-dura-grande);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(242, 232, 210, 0.62);
 }
 
-.bocadillo__accion {
-  font-family: var(--letra-grito);
-  font-size: 26px;
-  line-height: 1;
-  color: var(--almagre);
-}
-
-.bocadillo__frase {
-  margin-top: 4px;
-  font-style: italic;
-  font-size: 19px;
-}
-
-/* La cola apunta hacia arriba, al retrato. */
-.bocadillo__cola {
+.barra-cara__marca {
   position: absolute;
-  left: 50%;
-  top: -21px;
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 20px solid var(--tinta);
+  top: -6px;
+  width: 4px;
+  height: 24px;
+  background: var(--tinta);
+  border-radius: 2px;
   transform: translateX(-50%);
+  transition: left 0.6s ease-out;
 }
 
-/* ——— Etiqueta de nombre ——— */
-
-.etiqueta-nombre {
-  position: absolute;
-  padding: 1px 10px;
-  font-family: var(--letra-grito);
-  font-size: 18px;
-  color: var(--tinta);
-  background: var(--gualda);
-  border: var(--borde);
-  border-radius: 6px;
-  box-shadow: var(--sombra-dura);
-  transform: rotate(-4deg);
+.careto {
+  display: block;
+  flex: 0 0 auto;
 }
 
 /* ——— Cartas (512 × 925) ——— */
@@ -479,6 +342,163 @@
   inset: 0;
   background: var(--gualda);
   animation: destello 0.9s ease-out forwards;
+}
+
+/*
+ * Con arte: la figura respira (se ensancha un pelo desde abajo) y los tics entran con un
+ * fundido sobre el reposo. Los fotogramas ya traen el contorno de tinta y la sombra dura.
+ */
+.retrato__figura {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+  animation: respira 3.8s ease-in-out infinite;
+}
+
+.retrato__capa {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.18s ease-out;
+}
+
+.retrato__capa--oculta {
+  opacity: 0;
+}
+
+.retrato__capa--tic {
+  animation: tic-entra 0.18s ease-out both;
+}
+
+.retrato__capa--saliendo {
+  animation: tic-sale 0.18s ease-in both;
+}
+
+.retrato__arte {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-repeat: no-repeat;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Humo del puro: bocanadas de papel con contorno de tinta que suben y se deshacen. */
+.retrato__humo {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.retrato__humo span {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 50%;
+  opacity: 0;
+  animation: humo 1.5s ease-out infinite;
+}
+
+.retrato__humo span:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.retrato__humo span:nth-child(3) {
+  animation-delay: 1s;
+}
+
+/* Brillo del diente de oro: una estrella de papel con contorno de tinta que gira y se apaga, dos veces. */
+.retrato__destello {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.retrato__destello svg {
+  position: absolute;
+  left: -13px;
+  top: -13px;
+  width: 26px;
+  height: 26px;
+  fill: var(--papel);
+  stroke: var(--tinta);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  animation: destello-diente 1s ease-out 0.15s 2 both;
+}
+
+.retrato__efecto--saliendo {
+  opacity: 0;
+  transition: opacity 0.18s ease-in;
+}
+
+@keyframes respira {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.006, 1.014);
+  }
+}
+
+@keyframes tic-entra {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tic-sale {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes destello-diente {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.15) rotate(40deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.85) rotate(70deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(90deg);
+  }
+}
+
+@keyframes humo {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  15% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(10px, -46px) scale(1.5);
+  }
 }
 
 .retrato__acotacion {
@@ -557,7 +577,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .retrato__marcador--tic {
+  .retrato__marcador--tic,
+  .retrato__figura {
     animation: none;
   }
   .boton-apuesta {

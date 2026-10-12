@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { aplicarNovedades, mesaInicial, sacarTic, textoEnvite, ultimoDelRival } from '../src/estado/mesa';
+import { aplicarNovedades, mesaInicial, narrarEnvite, sacarTic, ultimoDelRival } from '../src/estado/mesa';
 import { nuevaPartida, type Novedades, type ResultadoPartida } from '../src/estado/partida';
 import type { EventoDuelo } from '../src/nucleo/eventos';
 import { ES } from '../src/textos/es';
@@ -21,9 +21,9 @@ const con = (eventos: EventoDuelo[], extra: Partial<Novedades> = {}): ResultadoP
 });
 
 describe('lo que enseña la mesa', () => {
-  it('empieza con el saludo de Ruperto en el acta', () => {
+  it('empieza con Ruperto sentándose a la mesa y su saludo', () => {
     const { saludo } = ES.rivales.ruperto;
-    expect(base().acta).toEqual([{ quien: 'rival', texto: saludo.accion, frase: saludo.frase }]);
+    expect(base().acta).toEqual([{ quien: 'rival', texto: 'Ruperto se sienta a la mesa', frase: saludo.frase }]);
   });
 
   it('cada cosa dicha va una vez al acta, y solo el rival lleva frase', () => {
@@ -35,8 +35,8 @@ describe('lo que enseña la mesa', () => {
       ]),
     );
     const [, tuya, suya] = tras.acta;
-    expect(tuya).toEqual({ quien: 'jugador', texto: 'ENVIDO DOS' });
-    expect(suya).toMatchObject({ quien: 'rival', texto: 'CINCO MÁS' });
+    expect(tuya).toEqual({ quien: 'jugador', texto: 'Has envidado dos.' });
+    expect(suya).toMatchObject({ quien: 'rival', texto: 'Ruperto sube cinco más' });
     expect(ES.rivales.ruperto.frases.mas).toContain(suya!.frase);
     expect(ultimoDelRival(tras.acta)).toBe(2);
   });
@@ -57,7 +57,7 @@ describe('lo que enseña la mesa', () => {
     });
     const primera = aplicarNovedades(base(), con([reparto(1, 'rival')]));
     expect(primera.acta[0]).toEqual({ quien: null, texto: 'Mano 1: es mano Ruperto (habla primero y gana los empates)' });
-    expect(primera.acta[1]).toMatchObject({ quien: 'rival', texto: ES.rivales.ruperto.saludo.accion });
+    expect(primera.acta[1]).toMatchObject({ quien: 'rival', texto: 'Ruperto se sienta a la mesa' });
     const segunda = aplicarNovedades(primera, con([reparto(2, 'jugador')]));
     expect(segunda.acta).toEqual([{ quien: null, texto: 'Mano 2: eres mano' }]);
   });
@@ -88,10 +88,10 @@ describe('lo que enseña la mesa', () => {
       partida: fulgencio.partida,
     });
     expect(tras.acta.slice(1).map((l) => [l.quien, l.texto])).toEqual([
-      ['rival', ES.mesa.pideTrato],
+      ['rival', 'Fulgencio propone un trato'],
       [null, ES.mesa.tratoExplica('Fulgencio')],
-      ['jugador', ES.mesa.botones.aceptarTrato],
-      ['rival', ES.mesa.tratoHecho],
+      ['jugador', 'Has aceptado el trato.'],
+      ['rival', 'Fulgencio cierra el trato'],
     ]);
   });
 
@@ -105,8 +105,8 @@ describe('lo que enseña la mesa', () => {
   it('el enfado lo dice él y la mesa explica qué significa', () => {
     const tras = aplicarNovedades(base(), con([], { seEnfada: true }));
     expect(tras.acta.slice(-2)).toEqual([
-      { quien: 'rival', texto: ES.mesa.enfadado, frase: ES.rivales.ruperto.frases.enfado },
-      { quien: null, texto: ES.mesa.acta.enfadado('Ruperto') },
+      { quien: 'rival', texto: '¡Ruperto se ha enfadado!', frase: ES.rivales.ruperto.frases.enfado },
+      { quien: null, texto: 'Durante dos manos lo aceptará todo' },
     ]);
   });
 
@@ -121,10 +121,33 @@ describe('lo que enseña la mesa', () => {
     expect(sacarTic(mesa)).toBe(mesa);
   });
 
-  it('nombra cada envite como se dice en la mesa', () => {
-    expect(textoEnvite({ tipo: 'envido', piedras: 10 })).toBe('ENVIDO DIEZ');
-    expect(textoEnvite({ tipo: 'mas', piedras: 2 })).toBe('DOS MÁS');
-    expect(textoEnvite({ tipo: 'noQuiero' })).toBe('NO QUIERO');
-    expect(textoEnvite({ tipo: 'ordago' })).toBe('¡ÓRDAGO!');
+  it('cuenta cada envite: lo tuyo en pasado, lo del rival en presente', () => {
+    expect(narrarEnvite({ tipo: 'envido', piedras: 10 }, null)).toBe('Has envidado diez.');
+    expect(narrarEnvite({ tipo: 'envido', piedras: 10 }, 'Ruperto')).toBe('Ruperto envida diez');
+    expect(narrarEnvite({ tipo: 'mas', piedras: 2 }, 'Doña Engracia')).toBe('Doña Engracia sube dos más');
+    expect(narrarEnvite({ tipo: 'paso' }, null)).toBe('Has pasado.');
+    expect(narrarEnvite({ tipo: 'quiero' }, 'Fulgencio')).toBe('Fulgencio quiere');
+    expect(narrarEnvite({ tipo: 'noQuiero' }, null)).toBe('No has querido.');
+    expect(narrarEnvite({ tipo: 'ordago' }, 'Don Bonifacio')).toBe('¡Don Bonifacio echa un órdago!');
+  });
+
+  it('cuenta el mus, los descartes y las declaraciones', () => {
+    const tras = aplicarNovedades(
+      base(),
+      con([
+        { tipo: 'mus', lado: 'jugador', quiereMus: true },
+        { tipo: 'mus', lado: 'rival', quiereMus: false },
+        { tipo: 'descarte', lado: 'rival', descartadas: [{ numero: 1, palo: 'oros' }], robadas: [{ numero: 12, palo: 'oros' }] },
+        { tipo: 'declaracion', lance: 'pares', lado: 'jugador', tiene: false },
+        { tipo: 'declaracion', lance: 'juego', lado: 'rival', tiene: true },
+      ]),
+    );
+    expect(tras.acta.slice(1).map((l) => l.texto)).toEqual([
+      'Has pedido mus.',
+      'Ruperto corta',
+      'Ruperto pide una carta',
+      'No llevas pares.',
+      'Ruperto lleva juego',
+    ]);
   });
 });

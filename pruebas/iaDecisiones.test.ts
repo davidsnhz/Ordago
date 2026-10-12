@@ -47,32 +47,35 @@ describe('fórmulas del documento', () => {
     expect(cantidadEnvite(0.95, ENGRACIA)).toBe(2);
   });
 
-  it('aceptar: F + (50 − Cara)/200 + Me/10·0,6·(t_farol − 0,25) + ε', () => {
+  it('aceptar: F + (50 − Cara)/200 + Me/10·0,6·(t_farol − 0,25) + 0,75·(0,5 − (X − d)/2X) + ε', () => {
     const s = situacion(0.7, conEnvite(), { caraJugador: 60, tFarol: 0.5 });
-    // 0,7 − 0,05 + 0,2·0,6·0,25 + 0
-    expect(valorParaAceptar(s, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.68);
+    // 0,7 − 0,05 + 0,2·0,6·0,25 + 0,75·(0,5 − 0,25) + 0
+    expect(valorParaAceptar(s, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.8675);
     // Con Cara baja se acepta más.
-    expect(valorParaAceptar({ ...s, caraJugador: 10 }, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.93);
+    expect(valorParaAceptar({ ...s, caraJugador: 10 }, RUPERTO, azarFijo(0.5))).toBeCloseTo(1.1175);
     // El ruido está entre −0,05 y +0,05.
-    expect(valorParaAceptar(s, RUPERTO, azarFijo(0))).toBeCloseTo(0.63);
+    expect(valorParaAceptar(s, RUPERTO, azarFijo(0))).toBeCloseTo(0.8175);
   });
 
-  it('lo que se arriesga: sin peso no cambia nada; con peso, un envite pequeño se acepta más', () => {
+  it('lo que se arriesga: un envite pequeño se acepta más que uno grande, y el órdago no cambia', () => {
     // Cara 50 y t_farol 0,25: ni la Cara ni la memoria suman nada.
-    const s = situacion(0.4, conEnvite(), { caraJugador: 50, tFarol: 0.25 });
-    const sinCuota = valorParaAceptar(s, RUPERTO, azarFijo(0.5));
-    expect(sinCuota).toBeCloseTo(0.4);
+    const neutro = { caraJugador: 50, tFarol: 0.25 };
+    // Envido dos con deje 1: compensa aceptar con F > (2 − 1)/4 = 0,25, así que suma 0,75·(0,5 − 0,25).
+    expect(valorParaAceptar(situacion(0.4, conEnvite(), neutro), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.5875);
+    // Dos más sobre dos queridos (4 en juego, deje 2): (4 − 2)/8 = 0,25 también.
+    const subida = ronda({ tipo: 'envido', piedras: 2 }, { tipo: 'mas', piedras: 2 });
+    expect(valorParaAceptar(situacion(0.4, subida, neutro), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.5875);
+    // Envido diez: (10 − 1)/20 = 0,45, así que solo suma 0,75·0,05.
+    const diez = ronda({ tipo: 'envido', piedras: 10 });
+    expect(valorParaAceptar(situacion(0.4, diez, neutro), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.4375);
+    // Al órdago no se le aplica.
+    expect(valorParaAceptar(situacion(0.4, conOrdago(), neutro), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.4);
+    // Con peso 0 es la fórmula original del documento.
     const aceptar = IA.aceptar as { pesoCuota: number };
     const antes = aceptar.pesoCuota;
     try {
-      aceptar.pesoCuota = 1;
-      // Envido dos con deje 1: compensa aceptar con F > (2 − 1)/4 = 0,25, así que suma 0,5 − 0,25.
-      expect(valorParaAceptar(s, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.65);
-      // Dos más sobre dos aceptados (4 en juego, deje 2): (4 − 2)/8 = 0,25 también.
-      const subida = situacion(0.4, ronda({ tipo: 'envido', piedras: 2 }, { tipo: 'mas', piedras: 2 }), { caraJugador: 50, tFarol: 0.25 });
-      expect(valorParaAceptar(subida, RUPERTO, azarFijo(0.5))).toBeCloseTo(0.65);
-      // Al órdago no se le aplica.
-      expect(valorParaAceptar(situacion(0.4, conOrdago(), { caraJugador: 50, tFarol: 0.25 }), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.4);
+      aceptar.pesoCuota = 0;
+      expect(valorParaAceptar(situacion(0.4, conEnvite(), neutro), RUPERTO, azarFijo(0.5))).toBeCloseTo(0.4);
     } finally {
       aceptar.pesoCuota = antes;
     }
@@ -123,7 +126,12 @@ describe('Ruperto habla sin envite delante', () => {
 describe('Ruperto responde a un envite', () => {
   it('quiere con mano decente y no quiere con mano mala', () => {
     expect(decide(0.7, conEnvite(), 0.5)).toEqual({ tipo: 'quiero' });
-    expect(decide(0.4, conEnvite(), 0.5)).toEqual({ tipo: 'noQuiero' });
+    expect(decide(0.25, conEnvite(), 0.5)).toEqual({ tipo: 'noQuiero' });
+  });
+
+  it('con una mano regular quiere un envido dos, que arriesga poco, pero no un envido diez', () => {
+    expect(decide(0.4, conEnvite(), 0.5)).toEqual({ tipo: 'quiero' });
+    expect(decide(0.4, ronda({ tipo: 'envido', piedras: 10 }), 0.5)).toEqual({ tipo: 'noQuiero' });
   });
 
   it('sube con mano muy buena', () => {

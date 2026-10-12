@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
 import { ORDEN_RIVALES, type IdRival } from '../../datos/rivales';
+import type { Partida } from '../../estado/partida';
 import { useDuelo } from '../../estado/useDuelo';
 import { textosDe, ultimoDelRival, type EstadoMesa, type LineaActa } from '../../estado/mesa';
 import { idCarta, type Carta } from '../../nucleo/carta';
 import type { Lado } from '../../nucleo/comun';
 import { accionesValidas, type AccionDuelo, type EstadoDuelo, type OpcionDuelo } from '../../nucleo/duelo';
 import { calcularFuerza } from '../../nucleo/ia/fuerza';
-import { LANCES, type Lance } from '../../nucleo/lances';
+import { LANCES } from '../../nucleo/lances';
 import { cartaCorta, ES, type TextosRival } from '../../textos/es';
 import { BotonOrdago } from '../componentes/BotonOrdago';
 import { Escenario } from '../componentes/Escenario';
-import { BarraCara, BotonApuesta, CartaReverso, CartaVista, clases, EtiquetaNombre, FilaLances } from '../componentes/piezas';
+import { BotonApuesta, CartaReverso, CartaVista, clases } from '../componentes/piezas';
 import { Retrato } from '../componentes/Retrato';
+import { AyudaCara, Cabecera } from './Cabecera';
 import './mesa.css';
 
 const M = ES.mesa;
@@ -38,10 +40,13 @@ const PULSACION_LARGA = 250;
 
 /** La mesa: un duelo contra uno de los cinco rivales, en vertical. */
 export function Mesa() {
-  const { estado, jugar, nuevoDuelo, mirar, mirando, setMirando, cambiarCara, rivalPiensa } = useDuelo();
+  const { estado, jugar, nuevoDuelo, mirar, mirando, setMirando, cambiarCara, ensayarTics, setPausa, rivalPiensa } = useDuelo();
   const pruebas = useModoPruebas();
   const [depuracion, alternarDepuracion] = useDepuracion(pruebas);
   const [eligiendoRival, setEligiendoRival] = useState(false);
+  // Mientras lees qué es la Cara, el rival espera.
+  const [ayudaCara, setAyudaCara] = useState(false);
+  useEffect(() => setPausa(ayudaCara), [ayudaCara, setPausa]);
   const { partida } = estado;
   const duelo = partida.duelo;
   const textos = textosDe(partida);
@@ -67,8 +72,7 @@ export function Mesa() {
         <div className="mesa__pared" />
         <div className="mesa__luz" />
 
-        <Marcador duelo={duelo} textos={textos} />
-        <ColumnaCara estado={estado} />
+        <Cabecera estado={estado} textos={textos} onAyuda={() => setAyudaCara(true)} />
 
         <Retrato
           id={partida.rivalId}
@@ -87,10 +91,7 @@ export function Mesa() {
             mirar(segundos);
           }}
         />
-        <EtiquetaNombre className="mesa__nombre">
-          {textos.etiqueta}
-          {partida.memoria.manosEnfadado > 0 && <span className="mesa__enfado">{M.enfadado}</span>}
-        </EtiquetaNombre>
+        <EstadoDelRival partida={partida} />
         {pruebas && (
           <div className="mesa__pruebas">
             <button type="button" className="mesa__boton-pequeno" onClick={() => setEligiendoRival(true)}>
@@ -99,10 +100,13 @@ export function Mesa() {
             <button type="button" className="mesa__boton-pequeno" aria-pressed={depuracion} onClick={alternarDepuracion}>
               {M.depurar}
             </button>
+            <button type="button" className="mesa__boton-pequeno" onClick={ensayarTics}>
+              {M.ensayarTics}
+            </button>
           </div>
         )}
 
-        <Acta duelo={duelo} acta={estado.acta} textos={textos} />
+        <Acta duelo={duelo} acta={estado.acta} />
 
         <div className="mesa__madera" />
         <div className="mesa__tapete" />
@@ -131,6 +135,7 @@ export function Mesa() {
           onSiguiente={() => jugar({ tipo: 'siguienteMano' })}
           onOtroDuelo={elegirRival}
         />
+        {ayudaCara && <AyudaCara valor={partida.caraJugador} onCerrar={() => setAyudaCara(false)} />}
         {eligiendoRival && (
           <SelectorDeRival actual={partida.rivalId} onElegir={elegirRival} onCancelar={() => setEligiendoRival(false)} />
         )}
@@ -139,63 +144,24 @@ export function Mesa() {
   );
 }
 
-/** Marcador de arriba: solo los números, el rival a la izquierda y tú a la derecha. */
-function Marcador({ duelo, textos }: { duelo: EstadoDuelo; textos: TextosRival }) {
-  const jugados = new Set(duelo.lances.map((l) => l.lance));
-  const terminada = duelo.fase === 'finMano' || duelo.fase === 'finDuelo' || duelo.fase === 'trato';
-  const hayPunto = jugados.has('punto') || duelo.lanceActual === 'punto';
-  const fila = (['grande', 'chica', 'pares', hayPunto ? 'punto' : 'juego'] as Lance[]).map((lance) => ({
-    etiqueta: ES.lances[lance],
-    estado: (duelo.lanceActual === lance && !terminada ? 'actual' : jugados.has(lance) || terminada ? 'jugado' : 'pendiente') as
-      | 'actual'
-      | 'jugado'
-      | 'pendiente',
-  }));
-  const lado = (quien: Lado, nombre: string) => (
-    <div className={clases('marcador-simple__lado', quien === 'jugador' && 'marcador-simple__lado--tu')}>
-      <span className="rotulo">{nombre}</span>
-      <span className="marcador-simple__numero">{duelo.marcador[quien]}</span>
-      {duelo.quienEsMano === quien && (
-        <span className={clases('insignia', quien === 'jugador' && 'insignia--anil')} title={M.ayudaMano}>
-          {M.esMano}
+/**
+ * Junto al retrato ya no va el nombre (está en el marcador): solo cómo está el rival por sus
+ * reglas especiales, mientras dura.
+ */
+function EstadoDelRival({ partida }: { partida: Partida }) {
+  const { memoria, duelo } = partida;
+  const estados = [
+    memoria.manosEnfadado > 0 ? { texto: M.enfadado, ayuda: M.ayudaEnfadado } : null,
+    memoria.ofendidaHastaMano >= duelo.numeroMano ? { texto: M.estadoOfendida, ayuda: M.ayudaOfendida } : null,
+  ].filter((e) => e !== null);
+  if (estados.length === 0) return null;
+  return (
+    <div className="mesa__estado-rival">
+      {estados.map((e) => (
+        <span key={e.texto} className="mesa__estado" title={e.ayuda}>
+          {e.texto}
         </span>
-      )}
-    </div>
-  );
-  return (
-    <div className="panel mesa__marcador" aria-label={`${textos.nombre} ${duelo.marcador.rival}, tú ${duelo.marcador.jugador}`}>
-      {lado('rival', textos.nombre)}
-      <div className="marcador-simple__centro">
-        <span className="rotulo">{M.marcador}</span>
-        <FilaLances lances={fila} />
-      </div>
-      {lado('jugador', M.tu)}
-    </div>
-  );
-}
-
-function ColumnaCara({ estado }: { estado: EstadoMesa }) {
-  const { partida, avisoCara, seTeNota } = estado;
-  return (
-    <div className="mesa__cara">
-      <BarraCara
-        valor={partida.caraJugador}
-        titulo={M.tuCara}
-        zonas={M.zonasCara}
-        etiqueta={partida.expuesto ? <span className="mesa__expuesto">{M.expuesto}</span> : undefined}
-      />
-      <div className="mesa__avisos">
-        {avisoCara && (
-          <div key={avisoCara.clave} className={clases('mesa__aviso', avisoCara.delta < 0 && 'mesa__aviso--baja')} role="status">
-            <strong>{M.cambioCara(avisoCara.delta)}</strong> {avisoCara.motivos.join(' · ')}
-          </div>
-        )}
-        {seTeNota && (
-          <div key={seTeNota} className="mesa__aviso mesa__aviso--pulso" role="status">
-            {M.seTeNota}
-          </div>
-        )}
-      </div>
+      ))}
     </div>
   );
 }
@@ -241,70 +207,90 @@ function ZonaMirar({ nombre, onEmpieza, onTermina }: { nombre: string; onEmpieza
 }
 
 /**
- * El acta de la mano, en un solo sitio bajo el retrato: arriba en qué lance estamos y qué hay
- * en juego; debajo, lo último que se ha dicho (lo más reciente, más marcado). Se puede abrir
- * para ver la mano entera.
+ * El acta de la mano, contada, en un solo panel bajo el retrato. La pestaña dice el lance y la
+ * ficha roja, lo que hay en juego; dentro, las últimas cosas: lo tuyo en cursiva azul, lo del
+ * rival en versalitas rojas con su frase, y lo que pasa en la mesa en letra corriente. «La mano»
+ * la abre entera.
  */
-function Acta({ duelo, acta, textos }: { duelo: EstadoDuelo; acta: LineaActa[]; textos: TextosRival }) {
+function Acta({ duelo, acta }: { duelo: EstadoDuelo; acta: LineaActa[] }) {
   const [abierta, setAbierta] = useState(false);
   useEffect(() => setAbierta(false), [duelo.numeroMano]);
-  const { titulo, enJuego, destacado } = cabeceraActa(duelo);
-  const desde = abierta ? 0 : Math.max(0, acta.length - LINEAS_VISIBLES);
+  const ficha = fichaActa(duelo);
+  // Si las últimas líneas no caben (frases largas), se esconden enteras las más antiguas en vez
+  // de cortarse a medias; siguen en «Toda la mano».
+  const lineas = useRef<HTMLOListElement>(null);
+  const [sobran, setSobran] = useState(0);
+  useLayoutEffect(() => setSobran(0), [acta.length, abierta]);
+  const desde = abierta ? 0 : Math.min(acta.length - 1, Math.max(0, acta.length - LINEAS_VISIBLES) + sobran);
+  useLayoutEffect(() => {
+    const ol = lineas.current;
+    const primera = ol?.firstElementChild;
+    // Con las líneas pegadas abajo, lo que no cabe asoma por arriba: la primera empieza antes que la caja.
+    if (ol && primera && !abierta && desde < acta.length - 1 && primera.getBoundingClientRect().top < ol.getBoundingClientRect().top - 1) {
+      setSobran((s) => s + 1);
+    }
+  });
   const conFrase = ultimoDelRival(acta);
   const ultima = acta.length - 1;
 
   return (
-    <section className={clases('panel panel--sombra acta', abierta && 'acta--abierta')} aria-label="Lo que pasa en la mano">
-      <span className="acta__cola" aria-hidden="true" />
-      <div className="acta__cabecera">
-        <span className="rotulo">{titulo}</span>
-        {enJuego && <span className={clases('acta__en-juego', destacado && 'acta__en-juego--destacado')}>{enJuego}</span>}
+    <section className={clases('acta', abierta && 'acta--abierta', ficha && 'acta--con-ficha')} aria-label="Lo que pasa en la mano">
+      <div className="acta__caja">
+        <ol ref={lineas} className="acta__lineas" aria-live="polite">
+          {acta.slice(desde).map((linea, i) => {
+            const indice = desde + i;
+            return (
+              <li
+                key={indice}
+                className={clases('acta__linea', `acta__linea--${linea.quien ?? 'mesa'}`, indice === ultima && 'acta__linea--ultima')}
+              >
+                <span className="acta__texto">{linea.texto}</span>
+                {linea.frase && indice === conFrase && <span className="acta__frase">{linea.frase}</span>}
+              </li>
+            );
+          })}
+        </ol>
       </div>
-      <ol className="acta__lineas" aria-live="polite">
-        {acta.slice(desde).map((linea, i) => {
-          const indice = desde + i;
-          return (
-            <li
-              key={indice}
-              className={clases('acta__linea', `acta__linea--${linea.quien ?? 'mesa'}`, indice === ultima && 'acta__linea--ultima')}
-            >
-              {linea.quien && <span className="acta__quien">{linea.quien === 'rival' ? textos.nombre : M.tu}</span>}
-              <span className="acta__texto">{linea.texto}</span>
-              {linea.frase && indice === conFrase && <span className="acta__frase">{linea.frase}</span>}
-            </li>
-          );
-        })}
-      </ol>
+      <span className="acta__cola" aria-hidden="true" />
+      <span className="acta__pestana">{pestanaActa(duelo)}</span>
+      {ficha && (
+        <span className={clases('acta__ficha', ficha.todo && 'acta__ficha--todo')} aria-label={`${ficha.cifra} ${ficha.pie}`}>
+          <b>{ficha.cifra}</b>
+          <span>{ficha.pie}</span>
+        </span>
+      )}
       {acta.length > LINEAS_VISIBLES && (
         <button type="button" className="acta__ver" aria-expanded={abierta} onClick={() => setAbierta((a) => !a)}>
-          {abierta ? `▴ ${M.cerrarMano}` : `▾ ${M.verMano}`}
+          {abierta ? `▴ ${M.cerrarMano}` : `≡ ${M.verMano}`}
         </button>
       )}
     </section>
   );
 }
 
-function cabeceraActa(duelo: EstadoDuelo): { titulo: string; enJuego: string; destacado: boolean } {
+/** En qué estamos: el lance con su artículo, o la fase con el número de mano. */
+function pestanaActa(duelo: EstadoDuelo): string {
   const mano = M.mano(duelo.numeroMano);
   switch (duelo.fase) {
     case 'mus':
-      return { titulo: `${M.fases.mus} · ${mano}`, enJuego: '', destacado: false };
+      return `${M.fases.mus} · ${mano}`;
     case 'descarte':
-      return { titulo: `${M.fases.descarte} · ${mano}`, enJuego: '', destacado: false };
+      return `${M.fases.descarte} · ${mano}`;
     case 'trato':
-      return { titulo: M.fases.trato, enJuego: '', destacado: false };
-    case 'envite': {
-      const envite = duelo.envite;
-      const titulo = duelo.lanceActual ? ES.lances[duelo.lanceActual] : mano;
-      if (!envite) return { titulo, enJuego: '', destacado: false };
-      if (envite.ordago) return { titulo, enJuego: M.dueloEntero, destacado: true };
-      return envite.apuesta > 0
-        ? { titulo, enJuego: M.enJuego(envite.apuesta), destacado: true }
-        : { titulo, enJuego: M.sinEnvite, destacado: false };
-    }
+      return M.fases.trato;
+    case 'envite':
+      return duelo.lanceActual ? M.lanceConArticulo[duelo.lanceActual] : mano;
     default:
-      return { titulo: `${M.fases.recuento} · ${mano}`, enJuego: '', destacado: false };
+      return `${M.fases.recuento} · ${mano}`;
   }
+}
+
+/** Lo que hay en juego, si hay envite: la cifra, o TODO si es un órdago. */
+function fichaActa(duelo: EstadoDuelo): { cifra: string; pie: string; todo: boolean } | null {
+  const envite = duelo.fase === 'envite' ? duelo.envite : null;
+  if (!envite) return null;
+  if (envite.ordago) return { cifra: M.ficha.todo, pie: M.ficha.elDuelo, todo: true };
+  return envite.apuesta > 0 ? { cifra: String(envite.apuesta), pie: M.ficha.enJuego, todo: false } : null;
 }
 
 function ManoDelJugador({
