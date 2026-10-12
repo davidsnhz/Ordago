@@ -25,15 +25,15 @@ const LINEAS_VISIBLES = 3;
 /** Abanico de la mano: posición y giro de cada carta (escenario vertical de 390 × 844). */
 const ABANICO = [
   { left: 0, top: 8, giro: -9 },
-  { left: 66, top: 2, giro: -3 },
-  { left: 132, top: 2, giro: 3 },
-  { left: 198, top: 8, giro: 9 },
+  { left: 70, top: 2, giro: -3 },
+  { left: 140, top: 2, giro: 3 },
+  { left: 210, top: 8, giro: 9 },
 ];
 const ABANICO_RIVAL = [
   { left: 0, top: 3, giro: -8 },
-  { left: 32, top: 0, giro: -3 },
-  { left: 64, top: 0, giro: 3 },
-  { left: 96, top: 3, giro: 8 },
+  { left: 30, top: 0, giro: -3 },
+  { left: 60, top: 0, giro: 3 },
+  { left: 90, top: 3, giro: 8 },
 ];
 /** Lo que hay que mantener pulsado el retrato para empezar a mirar. */
 const PULSACION_LARGA = 250;

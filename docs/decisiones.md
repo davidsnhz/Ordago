@@ -221,6 +221,14 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 4. **«?»** abre una ficha corta con lo que la mueve y lo que hace cada zona (la tuya resaltada). Los números salen de `datos/cara.ts`, así que no se desajustan si se cambian. **Mientras está abierta, el rival espera** (como cuando le miras).
 5. **Limpieza:** fuera las piezas que ya no se usaban (bocadillo, marcador de piedras, Cara de 20 segmentos, fila de lances y etiqueta de nombre) y sus estilos.
 
+## El tapete, un tercio (12 de octubre de 2026)
+
+*Pedido por David:* «aumenta un poco el tamaño de tus cartas para que la parte del tapete ocupe un tercio de la pantalla».
+
+- El tapete empieza en 563 px (844 − 281), así que ocupa justo el tercio de abajo, con la barra de botones dentro.
+- Tus cartas pasan de 70 × 126 a 80 × 145 px (un 15 % más), con el abanico algo más abierto. Las del rival, de 32 × 58 a 30 × 54, para que quepan en la parte de arriba del tapete.
+- El selector de cantidad sube con la mano para no taparla, y el acta gana algo de sitio por abajo.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).
