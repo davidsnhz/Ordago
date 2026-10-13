@@ -63,7 +63,7 @@ describe('memoria del rival', () => {
   });
 });
 
-describe('el enfado de Ruperto', () => {
+describe('el enfado de Agustín', () => {
   it('si pierde 3 lances seguidos se enfada durante 2 manos', () => {
     let m = memoriaInicial();
     let r = recordar(m, [recuento({ grande: 'jugador', chica: 'jugador', pares: null, juego: 'rival' })], RUPERTO, 8);

@@ -47,7 +47,7 @@ export interface Novedades {
   cambiosCara: CambioCara[];
   /** Cara a 0: al jugador se le ha notado el tic. */
   seTeNota: boolean;
-  /** Doña Engracia se ha dado cuenta de que la mirabas. */
+  /** Doña Ignacia se ha dado cuenta de que la mirabas. */
   seOfende: boolean;
 }
 
@@ -69,7 +69,7 @@ const sinNovedades = (): Novedades => ({
 
 export function nuevaPartida(semilla: string, rivalId: IdRival = 'ruperto', cara: number = CARA.inicial): ResultadoPartida {
   const perfil = RIVALES[rivalId];
-  // La Casa: Don Bonifacio es mano en el primer reparto.
+  // La Casa: Don Rodrigo es mano en el primer reparto.
   const { estado, eventos } = crearDuelo({ semilla, quienEsMano: perfil.casa ? 'rival' : undefined });
   const partida: Partida = {
     version: VERSION_PARTIDA,
@@ -137,7 +137,7 @@ export function jugarRival(partida: Partida): ResultadoPartida {
 }
 
 /**
- * Mirar al rival (pulsación larga en el retrato). Doña Engracia, si la miras demasiado, puede
+ * Mirar al rival (pulsación larga en el retrato). Doña Ignacia, si la miras demasiado, puede
  * darse cuenta (según su Ojo) y ofenderse: no hace tics en lo que queda de mano ni en la siguiente.
  */
 export function mirarAlRival(partida: Partida, segundos: number): ResultadoPartida {
@@ -196,7 +196,7 @@ function cobrarPenitencia(
 }
 
 /**
- * El trato de Fulgencio: con sus cartas calcula lo que espera ganar de los envites queridos.
+ * El trato de Aurelio: con sus cartas calcula lo que espera ganar de los envites queridos.
  * Si espera menos de la mitad, lo propone; si espera más, a veces también, de farol.
  */
 function quiereTrato(estado: Readonly<EstadoDuelo>, tirada: number): boolean {
@@ -215,7 +215,7 @@ function quiereTrato(estado: Readonly<EstadoDuelo>, tirada: number): boolean {
 }
 
 /**
- * Cartas de la casa: si su mejor lance no llega a la fuerza indicada, Don Bonifacio cambia su
+ * Cartas de la casa: si su mejor lance no llega a la fuerza indicada, Don Rodrigo cambia su
  * carta más baja por un rey del mazo (o la carta más alta que quede).
  */
 function elegirCambio(duelo: EstadoDuelo, fuerzaMaxima: number): { sale: Carta; entra: Carta } | null {

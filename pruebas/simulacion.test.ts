@@ -70,7 +70,7 @@ describe(`simulación de ${DUELOS} duelos entre jugadores aleatorios`, () => {
   }, 120_000);
 
   it('la misma semilla repite exactamente el mismo duelo', () => {
-    for (const semilla of [1, 2, 'Ruperto', 12345]) {
+    for (const semilla of [1, 2, 'Agustín', 12345]) {
       expect(simularDuelo(semilla)).toEqual(simularDuelo(semilla));
     }
     expect(simularDuelo(1).eventos).not.toEqual(simularDuelo(2).eventos);

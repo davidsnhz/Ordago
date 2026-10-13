@@ -22,7 +22,7 @@ function hastaElTrato(mods: Modificador[] = [OFRECE]) {
   );
 }
 
-describe('el trato (Fulgencio)', () => {
+describe('el trato (Aurelio)', () => {
   it('antes del recuento, si hay envites queridos, se espera la respuesta del otro', () => {
     const { estado, eventos } = hastaElTrato();
     expect(estado).toMatchObject({ fase: 'trato', turno: 'jugador', trato: { ofrece: 'rival' } });
@@ -94,14 +94,14 @@ describe('reglas de decisión de cada rival', () => {
   const conOrdago = aplicarEnvite(iniciarEnvite('jugador'), 'jugador', { tipo: 'ordago' }, LIMITES);
   const base = { limites: LIMITES, diferencia: 0, caraJugador: 60, tFarol: 0, aceptaTodo: false };
 
-  it('Doña Engracia nunca acepta un órdago antes de la tercera mano', () => {
+  it('Doña Ignacia nunca acepta un órdago antes de la tercera mano', () => {
     // Con su miedo al órdago (9) necesita casi la mano perfecta y que tu Cara esté baja.
     const situacion = { ...base, F: 1, envite: conOrdago, ordagoDesdeMano: 3, caraJugador: 20 };
     expect(decidirEnvite({ ...situacion, numeroMano: 2 }, RIVALES.engracia.parametros, azar).accion).toEqual({ tipo: 'noQuiero' });
     expect(decidirEnvite({ ...situacion, numeroMano: 3 }, RIVALES.engracia.parametros, azar).accion).toEqual({ tipo: 'quiero' });
   });
 
-  it('Don Anselmo envida siempre a la Chica, lleve lo que lleve', () => {
+  it('Don Francisco envida siempre a la Chica, lleve lo que lleve', () => {
     const situacion = { ...base, F: 0.1, envite: iniciarEnvite('rival'), siempreEnvida: true };
     const decision = decidirEnvite(situacion, RIVALES.anselmo.parametros, azar);
     expect(decision.accion).toEqual({ tipo: 'envido', piedras: 2 });
@@ -125,7 +125,7 @@ describe('memoria de las reglas especiales', () => {
   const envidoDelJugador: EventoDuelo = { tipo: 'envite', lance: 'grande', lado: 'jugador', accion: { tipo: 'envido', piedras: 2 } };
   const reparto: EventoDuelo = { tipo: 'reparto', numeroMano: 1, quienEsMano: 'jugador', cartas: { jugador: [], rival: [] } };
 
-  it('Don Anselmo impone penitencia al pillarte un farol, y se paga con tu siguiente envite', () => {
+  it('Don Francisco impone penitencia al pillarte un farol, y se paga con tu siguiente envite', () => {
     const r1 = recordar(memoriaInicial(), [reparto, envidoDelJugador, recuento('A 4 5 6')], RIVALES.anselmo, 8);
     expect(r1).toMatchObject({ imponePenitencia: true, memoria: { penitencia: true } });
     // Una mano sin envites tuyos: sigue pendiente.

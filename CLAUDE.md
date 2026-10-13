@@ -67,7 +67,7 @@ pruebas/
 Sigue el plan de prototipo del documento y no avances de fase sin que la anterior funcione y tenga pruebas:
 
 1. **Motor de mus** con pruebas exhaustivas: orden de cartas a 8 reyes, pares, juego (31 > 32 > 40 > 37 > … > 33), punto, empates para el que es mano, piedras en paso, «no quiero» y recuento en orden de lances, con victoria a 20 a mitad de recuento.
-2. **Un duelo jugable** contra Ruperto, con interfaz de la guía, tics como efectos de marcador, envites y órdago.
+2. **Un duelo jugable** contra Agustín (antes, Ruperto), con interfaz de la guía, tics como efectos de marcador, envites y órdago.
 3. **IA completa y la Cara**, con los cinco rivales. Añade un modo de depuración que muestre la fuerza F y la decisión de la IA.
 4. **Estructura de gira**: la primera arena completa (3 secuaces y su jefe) con taberna, 5 objetos y 2 compañeros.
 5. **Pantallas** de título, mapa, órdago y taberna, más sonido provisional.

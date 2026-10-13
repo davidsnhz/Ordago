@@ -10,7 +10,7 @@ const CARPETA = 'public/arte/personajes';
 const leer = <T>(ruta: string): T => JSON.parse(fs.readFileSync(path.join(CARPETA, ruta), 'utf8')) as T;
 const indice = leer<{ personajes: string[] }>('indice.json');
 
-/** Todos los tics que puede hacer un rival, también los de las fases de Don Bonifacio. */
+/** Todos los tics que puede hacer un rival, también los de las fases de Don Rodrigo. */
 const ticsDe = (id: IdRival) => {
   const perfil = RIVALES[id];
   return new Set([...perfil.tics, ...(perfil.fasesDeTics ?? []).flatMap((f) => f.tics)].map((t) => t.id));

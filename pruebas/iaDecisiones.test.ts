@@ -88,7 +88,7 @@ describe('fórmulas del documento', () => {
   });
 });
 
-describe('Ruperto habla sin envite delante', () => {
+describe('Agustín habla sin envite delante', () => {
   it('con F > 0,85 tira órdago una de cada cuatro veces (0,03·8); si no, envida fuerte', () => {
     expect(decide(0.9, sinEnvite(), 0.2)).toEqual({ tipo: 'ordago' });
     expect(decide(0.9, sinEnvite(), 0.3)).toEqual({ tipo: 'envido', piedras: 5 });
@@ -123,7 +123,7 @@ describe('Ruperto habla sin envite delante', () => {
   });
 });
 
-describe('Ruperto responde a un envite', () => {
+describe('Agustín responde a un envite', () => {
   it('quiere con mano decente y no quiere con mano mala', () => {
     expect(decide(0.7, conEnvite(), 0.5)).toEqual({ tipo: 'quiero' });
     expect(decide(0.25, conEnvite(), 0.5)).toEqual({ tipo: 'noQuiero' });
@@ -154,7 +154,7 @@ describe('Ruperto responde a un envite', () => {
   });
 });
 
-describe('Ruperto responde a un órdago', () => {
+describe('Agustín responde a un órdago', () => {
   it('acepta por orgullo con poco más de media mano', () => {
     // valor = F − 0,05 − 0,03; umbral 0,58.
     expect(decide(0.6, conOrdago(), 0.5)).toEqual({ tipo: 'noQuiero' });

@@ -1,8 +1,8 @@
 # Órdago — Documento de diseño
 
-13 de octubre de 2026 · @david · *versión 8: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7) y las arenas nuevas con la Honra que no acaba la gira por perder contra un jefe (v8)*
+13 de octubre de 2026 · @david · *versión 8: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7) las arenas nuevas con la Honra que no acaba la gira por perder contra un jefe (v8) y los nombres nuevos, con todos los personajes por diseñar desde cero (v9)*
 
-> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Ruperto) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. **Los cinco rivales ya tienen su arte** en la mesa, con varios de sus tics dibujados. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 8 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
+> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Agustín) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. **Los cinco rivales ya tienen su arte** en la mesa, con varios de sus tics dibujados. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 9 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
 
 ## Visión y esencia
 
@@ -53,14 +53,14 @@ La gira recorre sitios reconocibles de España, cada uno con su identidad visual
 | Arena | Dónde | Ambiente | Contra quién | Jefe |
 | --- | --- | --- | --- | --- |
 | 1 | La facultad | La cafetería de una universidad pública: mesas de formica, máquina de café, apuntes | Estudiantes, que es donde casi todos aprenden a jugar | Chema, el Repetidor, que no entra en clase y vive en la cafetería |
-| 2 | El bar | Barra de zinc, raciones, la tele con el fútbol, la tragaperras | Adultos, no ancianos (Ruperto y Fulgencio juegan aquí) | Manolo, el Rey de la barra: cuarenta y tantos, medio calvo y con barriga cervecera |
-| 3 | La Montaña Palentina | Casa de piedra, nieve, chimenea, mesa camilla con brasero | Una familia de pueblo: la niña, la madre y el padre | El abuelo Teodoro |
-| 4 | Las fiestas del pueblo | Farolillos, casetas, orquesta y la carpa del concurso de mus | Ancianos que han jugado al mus toda su vida (Doña Engracia y Don Anselmo juegan aquí) | El tío Paulino, el Campeón de las fiestas |
-| 5 (final) | El casino de la capital | Terciopelo, lámparas, humo | Los de la casa | Don Bonifacio, el Cacique |
+| 2 | El bar | Barra de zinc, raciones, la tele con el fútbol, la tragaperras | Adultos, no ancianos (Agustín y Aurelio juegan aquí) | Manolo, el Rey de la barra: cuarenta y tantos, medio calvo y con barriga cervecera |
+| 3 | La Montaña Palentina | Casa de piedra, nieve, chimenea, mesa camilla con brasero | Una familia de pueblo: la niña, la madre y el padre | El abuelo Pepe |
+| 4 | Las fiestas del pueblo | Farolillos, casetas, orquesta y la carpa del concurso de mus | Ancianos que han jugado al mus toda su vida (Doña Ignacia y Don Francisco juegan aquí) | El tío Arturo, el Campeón de las fiestas |
+| 5 (final) | El casino de la capital | Terciopelo, lámparas, humo | Los de la casa | Don Rodrigo, el Cacique |
 
 ### Arte
 
-> **Esta sección está sustituida por `docs/direccion-arte.md`.** El pixel art se descartó: la interfaz y la baraja usan el estilo de naipe impreso. **[cambiado]** Los personajes son ilustraciones en 3D de estilo de animación (las hojas de personaje de David) **pasadas por la imprenta** para que casen con la mesa: tonos planos, tinta en lugar de negro, papel en lugar de blanco, grano de impresión, contorno de tinta y sombra dura, como los paneles.
+> **Esta sección está sustituida por `docs/direccion-arte.md`.** El pixel art se descartó: la interfaz y la baraja usan el estilo de naipe impreso. **[cambiado]** Los personajes son ilustraciones en 3D de estilo de animación (las hojas de personaje de David) **pasadas por la imprenta** para que casen con la mesa: tonos planos, tinta en lugar de negro, papel en lugar de blanco, grano de impresión, contorno de tinta y sombra dura, como los paneles. **[cambiado]** David ha decidido diseñar de nuevo desde cero a todos los personajes, también a estos cinco; hasta que estén, el juego usa los dibujos de ahora.
 
 - **La mesa en el centro.** Vista frontal: el rival sentado enfrente, ocupando el centro de la pantalla vertical. Tus cartas abajo y los botones al pie, al alcance del pulgar.
 - **Maquetación vertical:** escenario de 390 × 844, como un móvil. En ordenador se ve centrado con bandas, y si giras el móvil sale un aviso para ponerlo en vertical. De arriba abajo:
@@ -70,20 +70,20 @@ La gira recorre sitios reconocibles de España, cada uno con su identidad visual
      - **Abajo, tu Cara:** tu **careto** de tinta (sudando si te pillan, serio si te creen, con media sonrisa si te temen), qué significa ahora en pocas palabras (*te creen: a veces cuela*), su número, una barra fina de tres zonas con la marca y el botón **«?»**. Arriba ya no sale el nombre de la comarca.
      - **Cuando la Cara cambia**, la cifra (*+8*, *−12*) sube un momento sobre la marca y se va; el motivo queda apuntado en el acta. Antes salía un aviso debajo de la barra que tapaba la cara del rival, justo donde están sus tics. Cuando se te nota el pulso, la etiqueta *SE TE NOTA* parpadea.
      - **«?»** abre una ficha corta: qué es la Cara (*lo que te creen en la mesa*), qué la mueve (+8, +4, −12, −15) y qué hace cada zona, con la tuya resaltada. Mientras está abierta, el rival espera.
-  2. **El rival**, grande y centrado, con sus tics. **[cambiado]** Ya no lleva al lado el cartel con su nombre, que sobraba (su nombre está en el marcador); en ese sitio solo sale, mientras dura, una etiqueta con su estado: *¡ENFADADO!* (Ruperto) u *OFENDIDA* (Doña Engracia). Se ve de cintura para arriba, recortado sobre la pared de la taberna, con la luz del quinqué detrás; el acta tapa el corte de la figura y su cola le apunta.
+  2. **El rival**, grande y centrado, con sus tics. **[cambiado]** Ya no lleva al lado el cartel con su nombre, que sobraba (su nombre está en el marcador); en ese sitio solo sale, mientras dura, una etiqueta con su estado: *¡ENFADADO!* (Agustín) u *OFENDIDA* (Doña Ignacia). Se ve de cintura para arriba, recortado sobre la pared de la taberna, con la luz del quinqué detrás; el acta tapa el corte de la figura y su cola le apunta.
   3. **El acta de la mano [cambiado]:** un solo panel bajo el retrato, con la cola apuntando al rival, donde está todo lo que se dice y pasa. **Cuenta la partida con frases normales** (opción «D3 · Narrado», elegida por David entre varios prototipos que están en `referencias/prototipos-acta/`).
      - **La pestaña** de arriba dice en qué estamos: *LA GRANDE*, *LA CHICA*, *PARES*, *EL JUEGO*, *EL PUNTO*, o *MUS · MANO 2*, *DESCARTE*, *TRATO*.
      - **La ficha roja** de la esquina dice lo que hay en juego cuando hay envite: *6 en juego*, o *TODO · el duelo* si es un órdago.
-     - **Dentro, las tres últimas cosas, contadas:** lo tuyo en cursiva azul y en pasado (*Has envidado dos.*); lo del rival en versalitas rojas y en presente, con su frase debajo (*Ruperto sube cuatro más* · *«¡Más leña al fuego!»*); y lo que pasa en la mesa en letra corriente (*Grande en paso: se cobra en el recuento*). Ya no se usa la letra gruesa dentro del acta.
+     - **Dentro, las tres últimas cosas, contadas:** lo tuyo en cursiva azul y en pasado (*Has envidado dos.*); lo del rival en versalitas rojas y en presente, con su frase debajo (*Agustín sube cuatro más* · *«¡Más leña al fuego!»*); y lo que pasa en la mesa en letra corriente (*Grande en paso: se cobra en el recuento*). Ya no se usa la letra gruesa dentro del acta.
      - Lo último va bien marcado y lo anterior, algo apagado. Si una frase larga no deja sitio, lo más antiguo se esconde entero (nunca se corta a medias).
-     - Cada mano empieza diciendo quién es mano; en la primera, además, qué significa: *Mano 1: eres mano (habla primero y gana los empates)*. Al empezar el duelo, *Ruperto se sienta a la mesa* con su saludo.
+     - Cada mano empieza diciendo quién es mano; en la primera, además, qué significa: *Mano 1: eres mano (habla primero y gana los empates)*. Al empezar el duelo, *Agustín se sienta a la mesa* con su saludo.
      - **«Toda la mano»**, debajo del panel, la abre entera para repasar lo que ha pasado.
   4. **El tapete [cambiado]** ocupa algo más del tercio de abajo de la pantalla (de 529 a 844 px), con margen por encima de las cartas del rival, que van boca abajo arriba del tapete, con aire entre ellas y tu mano.
   5. **Tu mano**, en abanico. **[cambiado]** Cartas más grandes (80 × 145 px en vez de 70 × 126, un 15 % más), sin llegar a la barra de botones.
-  6. **La barra de acciones** (ver controles). Cuando le toca al rival dice *Le toca a Ruperto…* en vez de quedarse vacía.
+  6. **La barra de acciones** (ver controles). Cuando le toca al rival dice *Le toca a Agustín…* en vez de quedarse vacía.
 - **Herramientas de pruebas:** los botones Rival, Depurar y **Tics [nuevo]** son solo para probar el juego mientras se hace. Tics enseña seguidos todos los tics del rival, para revisar su arte sin esperar a que salgan jugando. Salen en desarrollo o con `?pruebas` en la dirección (*ordago-game.vercel.app/?pruebas*); en el juego normal no están.
 - **El rival es lo más importante de la pantalla** porque es donde están los tics. Necesita animaciones sutiles: parpadeo, respiración, manos, mirada. Cada tic es una animación propia.
-  - **Lo que ya hay [nuevo]:** el rival **respira** (se ensancha un pelo y vuelve, cada 4 segundos) y **parpadea** cada pocos segundos. Cada tic dibujado es un **cambio de pose con un fundido**: *Ruperto se lleva la mano a la barba* y, pasado el tic, vuelve a su postura. Algunos se mueven en varios fotogramas (*Fulgencio levanta el sombrero*, *golpea dos veces con la vara*) y otros llevan un efecto encima (*le brilla el diente de oro*, *el puro de Don Bonifacio echa humo*). Los gestos de ojos van pintados sobre el retrato: *Doña Engracia entorna los ojos y se inclina hacia ti*, *Don Bonifacio pone los ojos en blanco hacia arriba*.
+  - **Lo que ya hay [nuevo]:** el rival **respira** (se ensancha un pelo y vuelve, cada 4 segundos) y **parpadea** cada pocos segundos. Cada tic dibujado es un **cambio de pose con un fundido**: *Agustín se lleva la mano a la barba* y, pasado el tic, vuelve a su postura. Algunos se mueven en varios fotogramas (*Aurelio levanta el sombrero*, *golpea dos veces con la vara*) y otros llevan un efecto encima (*le brilla el diente de oro*, *el puro de Don Rodrigo echa humo*). Los gestos de ojos van pintados sobre el retrato: *Doña Ignacia entorna los ojos y se inclina hacia ti*, *Don Rodrigo pone los ojos en blanco hacia arriba*.
 - **Cada arena tiñe el ambiente** (fluorescente en la facultad, azulado en la montaña, con farolillos en las fiestas).
 - **Detalles de taberna**: porrón, vasos de chato, un perro durmiendo, parroquianos de fondo que reaccionan a los órdagos.
 
@@ -139,7 +139,7 @@ Ganar al jefe te da un premio a elegir entre tres (un compañero, su objeto raro
 
 *(Diagrama del bucle: elegir compañero → nueva arena → secuaz 1 → parada (taberna, plaza o era) → secuaz 2 → parada → mano derecha del jefe → parada → jefe → si ganas: premio y siguiente arena; si pierdes: −1 de Honra, parada y otra vez el jefe; si te quedas sin Honra: fin de la gira, se guardan Libreta y desbloqueos → nueva gira.)*
 
-Tras el casino final, ganar a Don Bonifacio completa la gira y desbloquea la dificultad siguiente.
+Tras el casino final, ganar a Don Rodrigo completa la gira y desbloquea la dificultad siguiente.
 
 ## Reglas del duelo
 
@@ -190,7 +190,7 @@ Lo que el reglamento no dejaba claro se ha resuelto con la opción más fiel al 
 - **Pares o Juego cuando solo uno tiene:** no hay envites y quien los tiene cobra su valor en el recuento.
 - **Pares a 8 reyes:** un tres y un rey son pareja de reyes; un dos y un as, pareja de ases. Sota y caballo no son pareja. Cuatro reyes (R R 3 3) son duples. Los duples se comparan por su pareja más alta y luego por la más baja. Con la misma jugada, las cartas sueltas no desempatan: gana la mano.
 - **El mus:** como mucho 2 rondas de descarte; se descartan de 1 a 4 cartas y la mano descarta primero. Si se acabara el mazo, se barajan los descartes anteriores (nunca vuelven las cartas que acabas de tirar).
-- **Quién es mano:** cambia en cada mano, no en cada descarte. En el primer reparto se sortea (salvo con Don Bonifacio).
+- **Quién es mano:** cambia en cada mano, no en cada descarte. En el primer reparto se sortea (salvo con Don Rodrigo).
 - **Cantidades:** el envite mínimo es 2 y la subida mínima, 2. No hay tope.
 - **Declaraciones:** las de pares y juego son automáticas y siempre verdaderas; declara primero la mano. El farol está en el envite, no en la declaración.
 - **Reparto:** de una en una, empezando por la mano, con la baraja completa y barajada en cada mano.
@@ -269,11 +269,11 @@ Cada tic tiene tres propiedades:
 
 | Rival | Con dibujo | Sin dibujo todavía |
 | --- | --- | --- |
-| Ruperto | Se rasca la barba, se arremanga | — |
-| Doña Engracia | El rosario, te mira fijamente | — |
-| Don Anselmo | Mira al cielo | Bebe vino (no lleva vaso), junta las manos |
-| Fulgencio | El diente de oro, se quita el sombrero, golpea la vara | — |
-| Don Bonifacio | Se rasca la barba, se arremanga, bebe vino, mira al cielo, el humo del puro | Junta las manos |
+| Agustín | Se rasca la barba, se arremanga | — |
+| Doña Ignacia | El rosario, te mira fijamente | — |
+| Don Francisco | Mira al cielo | Bebe vino (no lleva vaso), junta las manos |
+| Aurelio | El diente de oro, se quita el sombrero, golpea la vara | — |
+| Don Rodrigo | Se rasca la barba, se arremanga, bebe vino, mira al cielo, el humo del puro | Junta las manos |
 
 Ningún tic es 100 % fiable. Si lo fueran, el juego sería memorizar. Con un 70–85 % hay que decidir con riesgo, que es lo que hace divertido el mus.
 
@@ -281,7 +281,7 @@ Ningún tic es 100 % fiable. Si lo fueran, el juego sería memorizar. Con un 70�
 
 Cada vez que ves un tic y luego se enseñan las cartas, el juego te deja anotarlo en la Libreta del rival. Las notas se rellenan poco a poco («Se rasca la barba… ¿cuando lleva pares?») y se confirman con más observaciones.
 
-La Libreta persiste entre giras. Es tu progresión como jugador: la segunda vez que te enfrentas a la Viuda ya sabes algo de ella. Algunos rivales tienen tics que cambian (Don Bonifacio; en la gira, también Doña Leonor y el abuelo Teodoro, que a mitad del duelo hace señas falsas), para que la Libreta nunca lo resuelva todo.
+La Libreta persiste entre giras. Es tu progresión como jugador: la segunda vez que te enfrentas a la Viuda ya sabes algo de ella. Algunos rivales tienen tics que cambian (Don Rodrigo; en la gira, también Doña Isabel y el abuelo Pepe, que a mitad del duelo hace señas falsas), para que la Libreta nunca lo resuelva todo.
 
 ### Mirar al rival
 
@@ -347,17 +347,17 @@ Los objetos se compran con reales en la taberna y son la segunda capa de constru
 
 ## Los 5 rivales que ya están en el juego
 
-**[cambiado]** Son los cinco que se pueden jugar ya en duelos sueltos. Con las arenas nuevas, cada uno tiene su sitio en la gira: **Ruperto y Fulgencio juegan en el bar** (niveles 2 y 3), **Doña Engracia y Don Anselmo, en las fiestas del pueblo** (niveles 1 y 2), y **Don Bonifacio es el jefe final del casino**. Cada uno enseña una lección distinta del juego. El resto de rivales (los secuaces y los jefes nuevos) está en [La gira](gira.md).
+**[cambiado]** Son los cinco que se pueden jugar ya en duelos sueltos. **[cambiado]** El 13 de octubre de 2026 David les cambió el nombre (se quedan el «don» y el «doña»): Ruperto pasa a ser **Agustín**; Doña Engracia, **Doña Ignacia**; Don Anselmo, **Don Francisco**; Fulgencio, **Aurelio**; y Don Bonifacio, **Don Rodrigo**. En el juego ya salen así. Con las arenas nuevas, cada uno tiene su sitio en la gira: **Agustín y Aurelio juegan en el bar** (niveles 2 y 3), **Doña Ignacia y Don Francisco, en las fiestas del pueblo** (niveles 1 y 2), y **Don Rodrigo es el jefe final del casino**. Cada uno enseña una lección distinta del juego. El resto de rivales (los secuaces y los jefes nuevos) está en [La gira](gira.md).
 
 Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 | Rival | Agresividad | Faroleo | Miedo al órdago | Memoria | Ojo |
 | --- | --- | --- | --- | --- | --- |
-| Ruperto, el Herrero | 8 | 3 | 2 | 2 | 2 |
-| Doña Engracia, la Viuda | 3 | 1 | 9 | 6 | 7 |
-| Don Anselmo, el Cura | 5 | 5 | 5 | 7 | 5 |
-| Fulgencio, el Tratante | 7 | 9 | 4 | 5 | 6 |
-| Don Bonifacio, el Cacique | 6 | 6 | 6 | 10 | 9 |
+| Agustín, el Herrero | 8 | 3 | 2 | 2 | 2 |
+| Doña Ignacia, la Viuda | 3 | 1 | 9 | 6 | 7 |
+| Don Francisco, el Cura | 5 | 5 | 5 | 7 | 5 |
+| Aurelio, el Tratante | 7 | 9 | 4 | 5 | 6 |
+| Don Rodrigo, el Cacique | 6 | 6 | 6 | 10 | 9 |
 
 - **Agresividad:** cuánto envida y sube con manos buenas.
 - **Faroleo:** con qué frecuencia envida con manos malas.
@@ -365,9 +365,9 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 - **Memoria:** cuánto ajusta su juego según tus faroles anteriores.
 - **Ojo:** lo bien que detecta tus trucos (El Tahúr, mirar demasiado).
 
-### 1. Ruperto, el Herrero (el bar, nivel 2)
+### 1. Agustín, el Herrero (el bar, nivel 2)
 
-**Aspecto [cambiado]:** grandote, barba enorme y rizada, pañuelo rojo al cuello, delantal de cuero con tirantes y muñequeras. Golpea la mesa al envidar.
+**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* grandote, barba enorme y rizada, pañuelo rojo al cuello, delantal de cuero con tirantes y muñequeras. Golpea la mesa al envidar.
 
 **Personalidad:** bruto y directo. Cuando lleva cartas, se le ve en todo. Envida fuerte, sube mucho y casi nunca farolea. Acepta los órdagos por orgullo.
 
@@ -380,15 +380,15 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Regla especial:** si pierde 3 lances seguidos se enfada y durante 2 manos acepta todo. Cuentan los lances que se juegan, en orden y de una mano a otra (los que no se juegan, como Pares cuando nadie lleva, no cuentan). Enfadado acepta cualquier envite y cualquier órdago, aunque si va fuerte puede seguir subiendo.
 
-**Cuándo corta el mus:** corta con cualquier pareja de reyes y, al descartar, guarda reyes y parejas. *Ejemplo: con R 5 A 6 tira el 5, el as y el 6; Don Anselmo, con la misma mano, se quedaría el as para la Chica.* Todos los rivales cortan además con tres o cuatro reyes, 31, duples con reyes, o dos reyes con caballo o sota.
+**Cuándo corta el mus:** corta con cualquier pareja de reyes y, al descartar, guarda reyes y parejas. *Ejemplo: con R 5 A 6 tira el 5, el as y el 6; Don Francisco, con la misma mano, se quedaría el as para la Chica.* Todos los rivales cortan además con tres o cuatro reyes, 31, duples con reyes, o dos reyes con caballo o sota.
 
 **Lección:** aprender que los tics existen y que leerlos funciona.
 
 **Frase:** «Aquí se juega como se forja: a golpes.»
 
-### 2. Doña Engracia, la Viuda (las fiestas del pueblo, nivel 1)
+### 2. Doña Ignacia, la Viuda (las fiestas del pueblo, nivel 1)
 
-**Aspecto [cambiado]:** de negro, con mantón morado de flecos, moño gris, pendientes de oro, bastón y un rosario entre los dedos. Mirada de rayos X.
+**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* de negro, con mantón morado de flecos, moño gris, pendientes de oro, bastón y un rosario entre los dedos. Mirada de rayos X.
 
 **Personalidad:** paciente y desconfiada. Casi nunca farolea, rechaza muchos envites y nunca acepta un órdago antes de la tercera mano. Cuando envida ella, lleva cartas. **[cambiado]** Con el ajuste de equilibrio (ver «El farolero»), los envites pequeños los quiere más que antes: acepta casi la mitad de tus envites, frente al 30 % de antes. Sigue sin farolear y sin aceptar órdagos pronto.
 
@@ -405,9 +405,9 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Frase:** «Treinta años jugando con mi difunto. A mí no me la das.»
 
-### 3. Don Anselmo, el Cura (las fiestas del pueblo, nivel 2)
+### 3. Don Francisco, el Cura (las fiestas del pueblo, nivel 2)
 
-**Aspecto [cambiado]:** sotana, solideo, estola morada, cruz de oro y mofletes colorados. Falta dibujarle el vaso de vino, que necesita su tic.
+**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* sotana, solideo, estola morada, cruz de oro y mofletes colorados. Falta dibujarle el vaso de vino, que necesita su tic.
 
 **Personalidad:** equilibrado y astuto, con una manía: envida siempre a la Chica, lleve lo que lleve. Es el primer rival con buena memoria: si le faroleas dos veces, deja de creerte.
 
@@ -427,9 +427,9 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Frase:** «Dios lo ve todo, hijo. Yo, casi todo.»
 
-### 4. Fulgencio, el Tratante (el bar, nivel 3)
+### 4. Aurelio, el Tratante (el bar, nivel 3)
 
-**Aspecto [cambiado]:** sombrero de ala ancha con pluma roja, chaleco bordado, manta al hombro, aro de oro en la oreja, diente de oro y vara de tratante en la mano (estos dos, pintados sobre su dibujo porque los usan sus tics).
+**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* sombrero de ala ancha con pluma roja, chaleco bordado, manta al hombro, aro de oro en la oreja, diente de oro y vara de tratante en la mano (estos dos, pintados sobre su dibujo porque los usan sus tics).
 
 **Personalidad:** mentiroso profesional. Farolea más que nadie y tira órdagos sin nada. Es un espejo del jugador: te enseña lo que se siente al otro lado.
 
@@ -448,15 +448,15 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 - Lo propone si con sus cartas espera perder esos envites, y además de farol 3 de cada 10 veces.
 - *Ejemplo: hay cinco piedras queridas al Punto y aceptas: tú cobras 2 y él 3.*
 
-«Mano fuerte» (su sombrero, el rosario de Doña Engracia, el puro de Don Bonifacio) quiere decir duples, medias, 31, tres reyes o tres pitos. Los tics de farol (el diente de oro, Don Anselmo mirando al cielo) salen cuando decide envidar sin nada delante.
+«Mano fuerte» (su sombrero, el rosario de Doña Ignacia, el puro de Don Rodrigo) quiere decir duples, medias, 31, tres reyes o tres pitos. Los tics de farol (el diente de oro, Don Francisco mirando al cielo) salen cuando decide envidar sin nada delante.
 
 **Lección:** no todos los tics significan algo, y hay que atreverse a aceptar.
 
 **Frase:** «Esta mula vale lo que yo diga que vale. Y esta mano, también.»
 
-### 5. Don Bonifacio, el Cacique (el casino de la capital, jefe final)
+### 5. Don Rodrigo, el Cacique (el casino de la capital, jefe final)
 
-**Aspecto [cambiado]:** levita granate bordada en oro, chaleco de brocado, cadena de reloj, puro, anillos y bastón de puño dorado. Sentado en un sillón más alto que el tuyo.
+**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* levita granate bordada en oro, chaleco de brocado, cadena de reloj, puro, anillos y bastón de puño dorado. Sentado en un sillón más alto que el tuyo.
 
 **Personalidad:** lo sabe todo de ti. Lee tu Libreta: conoce los tics de los rivales que has anotado y juega al revés de lo que esperas. Adapta su estilo al tuyo durante el duelo.
 
@@ -507,9 +507,9 @@ La cantidad sube con la fuerza y la agresividad: 2 piedras de base, más 1 por c
 
 **Aceptar un órdago:** la misma fórmula, pero el umbral pasa de 0,5 a 0,5 + 0,04·M. Si el rival va perdiendo por 8 piedras o más, el umbral baja 0,1 (desesperación).
 
-**Tirar un órdago:** con F > 0,85 y probabilidad **0,03·A** (antes 0,1·A), o como farol con probabilidad 0,01·B cuando va perdiendo de 8 o más. Con 0,1·A Ruperto tiraba órdago en la mitad de las manos y el 64 % de los duelos acababan así; con 0,03·A lo tira en 1 de cada 6 manos y acaban así el 22 %.
+**Tirar un órdago:** con F > 0,85 y probabilidad **0,03·A** (antes 0,1·A), o como farol con probabilidad 0,01·B cuando va perdiendo de 8 o más. Con 0,1·A Agustín tiraba órdago en la mitad de las manos y el 64 % de los duelos acababan así; con 0,03·A lo tira en 1 de cada 6 manos y acaban así el 22 %.
 
-**Subir («más»):** sube si su fuerza pasa en 0,2 su umbral de envidar, con probabilidad 0,1·A y nunca por encima de 10 piedras. No responde a un envite con órdago. *Ejemplo: le envidas dos a la Grande y Ruperto lleva F 0,8 (su umbral es 0,56): ocho de cada diez veces sube cuatro más.*
+**Subir («más»):** sube si su fuerza pasa en 0,2 su umbral de envidar, con probabilidad 0,1·A y nunca por encima de 10 piedras. No responde a un envite con órdago. *Ejemplo: le envidas dos a la Grande y Agustín lleva F 0,8 (su umbral es 0,56): ocho de cada diez veces sube cuatro más.*
 
 ### 3. Tics
 
@@ -539,7 +539,7 @@ funcion decidir(rival, lance, situacion):
     return PASO
 ```
 
-Con esto el rival parece tener carácter: el Herrero envida siempre que lleva algo, la Viuda casi nunca acepta, Fulgencio te sorprende con faroles y el Cura te deja de creer si abusas. Son unos cientos de líneas de código y todo se equilibra cambiando cinco números por rival.
+Con esto el rival parece tener carácter: el Herrero envida siempre que lleva algo, la Viuda casi nunca acepta, Aurelio te sorprende con faroles y el Cura te deja de creer si abusas. Son unos cientos de líneas de código y todo se equilibra cambiando cinco números por rival.
 
 ### Equilibrio medido
 
@@ -547,11 +547,11 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
 | Rival | Gana | Manos por duelo | Órdago suyo | Acepta tus envites (antes) |
 | --- | --- | --- | --- | --- |
-| Ruperto | 52 % | 3,3 | 18 % de manos | 51 % (32 %) |
-| Doña Engracia | 43 % | 4,2 | 6 % | 47 % (30 %) |
-| Don Anselmo | 44 % | 4,2 | 13 % | 34 % (21 %) |
-| Fulgencio | 55 % | 3,7 | 12 % | 41 % (21 %) |
-| Don Bonifacio | 56 % | 3,5 | 16 % | 29 % (15 %) |
+| Agustín | 52 % | 3,3 | 18 % de manos | 51 % (32 %) |
+| Doña Ignacia | 43 % | 4,2 | 6 % | 47 % (30 %) |
+| Don Francisco | 44 % | 4,2 | 13 % | 34 % (21 %) |
+| Aurelio | 55 % | 3,7 | 12 % | 41 % (21 %) |
+| Don Rodrigo | 56 % | 3,5 | 16 % | 29 % (15 %) |
 
 - Contra un bot que no lee tics no se nota tanto el orden de dificultad; hay que comprobarlo jugando.
 
@@ -559,30 +559,30 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
 | Rival | Gana el sensato | Gana el farolero |
 | --- | --- | --- |
-| Ruperto | 45 % | 44 % |
-| Doña Engracia | 55 % | 64 % |
-| Don Anselmo | 60 % | 69 % |
-| Fulgencio | 44 % | 57 % |
-| Don Bonifacio | 47 % | 53 % |
+| Agustín | 45 % | 44 % |
+| Doña Ignacia | 55 % | 64 % |
+| Don Francisco | 60 % | 69 % |
+| Aurelio | 44 % | 57 % |
+| Don Rodrigo | 47 % | 53 % |
 
-- **Por qué pasa:** el rival acepta solo si su mano gana más de la mitad de las veces, sin mirar lo que arriesga. Pero aceptar un «envido dos» y perderlo cuesta 2 piedras, y no quererlo regala 1. *Ejemplo: Doña Engracia lleva una Grande que gana 4 de cada 10 veces. Si quiere, de media gana algo (4 veces gana 2, 6 veces pierde 2: pierde 0,4 piedras por vez); si no quiere, pierde 1 seguro. Le conviene querer, y no quiere.*
+- **Por qué pasa:** el rival acepta solo si su mano gana más de la mitad de las veces, sin mirar lo que arriesga. Pero aceptar un «envido dos» y perderlo cuesta 2 piedras, y no quererlo regala 1. *Ejemplo: Doña Ignacia lleva una Grande que gana 4 de cada 10 veces. Si quiere, de media gana algo (4 veces gana 2, 6 veces pierde 2: pierde 0,4 piedras por vez); si no quiere, pierde 1 seguro. Le conviene querer, y no quiere.*
 - **Subir la memoria no lo arregla.** Se probó: el farolero farolea en una proporción parecida a la que la fórmula da por normal (25 %), así que la memoria apenas le castiga, y en cambio al jugador honrado le cree todavía más.
-- **Lo que sí lo arregla:** que el rival mire lo que arriesga (`IA.aceptar.pesoCuota`). A cambio, todos aceptan más envites pequeños: Doña Engracia pasa de aceptar el 30 % de tus envites al 47 %.
+- **Lo que sí lo arregla:** que el rival mire lo que arriesga (`IA.aceptar.pesoCuota`). A cambio, todos aceptan más envites pequeños: Doña Ignacia pasa de aceptar el 30 % de tus envites al 47 %.
 - **[cambiado] Activado, con 0,75** (decidido por David). La fórmula para aceptar un envite queda así, con X lo que hay en juego y d lo que se cobra por el «no quiero»:
 
 <p class="formula">F + (50 − Cara) / 200 + (Me / 10) · 0,6 · (t<sub>farol</sub> − 0,25) + 0,75 · (0,5 − (X − d) / 2X) + ε &gt; 0,5</p>
 
-  *Ejemplo: a un «envido dos» (X = 2, d = 1) el término nuevo suma 0,75 · (0,5 − 0,25) ≈ 0,19: con tu Cara en 50, Doña Engracia ya lo quiere con una mano que gane algo más de 3 de cada 10 veces (antes necesitaba más de 5). A un envite de diez sobre dos ya queridos (X = 10, d = 2) suma solo 0,075: los envites grandes se siguen respetando.* Al órdago no se le aplica.
+  *Ejemplo: a un «envido dos» (X = 2, d = 1) el término nuevo suma 0,75 · (0,5 − 0,25) ≈ 0,19: con tu Cara en 50, Doña Ignacia ya lo quiere con una mano que gane algo más de 3 de cada 10 veces (antes necesitaba más de 5). A un envite de diez sobre dos ya queridos (X = 10, d = 2) suma solo 0,075: los envites grandes se siguen respetando.* Al órdago no se le aplica.
 
 | Rival | Gana el sensato | Gana el farolero |
 | --- | --- | --- |
-| Ruperto | 38 % | 37 % |
-| Doña Engracia | 53 % | 51 % |
-| Don Anselmo | 62 % | 67 % |
-| Fulgencio | 43 % | 44 % |
-| Don Bonifacio | 47 % | 45 % |
+| Agustín | 38 % | 37 % |
+| Doña Ignacia | 53 % | 51 % |
+| Don Francisco | 62 % | 67 % |
+| Aurelio | 43 % | 44 % |
+| Don Rodrigo | 47 % | 45 % |
 
-  Con la cuota, envidar dos en todos los lances ya no compensa: el farolero gana lo mismo o menos que el sensato, salvo un poco contra Don Anselmo (5 puntos, que con 300 duelos está cerca del ruido de la medida).
+  Con la cuota, envidar dos en todos los lances ya no compensa: el farolero gana lo mismo o menos que el sensato, salvo un poco contra Don Francisco (5 puntos, que con 300 duelos está cerca del ruido de la medida).
 
 ## Progresión, plataforma y prototipo
 
@@ -640,11 +640,19 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **La plaza:** el timador engaña una de cada tres veces (el amuleto falso se rompe nada más dártelo), y una monja puede darte +1 de Honra. Sale menos que el resto, y solo una vez por gira.
 - **Objetos:** los precios y efectos que están en «Objetos de taberna y economía».
 
+**Decididas por David el 13 de octubre de 2026, al revisar la versión 2 de la gira [nuevo]:**
+
+- **Nombres nuevos** para los cinco rivales del juego y para varios personajes de la gira (la lista está en [La gira](gira.md)). Se quedan los «don» y «doña».
+- **Todos los personajes se diseñan de nuevo desde cero**, también los cinco que ya tienen dibujo.
+- **Manolo, el jefe del bar,** juega con mucha calma las dos primeras manos y después, por culpa de la bebida, a lo loco.
+- **El Reloj de bolsillo, baratillo:** 3 reales.
+- **Confirmados:** las señas de la familia y que se cuenten los faroles pillados, la regla de Chema, la del tío Arturo, la Gaseosa, el Chato de vino, la monja, el Caldo de la abuela, la parada antes de repetir contra un jefe y el orden de las arenas (la facultad, el bar, la Montaña Palentina, las fiestas del pueblo y el casino).
+
 **Para la fase 4 [cambiado]** (decididas por David el 11 de octubre de 2026):
 
-- **El real por farol: sí.** El farol al que el rival dice «no quiero» cuenta como «no descubierto» y da +1 real, aunque en el recuento acabe viendo tus cartas. *Ejemplo: envidas a la Grande con A 4 5 6 y Ruperto no quiere: +1 real.*
+- **El real por farol: sí.** El farol al que el rival dice «no quiero» cuenta como «no descubierto» y da +1 real, aunque en el recuento acabe viendo tus cartas. *Ejemplo: envidas a la Grande con A 4 5 6 y Agustín no quiere: +1 real.*
 - **El Veterano: dos reyes cualesquiera.** Todos los reyes valen igual y los treses son reyes. *Ejemplo: con R 3 5 6, el rival tiene que aceptar tu órdago a la Grande.*
-- **El Tahúr: cambias la carta que quieras por un rey.** Si el rival tiene mucho Ojo y te pilla, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (lo mismo que ganas tú si pillas a Don Bonifacio). El rey sale del mazo; si no queda ninguno, la seña no se puede usar en esa mano.
+- **El Tahúr: cambias la carta que quieras por un rey.** Si el rival tiene mucho Ojo y te pilla, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (lo mismo que ganas tú si pillas a Don Rodrigo). El rey sale del mazo; si no queda ninguno, la seña no se puede usar en esa mano.
 - **La Medalla de la Virgen [cambiado]: decidida el 13 de octubre.** La primera vez en cada duelo que te pillan un farol, tu Cara no baja. Así uno se puede atrever a un farol arriesgado sin hundir su temple. Cuesta 9 reales.
 
 ## Historial de versiones
@@ -657,3 +665,4 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **Versión 6 (12 de octubre de 2026).** El acta narrada: David vio cuatro prototipos del panel central (etiquetas y bote, bocadillos, pizarra y acta ligera) y luego cuatro letras para el acta ligera, y eligió la narrada (pestaña con el lance, ficha con lo que hay en juego y la partida contada con frases). La cifra de la Cara sube junto a su marca en lugar de un aviso que tapaba la cara del rival. La cabecera, en un solo panel compacto (elegida entre cuatro prototipos: carrera a 20, reloj, careto y tira): números, MANO, los lances como pasos y la Cara con careto, una frase con lo que significa y «?», que abre una ficha corta que la explica. El tapete ocupa algo más del tercio de abajo de la pantalla, con aire entre las cartas del rival y las tuyas, y tus cartas son un 15 % más grandes. La moneda de oros es el icono de la aplicación en el móvil.
 - **Versión 7 (12 de octubre de 2026).** La visión del juego contada por David, ordenada al principio del documento. La gira pasa a **5 arenas de 4 niveles** (tres secuaces y su jefe, como las ciegas de Balatro), y los cinco rivales son los jefes. Confirmadas las tres vidas de Honra, un solo compañero a la vez que se compra y se cambia en la taberna, y que la «partida corta» es cada duelo a 20 piedras. Objetos que van contra el rival (las jugarretas y algunos amuletos) y objetos raros como premio de cada jefe. Nuevos reales por duelo según el nivel. El catálogo de la gira (arenas, 15 secuaces, taberna, plaza, objetos y compañeros, con tres compañeros nuevos) pasa a un documento propio, [La gira](gira.md), para ir cambiándolo. Decidido el orden: primero la gira y comprobar que es divertida; el pulido a fondo, en la fase 5.
 - **Versión 8 (13 de octubre de 2026).** Las arenas que propuso David: la facultad (el jefe es el que no entra en clase y vive en la cafetería), el bar (adultos; el jefe, de cuarenta y tantos, medio calvo y con barriga cervecera), una familia de la Montaña Palentina (la niña, la madre, el padre y el abuelo), las fiestas del pueblo con ancianos que llevan toda la vida jugando y el casino de la capital. Los cinco rivales que ya tenían dibujo se recolocan: Ruperto y Fulgencio en el bar, Doña Engracia y Don Anselmo en las fiestas y Don Bonifacio de jefe final. Perder contra un jefe ya no acaba la gira: cuesta Honra y se repite, y la gira solo termina sin Honra. Fuera la idea de saltarse secuaces. Dos huecos para bebidas y jugarretas y dos para amuletos y objetos raros. Decididos la Medalla de la Virgen (9 reales), el Chato de vino, el Caldo de la abuela, la Ristra de ajos y la Gorra calada; rehechos la Gaseosa y el Reloj de bolsillo; el timador y la monja en la plaza; el Abuelo pasa a llamarse el Jubilado. El detalle, en [La gira](gira.md), versión 2.
+- **Versión 9 (13 de octubre de 2026).** Nombres nuevos: Ruperto pasa a ser Agustín; Doña Engracia, Doña Ignacia; Don Anselmo, Don Francisco; Fulgencio, Aurelio, y Don Bonifacio, Don Rodrigo (también en el juego). En la gira cambian también Tomás, Pilar, el abuelo Teodoro, Don Severiano, el tío Paulino, Leandro, Doña Leonor y Don Ceferino. Todos los personajes se diseñarán de nuevo desde cero. Manolo juega con calma las dos primeras manos y luego a lo loco por la bebida. El Reloj de bolsillo cuesta 3 reales. David confirma las reglas de Chema, de la familia y del tío Arturo, y los objetos y paradas que se le preguntaron. El detalle, en [La gira](gira.md), versión 3.

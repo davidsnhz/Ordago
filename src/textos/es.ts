@@ -47,10 +47,10 @@ const SIGNIFICADO_CURA = { bebeVino: 'lleva juego', miraAlCielo: 'está farolean
 
 const RIVALES: Record<IdRival, TextosRival> = {
   ruperto: {
-    nombre: 'Ruperto',
-    etiqueta: 'RUPERTO',
-    titulo: 'Ruperto, el Herrero',
-    comarca: 'Tierra de Campos',
+    nombre: 'Agustín',
+    etiqueta: 'AGUSTÍN',
+    titulo: 'Agustín, el Herrero',
+    comarca: 'El bar',
     saludo: { accion: 'A GOLPES', frase: '«Aquí se juega como se forja: a golpes.»' },
     frases: {
       mus: ['«Estas no valen ni para clavos.»', '«Mus, que esto está frío.»'],
@@ -71,10 +71,10 @@ const RIVALES: Record<IdRival, TextosRival> = {
     significadoTics: SIGNIFICADO_HERRERO,
   },
   engracia: {
-    nombre: 'Doña Engracia',
-    etiqueta: 'DOÑA ENGRACIA',
-    titulo: 'Doña Engracia, la Viuda',
-    comarca: 'Montaña Palentina',
+    nombre: 'Doña Ignacia',
+    etiqueta: 'DOÑA IGNACIA',
+    titulo: 'Doña Ignacia, la Viuda',
+    comarca: 'Las fiestas del pueblo',
     saludo: { accion: 'SIÉNTESE', frase: '«Treinta años jugando con mi difunto. A mí no me la das.»' },
     frases: {
       mus: ['«Mus, si no le importa.»', '«Estas no rezan. Mus.»'],
@@ -95,10 +95,10 @@ const RIVALES: Record<IdRival, TextosRival> = {
     significadoTics: { rosario: 'mano fuerte en algún lance', miraFijamente: 'cree que faroleas: tu Cara está baja' },
   },
   anselmo: {
-    nombre: 'Don Anselmo',
-    etiqueta: 'DON ANSELMO',
-    titulo: 'Don Anselmo, el Cura',
-    comarca: 'Ribera del Duero',
+    nombre: 'Don Francisco',
+    etiqueta: 'DON FRANCISCO',
+    titulo: 'Don Francisco, el Cura',
+    comarca: 'Las fiestas del pueblo',
     saludo: { accion: 'PAZ Y BIEN', frase: '«Dios lo ve todo, hijo. Yo, casi todo.»' },
     frases: {
       mus: ['«Dios aprieta pero no ahoga.»', '«Mus, hijo. Hay que tener fe.»'],
@@ -119,10 +119,10 @@ const RIVALES: Record<IdRival, TextosRival> = {
     significadoTics: SIGNIFICADO_CURA,
   },
   fulgencio: {
-    nombre: 'Fulgencio',
-    etiqueta: 'FULGENCIO',
-    titulo: 'Fulgencio, el Tratante',
-    comarca: 'Feria de ganado',
+    nombre: 'Aurelio',
+    etiqueta: 'AURELIO',
+    titulo: 'Aurelio, el Tratante',
+    comarca: 'El bar',
     saludo: { accion: '¡TRATO HECHO!', frase: '«Esta mula vale lo que yo diga que vale. Y esta mano, también.»' },
     frases: {
       mus: ['«Estas no las quiere ni el matadero.»', '«Mus, y ya veremos.»'],
@@ -149,10 +149,10 @@ const RIVALES: Record<IdRival, TextosRival> = {
     significadoTics: { dienteDeOro: 'está faroleando', quitaSombrero: 'lleva cartas muy buenas', golpeaVara: 'nada: es para despistar' },
   },
   bonifacio: {
-    nombre: 'Don Bonifacio',
-    etiqueta: 'DON BONIFACIO',
-    titulo: 'Don Bonifacio, el Cacique',
-    comarca: 'Casino de la capital',
+    nombre: 'Don Rodrigo',
+    etiqueta: 'DON RODRIGO',
+    titulo: 'Don Rodrigo, el Cacique',
+    comarca: 'El casino de la capital',
     saludo: { accion: 'LA CASA ES MANO', frase: '«En este pueblo no se mueve una carta sin que yo lo sepa.»' },
     frases: {
       mus: ['«Que corra el aire.»', '«Mus, si la casa lo permite.»'],

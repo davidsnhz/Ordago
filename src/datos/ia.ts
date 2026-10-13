@@ -37,7 +37,7 @@ export const IA = {
   ordago: {
     /**
      * Tira órdago con F > fuerzaMinima y probabilidad porAgresividad · A. El documento dice
-     * 0,1 · A, pero así Ruperto tiraba órdago en la mitad de las manos (docs/decisiones.md).
+     * 0,1 · A, pero así Agustín tiraba órdago en la mitad de las manos (docs/decisiones.md).
      */
     fuerzaMinima: 0.85,
     porAgresividad: 0.03,
@@ -59,11 +59,11 @@ export const IA = {
   tics: {
     /** Probabilidad de hacer el tic cuando se cumple su disparador. */
     probabilidadSiCumple: 0.6,
-    /** Con qué frecuencia sale un tic que no significa nada (la vara de Fulgencio). */
+    /** Con qué frecuencia sale un tic que no significa nada (la vara de Aurelio). */
     probabilidadSinSentido: 0.15,
     /**
      * Proporción de momentos en que tu Cara está baja, para calibrar la «sospecha» de Doña
-     * Engracia (no sale de las cartas, así que se fija aquí).
+     * Ignacia (no sale de las cartas, así que se fija aquí).
      */
     tasaSospecha: 0.25,
     /** Mirando al rival, los tics duran más en pantalla. */
@@ -81,7 +81,7 @@ export const IA = {
     ajusteSiSeNota: -0.2,
     ajusteSiNo: 0.1,
   },
-  /** Trato de Fulgencio: lo propone si espera perder los envites queridos… */
+  /** Trato de Aurelio: lo propone si espera perder los envites queridos… */
   trato: {
     /** …o, de farol, con esta probabilidad aunque espere ganarlos. */
     farol: 0.3,

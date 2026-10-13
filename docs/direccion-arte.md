@@ -12,7 +12,7 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Tipografías | **Cerradas** | `assets/fuentes/` |
 | Piezas de mesa: botones, piedras, lances, Cara, paneles | **Cerradas** | esta guía + `00_guia_estilo` |
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
-| Rivales (los cinco caciques) | **Cerrado el estilo**; faltan poses de algunos tics | `assets/personajes/` → `npm run personajes` |
+| Rivales (los cinco del juego) | **Cerrado el estilo**. **Diseños por rehacer desde cero** (13 de octubre de 2026); hasta entonces, los dibujos de ahora | `assets/personajes/` → `npm run personajes` |
 | Compañeros, secuaces y tabernera | **PENDIENTE** | usar marcadores |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
 | Mapa ilustrado | Provisional | `referencias/pantallas/img/mapa.webp` |
@@ -108,6 +108,8 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 
 ## Personajes
 
+**Diseños desde cero (13 de octubre de 2026):** David va a diseñar de nuevo a todos los personajes, también a los cinco que ya están en el juego. Además, les ha cambiado el nombre: Ruperto pasa a ser Agustín; Doña Engracia, Doña Ignacia; Don Anselmo, Don Francisco; Fulgencio, Aurelio, y Don Bonifacio, Don Rodrigo. Lo que se cuenta abajo (la imprenta, los retoques, el manifiesto) vale igual para los dibujos nuevos. Lo que se dice de cada personaje es de los dibujos de ahora, que se usan hasta que estén los nuevos. Las carpetas siguen con los nombres antiguos (`ruperto/`, `engracia/`…), que son sus ids en el código.
+
 **Estilo (decidido el 11 de octubre de 2026):** ilustración en 3D de estilo de animación, la de las hojas de personaje de David (`assets/personajes/<id>/hoja.webp`). Para que no choque con el naipe impreso, **todo personaje pasa por la imprenta** antes de entrar en el juego. No se redibuja: se conserva su aspecto y se le aplica lo mismo que llevan las demás piezas.
 
 ### La imprenta (`scripts/personajes.mjs`)
@@ -137,21 +139,21 @@ Lo que no está en las hojas se pinta sobre el reposo, antes de la imprenta, par
 - **párpado:** baja el párpado de arriba (medio o del todo), con la piel de alrededor del ojo y una línea de pestañas curvada. Con él se hacen los **parpadeos** de los cinco (medio, cerrado, medio, a 18 fotogramas por segundo) y los ojos entornados.
 - **mirada:** repinta el blanco del ojo y mueve el iris.
 - **girar:** inclina la cabeza deformando suavemente alrededor, sin cortes.
-- **mover:** recorta una zona, la mueve y la gira, y pinta lo que queda al descubierto (el pelo bajo el sombrero de Fulgencio).
+- **mover:** recorta una zona, la mueve y la gira, y pinta lo que queda al descubierto (el pelo bajo el sombrero de Aurelio).
 - **dibujo:** formas SVG encima o debajo de la figura, con una zona que queda por delante (los dedos que agarran la vara).
 - **acercar:** agranda la figura alrededor de un punto: el rival se inclina hacia ti.
-- **arrastrar:** lleva una parte de un sitio a otro deformando lo de alrededor. Sirve para movimientos pequeños; para juntar las manos de Don Anselmo deformaba la cruz y la estola, y se descartó.
+- **arrastrar:** lleva una parte de un sitio a otro deformando lo de alrededor. Sirve para movimientos pequeños; para juntar las manos de Don Francisco deformaba la cruz y la estola, y se descartó.
 - **desplazar:** mueve la figura entera (el bote al golpear con la vara).
-- **plantilla:** una lista de retoques con nombre, que se reutiliza (la vara y el diente de Fulgencio salen en todos sus fotogramas).
+- **plantilla:** una lista de retoques con nombre, que se reutiliza (la vara y el diente de Aurelio salen en todos sus fotogramas).
 
 Hechos así:
 
 | Rival | Pintado sobre su dibujo |
 | --- | --- |
 | Los cinco | Parpadeo |
-| Doña Engracia | *Te mira fijamente:* entorna los ojos y se inclina hacia ti (antes era la pose con las cartas, que se confundía con la del rosario) |
-| Fulgencio | El diente de oro y la vara, en todos sus fotogramas. *Diente de oro:* entorna los ojos y le brilla el diente. *Se quita el sombrero:* lo levanta y lo ladea, con el pelo debajo. *Golpea la vara:* dos golpes con un bote |
-| Don Bonifacio | *Mira al cielo:* pone los ojos en blanco hacia arriba y ladea la cabeza |
+| Doña Ignacia | *Te mira fijamente:* entorna los ojos y se inclina hacia ti (antes era la pose con las cartas, que se confundía con la del rosario) |
+| Aurelio | El diente de oro y la vara, en todos sus fotogramas. *Diente de oro:* entorna los ojos y le brilla el diente. *Se quita el sombrero:* lo levanta y lo ladea, con el pelo debajo. *Golpea la vara:* dos golpes con un bote |
+| Don Rodrigo | *Mira al cielo:* pone los ojos en blanco hacia arriba y ladea la cabeza |
 
 ### En la mesa
 
@@ -159,7 +161,7 @@ Hechos así:
 - **Respira:** se ensancha un pelo desde abajo y vuelve, cada 3,8 s (se quita con «reducir movimiento»).
 - **Parpadea** cada 2,6–6,2 s, nunca durante un tic.
 - **Tic dibujado:** cambio de pose con un fundido de 0,18 s, sin texto; si tiene varios fotogramas, se reproducen y se queda en el último. Al acabar, vuelve al reposo con otro fundido.
-- **Efectos** encima del personaje, solos o con un tic dibujado: el **humo** (bocanadas de papel con contorno de tinta que suben, para el puro de Don Bonifacio) y el **destello** (una estrella de papel con contorno de tinta que gira y se apaga dos veces, para el diente de oro de Fulgencio).
+- **Efectos** encima del personaje, solos o con un tic dibujado: el **humo** (bocanadas de papel con contorno de tinta que suben, para el puro de Don Rodrigo) y el **destello** (una estrella de papel con contorno de tinta que gira y se apaga dos veces, para el diente de oro de Aurelio).
 - **Tic sin dibujo:** la figura se sacude y sale la acotación con el gesto, como con el marcador.
 - Si un rival no está en `indice.json`, se usa el marcador (ARTE PENDIENTE).
 
@@ -173,11 +175,11 @@ Quedan **tres gestos de brazos** que no están en ninguna hoja y no se pueden sa
 
 | Rival | Pose que falta |
 | --- | --- |
-| Don Anselmo | **Bebe un sorbo de vino** (no lleva vaso) y **junta las manos** (en el reposo las tiene separadas, para que el gesto se note) |
-| Don Bonifacio | **Junta las manos** |
+| Don Francisco | **Bebe un sorbo de vino** (no lleva vaso) y **junta las manos** (en el reposo las tiene separadas, para que el gesto se note) |
+| Don Rodrigo | **Junta las manos** |
 
 Para que encajen: la misma figura que la vista de frente, de cintura para arriba, misma luz y fondo gris liso, cambiando solo los brazos; si se saca retocando la vista de frente, mejor, para que no cambien el pelo ni los bordados.
 
-También mejorarían con poses nuevas: los tics que salen de las miniaturas (la ampliación inventa algún detalle, como un brillo en la mejilla de Doña Engracia al pasar el rosario) y Fulgencio al quitarse el sombrero, que debería además «ponerse serio» y hoy sigue sonriendo.
+También mejorarían con poses nuevas: los tics que salen de las miniaturas (la ampliación inventa algún detalle, como un brillo en la mejilla de Doña Ignacia al pasar el rosario) y Aurelio al quitarse el sombrero, que debería además «ponerse serio» y hoy sigue sonriendo.
 
 Las seis expresiones de cada hoja (neutral, contento, enfadado…) no se usan todavía: servirán para la pantalla de ¡Órdago! y el final del duelo.

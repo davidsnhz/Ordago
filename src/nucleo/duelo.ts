@@ -218,7 +218,7 @@ export function accionesValidas(estado: EstadoDuelo): AccionesValidas {
 
 /**
  * Cambia en secreto una carta de la mano de `lado` por una del mazo (las «cartas de la casa»
- * de Don Bonifacio). No es una jugada: la aplica la regla especial del rival.
+ * de Don Rodrigo). No es una jugada: la aplica la regla especial del rival.
  */
 export function cambiarCarta(estado: EstadoDuelo, lado: Lado, sale: Carta, entra: Carta): ResultadoAccion {
   if (estado.fase === 'finDuelo') throw new ErrorJugada('El duelo ya ha terminado');

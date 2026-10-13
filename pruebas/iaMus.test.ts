@@ -36,12 +36,12 @@ describe('cuándo corta cada rival', () => {
     for (const mano of ['R C 6 4', 'A 4 5 6', 'R R 6 4', 'C C S S']) expect(corta('bonifacio', mano), mano).toBe(false);
   });
 
-  it('Ruperto, impaciente, corta también con cualquier pareja de reyes', () => {
+  it('Agustín, impaciente, corta también con cualquier pareja de reyes', () => {
     expect(corta('ruperto', 'R R 6 4')).toBe(true);
     expect(corta('ruperto', 'R C 5 4')).toBe(false);
   });
 
-  it('Doña Engracia solo corta con lo mejor', () => {
+  it('Doña Ignacia solo corta con lo mejor', () => {
     expect(corta('engracia', 'R R R 5')).toBe(false);
     expect(corta('engracia', 'R R R A')).toBe(true);
     expect(corta('engracia', 'R R A A')).toBe(true);
@@ -49,12 +49,12 @@ describe('cuándo corta cada rival', () => {
     expect(corta('engracia', 'R C S A')).toBe(false);
   });
 
-  it('Don Anselmo corta con tres pitos', () => {
+  it('Don Francisco corta con tres pitos', () => {
     expect(corta('anselmo', 'A A 2 7')).toBe(true);
     expect(corta('ruperto', 'A A 2 7')).toBe(false);
   });
 
-  it('Fulgencio corta de farol una de cada cuatro veces con manos malas', () => {
+  it('Aurelio corta de farol una de cada cuatro veces con manos malas', () => {
     const a = Azar.conSemilla('fulgencio');
     let cortes = 0;
     for (let i = 0; i < 4000; i++) if (decidirMus(RIVALES.fulgencio.mus, cartas('A 4 5 6'), 8, a).corta) cortes++;
@@ -69,16 +69,16 @@ describe('cuándo corta cada rival', () => {
 });
 
 describe('qué descarta cada rival', () => {
-  it('con R 5 A 6, Ruperto guarda el rey y Don Anselmo el as', () => {
+  it('con R 5 A 6, Agustín guarda el rey y Don Francisco el as', () => {
     expect(tira('ruperto', 'R 5 A 6')).toEqual(['01_oros', '05_oros', '06_oros']);
     expect(tira('anselmo', 'R 5 A 6')).toEqual(['05_oros', '06_oros', '12_oros']);
   });
 
-  it('Ruperto guarda las parejas', () => {
+  it('Agustín guarda las parejas', () => {
     expect(tira('ruperto', 'R 5 5 6')).toEqual(['06_oros']);
   });
 
-  it('Fulgencio guarda figuras y sietes', () => {
+  it('Aurelio guarda figuras y sietes', () => {
     expect(tira('fulgencio', 'C 7 4 A')).toEqual(['01_oros', '04_oros']);
   });
 

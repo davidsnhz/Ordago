@@ -21,13 +21,13 @@ export interface MemoriaRival {
   quienEsMano: Lado | null;
   /** Envites del jugador en la mano en curso, para juzgarlos al ver las cartas. */
   envitesDeLaMano: { lance: Lance; esMano: boolean }[];
-  /** Don Anselmo: tu próximo envite paga penitencia si lo gana él. */
+  /** Don Francisco: tu próximo envite paga penitencia si lo gana él. */
   penitencia: boolean;
-  /** Fulgencio ya ha propuesto su trato en este duelo. */
+  /** Aurelio ya ha propuesto su trato en este duelo. */
   tratoUsado: boolean;
-  /** Don Bonifacio ya ha cambiado su carta en este duelo. */
+  /** Don Rodrigo ya ha cambiado su carta en este duelo. */
   cambioUsado: boolean;
-  /** Doña Engracia ofendida: no hace tics hasta esta mano, incluida (0 si no). */
+  /** Doña Ignacia ofendida: no hace tics hasta esta mano, incluida (0 si no). */
   ofendidaHastaMano: number;
 }
 

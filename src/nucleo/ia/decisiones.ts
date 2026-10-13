@@ -20,13 +20,13 @@ export interface SituacionEnvite {
   caraJugador: number;
   /** Proporción de envites del jugador que fueron faroles en este duelo. */
   tFarol: number;
-  /** Regla especial de Ruperto: acepta todo. */
+  /** Regla especial de Agustín: acepta todo. */
   aceptaTodo: boolean;
   /** Número de la mano en curso. */
   numeroMano?: number;
-  /** Doña Engracia: no acepta órdagos antes de esta mano. */
+  /** Doña Ignacia: no acepta órdagos antes de esta mano. */
   ordagoDesdeMano?: number;
-  /** Don Anselmo: en este lance, si habla sin envite delante, envida siempre. */
+  /** Don Francisco: en este lance, si habla sin envite delante, envida siempre. */
   siempreEnvida?: boolean;
 }
 

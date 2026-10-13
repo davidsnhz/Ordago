@@ -84,15 +84,15 @@ O sea que a veces compensa dejarte pillar un farol barato para que luego te quie
 
 ### Los rivales
 
-- **Ruperto, el Herrero.** Bruto y directo: cuando lleva cartas se le nota en todo, envida fuerte y casi nunca farolea. Si pierde tres lances seguidos se enfada y durante dos manos te lo quiere todo.
-- **Doña Engracia, la Viuda.** Paciente y desconfiada. Casi nunca farolea y cuando envida es que lleva algo. No acepta un órdago antes de la tercera mano, y si la miras demasiado se ofende y deja de hacer tics.
-- **Don Anselmo, el Cura.** Equilibrado y con buena memoria: si le faroleas mucho, deja de creerte. Envida siempre a la Chica, lleve lo que lleve. Si te pilla un farol te pone penitencia: tu siguiente envite le paga una piedra más si lo gana él.
-- **Fulgencio, el Tratante.** El que más farolea y el que tira órdagos sin nada. Una vez por duelo te propone un trato antes del recuento: retirar los envites queridos y repartiros las piedras (la impar, para él). Y no todos sus tics significan algo.
-- **Don Bonifacio, el Cacique.** El mejor de todos y el más difícil. Su casa, sus reglas: es mano en la primera mano, gana los empates a la Grande y una vez por duelo cambia una carta en secreto. A mitad del duelo cambia de tics.
+- **Agustín, el Herrero.** Bruto y directo: cuando lleva cartas se le nota en todo, envida fuerte y casi nunca farolea. Si pierde tres lances seguidos se enfada y durante dos manos te lo quiere todo.
+- **Doña Ignacia, la Viuda.** Paciente y desconfiada. Casi nunca farolea y cuando envida es que lleva algo. No acepta un órdago antes de la tercera mano, y si la miras demasiado se ofende y deja de hacer tics.
+- **Don Francisco, el Cura.** Equilibrado y con buena memoria: si le faroleas mucho, deja de creerte. Envida siempre a la Chica, lleve lo que lleve. Si te pilla un farol te pone penitencia: tu siguiente envite le paga una piedra más si lo gana él.
+- **Aurelio, el Tratante.** El que más farolea y el que tira órdagos sin nada. Una vez por duelo te propone un trato antes del recuento: retirar los envites queridos y repartiros las piedras (la impar, para él). Y no todos sus tics significan algo.
+- **Don Rodrigo, el Cacique.** El mejor de todos y el más difícil. Su casa, sus reglas: es mano en la primera mano, gana los empates a la Grande y una vez por duelo cambia una carta en secreto. A mitad del duelo cambia de tics.
 
 ### La pantalla
 
-De arriba abajo: el marcador con los lances y tu Cara; el rival; el acta, donde se va contando la mano («Has envidado dos.», «Ruperto sube cuatro más» y su frase), con lo que hay en juego en la ficha roja y *Toda la mano* para ver lo anterior; el tapete con sus cartas y las tuyas; y abajo los botones, que solo salen cuando te toca.
+De arriba abajo: el marcador con los lances y tu Cara; el rival; el acta, donde se va contando la mano («Has envidado dos.», «Agustín sube cuatro más» y su frase), con lo que hay en juego en la ficha roja y *Toda la mano* para ver lo anterior; el tapete con sus cartas y las tuyas; y abajo los botones, que solo salen cuando te toca.
 
 ## Para tocar el código
 

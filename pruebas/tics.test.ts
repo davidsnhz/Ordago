@@ -105,14 +105,14 @@ describe('tics que salen de la decisión', () => {
     expect(cumpleDisparador('farol', ctx([], { tipo: 'cartas' }))).toBeNull();
   });
 
-  it('la sospecha de Doña Engracia: al responder a tu envite, si tu Cara está baja', () => {
+  it('la sospecha de Doña Ignacia: al responder a tu envite, si tu Cara está baja', () => {
     const responde = { abre: false, farol: false, responde: true };
     expect(cumpleDisparador('sospecha', ctx([], envite, { decision: responde, caraJugador: 20 }))).toBe(true);
     expect(cumpleDisparador('sospecha', ctx([], envite, { decision: responde, caraJugador: 60 }))).toBe(false);
     expect(cumpleDisparador('sospecha', ctx([], envite, { decision: { ...responde, responde: false, abre: true } }))).toBeNull();
   });
 
-  it('el farol de Don Anselmo acierta más o menos su 70 % cuando farolea como dice su Faroleo', () => {
+  it('el farol de Don Francisco acierta más o menos su 70 % cuando farolea como dice su Faroleo', () => {
     const vistos = fiabilidadObservada([miraAlCielo], 120_000, (azar) => {
       // Decisiones de abrir: con F uniforme, farolea si F < 0,35 y sale el 0,04·B.
       const farol = azar.siguiente() < IA.farol.fuerzaMaxima && azar.siguiente() < IA.farol.porFaroleo * 5;
@@ -123,7 +123,7 @@ describe('tics que salen de la decisión', () => {
     expect(verdaderos / veces).toBeLessThan(0.74);
   }, 60_000);
 
-  it('la vara de Fulgencio no significa nada: nunca es verdad y sale a menudo', () => {
+  it('la vara de Aurelio no significa nada: nunca es verdad y sale a menudo', () => {
     const azar = Azar.conSemilla('vara');
     let veces = 0;
     for (let i = 0; i < 10_000; i++) {
@@ -142,7 +142,7 @@ describe('tics que salen de la decisión', () => {
   });
 });
 
-describe('Don Bonifacio cambia de tics según las piedras', () => {
+describe('Don Rodrigo cambia de tics según las piedras', () => {
   const ids = (piedras: number) => ticsActivos(RIVALES.bonifacio, piedras).map((t) => t.id);
   it('empieza con los del Herrero, a 10 pasa a los del Cura y a 15 solo le delata el puro', () => {
     expect(ids(0)).toEqual(['rascaBarba', 'arremanga']);

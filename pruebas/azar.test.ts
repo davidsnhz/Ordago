@@ -6,7 +6,7 @@ const secuencia = (azar: Azar, n: number) => Array.from({ length: n }, () => aza
 describe('azar con semilla', () => {
   it('la misma semilla da la misma secuencia', () => {
     expect(secuencia(Azar.conSemilla(42), 100)).toEqual(secuencia(Azar.conSemilla(42), 100));
-    expect(secuencia(Azar.conSemilla('Ruperto'), 100)).toEqual(secuencia(Azar.conSemilla('Ruperto'), 100));
+    expect(secuencia(Azar.conSemilla('Agustín'), 100)).toEqual(secuencia(Azar.conSemilla('Agustín'), 100));
   });
 
   it('semillas distintas dan secuencias distintas', () => {

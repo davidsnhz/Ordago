@@ -28,7 +28,7 @@ function almacenEnMemoria(): Almacen & { datos: Map<string, string> } {
   };
 }
 
-describe('partida contra Ruperto', () => {
+describe('partida contra Agustín', () => {
   it('se crea igual con la misma semilla', () => {
     expect(nuevaPartida('a').partida).toEqual(nuevaPartida('a').partida);
     expect(nuevaPartida('a').partida.duelo.cartas).not.toEqual(nuevaPartida('b').partida.duelo.cartas);
@@ -69,11 +69,11 @@ describe('partida contra Ruperto', () => {
     expect(comprobadas).toBeGreaterThan(200);
   }, 120_000);
 
-  it(`300 duelos contra un jugador aleatorio: terminan todos y Ruperto gana casi siempre`, () => {
+  it(`300 duelos contra un jugador aleatorio: terminan todos y Agustín gana casi siempre`, () => {
     const azar = Azar.conSemilla('contra-azar');
     let gana = 0;
     let manos = 0;
-    let ordagosRuperto = 0;
+    let ordagosAgustín = 0;
     let tics = 0;
     let enfados = 0;
     for (let s = 0; s < 300; s++) {
@@ -86,14 +86,14 @@ describe('partida contra Ruperto', () => {
         p = r.partida;
         tics += r.novedades.tics.length;
         if (r.novedades.seEnfada) enfados++;
-        if (r.novedades.decision?.accion.tipo === 'ordago') ordagosRuperto++;
+        if (r.novedades.decision?.accion.tipo === 'ordago') ordagosAgustín++;
       }
       if (p.duelo.ganador === 'rival') gana++;
       manos += p.duelo.numeroMano;
     }
     console.info(
-      `Ruperto contra el azar: gana ${gana}/300 · ${(manos / 300).toFixed(1)} manos por duelo · ` +
-        `${((ordagosRuperto / manos) * 100).toFixed(0)} % de manos con órdago suyo · ` +
+      `Agustín contra el azar: gana ${gana}/300 · ${(manos / 300).toFixed(1)} manos por duelo · ` +
+        `${((ordagosAgustín / manos) * 100).toFixed(0)} % de manos con órdago suyo · ` +
         `${(tics / manos).toFixed(2)} tics por mano · ${enfados} enfados`,
     );
     expect(gana).toBeGreaterThan(240);

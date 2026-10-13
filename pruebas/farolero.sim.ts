@@ -17,7 +17,7 @@ if (process.env.FAROLES_ESPERADOS) (IA.aceptar as { farolesEsperados: number }).
  * envites del rival responde con sentido.
  * Si gana mucho más que un jugador sensato, los rivales no castigan bien los faroles.
  * Solo informa: con IA.aceptar.pesoCuota = 0 el farolero gana unos puntos más que el sensato
- * contra Doña Engracia, Don Anselmo y Fulgencio (docs/decisiones.md). Con PESO_CUOTA=0.75 no.
+ * contra Doña Ignacia, Don Francisco y Aurelio (docs/decisiones.md). Con PESO_CUOTA=0.75 no.
  */
 const SENSATO: PerfilRival = {
   id: 'ruperto',

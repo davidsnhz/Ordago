@@ -19,10 +19,10 @@ export interface Modificador {
   ganaEmpate?(lado: Lado, lance: Lance, estado: Readonly<EstadoDuelo>): Lado;
   /**
    * Antes del recuento, si hay envites queridos: quién propone retirarlos y repartirse las
-   * piedras (el trato de Fulgencio), o null. El otro decide si lo acepta.
+   * piedras (el trato de Aurelio), o null. El otro decide si lo acepta.
    */
   ofreceTrato?(estado: Readonly<EstadoDuelo>): Lado | null;
-  /** Cambia los cobros del recuento antes de apuntarlos (p. ej. la Penitencia de Don Anselmo). */
+  /** Cambia los cobros del recuento antes de apuntarlos (p. ej. la Penitencia de Don Francisco). */
   ajustarCobros?(cobros: Cobro[], estado: Readonly<EstadoDuelo>, ganadores: CobrosDeLaMano['ganadores']): Cobro[];
 }
 

@@ -347,7 +347,7 @@ function Botonera({
   seleccion: string[];
   onAccion: (a: AccionDuelo) => void;
   opciones: OpcionDuelo[];
-  /** «Le toca a Ruperto» mientras el rival piensa. */
+  /** «Le toca a Agustín» mientras el rival piensa. */
   espera: string | null;
 }) {
   const yo: Lado = 'jugador';

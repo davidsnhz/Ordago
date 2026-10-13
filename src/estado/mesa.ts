@@ -7,7 +7,7 @@ import { ES, type TextosRival } from '../textos/es';
 import type { Partida, ResultadoPartida } from './partida';
 
 /**
- * Una línea del acta de la mano, contada: lo que hace cada uno («Has envidado dos.», «Ruperto
+ * Una línea del acta de la mano, contada: lo que hace cada uno («Has envidado dos.», «Agustín
  * sube cuatro más») o lo que pasa en la mesa («Grande en paso: se cobra en el recuento»).
  */
 export interface LineaActa {
@@ -65,7 +65,7 @@ export function mesaInicial(partida: Partida): EstadoMesa {
   };
 }
 
-/** Un envite contado: «Has envidado dos.» si es tuyo, «Ruperto sube cuatro más» si es suyo. */
+/** Un envite contado: «Has envidado dos.» si es tuyo, «Agustín sube cuatro más» si es suyo. */
 export function narrarEnvite(accion: AccionEnvite, rival: string | null): string {
   switch (accion.tipo) {
     case 'paso':

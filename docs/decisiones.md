@@ -309,6 +309,44 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - **Fuera el evento del cura:** hacía lo mismo que la Medalla.
 - **El Abuelo (compañero) pasa a llamarse el Jubilado**, para no confundirlo con el abuelo de la familia. Se desbloquea al llegar a la Montaña Palentina.
 
+## Nombres nuevos y diseños desde cero (13 de octubre de 2026)
+
+*Decidido por David* al revisar la versión 2 de `docs/gira.md`:
+
+- **Nombres nuevos.** Se quedan los «don» y «doña».
+
+  | Antes | Ahora | Antes | Ahora |
+  | --- | --- | --- | --- |
+  | Ruperto | Agustín | Don Severiano | Don Agapito |
+  | Fulgencio | Aurelio | El tío Paulino | El tío Arturo |
+  | Tomás | Fernando | Leandro | Sergio |
+  | Pilar | María | Doña Leonor | Doña Isabel |
+  | El abuelo Teodoro | El abuelo Pepe | Don Ceferino | Don Pelayo |
+  | Doña Engracia | Doña Ignacia | Don Bonifacio | Don Rodrigo |
+  | Don Anselmo | Don Francisco | | |
+
+  En las entradas anteriores de este documento salen con el nombre que tenían entonces.
+- **Todos los personajes se diseñarán de nuevo desde cero**, también los cinco que ya tienen dibujo.
+- **Manolo** juega con mucha calma las dos primeras manos y después, por la bebida, a lo loco.
+- **El Reloj de bolsillo, baratillo:** 3 reales.
+- **Confirmados:**
+  - las señas de la familia y que se cuenten los faroles pillados;
+  - «Se viene arriba» de Chema;
+  - «Cara de piedra» del tío Arturo;
+  - la Gaseosa, el Chato de vino, la monja y el Caldo de la abuela;
+  - la parada antes de repetir contra un jefe;
+  - el orden de las arenas: la facultad, el bar, la Montaña Palentina, las fiestas del pueblo y el casino. Ya estaban en ese orden.
+
+*Lo que he hecho o propuesto yo:*
+
+- **En el juego,** los cinco rivales ya salen con su nombre nuevo. Por dentro siguen con su id de antes (`ruperto`, `engracia`, `anselmo`, `fulgencio`, `bonifacio`), porque los usan el guardado y las carpetas del arte. Cambiarlos rompería las partidas guardadas y no se ve.
+- **La regla de Manolo, «Una caña más»:**
+  - las dos primeras manos casi no farolea y envida solo con buenas cartas;
+  - desde la tercera farolea muchísimo, sube más y tira órdagos sin nada, con la etiqueta *¡ACHISPADO!*;
+  - además, achispado se le notan más los tics, para que se le pueda leer.
+- **Lo que le pasa en la gira:** si le ganaste a Aurelio, Aurelio le paga una ronda y Manolo se suelta una mano antes. Sustituye a «¡Se ha rajado!», que ya no encajaba.
+- **Los diseños:** en `gira.md`, el «Aspecto» de los personajes nuevos pasa a ser «Idea de aspecto», solo como punto de partida. Los cinco del juego llevan en el documento de diseño la nota de que se rediseñan.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

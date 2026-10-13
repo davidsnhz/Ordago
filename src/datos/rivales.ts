@@ -2,6 +2,10 @@ import { LANCES, type Lance } from '../nucleo/lances';
 
 /** Rivales: parámetros de la IA, forma de jugar el mus, tics y reglas especiales. Sus textos están en textos/es.ts. */
 
+/**
+ * Los ids son los nombres que tenían antes (Ruperto, Engracia, Anselmo, Fulgencio y Bonifacio):
+ * los usan el guardado y las carpetas del arte. Los nombres que se ven están en textos/es.ts.
+ */
 export type IdRival = 'ruperto' | 'engracia' | 'anselmo' | 'fulgencio' | 'bonifacio';
 
 export const ORDEN_RIVALES: IdRival[] = ['ruperto', 'engracia', 'anselmo', 'fulgencio', 'bonifacio'];
@@ -60,23 +64,23 @@ export interface PerfilRival {
   parametros: ParametrosRival;
   mus: EstiloMus;
   tics: DefinicionTic[];
-  /** Bonifacio: cambia de tics según cómo va el duelo (piedras del que más lleva). */
+  /** Rodrigo: cambia de tics según cómo va el duelo (piedras del que más lleva). */
   fasesDeTics?: { desdePiedras: number; tics: DefinicionTic[] }[];
-  /** Ruperto: si pierde `lancesSeguidos` lances seguidos, acepta todo durante `manos` manos. */
+  /** Agustín: si pierde `lancesSeguidos` lances seguidos, acepta todo durante `manos` manos. */
   enfado?: { lancesSeguidos: number; manos: number };
-  /** Doña Engracia: nunca acepta un órdago antes de esta mano. */
+  /** Doña Ignacia: nunca acepta un órdago antes de esta mano. */
   ordagoDesdeMano?: number;
-  /** Doña Engracia: si la miras demasiado, se ofende y no hace tics durante `manos` manos. */
+  /** Doña Ignacia: si la miras demasiado, se ofende y no hace tics durante `manos` manos. */
   alSerMirado?: { manos: number };
-  /** Don Anselmo: en estos lances, si habla sin envite delante, envida siempre. */
+  /** Don Francisco: en estos lances, si habla sin envite delante, envida siempre. */
   siempreEnvidaA?: readonly Lance[];
-  /** Don Anselmo: si te pilla un farol, tu próximo envite le da `piedras` más si lo gana él. */
+  /** Don Francisco: si te pilla un farol, tu próximo envite le da `piedras` más si lo gana él. */
   penitencia?: { piedras: number };
-  /** Fulgencio: una vez por duelo propone un trato antes del recuento. */
+  /** Aurelio: una vez por duelo propone un trato antes del recuento. */
   trato?: true;
-  /** Don Bonifacio: es mano en el primer reparto y gana los empates de estos lances. */
+  /** Don Rodrigo: es mano en el primer reparto y gana los empates de estos lances. */
   casa?: { lances: readonly Lance[] };
-  /** Don Bonifacio: una vez por duelo cambia una carta si su mejor lance no llega a esta fuerza. */
+  /** Don Rodrigo: una vez por duelo cambia una carta si su mejor lance no llega a esta fuerza. */
   cartasDeLaCasa?: { fuerzaMaxima: number };
 }
 
@@ -153,7 +157,7 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
   },
 };
 
-/** Tics que usa el rival ahora mismo (Bonifacio cambia según las piedras). */
+/** Tics que usa el rival ahora mismo (Rodrigo cambia según las piedras). */
 export function ticsActivos(perfil: PerfilRival, piedrasMaximas: number): DefinicionTic[] {
   let tics = perfil.tics;
   for (const fase of perfil.fasesDeTics ?? []) if (piedrasMaximas >= fase.desdePiedras) tics = fase.tics;

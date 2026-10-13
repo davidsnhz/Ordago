@@ -74,36 +74,36 @@ describe('los cinco rivales', () => {
 });
 
 describe('reglas especiales en partida', () => {
-  it('Don Bonifacio es mano en el primer reparto', () => {
+  it('Don Rodrigo es mano en el primer reparto', () => {
     for (let s = 0; s < 10; s++) expect(nuevaPartida(`casa-${s}`, 'bonifacio').partida.duelo.quienEsMano).toBe('rival');
   });
 
-  it('Don Bonifacio cambia como mucho una carta por duelo, y alguna vez lo hace', () => {
+  it('Don Rodrigo cambia como mucho una carta por duelo, y alguna vez lo hace', () => {
     const duelos = jugarDuelos('bonifacio', 60);
     const cambios = duelos.map((d) => d.eventos.filter((e) => e.tipo === 'cartaCambiada').length);
     expect(Math.max(...cambios)).toBeLessThanOrEqual(1);
     expect(cambios.reduce((s, n) => s + n, 0)).toBeGreaterThan(0);
   }, 120_000);
 
-  it('Fulgencio propone como mucho un trato por duelo, y alguna vez lo hace', () => {
+  it('Aurelio propone como mucho un trato por duelo, y alguna vez lo hace', () => {
     const duelos = jugarDuelos('fulgencio', 60);
     const tratos = duelos.map((d) => d.eventos.filter((e) => e.tipo === 'trato').length);
     expect(Math.max(...tratos)).toBeLessThanOrEqual(1);
     expect(tratos.reduce((s, n) => s + n, 0)).toBeGreaterThan(0);
   }, 120_000);
 
-  it('Don Anselmo cobra penitencia alguna vez', () => {
+  it('Don Francisco cobra penitencia alguna vez', () => {
     const duelos = jugarDuelos('anselmo', 60);
     const penitencias = duelos.flatMap((d) => d.eventos).filter((e) => e.tipo === 'recuento' && e.cobros.some((c) => c.concepto === 'penitencia'));
     expect(penitencias.length).toBeGreaterThan(0);
   }, 120_000);
 
-  it('Ruperto se enfada alguna vez', () => {
+  it('Agustín se enfada alguna vez', () => {
     const duelos = jugarDuelos('ruperto', 40);
     expect(duelos.some((d) => d.resultados.some((r) => r.novedades.seEnfada))).toBe(true);
   }, 120_000);
 
-  it('Doña Engracia se ofende si la miras demasiado, y entonces no hace tics', () => {
+  it('Doña Ignacia se ofende si la miras demasiado, y entonces no hace tics', () => {
     let ofendida: Partida | null = null;
     for (let s = 0; s < 20 && !ofendida; s++) {
       const r = mirarAlRival(nuevaPartida(`mirar-${s}`, 'engracia').partida, 3);
