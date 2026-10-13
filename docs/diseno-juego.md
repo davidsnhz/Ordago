@@ -1,21 +1,21 @@
 # Órdago — Documento de diseño
 
-12 de octubre de 2026 · @david · *versión 7: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6) y la visión del juego con la gira en arenas de cuatro niveles (v7)*
+13 de octubre de 2026 · @david · *versión 8: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7) y las arenas nuevas con la Honra que no acaba la gira por perder contra un jefe (v8)*
 
-> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Ruperto) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. **Los cinco rivales ya tienen su arte** en la mesa, con varios de sus tics dibujados. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 7 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
+> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Ruperto) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. **Los cinco rivales ya tienen su arte** en la mesa, con varios de sus tics dibujados. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 8 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
 
 ## Visión y esencia
 
 **[cambiado]** La visión del juego, contada por David y ordenada:
 
-- **Qué es.** Un roguelike inspirado en el mus, el juego de cartas español. Eres **un forastero que se adentra en Castilla** jugándose el mus con la gente de cada sitio: herreros, viudas, curas, tratantes de ganado y caciques.
+- **Qué es.** Un roguelike inspirado en el mus, el juego de cartas español. Eres **un forastero que se adentra en Castilla** jugándose el mus con la gente de cada sitio: estudiantes, los del bar, una familia de pueblo, los veteranos de las fiestas y los caciques.
 - **Uno contra uno.** No es el mus de siempre, dos contra dos: juegas **tú solo contra un rival, a 20 piedras**.
 - **Partidas cortas.** Cada duelo a 20 piedras dura lo que una partida de Clash Royale: unos pocos minutos. La gira entera, que encadena muchos duelos, dura algo más de una hora.
-- **El camino.** El mapa se inspira en las arenas de Clash Royale, pero cada arena es **un paisaje de España**: los trigales de Tierra de Campos, la nieve de la Montaña Palentina, las bodegas de la Ribera del Duero… Cada arena tiene **cuatro niveles**, como en Balatro: tres secuaces y su jefe. Los rivales son gente típica de Castilla, cada uno con su forma de jugar.
+- **El camino.** El mapa se inspira en las arenas de Clash Royale, pero cada arena es **un sitio de España**: la cafetería de la facultad, el bar de toda la vida, una casa de la Montaña Palentina, las fiestas del pueblo y el casino de la capital. Cada arena tiene **cuatro niveles**, como en Balatro: tres secuaces y su jefe. Los rivales son gente típica de Castilla, cada uno con su forma de jugar.
 - **Leer al rival.** Cada rival tiene **tics**: gestos que se le escapan y que te ayudan a saber si está mintiendo o si lleva buena mano en ese lance. Ninguno acierta siempre.
 - **Mentir.** Como en el mus de verdad, tú también puedes **farolear**: envidar sin nada y que el rival se lo crea, o no. Lo que te creen se mide con **la Cara**, el medidor que está debajo del marcador. Con la Cara alta te tienen miedo y se retiran; con la Cara baja te lo quieren todo.
 - **Lo que llevas contigo.** Un **compañero**, que tiene su habilidad y te hace jugar de otra manera. Solo puedes llevar uno a la vez, pero en la taberna se compran y se cambian a medida que avanzas. Y **objetos** de la taberna: unos te ayudan a ti, otros fastidian al rival y otros te dejan hacer cosas distintas.
-- **Si pierdes, vuelves a empezar.** Como en Balatro: cuando se acaba la gira, vuelves al principio desde cero. Tienes tres vidas, **la Honra**, porque en el mus el reparto pesa mucho y una mala racha de cartas no debería tirarte la gira entera; pero si pierdes contra un jefe, se acabó. De una gira a otra solo te llevas lo aprendido (la Libreta) y lo desbloqueado.
+- **Si pierdes, vuelves a empezar.** Como en Balatro: cuando se acaba la gira, vuelves al principio desde cero. Tienes tres vidas, **la Honra**, porque en el mus el reparto pesa mucho y una mala racha de cartas no debería tirarte la gira entera. **[cambiado]** La gira solo se acaba cuando te quedas sin Honra: si pierdes contra un jefe, te cuesta una y vuelves a jugar contra él hasta ganarle. De una gira a otra solo te llevas lo aprendido (la Libreta) y lo desbloqueado.
 
 En resumen: un roguelike de duelos de mus 1 contra 1 donde se gana leyendo al rival y apostando con cabeza, no construyendo combinaciones de cartas. Se juega sin conexión, en móvil y **en vertical**, con una mano.
 
@@ -42,19 +42,21 @@ La frase que resume el juego: **«No gana quien lleva mejores cartas, gana quien
 
 ## Ambientación y estética
 
-Eres un jugador forastero que recorre los pueblos de Castilla desafiando a sus mejores jugadores de mus, hasta llegar a la gran timba de la capital. **[cambiado]** Cada arena tiene su taberna, tres secuaces y un jefe que no ha perdido nunca.
+Eres un jugador forastero que recorre Castilla desafiando a sus mejores jugadores de mus, hasta llegar a la gran timba de la capital. **[cambiado]** Empiezas donde aprenden casi todos, en la cafetería de la facultad, y vas subiendo: el bar, una familia de pueblo, los veteranos de las fiestas y el casino. Cada arena tiene tres secuaces y un jefe que no ha perdido nunca.
 
 ### La gira
 
-La gira recorre comarcas reales, cada una con su identidad visual y sus personajes. Se muestra como las **arenas de Clash Royale**: un camino vertical de arenas que se va subiendo, con la siguiente bloqueada hasta vencer al jefe de la anterior. **[cambiado]** Cada arena tiene cuatro niveles: tres secuaces y su jefe (ver «Estructura de la partida»). Quién es cada secuaz está en [La gira](gira.md).
+La gira recorre sitios reconocibles de España, cada uno con su identidad visual y sus personajes. Se muestra como las **arenas de Clash Royale**: un camino vertical de arenas que se va subiendo, con la siguiente bloqueada hasta vencer al jefe de la anterior. **[cambiado]** Cada arena tiene cuatro niveles: tres secuaces y su jefe (ver «Estructura de la partida»). Quién es cada secuaz está en [La gira](gira.md).
 
-| Arena | Paisaje | Ambiente | Jefe |
-| --- | --- | --- | --- |
-| 1 | Tierra de Campos | Adobe, palomares, trigo, sol de tarde | Ruperto, el Herrero |
-| 2 | Montaña Palentina | Piedra, nieve, chimenea, lana | Doña Engracia, la Viuda |
-| 3 | Ribera del Duero | Bodegas subterráneas, barricas, velas | Don Anselmo, el Cura |
-| 4 | Feria de ganado | Carpa, paja, mulas, bullicio | Fulgencio, el Tratante |
-| 5 (final) | Casino de la capital | Terciopelo, lámparas, humo | Don Bonifacio, el Cacique |
+**[cambiado]** Las arenas, elegidas por David el 13 de octubre de 2026:
+
+| Arena | Dónde | Ambiente | Contra quién | Jefe |
+| --- | --- | --- | --- | --- |
+| 1 | La facultad | La cafetería de una universidad pública: mesas de formica, máquina de café, apuntes | Estudiantes, que es donde casi todos aprenden a jugar | Chema, el Repetidor, que no entra en clase y vive en la cafetería |
+| 2 | El bar | Barra de zinc, raciones, la tele con el fútbol, la tragaperras | Adultos, no ancianos (Ruperto y Fulgencio juegan aquí) | Manolo, el Rey de la barra: cuarenta y tantos, medio calvo y con barriga cervecera |
+| 3 | La Montaña Palentina | Casa de piedra, nieve, chimenea, mesa camilla con brasero | Una familia de pueblo: la niña, la madre y el padre | El abuelo Teodoro |
+| 4 | Las fiestas del pueblo | Farolillos, casetas, orquesta y la carpa del concurso de mus | Ancianos que han jugado al mus toda su vida (Doña Engracia y Don Anselmo juegan aquí) | El tío Paulino, el Campeón de las fiestas |
+| 5 (final) | El casino de la capital | Terciopelo, lámparas, humo | Los de la casa | Don Bonifacio, el Cacique |
 
 ### Arte
 
@@ -82,7 +84,7 @@ La gira recorre comarcas reales, cada una con su identidad visual y sus personaj
 - **Herramientas de pruebas:** los botones Rival, Depurar y **Tics [nuevo]** son solo para probar el juego mientras se hace. Tics enseña seguidos todos los tics del rival, para revisar su arte sin esperar a que salgan jugando. Salen en desarrollo o con `?pruebas` en la dirección (*ordago-game.vercel.app/?pruebas*); en el juego normal no están.
 - **El rival es lo más importante de la pantalla** porque es donde están los tics. Necesita animaciones sutiles: parpadeo, respiración, manos, mirada. Cada tic es una animación propia.
   - **Lo que ya hay [nuevo]:** el rival **respira** (se ensancha un pelo y vuelve, cada 4 segundos) y **parpadea** cada pocos segundos. Cada tic dibujado es un **cambio de pose con un fundido**: *Ruperto se lleva la mano a la barba* y, pasado el tic, vuelve a su postura. Algunos se mueven en varios fotogramas (*Fulgencio levanta el sombrero*, *golpea dos veces con la vara*) y otros llevan un efecto encima (*le brilla el diente de oro*, *el puro de Don Bonifacio echa humo*). Los gestos de ojos van pintados sobre el retrato: *Doña Engracia entorna los ojos y se inclina hacia ti*, *Don Bonifacio pone los ojos en blanco hacia arriba*.
-- **Cada arena tiñe el ambiente** (azulado en la montaña, vinoso en la Ribera).
+- **Cada arena tiñe el ambiente** (fluorescente en la facultad, azulado en la montaña, con farolillos en las fiestas).
 - **Detalles de taberna**: porrón, vasos de chato, un perro durmiendo, parroquianos de fondo que reaccionan a los órdagos.
 
 ### Tono
@@ -98,20 +100,20 @@ Humor costumbrista y un punto de picaresca. Los rivales hablan con refranes y fr
 
 ## Estructura de la partida
 
-**[cambiado]** Una partida es una gira de 5 arenas de 4 niveles cada una: 20 duelos, algo más de una hora. Si pierdes contra un jefe o te quedas sin Honra, la gira termina y vuelves a empezar desde cero, con lo desbloqueado.
+**[cambiado]** Una partida es una gira de 5 arenas de 4 niveles cada una: 20 duelos, algo más de una hora. **[cambiado]** La gira solo termina cuando te quedas sin Honra; entonces vuelves a empezar desde cero, con lo desbloqueado.
 
 ### Niveles de juego
 
 | Nivel | Qué es | Duración aproximada |
 | --- | --- | --- |
-| Gira | La partida completa: 4 arenas + el casino final | 60–80 min |
+| Gira | La partida completa: 4 arenas + el casino final | 60–80 min (más si repites contra algún jefe) |
 | **[cambiado]** Arena | Un paisaje: 3 secuaces y su jefe | 12–16 min |
 | Duelo | Un enfrentamiento a 20 piedras contra un rival: **la partida corta** del juego, como una de Clash Royale | 2–4 min |
 | Mano | Reparto, mus, los cuatro lances y el recuento | 30–60 s |
 
 ### Recursos de la gira
 
-- **Honra (vidas) [cambiado]:** empiezas con 3 (confirmado por David: el reparto pesa mucho y una mala racha no debe tirar la gira). Perder contra un secuaz cuesta 1 y no cobras ese duelo, pero sigues al siguiente nivel. Perder contra un jefe termina la gira.
+- **Honra (vidas) [cambiado]:** empiezas con 3 (confirmado por David: el reparto pesa mucho y una mala racha no debe tirar la gira). Perder contra un secuaz cuesta 1 y no cobras ese duelo, pero sigues al siguiente nivel. **[cambiado]** Perder contra un jefe también cuesta 1, y vuelves a jugar contra él hasta que le ganes o te quedes sin Honra (decidido por David). Antes de repetir puedes pasar por una parada. La gira solo se acaba sin Honra. Una monja en la plaza puede darte una de más (ver [La gira](gira.md)).
 - **Reales (moneda):** se ganan en cada duelo y se gastan en la taberna.
 - **Cara (temple):** de 0 a 100, se arrastra de un duelo a otro. Ver el apartado de faroles.
 - **Libreta:** apuntes que tomas sobre cada rival una vez le hayas ganado. Persiste entre giras.
@@ -123,7 +125,7 @@ Humor costumbrista y un punto de picaresca. Los rivales hablan con refranes y fr
 1. **Primer secuaz:** el más flojo, con un solo tic de verdad.
 2. **Segundo secuaz:** dos tics y una manía pequeña.
 3. **La mano derecha del jefe:** juega parecido a él y tiene una manía que anuncia su regla.
-4. **El jefe:** uno de los cinco rivales del juego, con su regla especial completa.
+4. **El jefe:** el mejor de la arena, con su regla especial completa.
 
 Los secuaces son versiones más sencillas de la idea de su jefe. Quién es cada uno, cómo juega y sus tics están en [La gira](gira.md). Al entrar en una arena ya ves al jefe y su regla, para preparar la taberna.
 
@@ -135,7 +137,7 @@ Entre duelo y duelo eliges una parada:
 
 Ganar al jefe te da un premio a elegir entre tres (un compañero, su objeto raro o +1 de Honra si te falta) y abre la siguiente arena.
 
-*(Diagrama del bucle: elegir compañero → nueva arena → secuaz 1 → parada (taberna, plaza o era) → secuaz 2 → parada → mano derecha del jefe → parada → jefe → si ganas: premio y siguiente arena; si pierdes contra el jefe, o te quedas sin Honra: fin de la gira, se guardan Libreta y desbloqueos → nueva gira.)*
+*(Diagrama del bucle: elegir compañero → nueva arena → secuaz 1 → parada (taberna, plaza o era) → secuaz 2 → parada → mano derecha del jefe → parada → jefe → si ganas: premio y siguiente arena; si pierdes: −1 de Honra, parada y otra vez el jefe; si te quedas sin Honra: fin de la gira, se guardan Libreta y desbloqueos → nueva gira.)*
 
 Tras el casino final, ganar a Don Bonifacio completa la gira y desbloquea la dificultad siguiente.
 
@@ -279,7 +281,7 @@ Ningún tic es 100 % fiable. Si lo fueran, el juego sería memorizar. Con un 70�
 
 Cada vez que ves un tic y luego se enseñan las cartas, el juego te deja anotarlo en la Libreta del rival. Las notas se rellenan poco a poco («Se rasca la barba… ¿cuando lleva pares?») y se confirman con más observaciones.
 
-La Libreta persiste entre giras. Es tu progresión como jugador: la segunda vez que te enfrentas a la Viuda ya sabes algo de ella. Algunos rivales tienen tics que cambian (Don Bonifacio; en la gira, también Doña Leonor), para que la Libreta nunca lo resuelva todo.
+La Libreta persiste entre giras. Es tu progresión como jugador: la segunda vez que te enfrentas a la Viuda ya sabes algo de ella. Algunos rivales tienen tics que cambian (Don Bonifacio; en la gira, también Doña Leonor y el abuelo Teodoro, que a mitad del duelo hace señas falsas), para que la Libreta nunca lo resuelva todo.
 
 ### Mirar al rival
 
@@ -321,7 +323,7 @@ El compañero es el equivalente a los comodines de Balatro, pero con sabor a mus
 - **En la taberna se compran y se cambian** a medida que avanzas por las arenas. Si compras uno, el tuyo se despide y te deja la mitad de lo que costó. Ganar a un jefe también puede darte uno nuevo, si eliges ese premio.
 - Cada compañero tiene una **habilidad pasiva** y una **seña** que se usa un número limitado de veces por duelo.
 
-**[cambiado] La lista de compañeros está en [La gira](gira.md)**, con su pasiva, su seña, cómo se desbloquea y su precio, para ir cambiándola sin tocar este documento. Son once: el Pastor y la Tabernera (desde el principio), el Tahúr, el Abuelo, la Moza del Molino, el Sacristán, el Veterano, el Forastero y tres nuevos (la Cotilla, el Alguacil y el Dulzainero). Lo decidido sobre el Tahúr y el Veterano está allí y en «Preguntas abiertas».
+**[cambiado] La lista de compañeros está en [La gira](gira.md)**, con su pasiva, su seña, cómo se desbloquea y su precio, para ir cambiándola sin tocar este documento. Son once: el Pastor y la Tabernera (desde el principio), el Tahúr, el Jubilado (antes, el Abuelo: cambia de nombre para no confundirlo con el abuelo de la familia), la Moza del Molino, el Sacristán, el Veterano, el Forastero y tres nuevos (la Cotilla, el Alguacil y el Dulzainero). Lo decidido sobre el Tahúr y el Veterano está allí y en «Preguntas abiertas».
 
 La idea es que cada compañero empuje a un estilo distinto, para que dos giras no se jueguen igual. Combinado con los objetos, salen las sinergias propias de un roguelike: Tahúr con objetos de descarte, Tabernera con objetos de órdago, Pastor con objetos de lectura.
 
@@ -331,21 +333,21 @@ Los objetos se compran con reales en la taberna y son la segunda capa de constru
 
 | Tipo | Qué son | Duración | Huecos |
 | --- | --- | --- | --- |
-| Bebidas | Te ayudan a ti | Se consumen al usarlas, durante un duelo | 3, compartidos con las jugarretas |
-| **[nuevo]** Jugarretas | Fastidian al rival. *Ejemplo: «Darle conversación»: en esta mano el rival no puede tirar órdago* | Se consumen al usarlas, durante un duelo | Los mismos 3 |
-| Amuletos | Pasivos; unos te ayudan y otros van contra el rival. *Ejemplo: la «Carta del gobernador» quita a los jefes su regla especial* | Toda la gira | 4 |
+| Bebidas | Te ayudan a ti | Se consumen al usarlas, durante un duelo | **[cambiado]** 2, compartidos con las jugarretas |
+| **[nuevo]** Jugarretas | Fastidian al rival. *Ejemplo: «Darle conversación»: en esta mano el rival no puede tirar órdago* | Se consumen al usarlas, durante un duelo | Los mismos 2 |
+| Amuletos | Pasivos; unos te ayudan y otros van contra el rival. *Ejemplo: la «Carta del gobernador» quita a los jefes su regla especial* | Toda la gira | **[cambiado]** 2, compartidos con los objetos raros |
 | Barajas | Cambian la baraja | Toda la gira | 1 |
-| **[nuevo]** Objetos raros | El premio de cada jefe (el Martillo de Ruperto, el Rosario de Doña Engracia…) | Toda la gira | Ocupan un hueco de amuleto |
+| **[nuevo]** Objetos raros | El premio de cada jefe (los Apuntes de Chema, la Jarra de Manolo…) | Toda la gira | Los mismos 2 que los amuletos |
 
-**[cambiado] El catálogo de objetos, con su efecto y su precio, está en [La gira](gira.md)**, junto con cómo funciona la taberna (cuatro cosas a la venta, «otra ronda» para cambiarlas y vender por la mitad). La Medalla de la Virgen sigue descartada tal como estaba y con su sustituta pendiente (ver «Preguntas abiertas»).
+**[cambiado] El catálogo de objetos, con su efecto y su precio, está en [La gira](gira.md)**, junto con cómo funciona la taberna (cuatro cosas a la venta, «otra ronda» para cambiarlas y vender por la mitad). **[cambiado]** Decididos por David: la Medalla de la Virgen (la primera vez en cada duelo que te pillan un farol, tu Cara no baja; 9 reales), el Chato de vino (el rival canta su mano; 4 reales), el Caldo de la abuela (si el rival llega a 20, se juega hasta 30), la Ristra de ajos (los rivales no hacen tics falsos) y la Gorra calada (7 reales). La Gaseosa y el Reloj de bolsillo, rehechos para que sirvan de algo.
 
 ### Economía de referencia
 
 **[cambiado]** Con los reales de la tabla de apuestas, un jugador medio gana unos 30–40 reales por arena (25 por ganar los cuatro duelos, más los envites, faroles y órdagos). Eso da para 2–3 objetos por arena y obliga a decidir entre bebidas baratas y un amuleto caro. Estos números son un punto de partida y se ajustan en las pruebas.
 
-## Los 5 jefes
+## Los 5 rivales que ya están en el juego
 
-**[cambiado]** Los cinco rivales que ya están en el juego son los jefes de las cinco arenas. Cada uno enseña una lección distinta del juego, en orden de dificultad. Sus tres secuaces son versiones más sencillas de la misma idea (menos tics, parámetros más suaves), y el tercero, su mano derecha, anuncia su regla. Los secuaces están en [La gira](gira.md).
+**[cambiado]** Son los cinco que se pueden jugar ya en duelos sueltos. Con las arenas nuevas, cada uno tiene su sitio en la gira: **Ruperto y Fulgencio juegan en el bar** (niveles 2 y 3), **Doña Engracia y Don Anselmo, en las fiestas del pueblo** (niveles 1 y 2), y **Don Bonifacio es el jefe final del casino**. Cada uno enseña una lección distinta del juego. El resto de rivales (los secuaces y los jefes nuevos) está en [La gira](gira.md).
 
 Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
@@ -363,7 +365,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 - **Memoria:** cuánto ajusta su juego según tus faroles anteriores.
 - **Ojo:** lo bien que detecta tus trucos (El Tahúr, mirar demasiado).
 
-### 1. Ruperto, el Herrero (Tierra de Campos)
+### 1. Ruperto, el Herrero (el bar, nivel 2)
 
 **Aspecto [cambiado]:** grandote, barba enorme y rizada, pañuelo rojo al cuello, delantal de cuero con tirantes y muñequeras. Golpea la mesa al envidar.
 
@@ -384,7 +386,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Frase:** «Aquí se juega como se forja: a golpes.»
 
-### 2. Doña Engracia, la Viuda (Montaña Palentina)
+### 2. Doña Engracia, la Viuda (las fiestas del pueblo, nivel 1)
 
 **Aspecto [cambiado]:** de negro, con mantón morado de flecos, moño gris, pendientes de oro, bastón y un rosario entre los dedos. Mirada de rayos X.
 
@@ -403,9 +405,9 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Frase:** «Treinta años jugando con mi difunto. A mí no me la das.»
 
-### 3. Don Anselmo, el Cura (Ribera del Duero)
+### 3. Don Anselmo, el Cura (las fiestas del pueblo, nivel 2)
 
-**Aspecto [cambiado]:** sotana, solideo, estola morada, cruz de oro y mofletes colorados. Falta dibujarle el vaso de vino de la Ribera, que necesita su tic.
+**Aspecto [cambiado]:** sotana, solideo, estola morada, cruz de oro y mofletes colorados. Falta dibujarle el vaso de vino, que necesita su tic.
 
 **Personalidad:** equilibrado y astuto, con una manía: envida siempre a la Chica, lleve lo que lleve. Es el primer rival con buena memoria: si le faroleas dos veces, deja de creerte.
 
@@ -425,7 +427,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Frase:** «Dios lo ve todo, hijo. Yo, casi todo.»
 
-### 4. Fulgencio, el Tratante (Feria de ganado)
+### 4. Fulgencio, el Tratante (el bar, nivel 3)
 
 **Aspecto [cambiado]:** sombrero de ala ancha con pluma roja, chaleco bordado, manta al hombro, aro de oro en la oreja, diente de oro y vara de tratante en la mano (estos dos, pintados sobre su dibujo porque los usan sus tics).
 
@@ -452,7 +454,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 **Frase:** «Esta mula vale lo que yo diga que vale. Y esta mano, también.»
 
-### 5. Don Bonifacio, el Cacique (Casino de la capital)
+### 5. Don Bonifacio, el Cacique (el casino de la capital, jefe final)
 
 **Aspecto [cambiado]:** levita granate bordada en oro, chaleco de brocado, cadena de reloj, puro, anillos y bastón de puño dorado. Sentado en un sillón más alto que el tuyo.
 
@@ -613,7 +615,7 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 1. ✅ **Hecho. Motor de mus:** baraja, reparto, mus, los cuatro lances y el recuento. Sin gráficos: TypeScript puro con pruebas. Probar que las reglas son correctas.
 2. ✅ **Hecho. Un duelo jugable:** interfaz fea, el Herrero con sus 2 tics como rectángulos que parpadean, envites y órdago. **Esta es la prueba clave:** si un duelo de 5 minutos ya es divertido, hay juego.
 3. ✅ **Hecho. IA completa y la Cara:** los 5 parámetros, la memoria y el medidor de Cara, con los cinco rivales y sus reglas. Además, la mesa se ha pasado a vertical.
-4. ⏭️ **Siguiente. Estructura de gira [cambiado]:** la primera arena completa, Tierra de Campos, con sus 3 secuaces (Paco, Tomasa y Nicasio) y su jefe (Ruperto); la taberna con 5 objetos (al menos uno contra el rival) y 2 compañeros (el Pastor y la Tabernera); el mapa en vertical como las arenas; la Libreta, los reales y la Honra. Los secuaces salen con marcador hasta que estén sus dibujos.
+4. ⏭️ **Siguiente. Estructura de gira [cambiado]:** la primera arena completa, **[cambiado]** la facultad, con sus 3 secuaces (Lucía, Dani y Rubén) y su jefe (Chema); la taberna con 5 objetos (al menos uno contra el rival) y 2 compañeros (el Pastor y la Tabernera); el mapa en vertical como las arenas; la Libreta, los reales y la Honra. Los cuatro son nuevos, así que salen con marcador hasta que estén sus dibujos.
 5. **Arte y sonido de la primera arena:** retratos animados, mesa, cartas propias, música. Esto sirve como demo vertical. **[cambiado]** Adelantado: los cinco rivales ya tienen retrato y parte de sus tics (ver «Los tics del rival»). **[cambiado]** Aquí va el pulido a fondo (animaciones, arte de los rivales como en un juego profesional, la escena del órdago): David decidió el 12 de octubre de 2026 comprobar primero que la gira es divertida y luego ponerla bonita.
 6. **Resto del contenido:** las otras 4 arenas, todos los compañeros y objetos, progresión y dificultades.
 
@@ -625,17 +627,25 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 
 **Decididas por David el 12 de octubre de 2026 [nuevo]:**
 
-- **Honra: tres vidas.** Se queda como estaba, porque el reparto pesa mucho en el mus.
+- **Honra: tres vidas.** Se queda como estaba, porque el reparto pesa mucho en el mus. **[cambiado]** El 13 de octubre: perder contra un jefe no acaba la gira; cuesta 1 de Honra y se repite.
 - **Un solo compañero a la vez**, que se compra y se cambia en la taberna a medida que avanzas.
 - **Cada arena tiene cuatro niveles:** tres secuaces y su jefe, como las ciegas de Balatro.
 - **Objetos contra el rival:** las jugarretas y los amuletos contra el rival (en [La gira](gira.md)).
+
+**Decididas por David el 13 de octubre de 2026 [nuevo]:**
+
+- **Las arenas:** la facultad, el bar, una familia de la Montaña Palentina (la niña, la madre, el padre y el abuelo), las fiestas del pueblo con ancianos que llevan toda la vida jugando y el casino de la capital.
+- **Sin «pasar de largo»:** si te pudieras saltar a los secuaces, no compensaría jugar contra ellos.
+- **Huecos:** dos para bebidas y jugarretas, y dos para amuletos y objetos raros.
+- **La plaza:** el timador engaña una de cada tres veces (el amuleto falso se rompe nada más dártelo), y una monja puede darte +1 de Honra. Sale menos que el resto, y solo una vez por gira.
+- **Objetos:** los precios y efectos que están en «Objetos de taberna y economía».
 
 **Para la fase 4 [cambiado]** (decididas por David el 11 de octubre de 2026):
 
 - **El real por farol: sí.** El farol al que el rival dice «no quiero» cuenta como «no descubierto» y da +1 real, aunque en el recuento acabe viendo tus cartas. *Ejemplo: envidas a la Grande con A 4 5 6 y Ruperto no quiere: +1 real.*
 - **El Veterano: dos reyes cualesquiera.** Todos los reyes valen igual y los treses son reyes. *Ejemplo: con R 3 5 6, el rival tiene que aceptar tu órdago a la Grande.*
 - **El Tahúr: cambias la carta que quieras por un rey.** Si el rival tiene mucho Ojo y te pilla, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (lo mismo que ganas tú si pillas a Don Bonifacio). El rey sale del mazo; si no queda ninguno, la seña no se puede usar en esa mano.
-- **La Medalla de la Virgen: descartada tal como estaba.** Pendiente de decidir si se sustituye. **Propuesta:** que proteja el farol, que es el pilar del juego: *«La primera vez en cada duelo que te pillan un farol, tu Cara no baja.»* Así uno se puede atrever a un farol arriesgado sin hundir su temple. Mismo precio, 10 reales. **[nuevo]** Otra opción, en [La gira](gira.md): la Bula de Don Anselmo, el premio de ese jefe, que hace que tus faroles pillados no cuenten para la memoria del rival.
+- **La Medalla de la Virgen [cambiado]: decidida el 13 de octubre.** La primera vez en cada duelo que te pillan un farol, tu Cara no baja. Así uno se puede atrever a un farol arriesgado sin hundir su temple. Cuesta 9 reales.
 
 ## Historial de versiones
 
@@ -646,3 +656,4 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **Versión 5 (11 de octubre de 2026).** Fuera el cartel con el nombre del rival junto al retrato (en su lugar, solo su estado cuando toca: ¡ENFADADO! u OFENDIDA). Activado el ajuste de equilibrio contra el farolero: el rival mira lo que arriesga al aceptar (`pesoCuota` 0,75). Decididas las dudas del real por farol, el Veterano y el Tahúr (que cambia la carta que quieras por un rey); la Medalla de la Virgen, descartada tal como estaba, con una propuesta de sustituta.
 - **Versión 6 (12 de octubre de 2026).** El acta narrada: David vio cuatro prototipos del panel central (etiquetas y bote, bocadillos, pizarra y acta ligera) y luego cuatro letras para el acta ligera, y eligió la narrada (pestaña con el lance, ficha con lo que hay en juego y la partida contada con frases). La cifra de la Cara sube junto a su marca en lugar de un aviso que tapaba la cara del rival. La cabecera, en un solo panel compacto (elegida entre cuatro prototipos: carrera a 20, reloj, careto y tira): números, MANO, los lances como pasos y la Cara con careto, una frase con lo que significa y «?», que abre una ficha corta que la explica. El tapete ocupa algo más del tercio de abajo de la pantalla, con aire entre las cartas del rival y las tuyas, y tus cartas son un 15 % más grandes. La moneda de oros es el icono de la aplicación en el móvil.
 - **Versión 7 (12 de octubre de 2026).** La visión del juego contada por David, ordenada al principio del documento. La gira pasa a **5 arenas de 4 niveles** (tres secuaces y su jefe, como las ciegas de Balatro), y los cinco rivales son los jefes. Confirmadas las tres vidas de Honra, un solo compañero a la vez que se compra y se cambia en la taberna, y que la «partida corta» es cada duelo a 20 piedras. Objetos que van contra el rival (las jugarretas y algunos amuletos) y objetos raros como premio de cada jefe. Nuevos reales por duelo según el nivel. El catálogo de la gira (arenas, 15 secuaces, taberna, plaza, objetos y compañeros, con tres compañeros nuevos) pasa a un documento propio, [La gira](gira.md), para ir cambiándolo. Decidido el orden: primero la gira y comprobar que es divertida; el pulido a fondo, en la fase 5.
+- **Versión 8 (13 de octubre de 2026).** Las arenas que propuso David: la facultad (el jefe es el que no entra en clase y vive en la cafetería), el bar (adultos; el jefe, de cuarenta y tantos, medio calvo y con barriga cervecera), una familia de la Montaña Palentina (la niña, la madre, el padre y el abuelo), las fiestas del pueblo con ancianos que llevan toda la vida jugando y el casino de la capital. Los cinco rivales que ya tenían dibujo se recolocan: Ruperto y Fulgencio en el bar, Doña Engracia y Don Anselmo en las fiestas y Don Bonifacio de jefe final. Perder contra un jefe ya no acaba la gira: cuesta Honra y se repite, y la gira solo termina sin Honra. Fuera la idea de saltarse secuaces. Dos huecos para bebidas y jugarretas y dos para amuletos y objetos raros. Decididos la Medalla de la Virgen (9 reales), el Chato de vino, el Caldo de la abuela, la Ristra de ajos y la Gorra calada; rehechos la Gaseosa y el Reloj de bolsillo; el timador y la monja en la plaza; el Abuelo pasa a llamarse el Jubilado. El detalle, en [La gira](gira.md), versión 2.

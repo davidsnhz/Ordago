@@ -4,7 +4,7 @@
 
 Lo que más me gusta del mus no son las reglas, son cuatro momentos: que te entre una buena mano, envidar y que el otro te lo quiera, tirar un órdago y que te cuele un farol. El juego está pensado para que esos momentos pasen a menudo y se sientan grandes.
 
-Es un roguelike. Eres un forastero que va recorriendo pueblos de Castilla y jugándose el mus con la gente de cada sitio (un herrero, una viuda, un cura, un tratante de ganado…) hasta llegar al cacique de la capital. Cada rival juega a su manera y tiene sus tics, y la gracia está en aprender a leerlos. Las cartas importan, pero lo que decide es cuándo envidar, cuándo querer y cuándo farolear.
+Es un roguelike. Eres un forastero que se va jugando el mus por Castilla: empiezas en la cafetería de la facultad, que es donde aprende casi todo el mundo, y de ahí vas al bar, a una casa de pueblo en la Montaña Palentina contra una familia entera, a las fiestas contra los viejos del concurso de mus y, al final, al casino de la capital. Cada rival juega a su manera y tiene sus tics, y la gracia está en aprender a leerlos. Las cartas importan, pero lo que decide es cuándo envidar, cuándo querer y cuándo farolear.
 
 **Se juega aquí: https://ordago-game.vercel.app**
 

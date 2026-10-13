@@ -1,230 +1,254 @@
 # Órdago — La gira
 
-12 de octubre de 2026 · @david · *versión 1: arenas, jefes, secuaces, taberna, objetos y compañeros*
+13 de octubre de 2026 · @david · *versión 2: las arenas nuevas (facultad, bar, familia, fiestas y casino), la Honra sin fin de gira por el jefe, dos huecos de cada tipo y los objetos retocados*
 
-> **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, la taberna, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
+> **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
-> Lo que ya estaba en el documento de diseño va tal cual. Lo que es idea nueva lleva **[nuevo]** y lo que cambia algo de antes, **[cambiado]**. Los números (precios, reales, parámetros) son un punto de partida: se ajustan jugando.
+> **Las marcas son de esta versión:** **[cambiado]** es lo que me pediste cambiar, y **[nuevo]**, lo que he añadido yo para que encaje (nombres, aspecto, reglas…). Revisa sobre todo lo [nuevo], que es propuesta mía. Los números (precios, reales, parámetros) son un punto de partida: se ajustan jugando.
 
 ## 1. Cómo es una gira
 
-- **La gira es la partida entera:** 5 arenas, una detrás de otra, de Tierra de Campos al casino de la capital. Son 20 duelos y dura algo más de una hora.
+- **La gira es la partida entera:** 5 arenas, una detrás de otra, de la cafetería de la facultad al casino de la capital. Son 20 duelos, más los que repitas, y dura algo más de una hora.
 - **Cada duelo es una partida corta:** a 20 piedras, entre 2 y 4 minutos, como una partida de Clash Royale.
-- **[nuevo] Cada arena tiene 4 niveles**, como las ciegas de Balatro: tres secuaces y su jefe. Se juegan en orden, de menos a más:
+- **Cada arena tiene 4 niveles**, como las ciegas de Balatro: tres secuaces y su jefe. Se juegan en orden, de menos a más:
 
 | Nivel | Quién | Cómo es |
 | --- | --- | --- |
-| 1 | Primer secuaz | El más flojo. Un solo tic de verdad y, como mucho, una manía sencilla. Sirve para calentar |
-| 2 | Segundo secuaz | Dos tics y una manía pequeña |
-| 3 | La mano derecha del jefe | Juega parecido a su jefe y tiene una manía que anuncia la regla del jefe. Si le ganas, ya sabes lo que te espera |
-| 4 | El jefe | Uno de los cinco rivales que ya están en el juego, con su regla especial completa |
+| 1 | Primer secuaz | El más flojo. Pocos tics y claros. Sirve para calentar |
+| 2 | Segundo secuaz | Más tics y alguna manía |
+| 3 | La mano derecha del jefe | Juega parecido a su jefe; a menudo su manía anuncia la regla del jefe |
+| 4 | El jefe | El mejor de la arena, con su regla especial completa |
 
-- **[nuevo] Al entrar en una arena ya ves al jefe y su regla**, como en Balatro, que te enseña la ciega jefe desde el principio. Así preparas la taberna. *Ejemplo: sabes que Doña Engracia no acepta órdagos antes de la tercera mano, así que no gastas reales en la Navaja de Albacete (que premia los órdagos).*
+- **Al entrar en una arena ya ves al jefe y su regla**, como en Balatro, que te enseña la ciega jefe desde el principio. Así preparas la taberna. *Ejemplo: sabes que el tío Paulino casi no hace tics, así que te guardas un Chato de vino para su duelo.*
 - **Entre duelo y duelo eliges una parada:** la taberna (comprar), la plaza (pasa algo) o la era (recuperas Cara). Ver el apartado 3.
-- **Honra: 3 vidas.**
+- **[cambiado] Honra: 3 vidas, y la gira solo se acaba cuando te quedas sin ninguna.**
   - Perder contra un secuaz te quita 1 de Honra y no cobras ese duelo, pero sigues al siguiente nivel.
-  - Perder contra el jefe, o quedarte sin Honra, acaba la gira.
-  - Al acabar la gira vuelves al principio, desde cero. Solo te llevas la Libreta (lo que has aprendido de cada rival) y lo que hayas desbloqueado.
-- **[cambiado] Reales por duelo ganado:** 4 el primer secuaz, 5 el segundo, 6 la mano derecha y 10 el jefe. Se suman los de siempre: +1 por envite aceptado y ganado, +1 por farol que cuela y +5 por órdago ganado. Perder un duelo da 2 de consolación.
-- **[cambiado] Ganar al jefe:** eliges un premio entre tres (un compañero, el objeto raro de ese jefe, o +1 de Honra si te falta) y se abre la siguiente arena.
-- **[nuevo] Idea: pasar de largo.** Antes de los niveles 1 y 2 puedes saltarte al secuaz: no juegas, no cobras y no arriesgas Honra, pero te llevas un favor (un objeto de un uso, gratis y al azar). Es lo de saltarse una ciega en Balatro: ganas tiempo y un regalo, pero pierdes los reales.
+  - Perder contra el jefe te quita 1 de Honra y **vuelves a jugar contra él** hasta que le ganes o te quedes sin Honra. **[nuevo]** Antes de repetir puedes pasar por una parada, por ejemplo la taberna, para prepararte mejor.
+  - Al quedarte sin Honra vuelves al principio, desde cero. Solo te llevas la Libreta (lo que has aprendido de cada rival) y lo que hayas desbloqueado.
+- **Reales por duelo ganado:** 4 el primer secuaz, 5 el segundo, 6 la mano derecha y 10 el jefe. Se suman los de siempre: +1 por envite aceptado y ganado, +1 por farol que cuela y +5 por órdago ganado. Perder un duelo da 2 de consolación.
+- **Ganar al jefe:** eliges un premio entre tres (un compañero, el objeto raro de ese jefe, o +1 de Honra si te falta) y se abre la siguiente arena.
+- **[cambiado] Fuera la idea de «pasar de largo»:** si te pudieras saltar a los secuaces, no compensaría jugar contra ellos.
 
 ### El mapa
 
-Como las arenas de Clash Royale: un camino en vertical que se va subiendo con el dedo. Cada arena es un tramo con su paisaje y cuatro paradas en el camino, una por nivel. El jefe está arriba del todo, con su retrato. Los niveles ganados quedan marcados y los perdidos, con la Honra rota. La arena siguiente está tapada por la niebla hasta que ganas al jefe.
+Como las arenas de Clash Royale: un camino en vertical que se va subiendo con el dedo. Cada arena es un tramo con su paisaje y cuatro paradas en el camino, una por nivel. El jefe está arriba del todo, con su retrato. Los niveles ganados quedan marcados y, si pierdes contra el jefe, su parada se queda abierta hasta que le ganes. La arena siguiente está tapada por la niebla hasta entonces.
 
 ## 2. Las arenas
 
-| Arena | Paisaje | Jefe | Lo que enseña |
+| Arena | Dónde | Jefe | Lo que enseña |
 | --- | --- | --- | --- |
-| 1. Tierra de Campos | Adobe, palomares, trigo, sol de tarde | Ruperto, el Herrero | Los tics existen y leerlos funciona |
-| 2. Montaña Palentina | Piedra, nieve, chimenea, lana | Doña Engracia, la Viuda | No siempre se gana engañando: cobra poco a poco y respeta sus envites |
-| 3. Ribera del Duero | Bodegas bajo tierra, barricas, velas | Don Anselmo, el Cura | El rival se acuerda de tus faroles: dosifícalos |
-| 4. Feria de ganado | Carpa, paja, mulas, bullicio | Fulgencio, el Tratante | No todos los tics significan algo: atrévete a querer |
-| 5. Casino de la capital | Terciopelo, lámparas, humo | Don Bonifacio, el Cacique | Todo lo aprendido junto |
+| 1. La facultad | La cafetería de una universidad pública | Chema, el Repetidor | Los tics existen, y cómo va el marcador cambia cómo juega el rival |
+| 2. El bar | El bar de toda la vida | Manolo, el Rey de la barra | Los adultos farolean: atrévete a querer |
+| 3. La Montaña Palentina | La casa de una familia de pueblo | El abuelo Teodoro | Tus faroles se saben, y las señas se aprenden… y mienten |
+| 4. Las fiestas del pueblo | El concurso de mus de las fiestas | El tío Paulino, el Campeón | Cuando no se dejan leer, juega con tus cartas y cuida tu Cara |
+| 5. El casino de la capital | Terciopelo, lámparas y humo | Don Bonifacio, el Cacique | Todo lo aprendido junto |
+
+**[cambiado]** Las arenas son las que propusiste. **[nuevo]** Los cinco rivales que ya tienen dibujo los he colocado donde encajan por edad y oficio:
+- **Ruperto y Fulgencio, en el bar:** son adultos de unos cuarenta años, y el bar es donde se cierran los tratos.
+- **Doña Engracia y Don Anselmo, en las fiestas:** la viuda que juega el concurso todos los años y el cura que lo organiza.
+- **Don Bonifacio, de jefe del casino.**
+
+Si prefieres que la gira sea toda nueva, ellos se quedan para los duelos sueltos (el modo libre).
 
 **Cómo leer las fichas.** Los números son los cinco parámetros de la IA, de 0 a 10, como en el documento de diseño: **A** agresividad (cuánto envida con buenas cartas), **F** faroleo, **M** miedo al órdago, **Me** memoria (cuánto se acuerda de tus faroles) y **O** ojo (cuánto te pilla). Cada tic dice qué lo provoca y cuántas veces de cada 10 acierta.
 
-Los secuaces son todos **[nuevo]**. Cada uno necesita su hoja de personaje; mientras no la tenga, sale con un marcador.
+Los personajes nuevos necesitan su hoja de personaje; mientras no la tengan, salen con un marcador. De los cinco que ya están en el juego pongo un resumen: su ficha completa está en el documento de diseño.
 
 ---
 
-### Arena 1 · Tierra de Campos
+### Arena 1 · La facultad [cambiado]
 
-Llanura de trigo, palomares de adobe y sol de tarde. Aquí todos juegan claro: lo que llevan se les ve en la cara. Es la arena para aprender que los tics existen.
+La cafetería de una universidad pública en una ciudad castellana (Salamanca, por ejemplo): piedra dorada, mesas de formica, la máquina de café y el tablón lleno de carteles. Aquí es donde casi todos los chavales aprenden a jugar al mus, entre clase y clase o en vez de ir a clase. Son novatos y se les ve todo: es la arena para aprender que los tics existen.
 
-#### Nivel 1 · Paco, el Mozo de la era
+#### Nivel 1 · Lucía, la de primero [nuevo]
 
-- **Aspecto:** chaval, sombrero de paja, camisa remangada y una espiga en la boca.
-- **Cómo juega:** envida cuando lleva algo y casi nunca farolea. Quiere poco. · A 5 · F 1 · M 3 · Me 1 · O 1
-- **Tic:** mordisquea la espiga más deprisa → lleva pares o mejor (9 de cada 10).
+- **Aspecto:** sudadera de la facultad, mochila, apuntes subrayados con fosforito y un boli en la mano.
+- **Cómo juega:** aprendió ayer. Envida cuando lleva algo, no farolea nunca y quiere poco. · A 4 · F 0 · M 3 · Me 1 · O 1
+- **Tic:** mordisquea el boli → lleva pares o mejor (9 de cada 10).
 - **Manía:** ninguna.
-- **Frase:** «Yo no sé mentir, que me lo dice mi madre.»
+- **Frase:** «¿Los treses eran reyes? Vale, vale, ya me acuerdo.»
 
-#### Nivel 2 · Tomasa, la Palomera
+#### Nivel 2 · Dani, el Tuno [nuevo]
 
-- **Aspecto:** pañuelo a la cabeza, delantal de cuadros y una paloma en el hombro.
-- **Cómo juega:** tranquila. Le encanta cambiar cartas. · A 4 · F 2 · M 4 · Me 2 · O 2
+- **Aspecto:** la capa negra de la tuna llena de cintas de colores y la bandurria apoyada en la silla.
+- **Cómo juega:** alegre y despistado. Le encanta cambiar cartas. · A 4 · F 2 · M 4 · Me 2 · O 2
 - **Tics:**
-  - La paloma se esponja y arrulla → lleva 31 (8 de cada 10).
-  - Se le escapa la risa → lleva duples (8 de cada 10).
+  - Rasguea la bandurria → lleva 31 (8 de cada 10).
+  - Se coloca las cintas de la capa → lleva duples (8 de cada 10).
 - **Manía:** pide mus siempre la primera vez de cada mano. Cortar o no, lo decides tú.
-- **Frase:** «Las palomas siempre vuelven. Las piedras, también.»
+- **Frase:** «Si gano, os canto una ronda. Si pierdo, también.»
 
-#### Nivel 3 · Nicasio, el Aprendiz (mano derecha de Ruperto)
+#### Nivel 3 · Rubén, el colega de la cafetería (mano derecha de Chema) [nuevo]
 
-- **Aspecto:** joven y fornido, tizne en la cara, mandil de cuero pequeño y las tenazas al cinto.
-- **Cómo juega:** imita a su maestro: envida fuerte y quiere los órdagos por orgullo. · A 7 · F 2 · M 3 · Me 1 · O 2
+- **Aspecto:** gorra hacia atrás, chándal y un bocadillo de tortilla a medio comer.
+- **Cómo juega:** lleva un año sin pisar clase, aprendiendo de Chema. Envida fuerte y se crece. · A 6 · F 3 · M 3 · Me 2 · O 2
 - **Tics:**
-  - Se seca el sudor de la frente → lleva pares o mejor (8 de cada 10).
-  - Aprieta el puño → lleva 31 (8 de cada 10).
-- **Manía: «Se pica».** Si pierde 2 lances seguidos, en la mano siguiente te lo quiere todo. Es el enfado de Ruperto en pequeño.
-- **Frase:** «El maestro dice que el mus se gana a martillazos.»
+  - Le da un mordisco al bocadillo → lleva pares o mejor (8 de cada 10).
+  - Se ajusta la gorra → lleva 31 (8 de cada 10).
+- **Manía: «Se crece».** Cuando va ganando por 5 o más, farolea el doble. Es lo de Chema en pequeño.
+- **Frase:** «¿Clase? ¿Qué clase?»
 
-#### Nivel 4 · Ruperto, el Herrero (jefe)
+#### Nivel 4 · Chema, el Repetidor (jefe) [cambiado]
 
+- **Aspecto [nuevo]:** barba de tres días, sudadera gastada, gafas de sol en la cabeza y un café con leche que no se acaba nunca. Lleva ocho años matriculado y no ha pisado un aula.
+- **Cómo juega:** el rey de la cafetería. Envida mucho, farolea a menudo y quiere los órdagos por chulería. · A 7 · F 5 · M 3 · Me 3 · O 3
+- **Tics:**
+  - Se baja las gafas de sol → lleva una mano fuerte (8 de cada 10).
+  - Remueve el café sin parar → está faroleando (7 de cada 10).
+- **Regla [nuevo], «Se viene arriba»:**
+  - Cuando va ganando por 5 o más, se crece (sale *¡CRECIDO!*): farolea el doble y te lo quiere todo.
+  - Cuando va perdiendo por 5 o más, se arruga (*ARRUGADO*): no farolea y casi no quiere.
+  - *Ejemplo: va 12 a 6 y te envida cinco: puede ser un farol, así que quiérelo si llevas algo. Va 4 a 11 y te envida: lleva cartas.*
+- **En la gira [nuevo], «Rubén le avisa»:** si le ganaste a Rubén por 10 piedras o más, Chema empieza el duelo arrugado.
+- **Premio, su objeto raro:** los Apuntes de Chema.
+- **Frase:** «Yo aquí he aprendido más que en clase. Bueno, en clase no he estado.»
+
+---
+
+### Arena 2 · El bar [cambiado]
+
+El bar de toda la vida: barra de zinc, servilletas por el suelo, raciones en la vitrina, la tele con el fútbol y la tragaperras en la esquina. Ahora juegas contra adultos, que mienten mejor que los estudiantes. Aquí se farolea mucho y se ríen del que se raja: se aprende a atreverse a querer.
+
+#### Nivel 1 · Toño, el Camarero [nuevo]
+
+- **Aspecto:** camisa blanca, chaleco negro, el paño al hombro y la bandeja bajo el brazo.
+- **Cómo juega:** echa la partida entre ronda y ronda. Farolea poco. · A 5 · F 2 · M 4 · Me 2 · O 3
+- **Tic:** se echa el paño al hombro → lleva una mano fuerte (8 de cada 10).
+- **Manía: «Que tengo la barra llena».** Corta siempre el mus, para acabar antes.
+- **Frase:** «Echo una mano y vuelvo, que se me acumulan las cañas.»
+
+#### Nivel 2 · Ruperto, el Herrero (ya está en el juego)
+
+- **En el bar:** viene al salir de la fragua.
 - **Cómo juega:** bruto y directo. Envida fuerte, sube mucho y casi nunca farolea. · A 8 · F 3 · M 2 · Me 2 · O 2
 - **Tics:** se rasca la barba (lleva pares o mejor) y se arremanga (lleva 31).
 - **Regla:** si pierde 3 lances seguidos se enfada y durante 2 manos te lo quiere todo.
-- **[nuevo] En la gira, «viene avisado»:** si le ganaste a Nicasio por 10 piedras o más, Ruperto empieza el duelo picado y la primera mano te lo quiere todo.
-- **Premio, su objeto raro:** el Martillo de Ruperto (ver objetos raros).
 - **Frase:** «Aquí se juega como se forja: a golpes.»
+
+#### Nivel 3 · Fulgencio, el Tratante (ya está en el juego; mano derecha de Manolo)
+
+- **En el bar:** aquí es donde cierra los tratos de la feria, y es el compinche de Manolo.
+- **Cómo juega:** mentiroso profesional. Farolea más que nadie y tira órdagos sin nada. · A 7 · F 9 · M 4 · Me 5 · O 6
+- **Tics:** sonríe enseñando el diente de oro (está faroleando), se pone serio y se quita el sombrero (lleva cartas muy buenas) y golpea la vara (falso: no significa nada).
+- **Regla, «Trato»:** una vez por duelo, antes del recuento, te propone retirar los envites queridos y repartiros las piedras. La impar es para él.
+- **Frase:** «Esta mula vale lo que yo diga que vale. Y esta mano, también.»
+
+#### Nivel 4 · Manolo, el Rey de la barra (jefe) [cambiado]
+
+- **Aspecto:** cuarenta y tantos, medio calvo con cuatro pelos peinados de lado y barriga cervecera. **[nuevo]** Polo del equipo del pueblo, cadena de oro, un palillo en la boca y la caña en la mano.
+- **Cómo juega [nuevo]:** fanfarrón. Habla alto, farolea mucho y no soporta que te rajes. · A 7 · F 7 · M 4 · Me 4 · O 5
+- **Tics [nuevo]:**
+  - Se rasca la barriga → lleva una mano fuerte (7 de cada 10).
+  - Se repeina los cuatro pelos → está faroleando (7 de cada 10).
+  - Da un trago a la caña → lleva juego (7 de cada 10).
+- **Regla [nuevo], «¡Se ha rajado!»:** cada vez que le dices «no quiero», todo el bar se ríe y él cobra 1 piedra más. *Ejemplo: te envida dos y no quieres: cobra 2 en vez de 1.* Rajarse sale caro, así que hay que atreverse a querer.
+- **En la gira [nuevo], «Ya le han contado»:** si le dijiste «no quiero» a Fulgencio 3 veces o más, Manolo empieza sabiendo que te rajas y farolea todavía más.
+- **Premio, su objeto raro:** la Jarra de Manolo.
+- **Frase:** «Aquí, el que no quiere, paga la ronda.»
 
 ---
 
-### Arena 2 · Montaña Palentina
+### Arena 3 · La Montaña Palentina: la familia [cambiado]
 
-Piedra, nieve y chimeneas encendidas. Gente paciente y desconfiada que farolea poco y te mira mucho. Aquí se aprende a cobrar poco a poco y a no mirar demasiado.
+Una casa de piedra en un pueblo de montaña: nieve en la ventana, la chimenea encendida y la mesa camilla con el brasero. Juegas contra una familia entera, uno detrás de otro: **la niña pequeña, la madre, el padre y el abuelo.**
 
-#### Nivel 1 · Celedonio, el Leñador
+**[nuevo] Regla de la arena, «En esta casa todo se cuenta»:** los faroles que te pillan pasan de un duelo al siguiente. Si la niña te pilla dos, la madre empieza el duelo sabiéndolo, y así hasta el abuelo. Aquí se aprende a dosificar los faroles.
 
-- **Aspecto:** gorro de lana, barba con escarcha, chaquetón de borrego y el hacha al hombro.
-- **Cómo juega:** prudente. Casi no farolea y le cuesta querer los envites grandes. · A 3 · F 1 · M 7 · Me 2 · O 3
-- **Tic:** se sopla las manos → lleva una mano fuerte en algún lance (8 de cada 10).
-- **Manía:** ninguna.
-- **Frase:** «Aquí arriba, el que se precipita se despeña.»
+**[nuevo] Las señas.** En el mus de parejas, los compañeros se hacen señas para decirse lo que llevan. Esta familia lleva tanto tiempo jugando que las señas se les escapan solas: son sus tics. Cambian algo de un sitio a otro; estas son de las más comunes:
 
-#### Nivel 2 · Doña Pura, la Maestra
+| Seña | Qué quiere decir |
+| --- | --- |
+| Morderse el labio de abajo | Dos reyes o más |
+| Sacar la punta de la lengua | Dos ases o más (los doses cuentan como ases) |
+| Torcer la boca | Medias |
+| Levantar las cejas | Duples |
+| Guiñar un ojo | 31 |
 
-- **Aspecto:** moño, rebeca, gafas en la punta de la nariz y una regla de madera.
-- **Cómo juega:** se fija en todo lo que haces. · A 4 · F 2 · M 6 · Me 4 · O 5
+Quien conozca el mus de verdad las reconocerá. Quien no, las irá aprendiendo en la Libreta: primero con la niña, que las hace fatal, y al final con el abuelo, que también las usa para mentir.
+
+#### Nivel 1 · Martina, la niña [nuevo]
+
+- **Aspecto:** unos ocho años, coletas, jersey de lana y las piernas colgando de la silla.
+- **Cómo juega:** aprendió viendo al abuelo. Juega con lo que lleva y no sabe farolear. · A 4 · F 0 · M 3 · Me 3 · O 2
+- **Tic:** intenta guiñar un ojo, como el abuelo, y cierra los dos → lleva 31 (9 de cada 10).
+- **Manía:** ninguna, aparte de la regla de la casa: todo lo que ve se lo cuenta a su madre.
+- **Frase:** «¡El abuelo me ha enseñado las señas! Ay, que eso no se dice.»
+
+#### Nivel 2 · Pilar, la madre [nuevo]
+
+- **Aspecto:** delantal, moño hecho a prisas, jersey de punto y un trapo de cocina al hombro.
+- **Cómo juega:** paciente y desconfiada. Farolea poco y quiere poco. · A 4 · F 2 · M 6 · Me 5 · O 5
 - **Tics:**
-  - Se sube las gafas → lleva juego (8 de cada 10).
-  - Da golpecitos con la regla → sospecha que faroleas, porque tu Cara está baja (8 de cada 10).
-- **Manía: «Te corrige».** Si la miras más de 3 segundos, te pilla y deja de hacer tics en lo que queda de mano.
-- **Frase:** «A ver, ¿qué se dice? Paso, por favor.»
+  - Se muerde el labio (la seña de dos reyes) → lleva dos reyes o más (8 de cada 10).
+  - Mira de reojo a la niña → sospecha que faroleas, porque tu Cara está baja (8 de cada 10).
+- **Manía: «Aquí no se juega la casa».** No acepta un órdago en la primera mano.
+- **Frase:** «En esta casa se juega limpio. Casi siempre.»
 
-#### Nivel 3 · Fermina, la Cuñada (mano derecha de Doña Engracia)
+#### Nivel 3 · Tomás, el padre (mano derecha del abuelo) [nuevo]
 
-- **Aspecto:** de negro como su cuñada, chal de lana, un ovillo y las agujas de punto.
-- **Cómo juega:** como Doña Engracia, pero menos fina: no farolea y quiere poco. · A 3 · F 1 · M 8 · Me 5 · O 6
-- **Tics:**
-  - Tira del hilo del ovillo → lleva una mano fuerte (8 de cada 10).
-  - Cuenta los puntos en voz baja → lleva 31 (7 de cada 10).
-- **Manía:** no acepta un órdago en la primera mano. Doña Engracia aguanta hasta la tercera.
-- **Frase:** «Mi cuñada ya me ha contado cómo juegas.»
+- **Aspecto:** boina, chaleco de lana, manos enormes de ganadero y cara de no haber dicho tres palabras seguidas.
+- **Cómo juega:** callado y sólido, como su padre. · A 5 · F 4 · M 5 · Me 6 · O 6
+- **Tics (señas):**
+  - Levanta las cejas → lleva duples (8 de cada 10).
+  - Saca la punta de la lengua → lleva dos ases o más (7 de cada 10).
+- **Manía: «Señas de mentira».** Una de cada cuatro señas que hace es falsa, para despistarte. Anuncia lo que hace el abuelo.
+- **Frase:** «Mi padre me enseñó dos cosas: a callar y a envidar.»
 
-#### Nivel 4 · Doña Engracia, la Viuda (jefa)
+#### Nivel 4 · El abuelo Teodoro (jefe) [cambiado]
 
+- **Aspecto [nuevo]:** más de ochenta años, boina calada, chaqueta de pana, garrota y un palillo; sentado junto a la chimenea, en su silla de siempre.
+- **Cómo juega [nuevo]:** setenta años de mus a la espalda. Se acuerda de todo. · A 6 · F 5 · M 6 · Me 9 · O 7
+- **Tics [nuevo]:** las cinco señas de la tabla. Lleva tanto tiempo haciéndoselas a su pareja que se le escapan solas (8 de cada 10 cada una).
+- **Regla [nuevo], «Señas de toda la vida»:** desde que alguno de los dos llega a 10 piedras, también hace señas falsas para engañarte: la mitad de sus señas pasan a ser mentira. Y, por la regla de la casa, sabe todos los faroles que te ha pillado la familia.
+- **Premio, su objeto raro:** la Garrota del abuelo.
+- **Frase:** «Llevo setenta años haciendo señas. Algunas hasta son verdad.»
+
+---
+
+### Arena 4 · Las fiestas del pueblo [cambiado]
+
+Las fiestas del pueblo: farolillos, casetas, la orquesta al fondo, olor a churros y, bajo la carpa, el concurso de mus de las fiestas. Aquí juegas contra los que llevan toda la vida jugándolo: casi no se dejan leer y a ti te leen enseguida. Se aprende a cobrar poco a poco y a cuidar la Cara.
+
+#### Nivel 1 · Doña Engracia, la Viuda (ya está en el juego)
+
+- **En las fiestas:** juega el concurso todos los años desde que enviudó.
 - **Cómo juega:** paciente y desconfiada. Casi nunca farolea; cuando envida, lleva cartas. · A 3 · F 1 · M 9 · Me 6 · O 7
 - **Tics:** pasa las cuentas del rosario más deprisa (lleva una mano fuerte) y te mira fijamente (sospecha que faroleas).
 - **Reglas:** no acepta un órdago antes de la tercera mano. Si la miras más de 2 segundos, se da cuenta 7 de cada 10 veces, se ofende y deja de hacer tics en lo que queda de mano y en la siguiente.
-- **[nuevo] En la gira, «lo sabe por su cuñada»:** si Fermina te pilló mirándola, Doña Engracia empieza el duelo ofendida.
-- **Premio, su objeto raro:** el Rosario de Doña Engracia.
 - **Frase:** «Treinta años jugando con mi difunto. A mí no me la das.»
 
----
+#### Nivel 2 · Don Anselmo, el Cura (ya está en el juego)
 
-### Arena 3 · Ribera del Duero
-
-Bodegas bajo tierra, barricas y velas. Aquí se acuerdan de todo: si faroleas mucho, dejan de creerte. Se aprende a dosificar los faroles.
-
-#### Nivel 1 · Eusebio, el Monaguillo
-
-- **Aspecto:** chaval con sotana corta, roquete blanco y una campanilla.
-- **Cómo juega:** nervioso. Farolea poco y quiere bastante. · A 4 · F 2 · M 4 · Me 4 · O 3
-- **Tic:** se le escapa la campanilla → lleva duples (8 de cada 10).
-- **Manía: «Se chiva».** Si te pilla un farol, se lo cuenta al cura, y empiezas el duelo con Don Anselmo con la penitencia puesta.
-- **Frase:** «No se lo diga al padre, que me castiga.»
-
-#### Nivel 2 · Cosme, el Bodeguero
-
-- **Aspecto:** boina, mandil manchado de vino, nariz colorada y un porrón.
-- **Cómo juega:** alegre, y cada vez más farolero. · A 5 · F 5 · M 4 · Me 5 · O 4
-- **Tics:**
-  - Huele el corcho → lleva juego (8 de cada 10). En la Ribera, el vino es el juego: Don Anselmo también bebe cuando lo lleva.
-  - Se le ponen los mofletes colorados → está faroleando (7 de cada 10).
-- **Manía: «Cuanto más bebe, peor juega».** Echa un trago en cada mano: su Ojo baja 1 y su Faroleo sube 1. Al principio cuesta ganarle; al final, se le ve todo.
-- **Frase:** «Un vino de la Ribera y una buena mano. Lo demás, sobra.»
-
-#### Nivel 3 · Doña Rosario, el ama del cura (mano derecha de Don Anselmo)
-
-- **Aspecto:** delantal blanco, moño, mangas remangadas y un cucharón.
-- **Cómo juega:** lleva la cuenta de todo. Como Don Anselmo, deja de creerte si le faroleas. · A 5 · F 4 · M 5 · Me 7 · O 5
-- **Tics:**
-  - Se seca las manos en el delantal → lleva duples (8 de cada 10).
-  - Suspira → está faroleando (7 de cada 10).
-- **Manía:** envida siempre a la Grande cuando habla sin envite delante. Es como Don Anselmo con la Chica, pero al revés.
-- **Frase:** «En esta casa se reza, se guisa y se juega al mus. Por ese orden.»
-
-#### Nivel 4 · Don Anselmo, el Cura (jefe)
-
+- **En las fiestas:** es quien organiza el concurso.
 - **Cómo juega:** equilibrado y con buena memoria: si le faroleas dos veces, deja de creerte. · A 5 · F 5 · M 5 · Me 7 · O 5
 - **Tics:** bebe un sorbo de vino (lleva juego), mira al cielo (está faroleando) y junta las manos (lleva duples).
 - **Manía:** envida siempre a la Chica, lleve lo que lleve.
 - **Regla, «Penitencia»:** si te pilla un farol, tu próximo envite le paga 1 piedra más si lo gana él.
-- **En la gira:** si Eusebio se chivó, empiezas con la penitencia puesta (ver Eusebio).
-- **Premio, su objeto raro:** la Bula de Don Anselmo.
 - **Frase:** «Dios lo ve todo, hijo. Yo, casi todo.»
 
----
+#### Nivel 3 · Don Severiano, el Maestro jubilado (mano derecha del tío Paulino) [nuevo]
 
-### Arena 4 · Feria de ganado
-
-Carpa, paja, mulas y mucho ruido. Aquí todos mienten, y algunos tics no quieren decir nada. Se aprende a atreverse a querer.
-
-#### Nivel 1 · Melquíades, el Charlatán
-
-- **Aspecto:** bombín, bigote engominado, chaleco de cuadros y un frasco de elixir.
-- **Cómo juega:** farolea mucho y envida fuerte. · A 6 · F 7 · M 4 · Me 3 · O 3
+- **Aspecto:** chaqueta de punto, corbata, gafas en la punta de la nariz y un bigote blanco bien recortado.
+- **Cómo juega:** metódico y observador. Lleva cuarenta años perdiendo la final contra el tío Paulino y ha aprendido de él a leer a la gente. · A 5 · F 4 · M 6 · Me 7 · O 8
 - **Tics:**
-  - Se atusa el bigote → está faroleando (8 de cada 10).
-  - Agita el frasco → nada: es un tic falso, sale 1 de cada 7 veces sin motivo. Es el primer tic falso de la gira.
-- **Manía:** ninguna.
-- **Frase:** «¡Un elixir que cura el reuma, la calvicie y las malas manos!»
+  - Se sube las gafas → lleva juego (7 de cada 10).
+  - Se atusa el bigote → está faroleando (7 de cada 10).
+- **Manía: «Te lee».** Con él se te nota antes: te tiembla el pulso con la Cara por debajo de 10, no solo a 0. Anuncia lo del tío Paulino.
+- **Frase:** «Cuarenta años de maestro. Sé cuándo alguien no ha hecho los deberes.»
 
-#### Nivel 2 · Doña Fausta, la Churrera
+#### Nivel 4 · El tío Paulino, el Campeón de las fiestas (jefe) [cambiado]
 
-- **Aspecto:** cofia y delantal blancos, brazos fuertes y el perol de churros detrás.
-- **Cómo juega:** lista y regateadora. · A 5 · F 6 · M 5 · Me 4 · O 5
-- **Tics:**
-  - Se limpia el aceite de las manos → lleva una mano fuerte (7 de cada 10).
-  - Se ríe a carcajadas → está faroleando (6 de cada 10).
-- **Manía: «Regatea».** Una vez por duelo, cuando le envidas 4 o más, te propone dejarlo en la mitad. Si aceptas, queda querido a la mitad; si no, decide como siempre. *Ejemplo: le envidas seis a la Grande y te dice «¿lo dejamos en tres?».* Es el trato de Fulgencio en pequeño.
-- **Frase:** «A dos reales la docena, y a ti te los dejo en uno y medio.»
-
-#### Nivel 3 · Tiburcio, el Gancho (mano derecha de Fulgencio)
-
-- **Aspecto:** gorra de visera, chaqueta de pana y un palillo en la boca.
-- **Cómo juega:** el compinche de Fulgencio. Farolea casi tanto como él. · A 7 · F 8 · M 4 · Me 5 · O 6
-- **Tics:**
-  - Se rasca la oreja → lleva una mano fuerte (7 de cada 10).
-  - Mira de reojo hacia la carpa → nada, es un tic falso (sale 1 de cada 5 veces).
-- **Manía: «Habla por los codos».** A veces dice en voz alta lo que lleva («¡Menudos pares llevo!») y la mitad de las veces es mentira.
-- **Frase:** «Yo a ese señor del sombrero no le conozco de nada.»
-
-#### Nivel 4 · Fulgencio, el Tratante (jefe)
-
-- **Cómo juega:** mentiroso profesional. Farolea más que nadie y tira órdagos sin nada. · A 7 · F 9 · M 4 · Me 5 · O 6
-- **Tics:** sonríe enseñando el diente de oro (está faroleando), se pone serio y se quita el sombrero (lleva cartas muy buenas) y golpea la vara (falso).
-- **Regla, «Trato»:** una vez por duelo, antes del recuento, te propone retirar los envites queridos y repartiros las piedras. La impar es para él.
-- **[nuevo] En la gira, «el gancho le ha contado»:** si aceptaste el regateo de Doña Fausta, Fulgencio te propone el trato dos veces en vez de una.
-- **Premio, su objeto raro:** la Vara de Fulgencio.
-- **Frase:** «Esta mula vale lo que yo diga que vale. Y esta mano, también.»
+- **Aspecto [nuevo]:** noventa años, chiquito y arrugado, boina, chaqueta de pana, la medalla del concurso colgada al cuello y un vaso de anís.
+- **Cómo juega [nuevo]:** lleva toda la vida ganando este concurso. Casi no se le ve nada y él lo ve todo. · A 6 · F 6 · M 7 · Me 8 · O 9
+- **Tic [nuevo]:** solo uno: se le escapa media sonrisa → lleva duples o 31 (9 de cada 10).
+- **Regla [nuevo], «Cara de piedra»:** casi no hace tics (solo ese, y solo con lo mejor), y te lee a ti: con él se te nota con la Cara por debajo de 20.
+- **En la gira [nuevo], «Se conocen de toda la vida»:** Don Severiano le cuenta lo que ha visto. Si con él se te notó, empiezas el duelo con 10 menos de Cara.
+- **Premio, su objeto raro:** la Baraja del concurso.
+- **Frase:** «Siéntate, chaval, que no muerdo. Pero te voy a ganar.»
 
 ---
 
-### Arena 5 · Casino de la capital
+### Arena 5 · El casino de la capital
 
 Terciopelo, lámparas y humo de puro. Aquí juegan los que lo saben todo de ti. Es el examen final: hay que usar todo lo aprendido.
 
@@ -243,7 +267,7 @@ Terciopelo, lámparas y humo de puro. Aquí juegan los que lo saben todo de ti. 
 - **Tics:**
   - Se abanica deprisa → lleva una mano fuerte (7 de cada 10).
   - Cierra el abanico de golpe → está faroleando (7 de cada 10).
-- **Manía: «Cambia de copla».** Desde que alguno de los dos llega a 10 piedras, sus tics significan lo contrario: abanicarse deprisa pasa a ser farol, y cerrar el abanico, mano fuerte. Anuncia lo que hace Don Bonifacio, que cambia de tics a mitad del duelo.
+- **Manía: «Cambia de copla».** Desde que alguno de los dos llega a 10 piedras, sus tics significan lo contrario. Anuncia lo de Don Bonifacio, que cambia de tics a mitad del duelo.
 - **Frase:** «Ay, caballero, que me va usted a sacar los colores.»
 
 #### Nivel 3 · Don Ceferino, el Secretario (mano derecha de Don Bonifacio)
@@ -253,10 +277,10 @@ Terciopelo, lámparas y humo de puro. Aquí juegan los que lo saben todo de ti. 
 - **Tics:**
   - Moja la pluma en el tintero → lleva juego (7 de cada 10).
   - Se coloca las gafas → está faroleando (7 de cada 10).
-- **Manía: «Lleva las cuentas».** Empieza el duelo acordándose de tus faroles de toda la gira, no solo de ese duelo. Si has faroleado mucho, no te cree desde la primera mano. Anuncia que Don Bonifacio lee tu Libreta.
+- **Manía: «Lleva las cuentas».** Empieza el duelo acordándose de tus faroles de toda la gira, no solo de ese duelo. Anuncia que Don Bonifacio lee tu Libreta.
 - **Frase:** «Don Bonifacio quiere saber cuánto lleva usted ganado. Por curiosidad.»
 
-#### Nivel 4 · Don Bonifacio, el Cacique (jefe final)
+#### Nivel 4 · Don Bonifacio, el Cacique (jefe final; ya está en el juego)
 
 - **Cómo juega:** lo sabe todo de ti y adapta su estilo al tuyo. · A 6 · F 6 · M 6 · Me 10 · O 9
 - **Tics:** empieza con los del Herrero; a las 10 piedras cambia a los del Cura; a las 15 ya no tiene tics, pero su puro echa más humo cuando lleva cartas buenas.
@@ -269,7 +293,7 @@ Terciopelo, lámparas y humo de puro. Aquí juegan los que lo saben todo de ti. 
 
 ---
 
-### [nuevo] Ideas para más arenas
+### Ideas para más arenas
 
 Para más adelante, si se quiere una gira más larga o un modo infinito como el de Balatro:
 
@@ -284,23 +308,31 @@ Entre duelo y duelo eliges una de las tres.
 
 ### La taberna
 
-**[nuevo] Cómo funciona,** al estilo de la tienda de Balatro:
+Funciona como la tienda de Balatro:
 
 - En cada visita hay **4 cosas a la venta**: 2 de un uso (bebidas o jugarretas), 1 amuleto o baraja y, una de cada tres veces, un compañero.
 - **«Otra ronda»:** cambia lo que hay a la venta. La primera vez cuesta 2 reales y cada vez, 1 más.
 - **Vender:** cualquier objeto se vende por la mitad de lo que costó, redondeando hacia abajo.
-- **Huecos:** 3 para objetos de un uso, 4 para amuletos, 1 para la baraja y 1 para el compañero. Si están llenos, hay que vender algo para comprar.
+- **[cambiado] Huecos:**
+  - **2** para bebidas y jugarretas.
+  - **2** para amuletos y objetos raros.
+  - **1** para la baraja.
+  - **1** para el compañero.
+
+  Si están llenos, hay que vender algo para comprar. Con tan pocos huecos, cada compra es una decisión.
 - La tabernera atiende con su frase («¿Qué va a ser?»). Su arte está pendiente.
 
 ### La plaza
 
-**[nuevo] Ideas de cosas que pasan** (sale una al azar):
+Sale una cosa al azar:
 
 - **Un forastero apuesta contigo:** te juegas 5 reales a que ganas el próximo duelo sin perder ni un lance de Grande. Si lo consigues, cobras 15.
 - **Fiesta patronal:** en el próximo duelo, los dos empezáis con 5 piedras. Duelo más corto y más loco.
-- **Un timador** te vende un amuleto a mitad de precio. La mitad de las veces es falso y no hace nada.
-- **El cura de paso** te bendice: tu próximo farol pillado no te baja la Cara.
+- **[cambiado] Un timador** te vende un amuleto a mitad de precio. Uno de cada tres es falso: en cuanto te lo da, se rompe y desaparece (y los reales, con él).
+- **[cambiado] Una monja te da su bendición:** +1 de Honra, aunque ya tengas las tres (puedes llegar a 4). Sale la mitad de veces que las demás, y si te sale una vez, ya no vuelve a salir en esa gira; solo cuando empiezas otra.
 - **Una partida en la calle:** una mano suelta contra un vecino. Si la ganas, 3 reales; si la pierdes, nada.
+
+*(Quito la idea del cura que te bendecía: ahora hace lo mismo la Medalla de la Virgen.)*
 
 ### La era
 
@@ -310,29 +342,29 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 
 | Tipo | Qué son | Duración | Huecos |
 | --- | --- | --- | --- |
-| Bebidas | Te ayudan a ti | Un uso, durante un duelo | 3, compartidos con las jugarretas |
-| **[nuevo]** Jugarretas | Fastidian al rival | Un uso, durante un duelo | Los mismos 3 |
-| Amuletos | Pasivos; unos te ayudan y otros van contra el rival | Toda la gira | 4 |
+| Bebidas | Te ayudan a ti | Un uso, durante un duelo | **[cambiado]** 2, compartidos con las jugarretas |
+| Jugarretas | Fastidian al rival | Un uso, durante un duelo | Los mismos 2 |
+| Amuletos | Pasivos; unos te ayudan y otros van contra el rival | Toda la gira | **[cambiado]** 2, compartidos con los objetos raros |
+| Objetos raros | El premio de cada jefe | Toda la gira | Los mismos 2 (salvo la Baraja del concurso, que va en el de baraja) |
 | Barajas | Cambian la baraja | Toda la gira | 1 |
-| **[nuevo]** Objetos raros | El premio de cada jefe | Toda la gira | Ocupan un hueco de amuleto |
 
 ### Bebidas (a tu favor)
 
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
-| Chato de vino | El rival hace sus tics con más claridad durante 3 manos | 3 |
+| **[cambiado]** Chato de vino | El rival se va de la lengua: nada más bebérselo, dice en voz alta qué mano lleva (*«¡Llevo dos reyes, un caballo y un cinco!»*). Vale para la mano en que lo usas | 4 |
 | Orujo | +15 de Cara al momento | 4 |
 | Café de puchero | Una ronda de mus extra en la mano actual | 3 |
-| Gaseosa | Repites tu última decisión de «quiero» o «no quiero» (la deshaces y decides otra vez, antes de que se vean las cartas) | 6 |
-| **[nuevo]** Copa de anís | En esta mano ganas los empates, aunque no seas mano | 3 |
-| **[nuevo]** Agua del botijo | Se te quita el «se te nota» durante 3 manos | 2 |
-| **[nuevo]** Caldo de la abuela | Si pierdes este duelo, no pierdes Honra. No vale contra el jefe | 8 |
+| **[cambiado]** Gaseosa | La que rebaja el vino… y lo que pierdes. Después de ver las cartas en el recuento, si has perdido un envite que tú quisiste, haces como si hubieras dicho «no quiero»: pagas lo del «no quiero» en vez de todo lo apostado. No vale para órdagos. *Ejemplo: quisiste un envite de ocho a la Grande y en el recuento ves que el rival lleva tres reyes: con la gaseosa pagas 1 en vez de 8* | 6 |
+| Copa de anís | En esta mano ganas los empates, aunque no seas mano | 3 |
+| Agua del botijo | Se te quita el «se te nota» durante 3 manos | 2 |
+| **[cambiado]** Caldo de la abuela | Si el rival llega a 20, el duelo no se acaba: se juega hasta 30, así que todavía puedes remontar (o no). No vale si pierdes por un órdago | 8 |
 
-### [nuevo] Jugarretas (contra el rival)
+### Jugarretas (contra el rival)
 
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
-| Invitar a una ronda | El rival rechaza tu próximo envite, lleve lo que lleve (estaba en las bebidas) | 5 |
+| Invitar a una ronda | El rival rechaza tu próximo envite, lleve lo que lleve | 5 |
 | Darle conversación | El rival se distrae: en esta mano no puede tirar órdago | 4 |
 | Pisotón por debajo de la mesa | En esta mano el rival no puede subir: solo quiere o no quiere | 4 |
 | Silla coja | En la mano siguiente, el rival pierde la mano: la mano eres tú | 3 |
@@ -346,19 +378,19 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Boina de la suerte | Ganas los empates aunque no seas mano | 8 |
 | Navaja de Albacete | Los órdagos que ganas dan +1 de Honra (máximo 3) | 12 |
 | Pañuelo de hierbas | Ves si el rival tiene pares antes de que lo declare | 9 |
-| Reloj de bolsillo | Los rivales tardan más en decidir y sus tics duran más | 7 |
+| **[cambiado]** Reloj de bolsillo | Puedes mirar al rival el doble de tiempo sin que se dé cuenta, y sus tics duran más. *Con Doña Engracia aguantas 4 segundos mirándola antes de que se ofenda, en vez de 2* | 7 |
 | Gafas de culo de vaso | +1 nota automática en la Libreta por duelo | 6 |
-| Medalla de la Virgen | **Pendiente.** Descartada tal como estaba. Propuesta: la primera vez en cada duelo que te pillan un farol, tu Cara no baja | 10 |
-| **[nuevo]** Hucha de barro | Al acabar cada arena, +1 real por cada 5 que tengas ahorrados (máximo +5). *Ejemplo: llegas al final de la arena con 23 reales y cobras 4* | 8 |
-| **[nuevo]** Yesquero | Cuando tiras un órdago y el rival no lo quiere, cobras 2 piedras más | 9 |
+| **[cambiado]** Medalla de la Virgen | La primera vez en cada duelo que te pillan un farol, tu Cara no baja | 9 |
+| Hucha de barro | Al acabar cada arena, +1 real por cada 5 que tengas ahorrados (máximo +5). *Ejemplo: llegas al final de la arena con 23 reales y cobras 4* | 8 |
+| Yesquero | Cuando tiras un órdago y el rival no lo quiere, cobras 2 piedras más | 9 |
 
-### [nuevo] Amuletos contra el rival
+### Amuletos contra el rival
 
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
-| Ristra de ajos | Ahuyenta los tics falsos: los rivales que los tienen (Melquíades, Tiburcio, Fulgencio) los hacen la mitad de veces | 7 |
-| Gorra calada | No se te ve la cara: los rivales tienen 3 menos de Ojo (te pillan menos cuando les miras y cuando haces trampas con el Tahúr) | 8 |
-| Carta del gobernador | Los jefes pierden su regla especial: Ruperto no se enfada, Doña Engracia acepta órdagos desde la primera mano, Don Anselmo no pone penitencia, Fulgencio no propone tratos y Don Bonifacio ni tiene casa ni cambia cartas. Es el más caro de la taberna | 15 |
+| **[cambiado]** Ristra de ajos | Los rivales no hacen tics falsos: Fulgencio deja de golpear la vara, y en la familia nadie hace señas de mentira (ni Tomás ni el abuelo) | 7 |
+| **[cambiado]** Gorra calada | No se te ve la cara: los rivales tienen 3 menos de Ojo (te pillan menos cuando les miras y cuando haces trampas con el Tahúr) | 7 |
+| Carta del gobernador | Los jefes pierden su regla especial: Chema ni se crece ni se arruga, Manolo no cobra de más por tus «no quiero», el abuelo no hace señas falsas, el tío Paulino hace sus tics como cualquiera y no te lee antes de tiempo, y Don Bonifacio ni tiene casa ni cambia cartas. Es el más caro de la taberna | 15 |
 
 ### Barajas
 
@@ -368,20 +400,20 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Baraja de 4 reyes | Se juega a 4 reyes: los treses y los doses valen lo suyo. Más difícil, pero cobras un 50 % más de reales | 10 |
 | Baraja de feria | Una carta comodín por mazo que vale lo que tú elijas al enseñarla | 18 |
 
-### [nuevo] Objetos raros (el premio de cada jefe)
+### Objetos raros (el premio de cada jefe) [cambiado]
 
-No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges como premio.
+No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges como premio. **[nuevo]** Son nuevos, porque los jefes son otros.
 
 | Objeto | De quién | Qué hace |
 | --- | --- | --- |
-| El Martillo de Ruperto | Ruperto | Una vez por duelo, das un golpe en la mesa al envidar: si la mano del rival no gana al menos 6 de cada 10 veces, no lo quiere |
-| El Rosario de Doña Engracia | Doña Engracia | Una vez por duelo, al empezar un lance, sabes si el rival lleva una mano fuerte en él |
-| La Bula de Don Anselmo | Don Anselmo | Tienes bula: tus faroles pillados no cuentan para la memoria del rival, así que los que se acuerdan te siguen creyendo. *Podría sustituir a la Medalla de la Virgen* |
-| La Vara de Fulgencio | Fulgencio | Una vez por duelo propones tú el trato antes del recuento, y la impar es para ti |
+| Los Apuntes de Chema | Chema | Están en blanco, pero detrás tiene apuntados los tics de media cafetería: una vez por duelo, cuando el rival hace un tic, te dice al momento qué significa |
+| La Jarra de Manolo | Manolo | Su regla, a tu favor: cuando el rival te dice «no quiero», cobras 1 piedra más |
+| La Garrota del abuelo | El abuelo Teodoro | Una vez por duelo das un golpe con ella y el rival, del susto, hace la seña de lo mejor que lleva. Esa no miente |
+| La Baraja del concurso | El tío Paulino | Una baraja que él conoce de memoria (va en el hueco de baraja): una vez por mano, al descartarte, ves dos cartas del mazo y eliges cuál te quedas |
 
 ## 5. Compañeros
 
-**[cambiado] Cómo funcionan:**
+**Cómo funcionan:**
 
 - **Solo uno a la vez.** Se sienta a tu lado y te ayuda con señas y trucos. No juega cartas.
 - **Empiezas la gira eligiendo uno** de entre los que tienes desbloqueados.
@@ -393,14 +425,19 @@ No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges 
 | El Pastor | La Libreta se rellena el doble de rápido | Te enseña una carta del rival (1) | Lectura | Desde el principio | 8 |
 | La Tabernera | +2 reales por duelo ganado | Si ganas el próximo órdago, cobras el triple de reales (1) | Economía y órdagos | Desde el principio | 8 |
 | El Tahúr | Una ronda de mus extra por mano | Cambias en secreto la carta que quieras por un rey del mazo. Si el rival tiene mucho Ojo y te pilla, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (2) | Riesgo y trampas | Ganar 3 faroles en un mismo duelo | 12 |
-| El Abuelo | Los faroles pillados te quitan la mitad de Cara | «Ya me lo sé»: te dice si el rival lleva juego o no (1) | Farolear sin miedo | Llegar a la Ribera del Duero | 10 |
+| **[cambiado]** El Jubilado (antes, el Abuelo) | Los faroles pillados te quitan la mitad de Cara | «Ya me lo sé»: te dice si el rival lleva juego o no (1) | Farolear sin miedo | Llegar a la Montaña Palentina | 10 |
 | La Moza del Molino | Empiezas cada duelo con 2 piedras | Distrae al rival: no hace tics durante una mano, pero tampoco te lee a ti (2) | Agresivo y rápido | Ganar un duelo sin perder ningún lance | 10 |
 | El Sacristán | Ves cuándo el rival va a farolear (el retrato se oscurece un instante), con un 60 % de acierto | Repites el reparto de una mano (1) | Defensivo | Ganar a Don Anselmo | 12 |
 | El Veterano | Tus envites aceptados y ganados dan +1 piedra | «Órdago a la grande»: si llevas dos reyes (cualesquiera: los treses son reyes), tu órdago a la Grande no se puede rechazar (1) | Golpes grandes | Ganar 10 órdagos en total | 14 |
 | El Forastero | La Cara nunca baja de 30 | Cambia el lance en el que se juega el órdago después de que el rival lo acepte (1) | Caos | Completar una gira | 15 |
-| **[nuevo]** La Cotilla | Al empezar cada duelo te cuenta un tic del rival y te lo apunta en la Libreta | «¿Te has enterado?»: le cuenta al rival un chisme falso sobre ti y se olvida de tus faroles de este duelo (1) | Lectura y faroleo | Apuntar 10 tics en la Libreta | 10 |
-| **[nuevo]** El Alguacil | Delante de él no hay trampas: si Don Bonifacio cambia una carta, le pillas siempre (+5 piedras) | «¡Alto ahí!»: en esta mano el rival no puede subir ni tirar órdago (1) | Control del rival | Ganar a Fulgencio sin aceptarle ningún trato | 12 |
-| **[nuevo]** El Dulzainero | Tus órdagos van con redoble: el rival les tiene más miedo (Miedo al órdago +2) | «Una jota»: en esta mano, los tics del rival salen siempre que tienen motivo (2) | Presión y órdagos | Ganar 3 órdagos en una misma gira | 11 |
+| La Cotilla | Al empezar cada duelo te cuenta un tic del rival y te lo apunta en la Libreta | «¿Te has enterado?»: le cuenta al rival un chisme falso sobre ti y se olvida de tus faroles de este duelo (1) | Lectura y faroleo | Apuntar 10 tics en la Libreta | 10 |
+| El Alguacil | Delante de él no hay trampas: si Don Bonifacio cambia una carta, le pillas siempre (+5 piedras) | «¡Alto ahí!»: en esta mano el rival no puede subir ni tirar órdago (1) | Control del rival | Ganar a Fulgencio sin aceptarle ningún trato | 12 |
+| El Dulzainero | Tus órdagos van con redoble: el rival les tiene más miedo (Miedo al órdago +2) | «Una jota»: en esta mano, los tics del rival salen siempre que tienen motivo (2) | Presión y órdagos | Ganar 3 órdagos en una misma gira | 11 |
+
+**[cambiado] Lo que he cambiado en los compañeros** por las arenas nuevas:
+- **El Abuelo pasa a llamarse el Jubilado**, para que no se confunda con el abuelo Teodoro, el jefe de la familia. Hace lo mismo.
+- **Se desbloquea al llegar a la Montaña Palentina**, porque la Ribera del Duero ya no está en la gira.
+- **El resto se queda igual.** Como ahora solo hay dos huecos de amuleto, el compañero pesa más en cada gira, y por eso no he tocado sus precios.
 
 **Los que más fastidian al rival:** la Moza del Molino, el Alguacil, el Dulzainero y la Cotilla.
 
@@ -410,7 +447,10 @@ No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges 
 - **La Tabernera + la Navaja de Albacete o el Yesquero:** todo a los órdagos.
 - **El Pastor o la Cotilla + las Gafas de culo de vaso:** la Libreta se llena enseguida.
 - **El Dulzainero + el Yesquero:** tus órdagos asustan más y, cuando no te los quieren, cobras 2 piedras más.
-- **El Abuelo + Hacerle la pelota:** faroleas sin miedo y, cuando llevas cartas, te lo quieren todo.
+- **El Jubilado + la Medalla de la Virgen:** casi no pierdes Cara por farolear.
+- **[nuevo] La Cotilla en la familia:** su «¿Te has enterado?» borra los faroles que la familia se ha ido contando.
+- **[nuevo] La Ristra de ajos en la familia:** el padre y el abuelo dejan de hacer señas de mentira.
+- **[nuevo] El Agua del botijo contra Don Severiano y el tío Paulino**, que te leen antes que nadie.
 
 ## 6. Lo que habría que dibujar
 
@@ -418,14 +458,26 @@ Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falte
 
 | Qué | Cuántos | Para cuándo |
 | --- | --- | --- |
-| Secuaces de Tierra de Campos (Paco, Tomasa y Nicasio) | 3 | Fase 4: la primera arena |
-| Secuaces del resto de arenas | 12 | Más adelante |
+| La facultad: Lucía, Dani, Rubén y Chema | 4 | Fase 4: la primera arena |
+| El bar: Toño y Manolo (Ruperto y Fulgencio ya están) | 2 | Más adelante |
+| La familia: Martina, Pilar, Tomás y el abuelo Teodoro | 4 | Más adelante |
+| Las fiestas: Don Severiano y el tío Paulino (Doña Engracia y Don Anselmo ya están) | 2 | Más adelante |
+| El casino: Leandro, Doña Leonor y Don Ceferino (Don Bonifacio ya está) | 3 | Más adelante |
 | Compañeros | 11 (2 en la fase 4: el Pastor y la Tabernera) | Fase 4 y después |
-| La tabernera de la taberna | 1 | Fase 4 |
+| La tabernera de la taberna y la monja de la plaza | 2 | Fase 4 la tabernera |
 | Iconos de objetos | Unos 30 | Fase 4 los primeros 5 |
-| Poses que faltan de los jefes: Don Anselmo (el vino, las manos) y Don Bonifacio (las manos) | 3 | Cuando se pueda |
+| Poses que faltan: Don Anselmo (el vino, las manos) y Don Bonifacio (las manos) | 3 | Cuando se pueda |
 | Fondos de cada arena para el mapa | 5 | Fase 5 (pulido) |
 
 ## Historial de versiones
 
 - **Versión 1 (12 de octubre de 2026).** El catálogo de la gira: 5 arenas de 4 niveles (tres secuaces y su jefe), con 15 secuaces nuevos; cómo se conecta cada jefe con sus secuaces; la taberna al estilo de Balatro; ideas para la plaza; objetos nuevos, entre ellos las jugarretas y los amuletos contra el rival; los objetos raros de los jefes; tres compañeros nuevos y su precio en la taberna; y la lista de lo que hay que dibujar.
+- **Versión 2 (13 de octubre de 2026).** Cambios de David:
+  - **Arenas nuevas:** la facultad, el bar, una familia de la Montaña Palentina, las fiestas del pueblo con sus veteranos y el casino. Los personajes nuevos llevan nombre, aspecto, tics y reglas propuestos por mí, y los cinco que ya tenían dibujo están recolocados.
+  - **Honra:** la gira solo se acaba sin Honra; si pierdes contra el jefe, repites contra él.
+  - **Fuera** la idea de pasar de largo.
+  - **Huecos:** dos de bebidas y jugarretas, y dos de amuletos y objetos raros.
+  - **Objetos:** el Chato de vino hace que el rival cante su mano (4 reales); la Gaseosa, explicada de nuevo; el Caldo de la abuela alarga el duelo hasta 30; el Reloj de bolsillo, rehecho; la Medalla de la Virgen, aprobada a 9 reales; la Ristra de ajos quita los tics falsos; la Gorra calada, a 7 reales.
+  - **La plaza:** el timador engaña una de cada tres veces y está la monja que da Honra.
+  - **Compañeros:** el Abuelo pasa a ser el Jubilado.
+  - **Objetos raros nuevos** para los jefes nuevos.

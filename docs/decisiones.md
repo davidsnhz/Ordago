@@ -262,6 +262,53 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - **Tres compañeros nuevos:** la Cotilla, el Alguacil y el Dulzainero.
 - La plaza y la era se quedan como paradas, y la plaza tiene ya ideas de eventos.
 
+## Las arenas nuevas y los retoques de la gira (13 de octubre de 2026)
+
+*Decidido por David* al revisar la versión 1 de `docs/gira.md`:
+
+- **Honra:** la gira solo se acaba cuando te quedas sin Honra. Si pierdes contra un jefe, te cuesta 1 y vuelves a jugar contra él hasta ganarle.
+- **Fuera «pasar de largo»:** si te pudieras saltar a los secuaces, no compensaría jugar contra ellos.
+- **Las arenas:**
+  1. La facultad: el jefe es el que no entra en clase y vive en la cafetería.
+  2. El bar: adultos, no ancianos; el jefe tiene cuarenta y tantos, es medio calvo y tiene barriga cervecera.
+  3. Una familia de la Montaña Palentina: la niña, la madre, el padre y el abuelo.
+  4. Las fiestas del pueblo: ancianos que han jugado al mus toda su vida.
+  5. El casino de la capital.
+- **La plaza:**
+  - El amuleto del timador es falso una de cada tres veces; si es falso, se rompe en cuanto te lo da.
+  - La monja da +1 de Honra. Sale menos que el resto y solo una vez por gira.
+- **Huecos:** 2 para amuletos y objetos raros, y 2 para bebidas y jugarretas.
+- **Objetos:**
+  - El Chato de vino hace que el rival diga su mano (4 reales).
+  - Con el Caldo de la abuela, si el rival llega a 20, se juega hasta 30.
+  - La Medalla de la Virgen se queda (9 reales).
+  - Con la Ristra de ajos, los rivales no hacen tics falsos.
+  - La Gorra calada cuesta 7 reales.
+- **Los compañeros:** que los ajuste yo con todo lo anterior.
+
+*Lo que he interpretado o propuesto yo* (marcado con [nuevo] en `docs/gira.md`, para que David lo revise):
+
+- **Los personajes nuevos:** sus nombres, aspecto, tics y reglas. Destacan:
+  - las señas de mus de toda la vida como tics de la familia, con el abuelo, que a partir de 10 piedras también las usa para mentir;
+  - «Se viene arriba» de Chema: se crece cuando va ganando y se arruga cuando va perdiendo;
+  - «¡Se ha rajado!» de Manolo: cada «no quiero» le da 1 piedra más;
+  - «Cara de piedra» del tío Paulino: casi no hace tics y a ti se te nota antes.
+- **Los cinco que ya tienen dibujo, colocados por edad y oficio:**
+  - Ruperto y Fulgencio, en el bar: tienen unos cuarenta años.
+  - Doña Engracia y Don Anselmo, en las fiestas.
+  - Don Bonifacio, de jefe final.
+
+  Si David prefiere la gira toda nueva, quedan para los duelos sueltos.
+- **Antes de repetir contra un jefe** puedes pasar por una parada.
+- **El Chato de vino:** lo he entendido como que el rival canta sus cuatro cartas en esa mano.
+- **El Caldo de la abuela:** no vale si pierdes por un órdago, porque el órdago se juega el duelo entero.
+- **La monja:** su +1 de Honra puede pasar de 3.
+- **La Gaseosa, rehecha:** David no entendía la de antes. Tal como estaba (repetir un «quiero» antes de ver las cartas) no servía, porque decides a ciegas igual. Ahora vale después de ver las cartas: si perdiste un envite que quisiste, pagas como si no lo hubieras querido.
+- **El Reloj de bolsillo, rehecho:** que el rival tarde más no servía de nada. Ahora puedes mirar al rival el doble de tiempo sin que se dé cuenta, y sus tics duran más.
+- **Objetos raros nuevos** para los jefes nuevos.
+- **Fuera el evento del cura:** hacía lo mismo que la Medalla.
+- **El Abuelo (compañero) pasa a llamarse el Jubilado**, para no confundirlo con el abuelo de la familia. Se desbloquea al llegar a la Montaña Palentina.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).
@@ -270,4 +317,4 @@ No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Ca
 - **El real por «farol no descubierto»: decidido.** Cuenta el farol al que el rival dice «no quiero», como ya hace la Cara.
 - **El Veterano: decidido.** Basta con llevar dos reyes cualesquiera; los treses son reyes.
 - **El Tahúr: decidido.** Su seña cambia en secreto la carta que quieras por un rey del mazo (si no queda ninguno, no se puede usar). Si te pillan, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras.
-- **Medalla de la Virgen: descartada tal como estaba** (David no le ve sentido). Propuesta de sustituta, pendiente: «la primera vez en cada duelo que te pillan un farol, tu Cara no baja».
+- **Medalla de la Virgen: decidida.** La de antes, descartada (David no le veía sentido). La nueva, aprobada el 13 de octubre: «la primera vez en cada duelo que te pillan un farol, tu Cara no baja», a 9 reales.
