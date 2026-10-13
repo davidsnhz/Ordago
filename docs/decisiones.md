@@ -417,7 +417,7 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
   - dentro, al final de cada mano, como el duelo suelto;
   - si sales a mitad de mano, vuelves al final de la mano anterior, con lo de la bolsa tal como estaba entonces.
 - **Sin dibujo:** los personajes, los objetos y los compañeros que no tienen dibujo salen con un marcador (recuadro rojo de puntos con el nombre), como pide CLAUDE.md.
-- **Lo que pasa «En la gira» entre secuaces y jefes** no está programado, porque está sin confirmar. Por ejemplo, «Rubén le avisa».
+- **Lo que pasa «En la gira» entre secuaces y jefes** no está programado. Por ejemplo, «Rubén le avisa». *Decidido por David después:* de momento no se hará; si la gira resulta demasiado fácil, o él lo ve bien, se añadirá.
 
 ## Dudas para fases posteriores
 

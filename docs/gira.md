@@ -1,6 +1,6 @@
 # Órdago — La gira
 
-13 de octubre de 2026 · @david · *versión 4: los compañeros con sus nombres nuevos y la primera arena, la facultad, ya en el juego*
+13 de octubre de 2026 · @david · *versión 5: las conexiones entre secuaces y jefes, para más adelante*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
@@ -16,13 +16,14 @@
 >
 > **Todavía es propuesta mía, sin confirmar:**
 > - los tics y manías de los secuaces;
-> - lo que pasa «En la gira» entre secuaces y jefes;
 > - los objetos raros;
 > - lo que hace cada compañero.
 >
+> **[cambiado] Para más adelante (decidido por David):** lo que pasa «En la gira» entre secuaces y jefes («Rubén le avisa», «Aurelio le invita», «Se conocen de toda la vida»). De momento no se programa; si la gira resulta demasiado fácil, o David lo ve bien, se añadirá.
+>
 > Los números (precios, reales, parámetros) son un punto de partida: se ajustan jugando.
 
-> **[cambiado] Lo que ya se puede jugar (fase 4).** La primera arena entera, la facultad: Lucía, Dani, Rubén y Chema con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de Chema y el final de la gira. En la taberna hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte, más los Apuntes de Chema como premio. Los compañeros son el Lazarillo y la Recaudadora. En la plaza salen el forastero, la fiesta patronal, el timador y la monja; la partida en la calle, todavía no. Lo que pasa «En la gira» entre secuaces y jefes tampoco está, porque está sin confirmar. Al ganar a Chema, la gira acaba con victoria hasta que esté el bar.
+> **[cambiado] Lo que ya se puede jugar (fase 4).** La primera arena entera, la facultad: Lucía, Dani, Rubén y Chema con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de Chema y el final de la gira. En la taberna hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte, más los Apuntes de Chema como premio. Los compañeros son el Lazarillo y la Recaudadora. En la plaza salen el forastero, la fiesta patronal, el timador y la monja; la partida en la calle, todavía no. Lo que pasa «En la gira» entre secuaces y jefes tampoco está: queda para más adelante. Al ganar a Chema, la gira acaba con victoria hasta que esté el bar.
 
 ## 1. Cómo es una gira
 
@@ -115,7 +116,7 @@ La cafetería de una universidad pública en una ciudad castellana (Salamanca, p
   - Cuando va ganando por 5 o más, se crece (sale *¡CRECIDO!*): farolea el doble y te lo quiere todo.
   - Cuando va perdiendo por 5 o más, se arruga (*ARRUGADO*): no farolea y casi no quiere.
   - *Ejemplo: va 12 a 6 y te envida cinco: puede ser un farol, así que quiérelo si llevas algo. Va 4 a 11 y te envida: lleva cartas.*
-- **En la gira, «Rubén le avisa»:** si le ganaste a Rubén por 10 piedras o más, Chema empieza el duelo arrugado.
+- **[cambiado] Para más adelante · En la gira, «Rubén le avisa»:** si le ganaste a Rubén por 10 piedras o más, Chema empieza el duelo arrugado.
 - **Premio, su objeto raro:** los Apuntes de Chema.
 - **Frase:** «Yo aquí he aprendido más que en clase. Bueno, en clase no he estado.»
 
@@ -161,7 +162,7 @@ El bar de toda la vida: barra de zinc, servilletas por el suelo, raciones en la 
   - **Las dos primeras manos juega con mucha calma:** casi no farolea, envida solo con buenas cartas y quiere poco (A 4 · F 1).
   - **Desde la tercera, por culpa de la bebida, juega a lo loco** (sale *¡ACHISPADO!*): farolea muchísimo, sube más y tira órdagos sin nada (A 9 · F 9 · M 2). Y, como va achispado, se le notan más los tics: salen siempre que tienen motivo.
   - *Ejemplo: en la primera mano te envida cinco: respétalo, que lleva cartas. En la cuarta te envida cinco: puede ser cualquier cosa, así que, si llevas algo, quiérelo.*
-- **En la gira, «Aurelio le invita»:** si le ganaste a Aurelio, para consolarse le paga una ronda a Manolo, y Manolo se suelta una mano antes (desde la segunda).
+- **[cambiado] Para más adelante · En la gira, «Aurelio le invita»:** si le ganaste a Aurelio, para consolarse le paga una ronda a Manolo, y Manolo se suelta una mano antes (desde la segunda).
 - **Premio, su objeto raro:** la Jarra de Manolo.
 - **Frase:** «Aquí, el que no quiere, paga la ronda.»
 
@@ -261,7 +262,7 @@ Las fiestas del pueblo: farolillos, casetas, la orquesta al fondo, olor a churro
 - **Cómo juega:** lleva toda la vida ganando este concurso. Casi no se le ve nada y él lo ve todo. · A 6 · F 6 · M 7 · Me 8 · O 9
 - **Tic:** solo uno: se le escapa media sonrisa → lleva duples o 31 (9 de cada 10).
 - **Regla, «Cara de piedra»:** casi no hace tics (solo ese, y solo con lo mejor), y te lee a ti: con él se te nota con la Cara por debajo de 20.
-- **En la gira, «Se conocen de toda la vida»:** Don Agapito le cuenta lo que ha visto. Si con él se te notó, empiezas el duelo con 10 menos de Cara.
+- **[cambiado] Para más adelante · En la gira, «Se conocen de toda la vida»:** Don Agapito le cuenta lo que ha visto. Si con él se te notó, empiezas el duelo con 10 menos de Cara.
 - **Premio, su objeto raro:** la Baraja del concurso.
 - **Frase:** «Siéntate, chaval, que no muerdo. Pero te voy a ganar.»
 
@@ -506,3 +507,4 @@ Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falte
   - **El Reloj de bolsillo,** baratillo (3 reales).
   - **Confirmados:** las reglas de Chema, de la familia y del tío Arturo; la Gaseosa; el Chato de vino; la monja; el Caldo; la parada antes de repetir contra un jefe; y el orden de las arenas.
 - **Versión 4 (13 de octubre de 2026).** David eligió las pantallas (el mapa A1, la taberna T1, la bolsa arriba a la izquierda, y elegir compañero y después del duelo tal como estaban) y cambió el nombre de siete compañeros: el Pastor pasa a ser el Lazarillo; la Tabernera, la Recaudadora (de Hacienda); la Cotilla, la Maruja; el Sacristán, el Monaguillo; la Moza del Molino, la Moza; el Alguacil, el Militar; y el Forastero, el Afilador. La primera arena ya se juega entera (fase 4).
+- **Versión 5 (13 de octubre de 2026).** Lo que pasa «En la gira» entre secuaces y jefes queda para más adelante: no se programa de momento y se añadirá si la gira resulta demasiado fácil.
