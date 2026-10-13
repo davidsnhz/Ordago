@@ -1,11 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { CARA } from '../datos/cara';
 import { IA } from '../datos/ia';
 import { ORDEN_RIVALES, RIVALES, type IdRival } from '../datos/rivales';
 import type { AccionDuelo } from '../nucleo/duelo';
 import { borrarPartida, cargarPartida, guardarPartida } from './guardado';
+import { apuntar, cargarLibreta, guardarLibreta } from './libreta';
 import { aplicarNovedades, mesaInicial, sacarTic, type EstadoMesa } from './mesa';
-import { ajustarCara, jugarJugador, jugarRival, leTocaAlRival, mirarAlRival, nuevaPartida } from './partida';
+import {
+  ajustarCara,
+  jugarJugador,
+  jugarRival,
+  leTocaAlRival,
+  mirarAlRival,
+  nuevaPartida,
+  type Partida,
+  type ResultadoPartida,
+} from './partida';
 
 /** Ritmo de la mesa, en milisegundos. */
 const RITMO = {
@@ -22,29 +32,41 @@ const RITMO = {
 /** La semilla de cada duelo nuevo sale del reloj; a partir de ahí, todo el azar es reproducible. */
 const semillaNueva = () => `duelo-${Date.now().toString(36)}`;
 
-/** `?rival=engracia` en la dirección elige el rival del primer duelo. */
-function rivalDeLaDireccion(): IdRival | null {
+/** `?rival=engracia` en la dirección elige el rival del primer duelo suelto. */
+export function rivalDeLaDireccion(): IdRival | null {
   const pedido = new URLSearchParams(window.location.search).get('rival');
   return ORDEN_RIVALES.find((id) => id === pedido) ?? null;
 }
 
-/** Cada duelo empieza de cero, Cara incluida (hasta que haya gira, que la arrastrará). */
-function empezarDuelo(rival: IdRival): EstadoMesa {
+/** Duelo suelto: empieza de cero, Cara incluida. */
+function empezarDueloSuelto(rival: IdRival): EstadoMesa {
   const inicio = nuevaPartida(semillaNueva(), rival, CARA.inicial);
   return aplicarNovedades(mesaInicial(inicio.partida), inicio);
 }
 
-function empezar(): EstadoMesa {
-  const pedido = rivalDeLaDireccion();
+/** El duelo suelto guardado si lo hay (y es del rival pedido); si no, uno nuevo. */
+export function empezarSuelto(rival?: IdRival): EstadoMesa {
+  const pedido = rival ?? rivalDeLaDireccion();
   const guardada = cargarPartida();
   if (guardada && guardada.duelo.fase !== 'finDuelo' && (!pedido || pedido === guardada.rivalId)) return mesaInicial(guardada);
-  return empezarDuelo(pedido ?? 'ruperto');
+  return empezarDueloSuelto(pedido ?? 'lucia');
 }
 
-export function useDuelo() {
-  const [estado, setEstado] = useState(empezar);
+/** Lo que cambia entre el duelo suelto y el de la gira. */
+export interface OpcionesDuelo {
+  /** Cómo empieza la mesa. */
+  inicio: () => EstadoMesa;
+  /**
+   * Se llama al final de cada mano (para guardar) y al acabar el duelo. Si no se da, es un duelo
+   * suelto: se guarda solo y, al acabar, lo visto va a la Libreta.
+   */
+  alGuardar?: (partida: Partida) => void;
+}
+
+export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
+  const [estado, setEstado] = useState(inicio);
   const [mirando, setMirando] = useState(false);
-  /** Algo tapa la mesa (la ayuda de la Cara): el rival espera. */
+  /** Algo tapa la mesa (la ayuda de la Cara, la bolsa): el rival espera. */
   const [pausa, setPausa] = useState(false);
   const { partida } = estado;
 
@@ -59,10 +81,22 @@ export function useDuelo() {
     });
   }, []);
 
-  /** Duelo nuevo contra `rival` (o el mismo), de cero. */
+  /** Algo que cambia la partida desde fuera de la jugada (lo que se usa de la bolsa). */
+  const aplicar = useCallback((cambio: (partida: Partida) => ResultadoPartida) => {
+    setEstado((previo) => {
+      try {
+        return aplicarNovedades(previo, cambio(previo.partida));
+      } catch (error) {
+        console.error('No se ha podido usar', error);
+        return previo;
+      }
+    });
+  }, []);
+
+  /** Duelo suelto nuevo contra `rival` (o el mismo), de cero. */
   const nuevoDuelo = useCallback((rival?: IdRival) => {
     borrarPartida();
-    setEstado((previo) => empezarDuelo(rival ?? previo.partida.rivalId));
+    setEstado((previo) => empezarDueloSuelto(rival ?? previo.partida.rivalId));
   }, []);
 
   /** Termina una mirada al rival que ha durado `segundos`. */
@@ -98,7 +132,7 @@ export function useDuelo() {
   // Los tics salen de uno en uno; mirando al rival duran más.
   useEffect(() => {
     if (estado.tic) {
-      const duracion = RITMO.tic * (mirando ? IA.tics.duracionMirando : 1);
+      const duracion = RITMO.tic * (mirando ? IA.tics.duracionMirando : 1) * (estado.tic.explicado ? 1.5 : 1);
       const reloj = setTimeout(() => setEstado((previo) => ({ ...previo, tic: null })), duracion);
       return () => clearTimeout(reloj);
     }
@@ -116,23 +150,37 @@ export function useDuelo() {
     return () => clearTimeout(reloj);
   }, [estado.avisoCara, estado.seTeNota]);
 
-  // Se guarda al final de cada mano; al acabar el duelo se borra.
+  // Se guarda al final de cada mano. En el duelo suelto, al acabar se borra y lo visto va a la
+  // Libreta (una vez por duelo); en la gira, de eso se encarga la gira.
   const { fase, numeroMano } = partida.duelo;
+  const apuntado = useRef<string | null>(null);
   useEffect(() => {
+    if (alGuardar) {
+      if (fase === 'finMano' || fase === 'finDuelo') alGuardar(partida);
+      return;
+    }
     if (fase === 'finMano') guardarPartida(partida);
-    if (fase === 'finDuelo') borrarPartida();
+    if (fase === 'finDuelo') {
+      borrarPartida();
+      if (apuntado.current !== partida.semilla) {
+        apuntado.current = partida.semilla;
+        guardarLibreta(apuntar(cargarLibreta(), partida.rivalId, partida.estadisticas.observaciones).libreta);
+      }
+    }
     // Solo al cambiar de fase o de mano: `partida` cambia en cada jugada.
   }, [fase, numeroMano]);
 
   return {
     estado,
     jugar,
+    aplicar,
     nuevoDuelo,
     mirar,
     mirando,
     setMirando,
     cambiarCara,
     ensayarTics,
+    pausa,
     setPausa,
     rivalPiensa: leTocaAlRival(partida) && !mirando && !pausa,
   };

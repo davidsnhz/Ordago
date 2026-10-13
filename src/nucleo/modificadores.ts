@@ -11,7 +11,7 @@ import type { Cobro, CobrosDeLaMano } from './recuento';
  */
 export interface Modificador {
   readonly id: string;
-  /** Piedras extra con las que empieza el duelo `lado` (p. ej. la Moza del Molino). */
+  /** Piedras extra con las que empieza el duelo `lado` (p. ej. la Moza). */
   piedrasIniciales?(lado: Lado): number;
   /** Rondas de mus permitidas en la mano actual, partiendo del valor anterior (p. ej. el Tahúr). */
   rondasMus?(rondas: number, estado: Readonly<EstadoDuelo>): number;

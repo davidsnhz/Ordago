@@ -3,12 +3,23 @@ import { LANCES, type Lance } from '../nucleo/lances';
 /** Rivales: parámetros de la IA, forma de jugar el mus, tics y reglas especiales. Sus textos están en textos/es.ts. */
 
 /**
- * Los ids son los nombres que tenían antes (Ruperto, Engracia, Anselmo, Fulgencio y Bonifacio):
- * los usan el guardado y las carpetas del arte. Los nombres que se ven están en textos/es.ts.
+ * Los ids de los cinco primeros son los nombres que tenían antes (Ruperto, Engracia, Anselmo,
+ * Fulgencio y Bonifacio): los usan el guardado y las carpetas del arte. Los nombres que se ven
+ * están en textos/es.ts. Los cuatro de la facultad son los de la primera arena de la gira.
  */
-export type IdRival = 'ruperto' | 'engracia' | 'anselmo' | 'fulgencio' | 'bonifacio';
+export type IdRival =
+  | 'lucia'
+  | 'dani'
+  | 'ruben'
+  | 'chema'
+  | 'ruperto'
+  | 'engracia'
+  | 'anselmo'
+  | 'fulgencio'
+  | 'bonifacio';
 
-export const ORDEN_RIVALES: IdRival[] = ['ruperto', 'engracia', 'anselmo', 'fulgencio', 'bonifacio'];
+/** Todos los rivales, en el orden de la gira (la lista de los duelos sueltos). */
+export const ORDEN_RIVALES: IdRival[] = ['lucia', 'dani', 'ruben', 'chema', 'ruperto', 'fulgencio', 'engracia', 'anselmo', 'bonifacio'];
 
 /** De 0 a 10 (tabla «Los 5 rivales» del documento). */
 export interface ParametrosRival {
@@ -82,6 +93,26 @@ export interface PerfilRival {
   casa?: { lances: readonly Lance[] };
   /** Don Rodrigo: una vez por duelo cambia una carta si su mejor lance no llega a esta fuerza. */
   cartasDeLaCasa?: { fuerzaMaxima: number };
+  /** Dani: pide mus siempre la primera vez de cada mano. */
+  pideMusSiempre?: true;
+  /** Rubén: cuando va ganando por `ventaja` piedras o más, farolea el doble. */
+  seCrece?: { ventaja: number };
+  /**
+   * Chema: cuando va ganando por `ventaja` o más, se crece (farolea el doble y te lo quiere
+   * todo); cuando va perdiendo por `ventaja` o más, se arruga (no farolea y casi no quiere).
+   */
+  seVieneArriba?: { ventaja: number };
+}
+
+/** Cómo está el rival por el marcador (Rubén y Chema). */
+export type AnimoRival = 'crecido' | 'arrugado' | null;
+
+export function animoDe(perfil: PerfilRival, diferencia: number): AnimoRival {
+  const regla = perfil.seVieneArriba ?? perfil.seCrece;
+  if (!regla) return null;
+  if (diferencia >= regla.ventaja) return 'crecido';
+  if (perfil.seVieneArriba && diferencia <= -regla.ventaja) return 'arrugado';
+  return null;
 }
 
 /** La lista común: con estas manos corta cualquiera. */
@@ -101,6 +132,46 @@ const TICS_ANSELMO: DefinicionTic[] = [
 ];
 
 export const RIVALES: Record<IdRival, PerfilRival> = {
+  // ——— La facultad (arena 1) ———
+  lucia: {
+    id: 'lucia',
+    // Aprendió ayer: envida cuando lleva algo y no farolea nunca.
+    parametros: { agresividad: 4, faroleo: 0, miedoOrdago: 3, memoria: 1, ojo: 1 },
+    mus: { corta: [...CORTES_COMUNES, 'parejaDeReyes'], guarda: ['reyes', 'parejas'], farolDeCorte: 0 },
+    tics: [{ id: 'mordisqueaBoli', disparador: 'pares', fiabilidad: 0.9, lances: ['pares'] }],
+  },
+  dani: {
+    id: 'dani',
+    parametros: { agresividad: 4, faroleo: 2, miedoOrdago: 4, memoria: 2, ojo: 2 },
+    mus: { corta: [...CORTES_COMUNES], guarda: ['reyes', 'figuras'], farolDeCorte: 0 },
+    tics: [
+      { id: 'rasgueaBandurria', disparador: 'treintaYUna', fiabilidad: 0.8, lances: ['juego'] },
+      { id: 'colocaCintas', disparador: 'duples', fiabilidad: 0.8, lances: ['pares'] },
+    ],
+    pideMusSiempre: true,
+  },
+  ruben: {
+    id: 'ruben',
+    parametros: { agresividad: 6, faroleo: 3, miedoOrdago: 3, memoria: 2, ojo: 2 },
+    mus: { corta: [...CORTES_COMUNES, 'parejaDeReyes'], guarda: ['reyes', 'parejas'], farolDeCorte: 0 },
+    tics: [
+      { id: 'muerdeBocadillo', disparador: 'pares', fiabilidad: 0.8, lances: ['pares'] },
+      { id: 'ajustaGorra', disparador: 'treintaYUna', fiabilidad: 0.8, lances: ['juego'] },
+    ],
+    seCrece: { ventaja: 5 },
+  },
+  chema: {
+    id: 'chema',
+    parametros: { agresividad: 7, faroleo: 5, miedoOrdago: 3, memoria: 3, ojo: 3 },
+    mus: { corta: [...CORTES_COMUNES], guarda: ['reyes', 'parejas'], farolDeCorte: 0.1 },
+    tics: [
+      { id: 'bajaGafas', disparador: 'manoFuerte', fiabilidad: 0.8, lances: TODOS },
+      { id: 'remueveCafe', disparador: 'farol', fiabilidad: 0.7, lances: TODOS },
+    ],
+    seVieneArriba: { ventaja: 5 },
+  },
+
+  // ——— Los cinco que ya estaban (el bar, las fiestas y el casino) ———
   ruperto: {
     id: 'ruperto',
     parametros: { agresividad: 8, faroleo: 3, miedoOrdago: 2, memoria: 2, ojo: 2 },

@@ -321,7 +321,8 @@
 .mesa__estado-rival {
   position: absolute;
   left: 12px;
-  top: 170px;
+  /* Debajo de la bolsa (gira). */
+  top: 212px;
   z-index: 11;
   display: flex;
   flex-direction: column;
@@ -382,7 +383,8 @@
 .mesa__pruebas {
   position: absolute;
   right: 10px;
-  top: 168px;
+  /* Debajo de SALIR. */
+  top: 196px;
   z-index: 13;
   display: flex;
   flex-direction: column;
@@ -1091,4 +1093,160 @@
   border: 1px solid var(--gualda);
   border-radius: 3px;
   cursor: pointer;
+}
+
+/*
+ * ——— La bolsa (gira) y salir ———
+ * La bolsa, redonda y en gualda, arriba a la izquierda (donde el prototipo M1 tenía la seña); con
+ * cuántas cosas se pueden usar ahora. SALIR, discreto, arriba a la derecha.
+ */
+
+.mesa__bolsa {
+  position: absolute;
+  left: 10px;
+  top: 150px;
+  z-index: 14;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  font-family: var(--letra-grito);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--tinta);
+  background: var(--gualda);
+  border: var(--borde);
+  box-shadow: var(--sombra-dura);
+  cursor: pointer;
+}
+
+.mesa__bolsa:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.mesa__bolsa-cuenta {
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  box-sizing: border-box;
+  border-radius: 11px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--papel);
+  background: var(--almagre);
+  border: 2px solid var(--tinta);
+}
+
+.mesa__salir {
+  position: absolute;
+  right: 10px;
+  top: 158px;
+  z-index: 14;
+  min-height: 30px;
+  padding: 2px 10px;
+  font-family: var(--letra-rotulo);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--papel);
+  background: transparent;
+  border: 2px dashed rgba(242, 232, 210, 0.55);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+/* Cartas del rival boca arriba (el Chato de vino, la seña del Lazarillo). */
+.carta--rival-vista {
+  box-shadow: 0 0 0 2px var(--gualda), 2px 2px 0 var(--tinta);
+}
+
+.mesa__velo--bolsa {
+  z-index: 30;
+  align-items: flex-end;
+  padding: 0 8px 92px;
+}
+
+.bolsa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px 12px;
+  box-sizing: border-box;
+}
+
+.bolsa__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bolsa__titulo {
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 21px;
+}
+
+.bolsa__cerrar {
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.bolsa__fila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bolsa__icono {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  font-size: 8px;
+}
+
+.bolsa__texto {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.bolsa__texto b {
+  display: block;
+  font-family: var(--letra-rotulo);
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.bolsa__texto i {
+  display: block;
+}
+
+.bolsa__boton {
+  flex: none;
+  width: auto;
+  min-height: 40px;
+  padding: 4px 12px;
+  font-size: 16px;
+}
+
+.bolsa__puesto {
+  flex: none;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--verde);
+}
+
+.bolsa__vacia {
+  margin: 0;
+  font-style: italic;
+  font-size: 15px;
 }

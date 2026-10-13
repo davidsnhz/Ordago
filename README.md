@@ -16,7 +16,11 @@ Sale con la moneda de oros, a pantalla completa y en vertical.
 
 ## Cómo está ahora mismo
 
-Ahora se pueden jugar **duelos sueltos contra los cinco rivales**, cada uno con su arte, sus tics y sus manías. Lo siguiente es la gira: cinco arenas, cada una con cuatro niveles (tres secuaces y su jefe), la taberna con sus objetos, los compañeros, la Libreta y la Honra. Todo eso está ya pensado en el [documento de diseño](docs/diseno-juego.md) (también en [PDF](<docs/Órdago — Documento de diseño.pdf>)), pero todavía no está en el juego.
+Ya se puede jugar **la primera arena de la gira, la facultad**: eliges compañero (el Lazarillo o la Recaudadora), subes por el mapa contra Lucía, Dani, Rubén y Chema, y entre duelo y duelo paras en la taberna, en la plaza o en la era. Tienes tres de Honra: si pierdes contra un secuaz, sigues; si pierdes contra Chema, te toca repetir; y sin Honra, se acaba la gira. Lo que vas viendo de cada rival se apunta solo en la Libreta.
+
+También se pueden jugar **duelos sueltos** contra cualquiera de los nueve rivales, sin gira.
+
+Lo siguiente es jugarla mucho, ajustar números y después el pulido (dibujos, animaciones y sonido). Las demás arenas (el bar, la Montaña Palentina, las fiestas del pueblo y el casino) ya están pensadas en [la gira](docs/gira.md), pero todavía no están en el juego. Todo lo demás está en el [documento de diseño](docs/diseno-juego.md) (también en [PDF](<docs/Órdago — Documento de diseño.pdf>)).
 
 ## Cómo se juega
 
@@ -84,6 +88,15 @@ O sea que a veces compensa dejarte pillar un farol barato para que luego te quie
 
 ### Los rivales
 
+Los de la facultad, que son los primeros de la gira (todavía sin dibujo):
+
+- **Lucía, la de primero.** Aprendió ayer: envida cuando lleva algo y no farolea nunca.
+- **Dani, el Tuno.** Alegre y despistado. Pide mus siempre la primera vez.
+- **Rubén, el colega de la cafetería.** Envida fuerte y, cuando va ganando de cinco, se crece y farolea el doble.
+- **Chema, el Repetidor.** El jefe: lleva ocho años sin pisar clase. Cuando va ganando de cinco se viene arriba (farolea el doble y te lo quiere todo); cuando va perdiendo de cinco, se arruga.
+
+Y los cinco del principio, que en la gira irán en el bar, en las fiestas del pueblo y en el casino:
+
 - **Agustín, el Herrero.** Bruto y directo: cuando lleva cartas se le nota en todo, envida fuerte y casi nunca farolea. Si pierde tres lances seguidos se enfada y durante dos manos te lo quiere todo.
 - **Doña Ignacia, la Viuda.** Paciente y desconfiada. Casi nunca farolea y cuando envida es que lleva algo. No acepta un órdago antes de la tercera mano, y si la miras demasiado se ofende y deja de hacer tics.
 - **Don Francisco, el Cura.** Equilibrado y con buena memoria: si le faroleas mucho, deja de creerte. Envida siempre a la Chica, lleve lo que lleve. Si te pilla un farol te pone penitencia: tu siguiente envite le paga una piedra más si lo gana él.
@@ -92,7 +105,7 @@ O sea que a veces compensa dejarte pillar un farol barato para que luego te quie
 
 ### La pantalla
 
-De arriba abajo: el marcador con los lances y tu Cara; el rival; el acta, donde se va contando la mano («Has envidado dos.», «Agustín sube cuatro más» y su frase), con lo que hay en juego en la ficha roja y *Toda la mano* para ver lo anterior; el tapete con sus cartas y las tuyas; y abajo los botones, que solo salen cuando te toca.
+De arriba abajo: el marcador con los lances y tu Cara; el rival (en la gira, con la bolsa arriba a la izquierda para usar lo que lleves y la seña del compañero); el acta, donde se va contando la mano («Has envidado dos.», «Agustín sube cuatro más» y su frase), con lo que hay en juego en la ficha roja y *Toda la mano* para ver lo anterior; el tapete con sus cartas y las tuyas; y abajo los botones, que solo salen cuando te toca.
 
 ## Para tocar el código
 

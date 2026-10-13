@@ -1,9 +1,20 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
-import { ORDEN_RIVALES, type IdRival } from '../../datos/rivales';
-import type { Partida } from '../../estado/partida';
-import { useDuelo } from '../../estado/useDuelo';
+import { COMPANEROS } from '../../datos/companeros';
+import { esDeUnUso, OBJETOS, type IdObjeto } from '../../datos/objetos';
+import { animoDe, ORDEN_RIVALES, RIVALES, type IdRival } from '../../datos/rivales';
+import type { Bolsa } from '../../estado/gira';
+import {
+  cartasDelRivalALaVista,
+  puedeUsarObjeto,
+  puedeUsarSena,
+  senasQueQuedan,
+  usarObjeto,
+  usarSena,
+  type Partida,
+} from '../../estado/partida';
+import { empezarSuelto, useDuelo } from '../../estado/useDuelo';
 import { textosDe, ultimoDelRival, type EstadoMesa, type LineaActa } from '../../estado/mesa';
-import { idCarta, type Carta } from '../../nucleo/carta';
+import { idCarta, mismaCarta, type Carta } from '../../nucleo/carta';
 import type { Lado } from '../../nucleo/comun';
 import { accionesValidas, type AccionDuelo, type EstadoDuelo, type OpcionDuelo } from '../../nucleo/duelo';
 import { calcularFuerza } from '../../nucleo/ia/fuerza';
@@ -17,6 +28,7 @@ import { AyudaCara, Cabecera } from './Cabecera';
 import './mesa.css';
 
 const M = ES.mesa;
+const G = ES.gira;
 /** Envites rápidos; el resto, con la barra. */
 const RAPIDAS = [2, 3];
 const BARRA = { minimo: 4, maximo: 19 };
@@ -38,16 +50,36 @@ const ABANICO_RIVAL = [
 /** Lo que hay que mantener pulsado el retrato para empezar a mirar. */
 const PULSACION_LARGA = 250;
 
-/** La mesa: un duelo contra uno de los cinco rivales, en vertical. */
-export function Mesa() {
-  const { estado, jugar, nuevoDuelo, mirar, mirando, setMirando, cambiarCara, ensayarTics, setPausa, rivalPiensa } = useDuelo();
+/** Duelo suelto (contra el rival que elijas) o un duelo de la gira, con la bolsa. */
+export type ModoMesa =
+  | { tipo: 'suelto'; rival?: IdRival; onSalir: () => void }
+  | {
+      tipo: 'gira';
+      inicio: () => EstadoMesa;
+      /** Al final de cada mano y al acabar: para guardar la gira. */
+      alGuardar: (partida: Partida) => void;
+      bolsa: Bolsa;
+      /** Se ha usado en la mesa una bebida o jugarreta: sale de la bolsa. */
+      onGastar: (id: IdObjeto) => void;
+      onTerminar: (partida: Partida) => void;
+      onSalir: () => void;
+    };
+
+/** La mesa: un duelo contra un rival, en vertical. */
+export function Mesa({ modo }: { modo: ModoMesa }) {
+  const enGira = modo.tipo === 'gira';
+  const { estado, jugar, aplicar, nuevoDuelo, mirar, mirando, setMirando, cambiarCara, ensayarTics, setPausa, rivalPiensa } = useDuelo(
+    modo.tipo === 'gira' ? { inicio: modo.inicio, alGuardar: modo.alGuardar } : { inicio: () => empezarSuelto(modo.rival) },
+  );
   const pruebas = useModoPruebas();
   const [depuracion, alternarDepuracion] = useDepuracion(pruebas);
   const [eligiendoRival, setEligiendoRival] = useState(false);
-  // Mientras lees qué es la Cara, el rival espera.
+  // Mientras lees qué es la Cara o miras la bolsa, el rival espera.
   const [ayudaCara, setAyudaCara] = useState(false);
-  useEffect(() => setPausa(ayudaCara), [ayudaCara, setPausa]);
+  const [bolsaAbierta, setBolsaAbierta] = useState(false);
+  useEffect(() => setPausa(ayudaCara || bolsaAbierta), [ayudaCara, bolsaAbierta, setPausa]);
   const { partida } = estado;
+  const aLaVista = cartasDelRivalALaVista(partida);
   const duelo = partida.duelo;
   const textos = textosDe(partida);
   const { lado: quienActua, opciones } = accionesValidas(duelo);
@@ -79,8 +111,14 @@ export function Mesa() {
           nombre={textos.titulo}
           tic={estado.tic}
           acotacion={estado.tic ? (textos.tics[estado.tic.id] ?? null) : null}
-          depuracion={depuracion && estado.tic ? M.depuracionTic(estado.tic.verdadero, textos.significadoTics[estado.tic.id] ?? '') : null}
-          textoPendiente={M.artePendiente}
+          depuracion={
+            estado.tic && estado.tic.explicado
+              ? (textos.significadoTics[estado.tic.id] ?? null)
+              : depuracion && estado.tic
+                ? M.depuracionTic(estado.tic.verdadero, textos.significadoTics[estado.tic.id] ?? '')
+                : null
+          }
+          textoPendiente={`${textos.etiqueta} · ${M.artePendiente}`}
         />
         {mirando && <div className="mesa__penumbra" />}
         <ZonaMirar
@@ -92,11 +130,19 @@ export function Mesa() {
           }}
         />
         <EstadoDelRival partida={partida} />
+        {modo.tipo === 'gira' && (
+          <BotonBolsa partida={partida} bolsa={modo.bolsa} onAbrir={() => setBolsaAbierta(true)} />
+        )}
+        <button type="button" className="mesa__salir" onClick={modo.onSalir} aria-label={ES.gira.mesa.salirAyuda}>
+          {ES.gira.mesa.salir}
+        </button>
         {pruebas && (
           <div className="mesa__pruebas">
-            <button type="button" className="mesa__boton-pequeno" onClick={() => setEligiendoRival(true)}>
-              {M.rival}
-            </button>
+            {!enGira && (
+              <button type="button" className="mesa__boton-pequeno" onClick={() => setEligiendoRival(true)}>
+                {M.rival}
+              </button>
+            )}
             <button type="button" className="mesa__boton-pequeno" aria-pressed={depuracion} onClick={alternarDepuracion}>
               {M.depurar}
             </button>
@@ -111,9 +157,16 @@ export function Mesa() {
         <div className="mesa__madera" />
         <div className="mesa__tapete" />
         <div className="mesa__cartas-rival" aria-label={M.susCartas(textos.nombre)}>
-          {ABANICO_RIVAL.map((p, i) => (
-            <CartaReverso key={i} className="carta--rival" style={{ left: p.left, top: p.top, transform: `rotate(${p.giro}deg)` }} />
-          ))}
+          {ABANICO_RIVAL.map((p, i) => {
+            const carta = duelo.cartas.rival[i];
+            const estilo = { left: p.left, top: p.top, transform: `rotate(${p.giro}deg)` };
+            // Con el Chato de vino o la seña del Lazarillo, se ven boca arriba.
+            return carta && aLaVista.some((c) => mismaCarta(c, carta)) ? (
+              <CartaVista key={idCarta(carta)} carta={carta} className="carta--rival carta--rival-vista" style={estilo} />
+            ) : (
+              <CartaReverso key={i} className="carta--rival" style={estilo} />
+            );
+          })}
         </div>
 
         <ManoDelJugador cartas={duelo.cartas.jugador} seleccionables={descartando} seleccion={seleccion} onAlternar={alternarCarta} />
@@ -134,7 +187,27 @@ export function Mesa() {
           rivalActual={partida.rivalId}
           onSiguiente={() => jugar({ tipo: 'siguienteMano' })}
           onOtroDuelo={elegirRival}
+          alAcabar={modo.tipo === 'gira' ? () => modo.onTerminar(partida) : null}
+          onSalir={modo.onSalir}
         />
+        {modo.tipo === 'gira' && bolsaAbierta && (
+          <PanelBolsa
+            partida={partida}
+            bolsa={modo.bolsa}
+            onUsar={(id) => {
+              if (!puedeUsarObjeto(partida, id)) return;
+              aplicar((p) => usarObjeto(p, id));
+              if (esDeUnUso(id)) modo.onGastar(id);
+              setBolsaAbierta(false);
+            }}
+            onSena={() => {
+              if (!puedeUsarSena(partida)) return;
+              aplicar(usarSena);
+              setBolsaAbierta(false);
+            }}
+            onCerrar={() => setBolsaAbierta(false)}
+          />
+        )}
         {ayudaCara && <AyudaCara valor={partida.caraJugador} onCerrar={() => setAyudaCara(false)} />}
         {eligiendoRival && (
           <SelectorDeRival actual={partida.rivalId} onElegir={elegirRival} onCancelar={() => setEligiendoRival(false)} />
@@ -150,9 +223,13 @@ export function Mesa() {
  */
 function EstadoDelRival({ partida }: { partida: Partida }) {
   const { memoria, duelo } = partida;
+  const perfil = RIVALES[partida.rivalId];
+  const animo = duelo.fase === 'finDuelo' ? null : animoDe(perfil, duelo.marcador.rival - duelo.marcador.jugador);
   const estados = [
     memoria.manosEnfadado > 0 ? { texto: M.enfadado, ayuda: M.ayudaEnfadado } : null,
     memoria.ofendidaHastaMano >= duelo.numeroMano ? { texto: M.estadoOfendida, ayuda: M.ayudaOfendida } : null,
+    animo === 'crecido' ? { texto: M.crecido, ayuda: M.ayudaCrecido(Boolean(perfil.seVieneArriba)) } : null,
+    animo === 'arrugado' ? { texto: M.arrugado, ayuda: M.ayudaArrugado } : null,
   ].filter((e) => e !== null);
   if (estados.length === 0) return null;
   return (
@@ -518,12 +595,17 @@ function PanelFinal({
   rivalActual,
   onSiguiente,
   onOtroDuelo,
+  alAcabar,
+  onSalir,
 }: {
   duelo: EstadoDuelo;
   textos: TextosRival;
   rivalActual: IdRival;
   onSiguiente: () => void;
   onOtroDuelo: (rival: IdRival) => void;
+  /** En la gira: al acabar el duelo se sigue con la gira (en vez de revancha). */
+  alAcabar: (() => void) | null;
+  onSalir: () => void;
 }) {
   if (duelo.fase !== 'finMano' && duelo.fase !== 'finDuelo') return null;
   const nombre = (lado: Lado) => (lado === 'jugador' ? M.tu : textos.nombre);
@@ -575,14 +657,100 @@ function PanelFinal({
           <BotonApuesta variante="gualda" className="final__boton" onClick={onSiguiente} autoFocus>
             {M.botones.siguienteMano}
           </BotonApuesta>
+        ) : alAcabar ? (
+          <BotonApuesta variante="gualda" className="final__boton" onClick={alAcabar} autoFocus>
+            {ES.gira.finDuelo}
+          </BotonApuesta>
         ) : (
           <>
             <BotonApuesta variante="gualda" className="final__boton" onClick={() => onOtroDuelo(rivalActual)} autoFocus>
               {M.botones.revancha}
             </BotonApuesta>
             <ListaDeRivales actual={rivalActual} titulo={M.contra} onElegir={onOtroDuelo} sinElActual />
+            <BotonApuesta variante="rendirse" className="final__boton" onClick={onSalir}>
+              {ES.gira.mesa.portada}
+            </BotonApuesta>
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * La bolsa (gira): un botón redondo arriba a la izquierda con cuántas cosas se pueden usar ahora.
+ * Al tocarlo se abre el panel con el compañero y lo que llevas.
+ */
+function BotonBolsa({ partida, bolsa, onAbrir }: { partida: Partida; bolsa: Bolsa; onAbrir: () => void }) {
+  const usables =
+    bolsa.unUso.filter((id) => puedeUsarObjeto(partida, id)).length +
+    bolsa.amuletos.filter((id) => puedeUsarObjeto(partida, id)).length +
+    (puedeUsarSena(partida) ? 1 : 0);
+  return (
+    <button type="button" className="mesa__bolsa" onClick={onAbrir} aria-label={`${G.bolsa.titulo}: ${usables}`}>
+      {G.bolsa.boton}
+      {usables > 0 && <span className="mesa__bolsa-cuenta">{usables}</span>}
+    </button>
+  );
+}
+
+/** El panel de la bolsa: la seña del compañero y cada objeto, explicados, con su botón. */
+function PanelBolsa({
+  partida,
+  bolsa,
+  onUsar,
+  onSena,
+  onCerrar,
+}: {
+  partida: Partida;
+  bolsa: Bolsa;
+  onUsar: (id: IdObjeto) => void;
+  onSena: () => void;
+  onCerrar: () => void;
+}) {
+  const { companero } = partida.extras;
+  const cosas = [...bolsa.unUso, ...bolsa.amuletos];
+  return (
+    <div className="mesa__velo mesa__velo--bolsa" onClick={onCerrar}>
+      <div className="panel panel--sombra bolsa" role="dialog" aria-modal="true" aria-label={G.bolsa.titulo} onClick={(e) => e.stopPropagation()}>
+        <div className="bolsa__cabecera">
+          <b className="bolsa__titulo">{G.bolsa.titulo}</b>
+          <button type="button" className="bolsa__cerrar" onClick={onCerrar}>
+            ✕ {G.bolsa.cerrar}
+          </button>
+        </div>
+        {companero && (
+          <div className="bolsa__fila">
+            <span className="marcador marcador--redondo bolsa__icono">{ES.companeros[companero].nombre.split(' ').at(-1)}</span>
+            <div className="bolsa__texto">
+              <b>{G.bolsa.senaDe(ES.companeros[companero].nombre, senasQueQuedan(partida), COMPANEROS[companero].senas)}</b>
+              <i>{ES.companeros[companero].sena}</i>
+            </div>
+            <BotonApuesta variante="gualda" className="bolsa__boton" disabled={!puedeUsarSena(partida)} onClick={onSena}>
+              {G.bolsa.sena}
+            </BotonApuesta>
+          </div>
+        )}
+        {cosas.map((id, i) => {
+          const usable = OBJETOS[id].tipo !== 'amuleto';
+          return (
+            <div key={`${id}-${i}`} className="bolsa__fila">
+              <span className="marcador bolsa__icono">{ES.objetos[id].nombre.split(' ')[0]}</span>
+              <div className="bolsa__texto">
+                <b>{ES.objetos[id].nombre}</b>
+                <i>{ES.objetos[id].efecto}</i>
+              </div>
+              {usable ? (
+                <BotonApuesta className="bolsa__boton" disabled={!puedeUsarObjeto(partida, id)} onClick={() => onUsar(id)}>
+                  {G.bolsa.usar}
+                </BotonApuesta>
+              ) : (
+                <span className="bolsa__puesto">{G.bolsa.puesto}</span>
+              )}
+            </div>
+          );
+        })}
+        {cosas.length === 0 && <p className="bolsa__vacia">{G.bolsa.vacia}</p>}
       </div>
     </div>
   );

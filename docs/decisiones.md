@@ -347,6 +347,78 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - **Lo que le pasa en la gira:** si le ganaste a Aurelio, Aurelio le paga una ronda y Manolo se suelta una mano antes. Sustituye a «¡Se ha rajado!», que ya no encajaba.
 - **Los diseños:** en `gira.md`, el «Aspecto» de los personajes nuevos pasa a ser «Idea de aspecto», solo como punto de partida. Los cinco del juego llevan en el documento de diseño la nota de que se rediseñan.
 
+## Fase 4 · La gira, con la primera arena (13 de octubre de 2026)
+
+*Decidido por David:*
+
+- **Las pantallas:**
+  - el mapa A1 (como las arenas de Clash Royale);
+  - la taberna T1 (la estantería);
+  - la bolsa del prototipo M3, pero con el botón arriba a la izquierda, donde el M1 tenía la seña;
+  - las pantallas de elegir compañero (C) y de después del duelo (R), tal como estaban.
+
+  Los prototipos están en `referencias/prototipos-gira/`.
+- **Nombres de los compañeros:**
+  - el Pastor pasa a ser el Lazarillo;
+  - la Tabernera, la Recaudadora (de Hacienda);
+  - la Cotilla, la Maruja;
+  - el Sacristán, el Monaguillo;
+  - la Moza del Molino, la Moza;
+  - el Alguacil, el Militar;
+  - el Forastero, el Afilador.
+- «Hazlo»: con lo que había propuesto para la primera taberna (cinco objetos) y los dos compañeros del principio.
+
+*Decidido por mí al programarla* (todo se puede cambiar):
+
+- **Dónde va el código:**
+  - la gira es pura y está en `src/estado/gira.ts`, porque junta duelos, reales y guardado;
+  - la Libreta está en `src/estado/libreta.ts`;
+  - los datos están en `src/datos/gira.ts`, `objetos.ts` y `companeros.ts`.
+
+  CLAUDE.md la ponía en `nucleo/gira/`; lo he dejado anotado allí.
+- **La portada es nueva y hacía falta:**
+  - antes la web entraba directa al duelo;
+  - ahora se elige entre seguir o empezar la gira, un duelo suelto (contra cualquiera de los nueve, agrupados por arena) o la Libreta;
+  - `?rival=chema` sigue llevando directo a un duelo suelto.
+- **Rubén y Chema:**
+  - «se crece» (Rubén) y «se viene arriba» (Chema) se miran con el marcador: 5 piedras o más de ventaja;
+  - crecidos farolean el doble;
+  - Chema crecido, además, quiere más tus envites: +0,3 al valor para aceptar, sin contar los órdagos;
+  - Chema arrugado no farolea y quiere menos: −0,2;
+  - se avisa en el acta y junto al retrato: *¡CRECIDO!* o *ARRUGADO*.
+- **Dani pide mus siempre** la primera vez de cada mano, lleve lo que lleve. Después ya decide normal.
+- **Cuándo se usa cada cosa de la bolsa:**
+  - las bebidas, jugarretas y señas, durante una mano;
+  - el Orujo, en cualquier momento del duelo;
+  - mientras la bolsa está abierta, el rival espera.
+- **El Chato de vino** pone las cartas del rival boca arriba en la mesa durante esa mano. También las que robe al descartarse.
+- **La seña del Lazarillo** pone boca arriba una de sus cartas, elegida al azar, mientras la lleve en la mano.
+- **Los Apuntes de Chema:** se abren desde la bolsa y explican el siguiente tic. Sale su significado junto al retrato y en el acta. Una vez por duelo.
+- **La Boina** gana los empates de todos los lances. La casa de Don Rodrigo va después, así que en su Grande manda él.
+- **La Medalla** quita el primer «farol pillado» de cada duelo, también el de un órdago tuyo de farol. Si el órdago se pierde, ese −15 sigue.
+- **Los reales:**
+  - de un envite ganado se cobran solo los que se quisieron y se ganaron en el recuento, no los retirados con trato;
+  - de un farol que cuela se cobra cuando el rival dice «no quiero» a un envite tuyo de farol (lo mismo que sube la Cara);
+  - el órdago al triple de la Recaudadora suma 10 más a los 5 del órdago.
+- **La apuesta del forastero** se pierde si el rival se lleva algún lance de Grande en un recuento, o si pierdes el duelo.
+- **La plaza:**
+  - el timador decide al salir si su amuleto es falso;
+  - solo ofrece amuletos que no llevas, y si no te cabe no se puede comprar;
+  - la partida en la calle queda para más adelante.
+- **El premio del jefe:**
+  - el compañero que te ofrece es el otro de los dos del principio;
+  - el tuyo te deja la mitad, como en la taberna;
+  - el objeto raro solo se puede elegir si te cabe;
+  - la Honra, si te falta;
+  - mientras no esté el bar, después del premio la gira acaba con victoria.
+- **La Libreta** sube de nivel con 1, 4 y 10 veces vistas. Con 1, 3 y 6 se llenaba en un solo duelo contra Lucía, que tiene un único tic muy claro.
+- **El guardado:**
+  - la gira se guarda en cada paso fuera de la mesa;
+  - dentro, al final de cada mano, como el duelo suelto;
+  - si sales a mitad de mano, vuelves al final de la mano anterior, con lo de la bolsa tal como estaba entonces.
+- **Sin dibujo:** los personajes, los objetos y los compañeros que no tienen dibujo salen con un marcador (recuadro rojo de puntos con el nombre), como pide CLAUDE.md.
+- **Lo que pasa «En la gira» entre secuaces y jefes** no está programado, porque está sin confirmar. Por ejemplo, «Rubén le avisa».
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

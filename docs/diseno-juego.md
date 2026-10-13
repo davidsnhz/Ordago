@@ -1,8 +1,8 @@
 # Órdago — Documento de diseño
 
-13 de octubre de 2026 · @david · *versión 8: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7) las arenas nuevas con la Honra que no acaba la gira por perder contra un jefe (v8) y los nombres nuevos, con todos los personajes por diseñar desde cero (v9)*
+13 de octubre de 2026 · @david · *versión 10: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7), las arenas nuevas con la Honra (v8), los nombres nuevos (v9) y la fase 4, con la primera arena ya en el juego (v10)*
 
-> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Agustín) y 3 (IA completa, la Cara y los cinco rivales) están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de seguir. **Los cinco rivales ya tienen su arte** en la mesa, con varios de sus tics dibujados. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es la fase 4: la estructura de gira. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 9 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
+> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Agustín), 3 (IA completa, la Cara y los cinco rivales) y **[nuevo] 4 (la gira, con la primera arena entera)** están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de la gira. **Los cinco rivales del principio tienen su arte** en la mesa; los de la facultad salen con marcador hasta que estén sus dibujos. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es jugarla, ajustar números y, después, la fase 5: el pulido. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 10 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
 
 ## Visión y esencia
 
@@ -81,6 +81,15 @@ La gira recorre sitios reconocibles de España, cada uno con su identidad visual
   4. **El tapete [cambiado]** ocupa algo más del tercio de abajo de la pantalla (de 529 a 844 px), con margen por encima de las cartas del rival, que van boca abajo arriba del tapete, con aire entre ellas y tu mano.
   5. **Tu mano**, en abanico. **[cambiado]** Cartas más grandes (80 × 145 px en vez de 70 × 126, un 15 % más), sin llegar a la barra de botones.
   6. **La barra de acciones** (ver controles). Cuando le toca al rival dice *Le toca a Agustín…* en vez de quedarse vacía.
+- **[nuevo] Las pantallas de la gira** (elegidas por David entre prototipos, en `referencias/prototipos-gira/`):
+  - **La portada:** el letrero de Órdago y su lema, *SEGUIR LA GIRA* (si hay una guardada, con por dónde vas), *EMPEZAR LA GIRA*, *DUELO SUELTO* (contra quien quieras, agrupados por arena, sin Honra ni reales) y *LIBRETA*.
+  - **Elegir compañero (C):** los que tienes, con su pasiva y su seña, y abajo los que faltan por desbloquear.
+  - **El mapa (A1, como las arenas de Clash Royale):** la arena en curso ocupa la pantalla, con sus cuatro paradas en un camino punteado de abajo arriba hasta el jefe (*AQUÍ ESTÁS* en la de ahora, ✓ las ganadas, ✕ las perdidas, candado las que faltan); la siguiente arena asoma arriba tapada por la niebla (*Gana a Chema para entrar*). Arriba, la Honra, los reales, la Cara y el compañero; abajo, quién viene, lo que da ganarle y *¡A LA MESA!*.
+  - **En la mesa, la bolsa (M3):** un botón redondo arriba a la izquierda, con cuántas cosas se pueden usar ahora. Al tocarlo se abre un panel con la seña del compañero y cada objeto explicado, con su botón; mientras está abierto, el rival espera. Arriba a la derecha, *SALIR* a la portada (se guarda al final de cada mano).
+  - **Después del duelo (R):** lo que cobras y por qué, cómo vas de reales, Honra y Cara, lo apuntado en la Libreta y adónde vas: la taberna, la plaza o la era.
+  - **La taberna (T1):** dos baldas con lo que hay a la venta, la ficha de lo que tocas (comprar o vender) con *OTRA RONDA*, y tu bolsa abajo con los huecos.
+  - **La plaza, la era, el premio del jefe y el final:** una ficha en el centro.
+  - **La Libreta:** una hoja de cuaderno con lo apuntado de cada rival.
 - **Herramientas de pruebas:** los botones Rival, Depurar y **Tics [nuevo]** son solo para probar el juego mientras se hace. Tics enseña seguidos todos los tics del rival, para revisar su arte sin esperar a que salgan jugando. Salen en desarrollo o con `?pruebas` en la dirección (*ordago-game.vercel.app/?pruebas*); en el juego normal no están.
 - **El rival es lo más importante de la pantalla** porque es donde están los tics. Necesita animaciones sutiles: parpadeo, respiración, manos, mirada. Cada tic es una animación propia.
   - **Lo que ya hay [nuevo]:** el rival **respira** (se ensancha un pelo y vuelve, cada 4 segundos) y **parpadea** cada pocos segundos. Cada tic dibujado es un **cambio de pose con un fundido**: *Agustín se lleva la mano a la barba* y, pasado el tic, vuelve a su postura. Algunos se mueven en varios fotogramas (*Aurelio levanta el sombrero*, *golpea dos veces con la vara*) y otros llevan un efecto encima (*le brilla el diente de oro*, *el puro de Don Rodrigo echa humo*). Los gestos de ojos van pintados sobre el retrato: *Doña Ignacia entorna los ojos y se inclina hacia ti*, *Don Rodrigo pone los ojos en blanco hacia arriba*.
@@ -281,6 +290,8 @@ Ningún tic es 100 % fiable. Si lo fueran, el juego sería memorizar. Con un 70�
 
 Cada vez que ves un tic y luego se enseñan las cartas, el juego te deja anotarlo en la Libreta del rival. Las notas se rellenan poco a poco («Se rasca la barba… ¿cuando lleva pares?») y se confirman con más observaciones.
 
+**[nuevo] Cómo funciona en el juego:** se apunta solo, al acabar cada duelo (de la gira o suelto). Cada tic que viste en una mano que llegó a enseñar las cartas (recuento u órdago) cuenta una vez; con el Lazarillo, dos. La nota tiene tres niveles: con 1 vez, el gesto (*Mordisquea el boli… ¿qué querrá decir?*); con 4, lo que puede querer decir (*Mordisquea el boli… ¿pares o mejor?*); y con 10, lo que significa y cuánto acierta según lo que has visto (*Mordisquea el boli: pares o mejor (acierta 9 de cada 10)*). Después de cada duelo sale lo que ha subido, y se puede leer entera desde la portada o el mapa.
+
 La Libreta persiste entre giras. Es tu progresión como jugador: la segunda vez que te enfrentas a la Viuda ya sabes algo de ella. Algunos rivales tienen tics que cambian (Don Rodrigo; en la gira, también Doña Isabel y el abuelo Pepe, que a mitad del duelo hace señas falsas), para que la Libreta nunca lo resuelva todo.
 
 ### Mirar al rival
@@ -322,10 +333,11 @@ El compañero es el equivalente a los comodines de Balatro, pero con sabor a mus
 - **Solo uno a la vez.** Empiezas la gira eligiendo uno entre los desbloqueados.
 - **En la taberna se compran y se cambian** a medida que avanzas por las arenas. Si compras uno, el tuyo se despide y te deja la mitad de lo que costó. Ganar a un jefe también puede darte uno nuevo, si eliges ese premio.
 - Cada compañero tiene una **habilidad pasiva** y una **seña** que se usa un número limitado de veces por duelo.
+- **[nuevo] En el juego** están los dos del principio: **el Lazarillo** (la Libreta cuenta doble; su seña te enseña una carta del rival, que se ve boca arriba en la mesa) y **la Recaudadora**, de Hacienda (+2 reales por duelo ganado; su seña hace que el próximo órdago que ganes cobre el triple). **[cambiado]** Nombres puestos por David el 13 de octubre de 2026: el Pastor pasa a ser el Lazarillo; la Tabernera, la Recaudadora; la Cotilla, la Maruja; el Sacristán, el Monaguillo; la Moza del Molino, la Moza; el Alguacil, el Militar; y el Forastero, el Afilador.
 
-**[cambiado] La lista de compañeros está en [La gira](gira.md)**, con su pasiva, su seña, cómo se desbloquea y su precio, para ir cambiándola sin tocar este documento. Son once: el Pastor y la Tabernera (desde el principio), el Tahúr, el Jubilado (antes, el Abuelo: cambia de nombre para no confundirlo con el abuelo de la familia), la Moza del Molino, el Sacristán, el Veterano, el Forastero y tres nuevos (la Cotilla, el Alguacil y el Dulzainero). Lo decidido sobre el Tahúr y el Veterano está allí y en «Preguntas abiertas».
+**[cambiado] La lista de compañeros está en [La gira](gira.md)**, con su pasiva, su seña, cómo se desbloquea y su precio, para ir cambiándola sin tocar este documento. Son once: el Lazarillo y la Recaudadora (desde el principio), el Tahúr, el Jubilado (antes, el Abuelo: cambia de nombre para no confundirlo con el abuelo de la familia), la Moza, el Monaguillo, el Veterano, el Afilador y tres nuevos (la Maruja, el Militar y el Dulzainero). Lo decidido sobre el Tahúr y el Veterano está allí y en «Preguntas abiertas».
 
-La idea es que cada compañero empuje a un estilo distinto, para que dos giras no se jueguen igual. Combinado con los objetos, salen las sinergias propias de un roguelike: Tahúr con objetos de descarte, Tabernera con objetos de órdago, Pastor con objetos de lectura.
+La idea es que cada compañero empuje a un estilo distinto, para que dos giras no se jueguen igual. Combinado con los objetos, salen las sinergias propias de un roguelike: Tahúr con objetos de descarte, Recaudadora con objetos de órdago, Lazarillo con objetos de lectura.
 
 ## Objetos de taberna y economía
 
@@ -338,6 +350,8 @@ Los objetos se compran con reales en la taberna y son la segunda capa de constru
 | Amuletos | Pasivos; unos te ayudan y otros van contra el rival. *Ejemplo: la «Carta del gobernador» quita a los jefes su regla especial* | Toda la gira | **[cambiado]** 2, compartidos con los objetos raros |
 | Barajas | Cambian la baraja | Toda la gira | 1 |
 | **[nuevo]** Objetos raros | El premio de cada jefe (los Apuntes de Chema, la Jarra de Manolo…) | Toda la gira | Los mismos 2 que los amuletos |
+
+**[nuevo] En el juego** están los cinco de la primera taberna: el Orujo (+15 de Cara), el Chato de vino (el rival canta su mano: sus cartas se ven boca arriba esa mano), Darle conversación (esa mano no puede tirar órdago), la Medalla de la Virgen y la Boina de la suerte; y los Apuntes de Chema como premio. Las bebidas y jugarretas se usan desde la bolsa, en cualquier momento de una mano (el Orujo, también entre manos).
 
 **[cambiado] El catálogo de objetos, con su efecto y su precio, está en [La gira](gira.md)**, junto con cómo funciona la taberna (cuatro cosas a la venta, «otra ronda» para cambiarlas y vender por la mitad). **[cambiado]** Decididos por David: la Medalla de la Virgen (la primera vez en cada duelo que te pillan un farol, tu Cara no baja; 9 reales), el Chato de vino (el rival canta su mano; 4 reales), el Caldo de la abuela (si el rival llega a 20, se juega hasta 30), la Ristra de ajos (los rivales no hacen tics falsos) y la Gorra calada (7 reales). La Gaseosa y el Reloj de bolsillo, rehechos para que sirvan de algo.
 
@@ -584,6 +598,18 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
   Con la cuota, envidar dos en todos los lances ya no compensa: el farolero gana lo mismo o menos que el sensato, salvo un poco contra Don Francisco (5 puntos, que con 300 duelos está cerca del ruido de la medida).
 
+**[nuevo] Los cuatro de la facultad** (300 duelos de cada uno contra el jugador sensato, 13 de octubre de 2026). La dificultad sube nivel a nivel, como se buscaba:
+
+| Rival | Gana | Manos por duelo | Órdago suyo | Acepta tus envites | Tics por mano |
+| --- | --- | --- | --- | --- | --- |
+| Lucía | 52 % | 4,3 | 8 % de manos | 54 % | 1,7 |
+| Dani | 55 % | 4,0 | 8 % | 56 % | 0,5 |
+| Rubén | 58 % | 3,5 | 16 % | 46 % | 2,0 |
+| Chema | 60 % | 3,4 | 17 % | 41 % | 1,8 |
+
+- **Contra el farolero** que envida dos en todos los lances, ninguno de los cuatro se deja: el farolero gana lo mismo que el sensato (50 % contra Lucía, 47 % contra Dani, 48 % contra Rubén y 46 % contra Chema).
+- **Hay que comprobarlo jugando.** El sensato no lee tics, y los de la facultad hacen muchos y muy claros (Lucía y Chema, casi dos por mano), así que a una persona que se fije le costarán menos. Dani hace pocos porque solo los dispara el 31 y los duples.
+
 ## Progresión, plataforma y prototipo
 
 ### Progresión entre giras
@@ -598,15 +624,15 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
 - **Plataforma:** de momento, **navegador** (móvil en vertical; en escritorio se ve centrado) y sin conexión, como PWA. Publicado en https://ordago-game.vercel.app. Más adelante se empaquetará para móvil.
 - **Icono de la aplicación [nuevo]:** la moneda de oros sobre el marrón de la taberna. Al añadir la web a la pantalla de inicio del móvil (en Safari, *Compartir → Añadir a pantalla de inicio*; en Chrome, *Instalar aplicación*) sale con ese icono, con el nombre *Órdago*, a pantalla completa y en vertical. Los iconos se generan con `npm run iconos`. Falta que funcione sin conexión (el *service worker*).
-- **Tecnología:** TypeScript + React + Vite, con un motor puro y reproducible (cada partida sale de una semilla) y 291 pruebas automáticas. Sustituye a Godot.
+- **Tecnología:** TypeScript + React + Vite, con un motor puro y reproducible (cada partida sale de una semilla) y **[cambiado]** 345 pruebas automáticas. Sustituye a Godot.
 - **Controles:**
   - Tocar una carta para marcarla en el descarte.
   - **Barra de acciones abajo, al estilo Offsuit:** en una fila, solo los botones que tocan en cada momento (MUS · CORTO, PASO · ENVIDO, NO QUIERO · QUIERO · MÁS). Cada botón ocupa lo que pide su texto.
   - **Cuánto envidar, al estilo Offsuit:** al pulsar ENVIDO o MÁS se abre, sobre el tapete y sin tapar tu mano, un selector con dos botones rápidos (*ENVIDO DOS* y *ENVIDO TRES*, o *DOS MÁS* y *TRES MÁS*) y una barra para elegir **cualquier cantidad del 4 al 19**, con − y + para afinar y el número encima del tirador. El botón de abajo confirma (*ENVIDO SIETE*). Al subir, el selector recuerda lo que ya hay en juego. Sustituye a las cuatro fichas de 2, 3, 5 y 10.
   - **El botón de Órdago, pequeño y aparte en la esquina:** se tira manteniéndolo pulsado un segundo mientras se llena (con teclado, manteniendo Intro o Espacio), para que nunca se pulse sin querer y tirarlo se sienta como un gesto. Sustituye al deslizar hacia arriba.
-  - **Al acabar el duelo:** sale el resultado con **REVANCHA** (el mismo rival, de cero) y debajo los otros rivales. El botón «Rival» de arriba es solo del modo de pruebas.
+  - **Al acabar el duelo:** en el duelo suelto sale el resultado con **REVANCHA** (el mismo rival, de cero), los otros rivales y *PORTADA*; **[nuevo]** en la gira, *SEGUIR*, que lleva a lo que se cobra. El botón «Rival» de arriba es solo del modo de pruebas (y no sale en la gira).
   - Mantener pulsado el retrato del rival para mirarle.
-  - Partidas guardadas automáticamente al final de cada mano, cuando aparece el recuento con las cartas de los dos.
+  - Partidas guardadas automáticamente al final de cada mano, cuando aparece el recuento con las cartas de los dos. **[nuevo]** La gira se guarda además en cada paso (mapa, taberna, plaza…), y la Libreta, aparte, para siempre. *?rival=chema* en la dirección lleva directo a un duelo suelto.
 
 ### Plan de prototipo
 
@@ -615,8 +641,8 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 1. ✅ **Hecho. Motor de mus:** baraja, reparto, mus, los cuatro lances y el recuento. Sin gráficos: TypeScript puro con pruebas. Probar que las reglas son correctas.
 2. ✅ **Hecho. Un duelo jugable:** interfaz fea, el Herrero con sus 2 tics como rectángulos que parpadean, envites y órdago. **Esta es la prueba clave:** si un duelo de 5 minutos ya es divertido, hay juego.
 3. ✅ **Hecho. IA completa y la Cara:** los 5 parámetros, la memoria y el medidor de Cara, con los cinco rivales y sus reglas. Además, la mesa se ha pasado a vertical.
-4. ⏭️ **Siguiente. Estructura de gira [cambiado]:** la primera arena completa, **[cambiado]** la facultad, con sus 3 secuaces (Lucía, Dani y Rubén) y su jefe (Chema); la taberna con 5 objetos (al menos uno contra el rival) y 2 compañeros (el Pastor y la Tabernera); el mapa en vertical como las arenas; la Libreta, los reales y la Honra. Los cuatro son nuevos, así que salen con marcador hasta que estén sus dibujos.
-5. **Arte y sonido de la primera arena:** retratos animados, mesa, cartas propias, música. Esto sirve como demo vertical. **[cambiado]** Adelantado: los cinco rivales ya tienen retrato y parte de sus tics (ver «Los tics del rival»). **[cambiado]** Aquí va el pulido a fondo (animaciones, arte de los rivales como en un juego profesional, la escena del órdago): David decidió el 12 de octubre de 2026 comprobar primero que la gira es divertida y luego ponerla bonita.
+4. ✅ **[cambiado] Hecho. Estructura de gira:** la primera arena completa, **[cambiado]** la facultad, con sus 3 secuaces (Lucía, Dani y Rubén) y su jefe (Chema); la taberna con 5 objetos (al menos uno contra el rival) y 2 compañeros (el Lazarillo y la Recaudadora); el mapa en vertical como las arenas; la Libreta, los reales y la Honra. Los cuatro son nuevos, así que salen con marcador hasta que estén sus dibujos. **[nuevo]** Hecho el 13 de octubre de 2026, con la portada, el duelo suelto, la plaza (sin la partida en la calle), la era, el premio de Chema y el final; lo que pasa «En la gira» entre secuaces y jefes queda para cuando David lo confirme. Mientras no esté el bar, ganar a Chema acaba la gira con victoria.
+5. ⏭️ **Siguiente, después de jugar la gira y ajustar sus números. Arte y sonido de la primera arena:** retratos animados, mesa, cartas propias, música. Esto sirve como demo vertical. **[cambiado]** Adelantado: los cinco rivales ya tienen retrato y parte de sus tics (ver «Los tics del rival»). **[cambiado]** Aquí va el pulido a fondo (animaciones, arte de los rivales como en un juego profesional, la escena del órdago): David decidió el 12 de octubre de 2026 comprobar primero que la gira es divertida y luego ponerla bonita.
 6. **Resto del contenido:** las otras 4 arenas, todos los compañeros y objetos, progresión y dificultades.
 
 ### Preguntas abiertas
@@ -666,3 +692,4 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **Versión 7 (12 de octubre de 2026).** La visión del juego contada por David, ordenada al principio del documento. La gira pasa a **5 arenas de 4 niveles** (tres secuaces y su jefe, como las ciegas de Balatro), y los cinco rivales son los jefes. Confirmadas las tres vidas de Honra, un solo compañero a la vez que se compra y se cambia en la taberna, y que la «partida corta» es cada duelo a 20 piedras. Objetos que van contra el rival (las jugarretas y algunos amuletos) y objetos raros como premio de cada jefe. Nuevos reales por duelo según el nivel. El catálogo de la gira (arenas, 15 secuaces, taberna, plaza, objetos y compañeros, con tres compañeros nuevos) pasa a un documento propio, [La gira](gira.md), para ir cambiándolo. Decidido el orden: primero la gira y comprobar que es divertida; el pulido a fondo, en la fase 5.
 - **Versión 8 (13 de octubre de 2026).** Las arenas que propuso David: la facultad (el jefe es el que no entra en clase y vive en la cafetería), el bar (adultos; el jefe, de cuarenta y tantos, medio calvo y con barriga cervecera), una familia de la Montaña Palentina (la niña, la madre, el padre y el abuelo), las fiestas del pueblo con ancianos que llevan toda la vida jugando y el casino de la capital. Los cinco rivales que ya tenían dibujo se recolocan: Ruperto y Fulgencio en el bar, Doña Engracia y Don Anselmo en las fiestas y Don Bonifacio de jefe final. Perder contra un jefe ya no acaba la gira: cuesta Honra y se repite, y la gira solo termina sin Honra. Fuera la idea de saltarse secuaces. Dos huecos para bebidas y jugarretas y dos para amuletos y objetos raros. Decididos la Medalla de la Virgen (9 reales), el Chato de vino, el Caldo de la abuela, la Ristra de ajos y la Gorra calada; rehechos la Gaseosa y el Reloj de bolsillo; el timador y la monja en la plaza; el Abuelo pasa a llamarse el Jubilado. El detalle, en [La gira](gira.md), versión 2.
 - **Versión 9 (13 de octubre de 2026).** Nombres nuevos: Ruperto pasa a ser Agustín; Doña Engracia, Doña Ignacia; Don Anselmo, Don Francisco; Fulgencio, Aurelio, y Don Bonifacio, Don Rodrigo (también en el juego). En la gira cambian también Tomás, Pilar, el abuelo Teodoro, Don Severiano, el tío Paulino, Leandro, Doña Leonor y Don Ceferino. Todos los personajes se diseñarán de nuevo desde cero. Manolo juega con calma las dos primeras manos y luego a lo loco por la bebida. El Reloj de bolsillo cuesta 3 reales. David confirma las reglas de Chema, de la familia y del tío Arturo, y los objetos y paradas que se le preguntaron. El detalle, en [La gira](gira.md), versión 3.
+- **Versión 10 (13 de octubre de 2026).** Fase 4 hecha: la primera arena, la facultad, se juega entera. Lucía, Dani, Rubén y Chema con sus tics y sus reglas (Dani pide mus siempre; Rubén se crece; Chema se viene arriba o se arruga); la portada, elegir compañero, el mapa como las arenas, la mesa con la bolsa arriba a la izquierda, lo que se cobra después de cada duelo, la taberna, la plaza (forastero, fiesta, timador y monja), la era, el premio de Chema y el final de la gira; el Lazarillo y la Recaudadora, los cinco objetos de la primera taberna y los Apuntes de Chema; la Libreta, que se apunta sola; y el duelo suelto contra cualquiera de los nueve rivales. Nombres nuevos para siete compañeros (el Lazarillo, la Recaudadora, la Maruja, el Monaguillo, la Moza, el Militar y el Afilador).

@@ -28,6 +28,10 @@ export interface SituacionEnvite {
   ordagoDesdeMano?: number;
   /** Don Francisco: en este lance, si habla sin envite delante, envida siempre. */
   siempreEnvida?: boolean;
+  /** Se suma al valor para aceptar un envite (no un órdago): Chema crecido quiere más; arrugado, menos. */
+  ajusteAceptar?: number;
+  /** «Darle conversación»: en esta mano no puede tirar órdago. */
+  sinOrdago?: boolean;
 }
 
 export interface DecisionEnvite {
@@ -106,17 +110,17 @@ export function decidirEnvite(s: SituacionEnvite, p: ParametrosRival, azar: Azar
       return { accion: { tipo: 'mas', piedras }, motivo: `sube ${piedras} (F ${fmt(s.F)})`, farol: false, umbral };
     }
     if (s.aceptaTodo) return { accion: { tipo: 'quiero' }, motivo: 'enfadado: acepta todo', farol: false, umbral: IA.aceptar.umbral };
-    const valor = valorParaAceptar(s, p, azar);
+    const valor = valorParaAceptar(s, p, azar) + (s.ajusteAceptar ?? 0);
     return valor > IA.aceptar.umbral
       ? { accion: { tipo: 'quiero' }, motivo: `quiere (${fmt(valor)} > 0,5)`, farol: false, umbral: IA.aceptar.umbral, valor }
       : { accion: { tipo: 'noQuiero' }, motivo: `no quiere (${fmt(valor)} ≤ 0,5)`, farol: false, umbral: IA.aceptar.umbral, valor };
   }
 
   // Habla sin envite delante.
-  if (s.F > IA.ordago.fuerzaMinima && azar.probabilidad(IA.ordago.porAgresividad * p.agresividad)) {
+  if (!s.sinOrdago && s.F > IA.ordago.fuerzaMinima && azar.probabilidad(IA.ordago.porAgresividad * p.agresividad)) {
     return { accion: { tipo: 'ordago' }, motivo: `órdago con F ${fmt(s.F)}`, farol: false, umbral };
   }
-  if (s.diferencia <= -IA.ordago.desesperacion && azar.probabilidad(IA.ordago.farolPorFaroleo * p.faroleo)) {
+  if (!s.sinOrdago && s.diferencia <= -IA.ordago.desesperacion && azar.probabilidad(IA.ordago.farolPorFaroleo * p.faroleo)) {
     return { accion: { tipo: 'ordago' }, motivo: 'órdago de farol: va perdiendo', farol, umbral };
   }
   if (s.F > umbral) {

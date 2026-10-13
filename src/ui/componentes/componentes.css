@@ -585,3 +585,30 @@
     transition: none;
   }
 }
+
+/* ——— Marcador de arte pendiente (personajes, objetos y compañeros sin dibujo todavía) ——— */
+
+.marcador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  font: 700 10px system-ui, sans-serif;
+  letter-spacing: 0.5px;
+  color: var(--almagre);
+  background: var(--almagre-claro);
+  border: 2px dashed var(--almagre);
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
+.marcador--redondo {
+  border-radius: 50%;
+}
+
+.boton-apuesta--peque {
+  min-height: 40px;
+  padding: 5px 10px;
+  font-size: 16px;
+}

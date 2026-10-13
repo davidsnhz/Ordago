@@ -38,13 +38,13 @@ src/
     recuento.ts
     azar.ts          # generador con semilla: partidas reproducibles en pruebas
     ia/              # fuerza de mano, decisiones, memoria, tics
-    gira/            # etapas, paradas, Honra, reales, Cara, Libreta
   datos/             # rivales, compañeros, objetos y equilibrio en JSON o TS de solo datos
   ui/
     componentes/     # panel, botones, órdago de pulsación larga, lances, Cara, acta, carta
-    pantallas/       # título, mapa, mesa, órdago, taberna
+    pantallas/       # portada, mesa (con la bolsa), Libreta; gira/: mapa, taberna, plaza, resultado…
     estilos/         # tokens de la guía de estilo como variables CSS
-  estado/            # estado global de la partida y conexión núcleo ↔ interfaz
+  estado/            # la partida (un duelo), la gira (gira.ts: arenas, paradas, Honra, reales, bolsa),
+                     # la Libreta (libreta.ts), el guardado y los hooks que las conectan con la interfaz
 public/
   arte/              # cartas, palos, marca, fuentes y personajes (estos los genera npm run personajes)
 pruebas/
@@ -69,7 +69,7 @@ Sigue el plan de prototipo del documento y no avances de fase sin que la anterio
 1. **Motor de mus** con pruebas exhaustivas: orden de cartas a 8 reyes, pares, juego (31 > 32 > 40 > 37 > … > 33), punto, empates para el que es mano, piedras en paso, «no quiero» y recuento en orden de lances, con victoria a 20 a mitad de recuento.
 2. **Un duelo jugable** contra Agustín (antes, Ruperto), con interfaz de la guía, tics como efectos de marcador, envites y órdago.
 3. **IA completa y la Cara**, con los cinco rivales. Añade un modo de depuración que muestre la fuerza F y la decisión de la IA.
-4. **Estructura de gira**: la primera arena completa (3 secuaces y su jefe) con taberna, 5 objetos y 2 compañeros.
+4. **Estructura de gira** (hecha): la primera arena completa (3 secuaces y su jefe) con taberna, 5 objetos y 2 compañeros.
 5. **Pantallas** de título, mapa, órdago y taberna, más sonido provisional.
 6. **Resto del contenido** y progresión.
 

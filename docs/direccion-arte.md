@@ -13,9 +13,9 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Piezas de mesa: botones, piedras, lances, Cara, paneles | **Cerradas** | esta guía + `00_guia_estilo` |
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
 | Rivales (los cinco del juego) | **Cerrado el estilo**. **Diseños por rehacer desde cero** (13 de octubre de 2026); hasta entonces, los dibujos de ahora | `assets/personajes/` → `npm run personajes` |
-| Compañeros, secuaces y tabernera | **PENDIENTE** | usar marcadores |
+| Compañeros, secuaces (los cuatro de la facultad ya juegan), tabernera y sucesos de la plaza | **PENDIENTE** | marcador: recuadro de puntos almagre con el nombre |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
-| Mapa ilustrado | Provisional | `referencias/pantallas/img/mapa.webp` |
+| Mapa ilustrado | Provisional: la facultad con formas planas (el edificio, la arena, el bar en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
 
 Todo lo pendiente se dibuja con **marcadores** (rectángulo de trazo discontinuo en almagre, fondo nogal translúcido y el texto «ARTE PENDIENTE»), detrás de una interfaz que permita cambiar el arte sin tocar código.
 
@@ -105,6 +105,16 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
    - Abajo: tu mano.
 4. **¡Órdago!** (`04_ordago`): pantalla almagre con rayos, el texto «¡ÓRDAGO!» gigante con sombra dura, el rival en el centro, tu jugada a la izquierda, lo que está en juego a la derecha y una barra de tensión debajo.
 5. **La taberna** (`05_taberna`): tabernera a la izquierda, dos baldas de madera (bebidas y amuletos) con etiquetas de papel ladeadas, y la bolsa del jugador a la derecha.
+
+**En vertical (13 de octubre de 2026).** David eligió entre prototipos (`referencias/prototipos-gira/`) y así están en el juego:
+
+- **La portada:** en papel, el letrero grande y el lema en cursiva; debajo, los botones (el principal en gualda).
+- **Elegir compañero (C):** cartas de papel con su marcador, el nombre en letra gruesa y, en versalitas almagre, *Siempre* y *Su seña*; la elegida, con anillo gualda. Abajo, los que faltan, con «?» en círculos de puntos.
+- **El mapa (A1):** como las arenas de Clash Royale. La arena en curso de arriba abajo en su color (la facultad, ocre de piedra de Salamanca con su edificio de arcos); los niveles, discos sobre un camino punteado de tinta; la siguiente arena arriba, en madera con niebla de papel y cinta negra. Cintas en almagre con el nombre de la arena. La barra de la gira (Honra en bolitas almagre, reales con la moneda de oros, Cara y compañero) es la de las referencias.
+- **La bolsa en la mesa (M3):** botón redondo gualda, arriba a la izquierda, con una cuenta en almagre; al abrirla, un panel de papel que sube desde abajo. *SALIR* va enfrente, discreto, con borde de puntos.
+- **Después del duelo (R):** el resultado en letra gruesa (verde si ganas, almagre si pierdes), la cuenta de reales en un panel, tres cajitas con reales, Honra y Cara, la Libreta como hoja de cuaderno con renglones azules y las tres paradas como botones de papel.
+- **La taberna (T1):** la de las referencias, en vertical: las baldas arriba, la ficha de lo que tocas en medio y tu bolsa abajo.
+- **La plaza, la era, el premio y el final:** una ficha de papel en el centro, con el lugar en versalitas almagre.
 
 ## Personajes
 

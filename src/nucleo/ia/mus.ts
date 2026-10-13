@@ -38,8 +38,8 @@ export function cumplePatron(patron: PatronCorte, cartas: readonly Carta[], modo
 
 export interface DecisionMus {
   corta: boolean;
-  /** Patrón por el que corta; `farol` si corta sin tener nada de su lista. */
-  motivo: PatronCorte | 'farol' | null;
+  /** Patrón por el que corta; `farol` si corta sin tener nada de su lista; `siempre` si pide mus por costumbre (Dani). */
+  motivo: PatronCorte | 'farol' | 'siempre' | null;
 }
 
 export function decidirMus(estilo: EstiloMus, cartas: readonly Carta[], modo: ModoReyes, azar: Azar): DecisionMus {

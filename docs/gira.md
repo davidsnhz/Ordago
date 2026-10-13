@@ -1,34 +1,28 @@
 # Órdago — La gira
 
-13 de octubre de 2026 · @david · *versión 3: nombres nuevos, todos los personajes por diseñar desde cero, Manolo se va soltando con la bebida y el Reloj de bolsillo baratillo*
+13 de octubre de 2026 · @david · *versión 4: los compañeros con sus nombres nuevos y la primera arena, la facultad, ya en el juego*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
-> **Las marcas son de esta versión:** **[cambiado]** es lo que me has pedido ahora, y **[nuevo]**, lo que he añadido yo para encajarlo. Los nombres nuevos ya están puestos en todo el documento, sin marca:
->
-> | Antes | Ahora | Antes | Ahora |
-> | --- | --- | --- | --- |
-> | Ruperto | Agustín | Don Severiano | Don Agapito |
-> | Fulgencio | Aurelio | El tío Paulino | El tío Arturo |
-> | Tomás | Fernando | Leandro | Sergio |
-> | Pilar | María | Doña Leonor | Doña Isabel |
-> | El abuelo Teodoro | El abuelo Pepe | Don Ceferino | Don Pelayo |
-> | Doña Engracia | Doña Ignacia | Don Bonifacio | Don Rodrigo |
-> | Don Anselmo | Don Francisco | | |
+> **Las marcas son de esta versión:** **[cambiado]** es lo que me has pedido ahora. Los nombres de los personajes de la versión anterior (Agustín, Aurelio, Doña Ignacia, Don Francisco, Don Rodrigo, el abuelo Pepe…) siguen puestos en todo el documento.
 >
 > **Ya confirmado por ti:**
 > - las arenas y su orden;
 > - la Honra;
 > - las reglas de Chema, de la familia (las señas y los faroles que se cuentan) y del tío Arturo;
-> - los objetos que revisaste.
+> - los objetos que revisaste;
+> - **[cambiado]** las pantallas: el mapa A1, la taberna T1, la bolsa arriba a la izquierda, y las pantallas de elegir compañero y de después del duelo (en `referencias/prototipos-gira/`);
+> - **[cambiado]** los nombres de los compañeros: el Lazarillo, la Recaudadora, la Maruja, el Monaguillo, la Moza, el Militar y el Afilador.
 >
 > **Todavía es propuesta mía, sin confirmar:**
 > - los tics y manías de los secuaces;
 > - lo que pasa «En la gira» entre secuaces y jefes;
 > - los objetos raros;
-> - los compañeros, que aún no habías visto.
+> - lo que hace cada compañero.
 >
 > Los números (precios, reales, parámetros) son un punto de partida: se ajustan jugando.
+
+> **[cambiado] Lo que ya se puede jugar (fase 4).** La primera arena entera, la facultad: Lucía, Dani, Rubén y Chema con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de Chema y el final de la gira. En la taberna hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte, más los Apuntes de Chema como premio. Los compañeros son el Lazarillo y la Recaudadora. En la plaza salen el forastero, la fiesta patronal, el timador y la monja; la partida en la calle, todavía no. Lo que pasa «En la gira» entre secuaces y jefes tampoco está, porque está sin confirmar. Al ganar a Chema, la gira acaba con victoria hasta que esté el bar.
 
 ## 1. Cómo es una gira
 
@@ -74,7 +68,7 @@ Las arenas son las que propusiste. Los cinco rivales que ya estaban en el juego 
 
 **Cómo leer las fichas.** Los números son los cinco parámetros de la IA, de 0 a 10, como en el documento de diseño: **A** agresividad (cuánto envida con buenas cartas), **F** faroleo, **M** miedo al órdago, **Me** memoria (cuánto se acuerda de tus faroles) y **O** ojo (cuánto te pilla). Cada tic dice qué lo provoca y cuántas veces de cada 10 acierta.
 
-**[cambiado] El diseño de todos los personajes se hace de nuevo desde cero**, también el de los cinco que ya tienen dibujo. Lo que pone en «Idea de aspecto» es solo un punto de partida para cuando los diseñes. Mientras no estén los dibujos nuevos, los personajes nuevos salen con un marcador y esos cinco, con su dibujo de ahora. De los cinco pongo un resumen; su ficha completa está en el documento de diseño.
+**El diseño de todos los personajes se hace de nuevo desde cero**, también el de los cinco que ya tienen dibujo. Lo que pone en «Idea de aspecto» es solo un punto de partida para cuando los diseñes. Mientras no estén los dibujos nuevos, los personajes nuevos salen con un marcador y esos cinco, con su dibujo de ahora. De los cinco pongo un resumen; su ficha completa está en el documento de diseño.
 
 ---
 
@@ -158,16 +152,16 @@ El bar de toda la vida: barra de zinc, servilletas por el suelo, raciones en la 
 #### Nivel 4 · Manolo, el Rey de la barra (jefe)
 
 - **Idea de aspecto:** cuarenta y tantos, medio calvo con cuatro pelos peinados de lado y barriga cervecera. Polo del equipo del pueblo, cadena de oro, un palillo en la boca y la caña en la mano.
-- **Cómo juega [cambiado]:** empieza con mucha calma y, caña a caña, se va soltando. · A 6 · F 5 · M 4 · Me 4 · O 5 (cambian con la bebida: ver su regla)
+- **Cómo juega:** empieza con mucha calma y, caña a caña, se va soltando. · A 6 · F 5 · M 4 · Me 4 · O 5 (cambian con la bebida: ver su regla)
 - **Tics:**
   - Se rasca la barriga → lleva una mano fuerte (7 de cada 10).
   - Se repeina los cuatro pelos → está faroleando (7 de cada 10).
   - Da un trago a la caña → lleva juego (7 de cada 10).
-- **Regla [cambiado], «Una caña más»:**
+- **Regla, «Una caña más»:**
   - **Las dos primeras manos juega con mucha calma:** casi no farolea, envida solo con buenas cartas y quiere poco (A 4 · F 1).
-  - **Desde la tercera, por culpa de la bebida, juega a lo loco** (sale *¡ACHISPADO!*): farolea muchísimo, sube más y tira órdagos sin nada (A 9 · F 9 · M 2). **[nuevo]** Y, como va achispado, se le notan más los tics: salen siempre que tienen motivo.
+  - **Desde la tercera, por culpa de la bebida, juega a lo loco** (sale *¡ACHISPADO!*): farolea muchísimo, sube más y tira órdagos sin nada (A 9 · F 9 · M 2). Y, como va achispado, se le notan más los tics: salen siempre que tienen motivo.
   - *Ejemplo: en la primera mano te envida cinco: respétalo, que lleva cartas. En la cuarta te envida cinco: puede ser cualquier cosa, así que, si llevas algo, quiérelo.*
-- **En la gira [nuevo], «Aurelio le invita»:** si le ganaste a Aurelio, para consolarse le paga una ronda a Manolo, y Manolo se suelta una mano antes (desde la segunda).
+- **En la gira, «Aurelio le invita»:** si le ganaste a Aurelio, para consolarse le paga una ronda a Manolo, y Manolo se suelta una mano antes (desde la segunda).
 - **Premio, su objeto raro:** la Jarra de Manolo.
 - **Frase:** «Aquí, el que no quiere, paga la ronda.»
 
@@ -311,9 +305,9 @@ Terciopelo, lámparas y humo de puro. Aquí juegan los que lo saben todo de ti. 
 - **Tics:** empieza con los del Herrero; a las 10 piedras cambia a los del Cura; a las 15 ya no tiene tics, pero su puro echa más humo cuando lleva cartas buenas.
 - **Reglas:**
   - «Casa»: es mano en el primer reparto y gana los empates a la Grande.
-  - «Cartas de la casa»: una vez por duelo cambia en secreto su carta más baja por la más alta del mazo. Si le pillas (con el Alguacil, o con mucho Ojo), te llevas 5 piedras.
+  - «Cartas de la casa»: una vez por duelo cambia en secreto su carta más baja por la más alta del mazo. Si le pillas (con el Militar, o con mucho Ojo), te llevas 5 piedras.
   - Lee tu Libreta: conoce los tics que has apuntado y juega al revés de lo que esperas.
-- **Premio:** ganarle completa la gira y desbloquea la dificultad siguiente y al Forastero.
+- **Premio:** ganarle completa la gira y desbloquea la dificultad siguiente y al Afilador.
 - **Frase:** «En este pueblo no se mueve una carta sin que yo lo sepa.»
 
 ---
@@ -403,7 +397,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Boina de la suerte | Ganas los empates aunque no seas mano | 8 |
 | Navaja de Albacete | Los órdagos que ganas dan +1 de Honra (máximo 3) | 12 |
 | Pañuelo de hierbas | Ves si el rival tiene pares antes de que lo declare | 9 |
-| Reloj de bolsillo | Puedes mirar al rival el doble de tiempo sin que se dé cuenta, y sus tics duran más. *Con Doña Ignacia aguantas 4 segundos mirándola antes de que se ofenda, en vez de 2* | **[cambiado]** 3, baratillo |
+| Reloj de bolsillo | Puedes mirar al rival el doble de tiempo sin que se dé cuenta, y sus tics duran más. *Con Doña Ignacia aguantas 4 segundos mirándola antes de que se ofenda, en vez de 2* | 3, baratillo |
 | Gafas de culo de vaso | +1 nota automática en la Libreta por duelo | 6 |
 | Medalla de la Virgen | La primera vez en cada duelo que te pillan un farol, tu Cara no baja | 9 |
 | Hucha de barro | Al acabar cada arena, +1 real por cada 5 que tengas ahorrados (máximo +5). *Ejemplo: llegas al final de la arena con 23 reales y cobras 4* | 8 |
@@ -447,16 +441,16 @@ No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges 
 
 | Compañero | Pasiva | Seña (usos por duelo) | Estilo | Cómo se desbloquea | Precio |
 | --- | --- | --- | --- | --- | --- |
-| El Pastor | La Libreta se rellena el doble de rápido | Te enseña una carta del rival (1) | Lectura | Desde el principio | 8 |
-| La Tabernera | +2 reales por duelo ganado | Si ganas el próximo órdago, cobras el triple de reales (1) | Economía y órdagos | Desde el principio | 8 |
+| **[cambiado]** El Lazarillo (antes, el Pastor) | La Libreta se rellena el doble de rápido | Te enseña una carta del rival (1) | Lectura | Desde el principio | 8 |
+| **[cambiado]** La Recaudadora, de Hacienda (antes, la Tabernera) | +2 reales por duelo ganado | Si ganas el próximo órdago, cobras el triple de reales (1) | Economía y órdagos | Desde el principio | 8 |
 | El Tahúr | Una ronda de mus extra por mano | Cambias en secreto la carta que quieras por un rey del mazo. Si el rival tiene mucho Ojo y te pilla, la mano se acaba, nadie cobra nada de ella y el rival se lleva 5 piedras (2) | Riesgo y trampas | Ganar 3 faroles en un mismo duelo | 12 |
 | El Jubilado (antes, el Abuelo) | Los faroles pillados te quitan la mitad de Cara | «Ya me lo sé»: te dice si el rival lleva juego o no (1) | Farolear sin miedo | Llegar a la Montaña Palentina | 10 |
-| La Moza del Molino | Empiezas cada duelo con 2 piedras | Distrae al rival: no hace tics durante una mano, pero tampoco te lee a ti (2) | Agresivo y rápido | Ganar un duelo sin perder ningún lance | 10 |
-| El Sacristán | Ves cuándo el rival va a farolear (el retrato se oscurece un instante), con un 60 % de acierto | Repites el reparto de una mano (1) | Defensivo | Ganar a Don Francisco | 12 |
+| **[cambiado]** La Moza (antes, la Moza del Molino) | Empiezas cada duelo con 2 piedras | Distrae al rival: no hace tics durante una mano, pero tampoco te lee a ti (2) | Agresivo y rápido | Ganar un duelo sin perder ningún lance | 10 |
+| **[cambiado]** El Monaguillo (antes, el Sacristán) | Ves cuándo el rival va a farolear (el retrato se oscurece un instante), con un 60 % de acierto | Repites el reparto de una mano (1) | Defensivo | Ganar a Don Francisco | 12 |
 | El Veterano | Tus envites aceptados y ganados dan +1 piedra | «Órdago a la grande»: si llevas dos reyes (cualesquiera: los treses son reyes), tu órdago a la Grande no se puede rechazar (1) | Golpes grandes | Ganar 10 órdagos en total | 14 |
-| El Forastero | La Cara nunca baja de 30 | Cambia el lance en el que se juega el órdago después de que el rival lo acepte (1) | Caos | Completar una gira | 15 |
-| La Cotilla | Al empezar cada duelo te cuenta un tic del rival y te lo apunta en la Libreta | «¿Te has enterado?»: le cuenta al rival un chisme falso sobre ti y se olvida de tus faroles de este duelo (1) | Lectura y faroleo | Apuntar 10 tics en la Libreta | 10 |
-| El Alguacil | Delante de él no hay trampas: si Don Rodrigo cambia una carta, le pillas siempre (+5 piedras) | «¡Alto ahí!»: en esta mano el rival no puede subir ni tirar órdago (1) | Control del rival | Ganar a Aurelio sin aceptarle ningún trato | 12 |
+| **[cambiado]** El Afilador (antes, el Forastero) | La Cara nunca baja de 30 | Cambia el lance en el que se juega el órdago después de que el rival lo acepte (1) | Caos | Completar una gira | 15 |
+| **[cambiado]** La Maruja (antes, la Cotilla) | Al empezar cada duelo te cuenta un tic del rival y te lo apunta en la Libreta | «¿Te has enterado?»: le cuenta al rival un chisme falso sobre ti y se olvida de tus faroles de este duelo (1) | Lectura y faroleo | Apuntar 10 tics en la Libreta | 10 |
+| **[cambiado]** El Militar (antes, el Alguacil) | Delante de él no hay trampas: si Don Rodrigo cambia una carta, le pillas siempre (+5 piedras) | «¡Alto ahí!»: en esta mano el rival no puede subir ni tirar órdago (1) | Control del rival | Ganar a Aurelio sin aceptarle ningún trato | 12 |
 | El Dulzainero | Tus órdagos van con redoble: el rival les tiene más miedo (Miedo al órdago +2) | «Una jota»: en esta mano, los tics del rival salen siempre que tienen motivo (2) | Presión y órdagos | Ganar 3 órdagos en una misma gira | 11 |
 
 **Lo que he cambiado en los compañeros** por las arenas nuevas:
@@ -464,22 +458,22 @@ No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges 
 - **Se desbloquea al llegar a la Montaña Palentina**, porque la Ribera del Duero ya no está en la gira.
 - **El resto se queda igual.** Como ahora solo hay dos huecos de amuleto, el compañero pesa más en cada gira, y por eso no he tocado sus precios.
 
-**Los que más fastidian al rival:** la Moza del Molino, el Alguacil, el Dulzainero y la Cotilla.
+**Los que más fastidian al rival:** la Moza, el Militar, el Dulzainero y la Maruja.
 
 **Sinergias**, que es lo que hace que cada gira sea distinta:
 
 - **El Tahúr + la Gorra calada:** te pillan menos las trampas.
-- **La Tabernera + la Navaja de Albacete o el Yesquero:** todo a los órdagos.
-- **El Pastor o la Cotilla + las Gafas de culo de vaso:** la Libreta se llena enseguida.
+- **La Recaudadora + la Navaja de Albacete o el Yesquero:** todo a los órdagos.
+- **El Lazarillo o la Maruja + las Gafas de culo de vaso:** la Libreta se llena enseguida.
 - **El Dulzainero + el Yesquero:** tus órdagos asustan más y, cuando no te los quieren, cobras 2 piedras más.
 - **El Jubilado + la Medalla de la Virgen:** casi no pierdes Cara por farolear.
-- **La Cotilla en la familia:** su «¿Te has enterado?» borra los faroles que la familia se ha ido contando.
+- **La Maruja en la familia:** su «¿Te has enterado?» borra los faroles que la familia se ha ido contando.
 - **La Ristra de ajos en la familia:** el padre y el abuelo dejan de hacer señas de mentira.
 - **El Agua del botijo contra Don Agapito y el tío Arturo**, que te leen antes que nadie.
 
 ## 6. Lo que habría que dibujar
 
-Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falten, el juego usa marcadores. **[cambiado]** Como todos los personajes se diseñan de nuevo desde cero, también entran Agustín, Aurelio, Doña Ignacia, Don Francisco y Don Rodrigo: hasta que estén, el juego usa sus dibujos de ahora.
+Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falten, el juego usa marcadores. Como todos los personajes se diseñan de nuevo desde cero, también entran Agustín, Aurelio, Doña Ignacia, Don Francisco y Don Rodrigo: hasta que estén, el juego usa sus dibujos de ahora.
 
 | Qué | Cuántos | Para cuándo |
 | --- | --- | --- |
@@ -488,7 +482,7 @@ Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falte
 | La familia: Martina, María, Fernando y el abuelo Pepe | 4 | Más adelante |
 | Las fiestas: Doña Ignacia, Don Francisco, Don Agapito y el tío Arturo | 4 | Más adelante |
 | El casino: Sergio, Doña Isabel, Don Pelayo y Don Rodrigo | 4 | Más adelante |
-| Compañeros | 11 (2 en la fase 4: el Pastor y la Tabernera) | Fase 4 y después |
+| Compañeros | 11 (2 en la fase 4: el Lazarillo y la Recaudadora) | Fase 4 y después |
 | La tabernera de la taberna y la monja de la plaza | 2 | Fase 4 la tabernera |
 | Iconos de objetos | Unos 30 | Fase 4 los primeros 5 |
 | Fondos de cada arena para el mapa | 5 | Fase 5 (pulido) |
@@ -511,3 +505,4 @@ Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falte
   - **Manolo:** juega con calma las dos primeras manos y luego, por la bebida, a lo loco.
   - **El Reloj de bolsillo,** baratillo (3 reales).
   - **Confirmados:** las reglas de Chema, de la familia y del tío Arturo; la Gaseosa; el Chato de vino; la monja; el Caldo; la parada antes de repetir contra un jefe; y el orden de las arenas.
+- **Versión 4 (13 de octubre de 2026).** David eligió las pantallas (el mapa A1, la taberna T1, la bolsa arriba a la izquierda, y elegir compañero y después del duelo tal como estaban) y cambió el nombre de siete compañeros: el Pastor pasa a ser el Lazarillo; la Tabernera, la Recaudadora (de Hacienda); la Cotilla, la Maruja; el Sacristán, el Monaguillo; la Moza del Molino, la Moza; el Alguacil, el Militar; y el Forastero, el Afilador. La primera arena ya se juega entera (fase 4).

@@ -45,7 +45,14 @@ li { margin: 2px 0; }
   const temporal = doc.md.replace(/\.md$/, '.html');
   fs.writeFileSync(temporal, html);
   const pdf = path.resolve(doc.pdf);
+  const antes = fs.existsSync(pdf) ? fs.statSync(pdf).mtimeMs : 0;
   execFileSync(edge, ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', `--print-to-pdf=${pdf}`, 'file:///' + path.resolve(temporal).split(path.sep).join('/')], { stdio: 'ignore' });
   fs.unlinkSync(temporal);
+  // Edge no dice nada si no puede escribir (por ejemplo, si el PDF está abierto en otro programa).
+  if (!fs.existsSync(pdf) || fs.statSync(pdf).mtimeMs === antes) {
+    console.warn(`OJO: no se ha podido escribir ${path.basename(pdf)}. ¿Está abierto en otro programa? Ciérralo y vuelve a lanzar npm run documento.`);
+    process.exitCode = 1;
+    continue;
+  }
   console.log('PDF:', pdf);
 }

@@ -3,7 +3,8 @@ import type { Lado } from '../nucleo/comun';
 import type { DecisionRival } from '../nucleo/ia/rival';
 import type { TicDisparado } from '../nucleo/ia/tics';
 import { tieneJuego, tienePares } from '../nucleo/mano';
-import { ES, type TextosRival } from '../textos/es';
+import { RIVALES } from '../datos/rivales';
+import { ES, nombreCarta, type TextosRival } from '../textos/es';
 import type { Partida, ResultadoPartida } from './partida';
 
 /**
@@ -29,8 +30,8 @@ export interface EstadoMesa {
   acta: LineaActa[];
   /** Tics que faltan por enseñar, en orden. */
   colaTics: TicDisparado[];
-  /** Tic que se está enseñando. */
-  tic: (TicDisparado & { clave: number }) | null;
+  /** Tic que se está enseñando; `explicado` si los Apuntes de Chema dicen qué significa. */
+  tic: (TicDisparado & { clave: number; explicado?: boolean }) | null;
   /** Última decisión del rival, para el modo de pruebas. */
   decision: DecisionRival | null;
   /** Último cambio de Cara, para enseñarlo junto a la marca de la barra. */
@@ -176,6 +177,28 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
     dice('rival', M.narra.ofendida(textos.nombre), textos.frases.ofendida);
     pasa(M.acta.ofendida);
   }
+  if (novedades.animo) {
+    const { despues } = novedades.animo;
+    const quiereTodo = Boolean(RIVALES[partida.rivalId].seVieneArriba);
+    if (despues === 'crecido') {
+      dice('rival', M.narra.crecido(textos.nombre), textos.frases.crecido);
+      pasa(M.acta.crecido(quiereTodo));
+    } else if (despues === 'arrugado') {
+      dice('rival', M.narra.arrugado(textos.nombre), textos.frases.arrugado);
+      pasa(M.acta.arrugado);
+    }
+  }
+  if (novedades.efecto) {
+    const N = ES.gira.narra;
+    const e = novedades.efecto;
+    if (e.tipo === 'orujo') dice('jugador', N.orujo);
+    if (e.tipo === 'chato') pasa(N.chato(textos.nombre));
+    if (e.tipo === 'conversacion') pasa(N.conversacion(textos.nombre));
+    if (e.tipo === 'apuntes') pasa(N.apuntes);
+    if (e.tipo === 'lazarillo') pasa(N.lazarillo(textos.nombre, nombreCarta(e.carta).toLowerCase()));
+    if (e.tipo === 'recaudadora') pasa(N.recaudadora);
+  }
+  if (novedades.medalla) pasa(ES.gira.narra.medalla);
   if (novedades.seTeNota) {
     pasa(M.acta.seTeNota);
     seTeNota = ++claveAviso;
@@ -199,9 +222,24 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
   };
 }
 
-/** Pasa el siguiente tic de la cola a la pantalla. */
+/**
+ * Pasa el siguiente tic de la cola a la pantalla. Si están abiertos los Apuntes de Chema, ese tic
+ * se explica (una vez por duelo) y se apunta en el acta qué significa.
+ */
 export function sacarTic(estado: EstadoMesa): EstadoMesa {
   const [siguiente, ...resto] = estado.colaTics;
   if (!siguiente) return estado;
-  return { ...estado, tic: { ...siguiente, clave: estado.claveTic + 1 }, claveTic: estado.claveTic + 1, colaTics: resto };
+  const { partida } = estado;
+  const explicado = partida.extras.explicarTic;
+  const tic = { ...siguiente, clave: estado.claveTic + 1, explicado };
+  if (!explicado) return { ...estado, tic, claveTic: estado.claveTic + 1, colaTics: resto };
+  const significado = textosDe(partida).significadoTics[siguiente.id] ?? '';
+  return {
+    ...estado,
+    partida: { ...partida, extras: { ...partida.extras, explicarTic: false, apuntesUsados: true } },
+    acta: [...estado.acta, { quien: null, texto: ES.gira.narra.explicado(significado) }].slice(-LINEAS_ACTA),
+    tic,
+    claveTic: estado.claveTic + 1,
+    colaTics: resto,
+  };
 }

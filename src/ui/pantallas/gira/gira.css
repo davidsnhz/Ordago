@@ -1,0 +1,1215 @@
+/*
+ * Pantallas de la gira, en píxeles del escenario vertical de 390 × 844. Salen de los prototipos
+ * elegidos por David (referencias/prototipos-gira): el mapa A1, la taberna T1, elegir compañero
+ * (C) y después del duelo (R).
+ */
+
+.pantalla {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  overflow: clip;
+  color: var(--tinta);
+  background-color: var(--papel-fondo);
+  background-image: var(--punteado-papel);
+  background-size: 6px 6px;
+}
+
+.pantalla--madera {
+  background-color: var(--taberna);
+  background-image: repeating-linear-gradient(90deg, transparent 0 63px, rgba(0, 0, 0, 0.35) 63px 66px);
+  background-size: auto;
+}
+
+.pantalla__abajo {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pantalla__titulo {
+  margin: 0;
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.pantalla__nota {
+  margin: 6px 0 0;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.fila-botones {
+  display: flex;
+  gap: 8px;
+}
+
+.fila-botones > * {
+  flex: 1;
+}
+
+/* ——— La barra de la gira: Honra, reales, Cara y compañero ——— */
+
+.hud {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  z-index: 20;
+  display: flex;
+  gap: 6px;
+}
+
+.hud__caja {
+  padding: 3px 8px 4px;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: 8px;
+  box-shadow: var(--sombra-dura);
+}
+
+.hud__titulo {
+  font-family: var(--letra-rotulo);
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.hud__valor {
+  font-family: var(--letra-grito);
+  font-size: 20px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.hud__compa {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud__compa .marcador {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  font-size: 7px;
+}
+
+.hud__compa b {
+  overflow: hidden;
+  font-family: var(--letra-rotulo);
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.05;
+}
+
+.honra {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.honra i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--almagre);
+  border: 2px solid var(--tinta);
+  box-sizing: border-box;
+}
+
+.honra i.honra__vacia {
+  background: transparent;
+}
+
+.moneda {
+  width: 18px;
+  height: 18px;
+  vertical-align: -3px;
+}
+
+/* ——— Portada ——— */
+
+.portada__marca {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 150px;
+  width: 342px;
+  height: auto;
+}
+
+.portada__lema {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 236px;
+  margin: 0;
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--tinta);
+}
+
+.portada__botones {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.portada__vas {
+  margin: -4px 0 4px;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-align: center;
+  color: var(--tinta);
+}
+
+.portada__confirmar {
+  padding: 12px;
+  text-align: center;
+}
+
+.portada__confirmar p {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.enlace {
+  padding: 4px;
+  font-family: var(--letra-rotulo);
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--tinta);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.enlace--tinta {
+  color: var(--tinta);
+}
+
+/* ——— Elegir compañero (C) ——— */
+
+.elegir__cabecera {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 22px;
+}
+
+.elegir__lista {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.compa-carta {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: 10px;
+  box-shadow: var(--sombra-dura-grande);
+  cursor: pointer;
+}
+
+.compa-carta--elegida {
+  outline: 4px solid var(--gualda);
+  outline-offset: 2px;
+}
+
+.compa-carta .marcador {
+  flex: none;
+  width: 96px;
+  height: 120px;
+  border-radius: 8px;
+}
+
+.compa-carta__nombre {
+  display: block;
+  margin: 0 0 4px;
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 22px;
+}
+
+.compa-carta__que {
+  display: block;
+  font-family: var(--letra-rotulo);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--almagre);
+}
+
+.compa-carta__txt {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.cerrados {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 476px;
+  padding: 10px 12px;
+}
+
+.cerrados__rejilla {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cerrados__rejilla span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-family: var(--letra-grito);
+  font-size: 20px;
+  color: var(--tachado);
+  border: 2px dashed var(--tachado);
+  border-radius: 50%;
+}
+
+.cerrados__pista {
+  margin-top: 8px;
+  font-style: italic;
+  font-size: 15px;
+}
+
+/* ——— El mapa (A1): cada arena es un tramo del camino ——— */
+
+.mapa__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 232px;
+  background: #5c3f2b;
+  background-image: repeating-linear-gradient(0deg, transparent 0 40px, rgba(0, 0, 0, 0.25) 40px 43px);
+}
+
+.mapa__niebla {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 232px;
+  background: rgba(234, 223, 196, 0.55);
+}
+
+.mapa__facultad {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 232px;
+  bottom: 0;
+  background-color: #dcb878;
+  background-image: var(--punteado-papel);
+  background-size: 6px 6px;
+}
+
+.mapa__edificio {
+  position: absolute;
+  left: 30px;
+  top: 282px;
+  width: 330px;
+  height: 120px;
+}
+
+.mapa__camino {
+  position: absolute;
+  inset: 0;
+  width: 390px;
+  height: 844px;
+  pointer-events: none;
+}
+
+.cinta {
+  position: absolute;
+  left: 50%;
+  z-index: 5;
+  padding: 4px 18px 5px;
+  white-space: nowrap;
+  font-family: var(--letra-grito);
+  font-size: 17px;
+  color: var(--papel);
+  background: var(--almagre);
+  border: var(--borde);
+  box-shadow: var(--sombra-dura);
+  transform: translateX(-50%);
+}
+
+.cinta--tinta {
+  background: var(--tinta);
+}
+
+.cinta small {
+  display: block;
+  font-family: var(--letra-texto);
+  font-style: italic;
+  font-size: 13px;
+  text-align: center;
+}
+
+.mapa__atajos {
+  position: absolute;
+  right: 12px;
+  top: 68px;
+  z-index: 21;
+  display: flex;
+  gap: 6px;
+}
+
+.mapa__atajo {
+  min-height: 30px;
+  padding: 2px 12px;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.nodo {
+  position: absolute;
+  z-index: 3;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.nodo__disco {
+  position: relative;
+  margin: 0 auto;
+  border: var(--borde);
+  box-shadow: var(--sombra-dura);
+}
+
+.nodo--jefe .nodo__disco {
+  border-width: 4px;
+}
+
+.nodo__nombre {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 1px 8px;
+  white-space: nowrap;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 4px;
+}
+
+.nodo--hecho .nodo__disco {
+  opacity: 0.8;
+  filter: grayscale(0.6);
+}
+
+.nodo__sello {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  width: 28px;
+  height: 28px;
+  font-family: var(--letra-grito);
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.nodo__sello--ganado {
+  background: var(--verde);
+}
+
+.nodo__sello--perdido {
+  background: var(--almagre);
+}
+
+.nodo__candado {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(35, 25, 21, 0.45);
+  border-radius: 50%;
+}
+
+.nodo--aqui .nodo__disco {
+  outline: 5px solid var(--gualda);
+  outline-offset: 3px;
+}
+
+.nodo__aqui {
+  position: absolute;
+  left: 50%;
+  top: -36px;
+  padding: 1px 8px;
+  white-space: nowrap;
+  font-family: var(--letra-grito);
+  font-size: 13px;
+  color: var(--papel);
+  background: var(--almagre);
+  border: 2px solid var(--tinta);
+  transform: translateX(-50%);
+}
+
+.nodo__jefe {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  padding: 0 8px;
+  font-family: var(--letra-grito);
+  font-size: 13px;
+  color: var(--gualda);
+  background: var(--tinta);
+  border: 2px solid var(--gualda);
+  transform: translateX(-50%);
+}
+
+.nodo__regla {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--papel);
+  background: var(--tinta);
+  border-radius: 4px;
+}
+
+.siguiente {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 10;
+  padding: 10px 12px 12px;
+}
+
+.siguiente__que {
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: var(--almagre);
+}
+
+.siguiente__quien {
+  margin-bottom: 4px;
+  font-family: var(--letra-grito);
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.siguiente__regla {
+  margin: 0 0 8px;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+/* ——— Después del duelo (R) ——— */
+
+.resultado__titulo {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 16px;
+  text-align: center;
+}
+
+.resultado__grande {
+  font-family: var(--letra-grito);
+  font-size: 25px;
+  line-height: 1.05;
+  color: var(--verde);
+}
+
+.resultado__grande--pierde {
+  color: var(--almagre);
+}
+
+.resultado__tanteo {
+  margin-top: 4px;
+  font-family: var(--letra-grito);
+  font-size: 22px;
+}
+
+.cuenta {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 96px;
+  padding: 8px 14px 10px;
+}
+
+.cuenta__linea {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 1.45;
+  border-bottom: 1px dotted var(--tachado);
+}
+
+.cuenta__total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-family: var(--letra-grito);
+  font-size: 20px;
+}
+
+.estado-gira {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.estado-gira > div {
+  flex: 1;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.estado-gira .rotulo {
+  font-size: 13px;
+}
+
+.estado-gira__valor {
+  font-family: var(--letra-grito);
+  font-size: 20px;
+}
+
+.estado-gira__aviso {
+  display: block;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--almagre);
+}
+
+.libreta-nota {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  padding: 7px 12px;
+  background: #fbf6e7;
+  background-image: repeating-linear-gradient(0deg, transparent 0 23px, rgba(44, 84, 160, 0.25) 23px 24px);
+  border: 2px solid var(--tinta);
+  border-radius: 4px;
+  box-shadow: var(--sombra-dura);
+}
+
+.libreta-nota .rotulo {
+  font-size: 13px;
+  color: var(--anil);
+}
+
+.libreta-nota p {
+  margin: 0;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.ahora {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  text-align: center;
+  font-family: var(--letra-grito);
+  font-size: 20px;
+}
+
+.paradas {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.parada {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--papel);
+  border: var(--borde);
+  border-radius: 10px;
+  box-shadow: var(--sombra-dura);
+  cursor: pointer;
+}
+
+.parada:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.parada .marcador {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  font-size: 8px;
+}
+
+.parada b {
+  display: block;
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 19px;
+  line-height: 1.1;
+}
+
+.parada i {
+  display: block;
+  font-size: 15px;
+  line-height: 1.15;
+}
+
+.resultado__despues {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 14px;
+  text-align: center;
+  font-family: var(--letra-rotulo);
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+/* ——— La taberna (T1): las baldas, la ficha y tu bolsa ——— */
+
+.taberna__titulo {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  font-family: var(--letra-grito);
+  font-size: 30px;
+  color: var(--gualda);
+  text-shadow: 3px 3px 0 var(--tinta);
+}
+
+.taberna__reales {
+  display: inline-block;
+  padding: 0 10px;
+  font-family: var(--letra-grito);
+  font-size: 18px;
+  background: var(--gualda);
+  border: 2px solid var(--tinta);
+  border-radius: 14px;
+}
+
+.taberna__tabernera {
+  position: absolute;
+  left: 12px;
+  top: 62px;
+  width: 70px;
+  height: 80px;
+  border-radius: 6px;
+  font-size: 8px;
+}
+
+.taberna__frase {
+  position: absolute;
+  left: 94px;
+  right: 12px;
+  top: 66px;
+  padding: 7px 12px;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.balda {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+}
+
+.balda__rotulo {
+  margin-left: 6px;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--gualda);
+}
+
+.balda__cosas {
+  display: flex;
+  justify-content: space-around;
+  gap: 6px;
+  min-height: 112px;
+  padding: 6px 4px 0;
+}
+
+.balda__tabla {
+  height: 12px;
+  background: var(--nogal);
+  border: 2px solid var(--tinta);
+}
+
+.cosa {
+  flex: 1;
+  max-width: 180px;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cosa .marcador {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 7px;
+  border-radius: 8px;
+  font-size: 8px;
+}
+
+.cosa__etiqueta {
+  display: block;
+  padding: 4px 6px 5px;
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  box-shadow: var(--sombra-dura);
+  transform: rotate(-1.5deg);
+}
+
+.cosa:nth-child(2) .cosa__etiqueta {
+  transform: rotate(1.2deg);
+}
+
+.cosa__etiqueta b {
+  display: block;
+  font-family: var(--letra-rotulo);
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.1;
+}
+
+.cosa__etiqueta i {
+  display: block;
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+.cosa__precio {
+  font-family: var(--letra-grito);
+  font-size: 14px;
+}
+
+.cosa--elegida .cosa__etiqueta {
+  background: var(--gualda);
+  transform: rotate(1deg) translateY(-3px);
+}
+
+.cosa--vendida {
+  opacity: 0.45;
+}
+
+.cosa--vendida .cosa__etiqueta {
+  text-decoration: line-through;
+}
+
+.ficha {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 498px;
+  padding: 10px 12px 12px;
+}
+
+.ficha h4 {
+  margin: 4px 0 2px;
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.ficha p {
+  margin: 0 0 8px;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.ficha__aviso {
+  margin: -2px 0 6px;
+  font-family: var(--letra-rotulo);
+  font-size: 13px;
+  color: var(--almagre);
+}
+
+.chip {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-family: var(--letra-rotulo);
+  font-size: 13px;
+  color: var(--papel);
+}
+
+.chip--bebida {
+  background: var(--anil);
+}
+
+.chip--jugarreta {
+  background: var(--almagre);
+}
+
+.chip--amuleto,
+.chip--raro {
+  background: var(--verde);
+}
+
+.chip--companero {
+  background: var(--gualda-oscuro);
+}
+
+.bolsa-taberna {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  padding: 7px 10px 9px;
+}
+
+.bolsa-taberna__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--letra-grito);
+  font-size: 18px;
+}
+
+.taberna__salir {
+  position: absolute;
+  right: 12px;
+  top: 22px;
+}
+
+.bolsa-taberna__huecos {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.bolsa-taberna__grupo .rotulo {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.bolsa-taberna__cajas {
+  display: flex;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.hueco {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font: 700 8px system-ui, sans-serif;
+  color: var(--almagre);
+  background: transparent;
+  border: 2px dashed var(--tachado);
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.hueco--lleno {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--almagre-claro);
+  border: 2px solid var(--tinta);
+  cursor: pointer;
+}
+
+.hueco--redondo {
+  border-radius: 50%;
+}
+
+.hueco--elegido {
+  outline: 3px solid var(--gualda);
+  outline-offset: 1px;
+}
+
+/* ——— La plaza, la era, el premio y el final: una ficha en el centro ——— */
+
+.suceso {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 16px 18px;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.suceso__lugar {
+  font-family: var(--letra-rotulo);
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--almagre);
+}
+
+.suceso .marcador {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.suceso h3 {
+  margin: 0;
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.suceso p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.suceso__desenlace {
+  font-style: italic;
+  color: var(--almagre);
+}
+
+.suceso__grande {
+  font-family: var(--letra-grito);
+  font-size: 26px;
+}
+
+.premios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.premio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 2px solid var(--tinta);
+  border-radius: 8px;
+}
+
+.premio .marcador {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  margin: 0;
+  border-radius: 8px;
+  font-size: 8px;
+}
+
+.premio__texto {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.premio__texto b {
+  display: block;
+  font-family: var(--letra-rotulo);
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.premio__texto i {
+  display: block;
+  color: var(--almagre);
+}
+
+.premio .boton-apuesta {
+  flex: none;
+  width: auto;
+}
+
+/* ——— La Libreta ——— */
+
+.libreta {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 92px;
+  bottom: 84px;
+  overflow-y: auto;
+  padding: 10px 14px;
+  background: #fbf6e7;
+  background-image: repeating-linear-gradient(0deg, transparent 0 25px, rgba(44, 84, 160, 0.22) 25px 26px);
+  border: var(--borde);
+  border-radius: 4px;
+  box-shadow: var(--sombra-dura-grande);
+}
+
+.libreta h4 {
+  margin: 6px 0 2px;
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 18px;
+  color: var(--anil);
+}
+
+.libreta ul {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.libreta li {
+  font-style: italic;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.libreta li.libreta__nivel3 {
+  font-style: normal;
+}
+
+.libreta__vacia {
+  font-style: italic;
+  font-size: 17px;
+  line-height: 26px;
+}
+
+/* ——— Duelo suelto: elegir rival ——— */
+
+.sueltos {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 96px;
+  bottom: 90px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sueltos__grupo .rotulo {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.sueltos__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sueltos__rival {
+  padding: 6px 10px;
+  font-family: var(--letra-rotulo);
+  font-size: 16px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  box-shadow: var(--sombra-dura);
+  cursor: pointer;
+}
+
+/*
+ * Después del duelo: en columna, porque lo que se cobra cambia de largo. Sus piezas dejan de ir
+ * colocadas a mano (van en el flujo).
+ */
+.resultado {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 12px;
+  box-sizing: border-box;
+}
+
+.resultado > * {
+  position: static;
+}
+
+.resultado .paradas {
+  gap: 8px;
+}
+
+.resultado__despues {
+  margin-top: auto;
+}
+
+.resultado__seguir {
+  margin-top: auto;
+}
+
+.libreta__nota {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 52px;
+  margin: 0;
+  font-size: 15px;
+  color: var(--gualda-claro);
+}

@@ -15,7 +15,7 @@ import type { LanceJugado } from './recuento';
  * - Órdago tuyo que pierdes: −15.
  */
 
-export type MotivoCara = 'farolCreido' | 'enviteCobrado' | 'farolPillado' | 'ordagoPerdido' | 'descanso';
+export type MotivoCara = 'farolCreido' | 'enviteCobrado' | 'farolPillado' | 'ordagoPerdido' | 'descanso' | 'orujo';
 
 export interface CambioCara {
   motivo: MotivoCara;
