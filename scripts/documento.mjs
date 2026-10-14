@@ -1,4 +1,4 @@
-// Genera los PDF de los documentos: el de diseño y el de la gira (npm run documento).
+// Genera los PDF de los documentos: el de diseño, el de la gira y el de cómo hacer los personajes (npm run documento).
 import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
@@ -7,6 +7,7 @@ import { marked } from 'marked';
 const DOCUMENTOS = [
   { md: 'docs/diseno-juego.md', pdf: 'docs/Órdago — Documento de diseño.pdf', titulo: 'Órdago — Documento de diseño' },
   { md: 'docs/gira.md', pdf: 'docs/Órdago — La gira.pdf', titulo: 'Órdago — La gira' },
+  { md: 'docs/personajes.md', pdf: 'docs/Órdago — Cómo hacer los personajes.pdf', titulo: 'Órdago — Cómo hacer los personajes' },
 ];
 
 // En el PDF, los enlaces entre documentos apuntan al otro PDF.

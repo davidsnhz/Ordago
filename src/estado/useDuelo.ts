@@ -27,6 +27,8 @@ const RITMO = {
   entreTics: 400,
   /** Lo que duran los avisos de la Cara y del pulso. */
   aviso: 2600,
+  /** Lo que le dura al rival la cara que pone (la del final del duelo se queda). */
+  reaccion: 2400,
 };
 
 /** La semilla de cada duelo nuevo sale del reloj; a partir de ahí, todo el azar es reproducible. */
@@ -149,6 +151,13 @@ export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
     const reloj = setTimeout(() => setEstado((previo) => ({ ...previo, avisoCara: null, seTeNota: null })), RITMO.aviso);
     return () => clearTimeout(reloj);
   }, [estado.avisoCara, estado.seTeNota]);
+
+  // La cara que pone el rival se le pasa sola, salvo la del final del duelo.
+  useEffect(() => {
+    if (!estado.reaccion || estado.reaccion.final) return;
+    const reloj = setTimeout(() => setEstado((previo) => ({ ...previo, reaccion: null })), RITMO.reaccion);
+    return () => clearTimeout(reloj);
+  }, [estado.reaccion]);
 
   // Se guarda al final de cada mano. En el duelo suelto, al acabar se borra y lo visto va a la
   // Libreta (una vez por duelo); en la gira, de eso se encarga la gira.

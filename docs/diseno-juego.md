@@ -1,8 +1,8 @@
 # Órdago — Documento de diseño
 
-13 de octubre de 2026 · @david · *versión 11: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7), las arenas nuevas con la Honra (v8), los nombres nuevos (v9), la fase 4, con la primera arena ya en el juego (v10), y las conexiones entre secuaces y jefes, para más adelante (v11)*
+15 de octubre de 2026 · @david · *versión 13: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7), las arenas nuevas con la Honra (v8), los nombres nuevos (v9), la fase 4, con la primera arena ya en el juego (v10), las conexiones entre secuaces y jefes, para más adelante (v11), los dibujos de antes, borrados (v12), y Chema, el primero con dibujo nuevo (v13)*
 
-> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Agustín), 3 (IA completa, la Cara y los cinco rivales) y **[nuevo] 4 (la gira, con la primera arena entera)** están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de la gira. **Los cinco rivales del principio tienen su arte** en la mesa; los de la facultad salen con marcador hasta que estén sus dibujos. Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es jugarla, ajustar números y, después, la fase 5: el pulido. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 11 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
+> **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Agustín), 3 (IA completa, la Cara y los cinco rivales) y **[nuevo] 4 (la gira, con la primera arena entera)** están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de la gira. **[cambiado]** Los personajes se dibujan de nuevo desde cero: los dibujos de antes se han borrado y, hasta que estén los nuevos, los rivales salen con un marcador. **[nuevo]** El primero ya está: **Chema**, con sus ocho imágenes (reposo, sus dos tics, crecido, arrugado y tres caras). Cómo hacerlos, paso a paso, en **[Cómo hacer los personajes](personajes.md)** (también en PDF). Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es jugarla, ajustar números y, después, la fase 5: el pulido. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 13 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
 
 ## Visión y esencia
 
@@ -60,7 +60,7 @@ La gira recorre sitios reconocibles de España, cada uno con su identidad visual
 
 ### Arte
 
-> **Esta sección está sustituida por `docs/direccion-arte.md`.** El pixel art se descartó: la interfaz y la baraja usan el estilo de naipe impreso. **[cambiado]** Los personajes son ilustraciones en 3D de estilo de animación (las hojas de personaje de David) **pasadas por la imprenta** para que casen con la mesa: tonos planos, tinta en lugar de negro, papel en lugar de blanco, grano de impresión, contorno de tinta y sombra dura, como los paneles. **[cambiado]** David ha decidido diseñar de nuevo desde cero a todos los personajes, también a estos cinco; hasta que estén, el juego usa los dibujos de ahora.
+> **Esta sección está sustituida por `docs/direccion-arte.md`.** El pixel art se descartó: la interfaz y la baraja usan el estilo de naipe impreso. **[cambiado]** Los personajes **pasan por la imprenta** para que casen con la mesa: contorno de tinta y sombra dura, como los paneles, y, si hace falta, tonos planos, tinta en lugar de negro y papel en lugar de blanco. **[cambiado]** David ha decidido diseñar de nuevo desde cero a todos los personajes: los dibujos de antes (las hojas en 3D de los cinco primeros rivales) se han borrado y el estilo se vuelve a elegir, probando un personaje en varios estilos sobre la mesa. Hasta entonces, todos salen con un marcador. Cómo se hacen, en [Cómo hacer los personajes](personajes.md).
 
 - **La mesa en el centro.** Vista frontal: el rival sentado enfrente, ocupando el centro de la pantalla vertical. Tus cartas abajo y los botones al pie, al alcance del pulgar.
 - **Maquetación vertical:** escenario de 390 × 844, como un móvil. En ordenador se ve centrado con bandas, y si giras el móvil sale un aviso para ponerlo en vertical. De arriba abajo:
@@ -274,15 +274,16 @@ Cada tic tiene tres propiedades:
 
 **Cómo salen:** si se cumple su disparador, el tic sale el 60 % de las veces; en falso sale lo justo para que, de todas las veces que lo ves, acierte su fiabilidad (comprobado con 150.000 manos). Salen al recibir cartas (reparto y tras descartar), al declarar su lance y al decidir un envite de su lance. **[cambiado]** Si el tic tiene dibujo, se ve sin texto: el rival cambia de pose. Si todavía no lo tiene, el rival se sacude y aparece una acotación con el gesto («se rasca la barba»). Lo que significa cada tic solo se ve en el modo de pruebas.
 
-**Tics con dibujo [nuevo]** (los demás esperan a que haya arte):
+**Tics con dibujo [cambiado]:** los de **Chema** (se baja las gafas de sol; **[cambiado]** le da un trago al refresco, que sustituye a remover el café y significa lo mismo, que va de farol). Los demás salen con sacudida y acotación hasta que estén sus poses (una imagen por tic; ver [Cómo hacer los personajes](personajes.md)).
 
-| Rival | Con dibujo | Sin dibujo todavía |
-| --- | --- | --- |
-| Agustín | Se rasca la barba, se arremanga | — |
-| Doña Ignacia | El rosario, te mira fijamente | — |
-| Don Francisco | Mira al cielo | Bebe vino (no lleva vaso), junta las manos |
-| Aurelio | El diente de oro, se quita el sombrero, golpea la vara | — |
-| Don Rodrigo | Se rasca la barba, se arremanga, bebe vino, mira al cielo, el humo del puro | Junta las manos |
+**[nuevo] Las caras del rival.** Si el rival tiene dibujo, además de los tics se le ve cómo va:
+
+- **Su postura, mientras dura:** *crecido* o *arrugado* (Rubén y Chema, con la etiqueta de siempre al lado); *enfadado* (Agustín enfadado, Doña Ignacia ofendida).
+- **La cara que pone, un par de segundos:** *sorprendido* cuando le echas un órdago; *riendo* cuando te pilla un farol; *enfadado* cuando le pillas el suyo.
+- **Al acabar el duelo** se queda riendo si gana y enfadado si pierde.
+- **Un tic siempre se ve por encima** de la postura y de la cara: es lo que hay que leer.
+
+Así, por ejemplo, Chema con los brazos abiertos y sonrisa de chulo está crecido: ojo, que farolea el doble.
 
 Ningún tic es 100 % fiable. Si lo fueran, el juego sería memorizar. Con un 70–85 % hay que decidir con riesgo, que es lo que hace divertido el mus.
 
@@ -381,7 +382,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 1. Agustín, el Herrero (el bar, nivel 2)
 
-**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* grandote, barba enorme y rizada, pañuelo rojo al cuello, delantal de cuero con tirantes y muñequeras. Golpea la mesa al envidar.
+**Aspecto [cambiado]:** *por diseñar desde cero; idea de partida (la del dibujo de antes, ya borrado):* grandote, barba enorme y rizada, pañuelo rojo al cuello, delantal de cuero con tirantes y muñequeras. Golpea la mesa al envidar.
 
 **Personalidad:** bruto y directo. Cuando lleva cartas, se le ve en todo. Envida fuerte, sube mucho y casi nunca farolea. Acepta los órdagos por orgullo.
 
@@ -402,7 +403,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 2. Doña Ignacia, la Viuda (las fiestas del pueblo, nivel 1)
 
-**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* de negro, con mantón morado de flecos, moño gris, pendientes de oro, bastón y un rosario entre los dedos. Mirada de rayos X.
+**Aspecto [cambiado]:** *por diseñar desde cero; idea de partida (la del dibujo de antes, ya borrado):* de negro, con mantón morado de flecos, moño gris, pendientes de oro, bastón y un rosario entre los dedos. Mirada de rayos X.
 
 **Personalidad:** paciente y desconfiada. Casi nunca farolea, rechaza muchos envites y nunca acepta un órdago antes de la tercera mano. Cuando envida ella, lleva cartas. **[cambiado]** Con el ajuste de equilibrio (ver «El farolero»), los envites pequeños los quiere más que antes: acepta casi la mitad de tus envites, frente al 30 % de antes. Sigue sin farolear y sin aceptar órdagos pronto.
 
@@ -421,7 +422,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 3. Don Francisco, el Cura (las fiestas del pueblo, nivel 2)
 
-**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* sotana, solideo, estola morada, cruz de oro y mofletes colorados. Falta dibujarle el vaso de vino, que necesita su tic.
+**Aspecto [cambiado]:** *por diseñar desde cero; idea de partida (la del dibujo de antes, ya borrado):* sotana, solideo, estola morada, cruz de oro y mofletes colorados. Necesita un vaso de vino para su tic.
 
 **Personalidad:** equilibrado y astuto, con una manía: envida siempre a la Chica, lleve lo que lleve. Es el primer rival con buena memoria: si le faroleas dos veces, deja de creerte.
 
@@ -443,7 +444,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 4. Aurelio, el Tratante (el bar, nivel 3)
 
-**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* sombrero de ala ancha con pluma roja, chaleco bordado, manta al hombro, aro de oro en la oreja, diente de oro y vara de tratante en la mano (estos dos, pintados sobre su dibujo porque los usan sus tics).
+**Aspecto [cambiado]:** *por diseñar desde cero; idea de partida (la del dibujo de antes, ya borrado):* sombrero de ala ancha con pluma roja, chaleco bordado, manta al hombro, aro de oro en la oreja, diente de oro y vara de tratante en la mano (estos dos, pintados sobre su dibujo porque los usan sus tics).
 
 **Personalidad:** mentiroso profesional. Farolea más que nadie y tira órdagos sin nada. Es un espejo del jugador: te enseña lo que se siente al otro lado.
 
@@ -470,7 +471,7 @@ Los parámetros van de 0 a 10 y alimentan la IA del apartado siguiente.
 
 ### 5. Don Rodrigo, el Cacique (el casino de la capital, jefe final)
 
-**Aspecto [cambiado]:** *por rediseñar desde cero; de momento, el dibujo actual:* levita granate bordada en oro, chaleco de brocado, cadena de reloj, puro, anillos y bastón de puño dorado. Sentado en un sillón más alto que el tuyo.
+**Aspecto [cambiado]:** *por diseñar desde cero; idea de partida (la del dibujo de antes, ya borrado):* levita granate bordada en oro, chaleco de brocado, cadena de reloj, puro, anillos y bastón de puño dorado. Sentado en un sillón más alto que el tuyo.
 
 **Personalidad:** lo sabe todo de ti. Lee tu Libreta: conoce los tics de los rivales que has anotado y juega al revés de lo que esperas. Adapta su estilo al tuyo durante el duelo.
 
@@ -624,7 +625,7 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 
 - **Plataforma:** de momento, **navegador** (móvil en vertical; en escritorio se ve centrado) y sin conexión, como PWA. Publicado en https://ordago-game.vercel.app. Más adelante se empaquetará para móvil.
 - **Icono de la aplicación [nuevo]:** la moneda de oros sobre el marrón de la taberna. Al añadir la web a la pantalla de inicio del móvil (en Safari, *Compartir → Añadir a pantalla de inicio*; en Chrome, *Instalar aplicación*) sale con ese icono, con el nombre *Órdago*, a pantalla completa y en vertical. Los iconos se generan con `npm run iconos`. Falta que funcione sin conexión (el *service worker*).
-- **Tecnología:** TypeScript + React + Vite, con un motor puro y reproducible (cada partida sale de una semilla) y **[cambiado]** 345 pruebas automáticas. Sustituye a Godot.
+- **Tecnología:** TypeScript + React + Vite, con un motor puro y reproducible (cada partida sale de una semilla) y **[cambiado]** 340 pruebas automáticas. Sustituye a Godot.
 - **Controles:**
   - Tocar una carta para marcarla en el descarte.
   - **Barra de acciones abajo, al estilo Offsuit:** en una fila, solo los botones que tocan en cada momento (MUS · CORTO, PASO · ENVIDO, NO QUIERO · QUIERO · MÁS). Cada botón ocupa lo que pide su texto.
@@ -671,7 +672,7 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 **Decididas por David el 13 de octubre de 2026, al revisar la versión 2 de la gira [nuevo]:**
 
 - **Nombres nuevos** para los cinco rivales del juego y para varios personajes de la gira (la lista está en [La gira](gira.md)). Se quedan los «don» y «doña».
-- **Todos los personajes se diseñan de nuevo desde cero**, también los cinco que ya tienen dibujo.
+- **Todos los personajes se diseñan de nuevo desde cero**, también los cinco que ya tienen dibujo. **[nuevo]** El 14 de octubre, David decidió borrar esos dibujos: no se reutilizan. La guía para hacer los nuevos con IA es [Cómo hacer los personajes](personajes.md).
 - **Manolo, el jefe del bar,** juega con mucha calma las dos primeras manos y después, por culpa de la bebida, a lo loco.
 - **El Reloj de bolsillo, baratillo:** 3 reales.
 - **Confirmados:** las señas de la familia y que se cuenten los faroles pillados, la regla de Chema, la del tío Arturo, la Gaseosa, el Chato de vino, la monja, el Caldo de la abuela, la parada antes de repetir contra un jefe y el orden de las arenas (la facultad, el bar, la Montaña Palentina, las fiestas del pueblo y el casino).
@@ -696,3 +697,5 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **Versión 9 (13 de octubre de 2026).** Nombres nuevos: Ruperto pasa a ser Agustín; Doña Engracia, Doña Ignacia; Don Anselmo, Don Francisco; Fulgencio, Aurelio, y Don Bonifacio, Don Rodrigo (también en el juego). En la gira cambian también Tomás, Pilar, el abuelo Teodoro, Don Severiano, el tío Paulino, Leandro, Doña Leonor y Don Ceferino. Todos los personajes se diseñarán de nuevo desde cero. Manolo juega con calma las dos primeras manos y luego a lo loco por la bebida. El Reloj de bolsillo cuesta 3 reales. David confirma las reglas de Chema, de la familia y del tío Arturo, y los objetos y paradas que se le preguntaron. El detalle, en [La gira](gira.md), versión 3.
 - **Versión 10 (13 de octubre de 2026).** Fase 4 hecha: la primera arena, la facultad, se juega entera. Lucía, Dani, Rubén y Chema con sus tics y sus reglas (Dani pide mus siempre; Rubén se crece; Chema se viene arriba o se arruga); la portada, elegir compañero, el mapa como las arenas, la mesa con la bolsa arriba a la izquierda, lo que se cobra después de cada duelo, la taberna, la plaza (forastero, fiesta, timador y monja), la era, el premio de Chema y el final de la gira; el Lazarillo y la Recaudadora, los cinco objetos de la primera taberna y los Apuntes de Chema; la Libreta, que se apunta sola; y el duelo suelto contra cualquiera de los nueve rivales. Nombres nuevos para siete compañeros (el Lazarillo, la Recaudadora, la Maruja, el Monaguillo, la Moza, el Militar y el Afilador).
 - **Versión 11 (13 de octubre de 2026).** Las conexiones «En la gira» entre secuaces y jefes, para más adelante.
+- **Versión 12 (14 de octubre de 2026).** Los dibujos de antes, borrados: los cinco primeros rivales vuelven al marcador, como los demás, hasta que estén los nuevos. Guía nueva para hacerlos con IA, del boceto a las poses: [Cómo hacer los personajes](personajes.md) (también en PDF).
+- **Versión 13 (15 de octubre de 2026).** Chema, el primero con dibujo nuevo: ocho imágenes de David (reposo, se baja las gafas, bebe el refresco, crecido, arrugado, sorprendido, riendo y enfadado). Su tic del café pasa a ser un trago al refresco. En la mesa se ve su postura (crecido, arrugado) y la cara que pone (sorpresa ante tu órdago, risa si te pilla un farol o gana, enfado si le pillas el suyo o pierde); en el mapa, su cara en el disco del jefe. Sin parpadeo: a David no le hace falta.

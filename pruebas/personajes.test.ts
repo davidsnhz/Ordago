@@ -10,6 +10,9 @@ const CARPETA = 'public/arte/personajes';
 const leer = <T>(ruta: string): T => JSON.parse(fs.readFileSync(path.join(CARPETA, ruta), 'utf8')) as T;
 const indice = leer<{ personajes: string[] }>('indice.json');
 
+/** Animaciones que no son tics: el reposo, el parpadeo, las posturas (poseDelRival) y las caras (reaccionDe). */
+const POSTURAS = ['reposo', 'parpadeo', 'crecido', 'arrugado', 'enfadado', 'sorprendido', 'riendo'];
+
 /** Todos los tics que puede hacer un rival, también los de las fases de Don Rodrigo. */
 const ticsDe = (id: IdRival) => {
   const perfil = RIVALES[id];
@@ -49,6 +52,10 @@ describe('arte de los personajes', () => {
           expect(archivos.length).toBeGreaterThan(0);
           for (const archivo of archivos) expect(fs.existsSync(path.join(CARPETA, id, archivo)), `${id}/${archivo}`).toBe(true);
         }
+      });
+
+      it('lo que no es un tic es una postura o una cara que la mesa sabe enseñar', () => {
+        for (const nombre of Object.keys(manifiesto.animaciones).filter((n) => !n.startsWith('tic_'))) expect(POSTURAS, `${id}: ${nombre}`).toContain(nombre);
       });
 
       it('cada tic dibujado es un tic de verdad del rival', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { RIVALES } from '../src/datos/rivales';
-import { apuntar, libretaVacia, nivelDe, textoNota } from '../src/estado/libreta';
+import { apuntar, cargarLibreta, guardarLibreta, libretaVacia, nivelDe, textoNota } from '../src/estado/libreta';
 import {
   cartasDelRivalALaVista,
   jugarJugador,
@@ -216,6 +216,17 @@ describe('la Libreta', () => {
     expect(textoNota('lucia', 'mordisqueaBoli', diez.libreta.rivales.lucia!.mordisqueaBoli)).toBe(
       'Mordisquea el boli: pares o mejor (acierta 8 de cada 10)',
     );
+  });
+
+  it('lo apuntado con el nombre antiguo de un tic pasa al nuevo (el café de Chema ahora es un refresco)', () => {
+    const { libreta } = apuntar(libretaVacia(), 'chema', [{ id: 'remueveCafe', verdadero: true }]);
+    expect(libreta.rivales.chema).toEqual({ bebeRefresco: { vistos: 1, aciertos: 1 } });
+
+    const datos = new Map<string, string>();
+    const almacen = { getItem: (k: string) => datos.get(k) ?? null, setItem: (k: string, v: string) => void datos.set(k, v), removeItem: (k: string) => void datos.delete(k) };
+    const antigua = { rivales: { chema: { remueveCafe: { vistos: 3, aciertos: 2 }, bajaGafas: { vistos: 1, aciertos: 1 } } } };
+    guardarLibreta(antigua, almacen);
+    expect(cargarLibreta(almacen).rivales.chema).toEqual({ bebeRefresco: { vistos: 3, aciertos: 2 }, bajaGafas: { vistos: 1, aciertos: 1 } });
   });
 
   it('con el Lazarillo cuenta doble', () => {

@@ -361,11 +361,27 @@
   transition: opacity 0.18s ease-out;
 }
 
-.retrato__capa--oculta {
+/*
+ * Posturas (reposo, crecido, las caras…): la que entra aparece encima con fundido y la que se va
+ * se queda debajo hasta que acaba, para que la figura no se transparente a mitad del cambio.
+ */
+.retrato__postura {
   opacity: 0;
+  transition: opacity 0s linear 0.2s;
+}
+
+.retrato__postura--vista {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.18s ease-out;
+}
+
+.retrato__postura--de-golpe {
+  transition: none;
 }
 
 .retrato__capa--tic {
+  z-index: 2;
   animation: tic-entra 0.18s ease-out both;
 }
 
@@ -379,6 +395,8 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  /* Si el dibujo no llena el recuadro, se apoya abajo, sobre el acta. */
+  object-position: 50% 100%;
   background-repeat: no-repeat;
   user-select: none;
   -webkit-user-drag: none;

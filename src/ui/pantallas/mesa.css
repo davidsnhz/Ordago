@@ -303,17 +303,20 @@
 
 /* ——— El rival ——— */
 
-/* El busto acaba por debajo del borde de arriba del acta, que tapa el corte de la figura. */
+/*
+ * El busto acaba por debajo del borde de arriba del acta, que tapa el corte de la figura. Es
+ * apaisado, como los dibujos (de codos sobre la mesa): 310 × 236, el fotograma de la imprenta.
+ */
 .mesa .retrato {
-  left: 85px;
-  top: 156px;
-  width: 220px;
-  height: 220px;
+  left: 40px;
+  top: 146px;
+  width: 310px;
+  height: 236px;
 }
 
 .mesa .retrato__acotacion {
-  left: -60px;
-  right: -60px;
+  left: -20px;
+  right: -20px;
   top: 150px;
 }
 
@@ -345,10 +348,10 @@
 
 .mesa__zona-mirar {
   position: absolute;
-  left: 85px;
-  top: 156px;
-  width: 220px;
-  height: 214px;
+  left: 70px;
+  top: 150px;
+  width: 250px;
+  height: 222px;
   padding: 0;
   background: transparent;
   border: 0;
@@ -1249,4 +1252,9 @@
   margin: 0;
   font-style: italic;
   font-size: 15px;
+}
+
+/* Sin dibujo, el marcador no llega hasta la bolsa y SALIR, que van en las esquinas de arriba. */
+.mesa .retrato__marcador {
+  inset: 10px 44px 4px;
 }

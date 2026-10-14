@@ -1,12 +1,18 @@
 /**
  * Prepara el arte de los rivales para el juego: lo «pasa por la imprenta».
  *
- * Lee las hojas de personaje de assets/personajes/<id>/ (la ampliada, hoja_x4.webp, si está; si
- * no, hoja.webp) y las indicaciones de assets/personajes/personajes.json, y escribe en
- * public/arte/personajes/<id>/ los fotogramas, su manifiesto.json y el indice.json que lee el
- * retrato (src/ui/componentes/Retrato.tsx).
+ * Lee los dibujos de assets/personajes/<id>/ y las indicaciones de assets/personajes/personajes.json,
+ * y escribe en public/arte/personajes/<id>/ los fotogramas, su manifiesto.json y el indice.json que
+ * lee el retrato (src/ui/componentes/Retrato.tsx).
  *
- * Cada fotograma sale de una de dos maneras:
+ * Los personajes de ahora llegan con **una imagen por pose** (`imagenes`: nombre de la animación →
+ * archivo), con el fondo transparente y todas con el mismo encuadre. Cada una se corta por la fila
+ * `corte` (lo de debajo lo tapa el acta), se ajusta al ancho del fotograma (`fotograma`, en px de
+ * pantalla), se apoya abajo y pasa por una imprenta ligera: tinta en lugar de negro y papel en
+ * lugar de blanco, color templado, grano suave, contorno de tinta de 3 px y sombra dura de 4 px.
+ *
+ * Los de antes venían en hojas con todas las poses (hoja.webp, y hoja_x4.webp ampliada), y cada
+ * fotograma salía de una de dos maneras:
  *  - `recorte`: se recorta una figura de la hoja (quitando el fondo gris de estudio) y se
  *    encuadra de cintura para arriba, con la cabeza siempre en el mismo sitio. Los tics se
  *    escalan por la altura de la figura (cabeza a pies) para que encajen con el reposo.
@@ -56,6 +62,17 @@ const IMPRENTA = {
   alisado: { porPixel: 0.5, minimo: 0.8 },
   /** Grano de impresión, en luminosidad. */
   grano: 2.4,
+};
+
+/** Imprenta de los dibujos que ya llegan planos y con contorno: sin tonos planos y con poco grano. */
+const IMPRENTA_IMAGENES = {
+  ...IMPRENTA,
+  pasoTono: 0,
+  color: 0.95,
+  calidez: 0.3,
+  grano: 1.2,
+  /** Opacidad con la que llega la figura (las WebP con pérdida la dejan en 252–253): pasa a 255. */
+  alfaPleno: 250,
 };
 
 const args = process.argv.slice(2);
@@ -221,6 +238,67 @@ async function prepararPersonaje(id, def) {
   return fotogramas;
 }
 
+/** Personaje con una imagen por pose: cada una, cortada, ajustada al fotograma e impresa. */
+async function prepararConImagenes(id, def) {
+  const carpeta = path.join(DESTINO, id);
+  fs.rmSync(carpeta, { recursive: true, force: true });
+  fs.mkdirSync(carpeta, { recursive: true });
+  const F = config.fotograma;
+  const [W, H, margen] = [F.ancho * PPP, F.alto * PPP, F.margen * PPP];
+  const fotogramas = {};
+  const animaciones = {};
+  for (const [nombre, archivo] of Object.entries(def.imagenes)) {
+    const fuente = path.join(ORIGEN, id, archivo);
+    const { width, height } = await sharp(fuente).metadata();
+    const corte = Math.min(height, def.corte ?? height);
+    const escala = (W - 2 * margen) / width;
+    const [ancho, alto] = [Math.round(width * escala), Math.round(corte * escala)];
+    const imagen = await sharp(fuente)
+      .ensureAlpha()
+      .extract({ left: 0, top: 0, width, height: corte })
+      .resize(ancho, alto, { kernel: 'lanczos3', fit: 'fill' })
+      .raw()
+      .toBuffer();
+    // Centrada y apoyada abajo: el corte queda en el borde de abajo, sin contorno, bajo el acta.
+    const l = { d: Buffer.alloc(W * H * 4), w: W, h: H };
+    const [izq, arr] = [Math.round((W - ancho) / 2), H - alto];
+    for (let y = Math.max(0, -arr); y < alto; y++) imagen.copy(l.d, ((arr + y) * W + izq) * 4, y * ancho * 4, (y + 1) * ancho * 4);
+    for (let p = 0; p < W * H; p++) l.d[p * 4 + 3] = Math.min(255, Math.round((l.d[p * 4 + 3] * 255) / IMPRENTA_IMAGENES.alfaPleno));
+    if (carpetaCruda) await guardarCrudo(l, path.join(carpetaCruda, `${id}_${nombre}.png`));
+    entintar(l, IMPRENTA_IMAGENES);
+    const impreso = contornear(l, W, IMPRENTA_IMAGENES.contorno, IMPRENTA_IMAGENES.sombra, H);
+    fotogramas[nombre] = impreso;
+    await aWebp(impreso).toFile(path.join(carpeta, `${nombre}.webp`));
+    animaciones[nombre] = { tipo: 'secuencia', archivos: [`${nombre}.webp`], fps: 1, bucle: nombre === 'reposo' };
+  }
+  if (!animaciones.reposo) throw new Error(`${id}: falta la imagen del reposo`);
+  if (def.medallon) await medallon(id, def.medallon, path.join(carpeta, 'medallon.webp'));
+  const manifiesto = { ancho: W, alto: H, animaciones };
+  fs.writeFileSync(path.join(carpeta, 'manifiesto.json'), JSON.stringify(manifiesto, null, 2) + '\n');
+  const kb = fs.readdirSync(carpeta).reduce((s, f) => s + fs.statSync(path.join(carpeta, f)).size, 0) / 1024;
+  console.log(`  ${id}: ${Object.keys(fotogramas).length} fotogramas de ${W} × ${H}, ${kb.toFixed(0)} KB`);
+  return fotogramas;
+}
+
+/**
+ * La cara del personaje para el mapa: un cuadrado de su imagen (`cuadro`: x, y, lado, en px de
+ * la imagen) con la misma tinta y papel. El disco del mapa la recorta en círculo y le pone el borde.
+ */
+async function medallon(id, { imagen, cuadro }, destino) {
+  const [x, y, lado] = cuadro;
+  const LADO_MEDALLON = 100 * PPP;
+  const d = await sharp(path.join(ORIGEN, id, imagen))
+    .extract({ left: x, top: y, width: lado, height: lado })
+    .resize(LADO_MEDALLON, LADO_MEDALLON, { kernel: 'lanczos3' })
+    .flatten({ background: '#F2E8D2' })
+    .ensureAlpha()
+    .raw()
+    .toBuffer();
+  const l = { d, w: LADO_MEDALLON, h: LADO_MEDALLON };
+  entintar(l, IMPRENTA_IMAGENES);
+  await aWebp(l).toFile(destino);
+}
+
 async function hojaDeMuestra(destino, todos) {
   const t = LADO / 2;
   const filas = Object.entries(todos);
@@ -228,7 +306,14 @@ async function hojaDeMuestra(destino, todos) {
   const piezas = [];
   for (const [fila, [, fotogramas]] of filas.entries())
     for (const [col, l] of Object.values(fotogramas).entries())
-      piezas.push({ input: await sharp(l.d, { raw: { width: LADO, height: LADO, channels: 4 } }).resize(t, t).png().toBuffer(), left: col * t, top: fila * t });
+      piezas.push({
+        input: await sharp(l.d, { raw: { width: l.w, height: l.h, channels: 4 } })
+          .resize(t, t, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+          .png()
+          .toBuffer(),
+        left: col * t,
+        top: fila * t,
+      });
   const fondo = Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${columnas * t}" height="${filas.length * t}"><defs><radialGradient id="l"><stop offset="0" stop-color="#E2A527" stop-opacity=".35"/><stop offset=".68" stop-color="#E2A527" stop-opacity="0"/></radialGradient><pattern id="p" width="${t}" height="${t}" patternUnits="userSpaceOnUse"><circle cx="${t / 2}" cy="${t / 2}" r="${t * 0.6}" fill="url(#l)"/></pattern></defs><rect width="100%" height="100%" fill="#2A1F18"/><rect width="100%" height="100%" fill="url(#p)"/></svg>`,
   );
@@ -241,12 +326,17 @@ const todos = {};
 for (const [id, def] of Object.entries(config.personajes)) {
   if (soloId && id !== soloId) continue;
   console.log(id);
-  todos[id] = await prepararPersonaje(id, def);
+  todos[id] = def.imagenes ? await prepararConImagenes(id, def) : await prepararPersonaje(id, def);
 }
 if (!soloId) {
   const indice = {
-    _nota: 'Personajes con arte: cada id tiene una carpeta con su manifiesto.json. Lo genera npm run personajes; los que no están usan el marcador.',
+    _nota: 'Personajes con arte: cada id tiene una carpeta con su manifiesto.json, y algunos, su cara para el mapa (medallones). Lo genera npm run personajes; los que no están usan el marcador.',
     personajes: Object.keys(todos),
+    medallones: Object.fromEntries(
+      Object.entries(config.personajes)
+        .filter(([id, def]) => todos[id] && def.medallon)
+        .map(([id]) => [id, `${id}/medallon.webp`]),
+    ),
   };
   fs.writeFileSync(path.join(DESTINO, 'indice.json'), JSON.stringify(indice, null, 2) + '\n');
 }

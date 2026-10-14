@@ -1,6 +1,6 @@
 # Órdago — La gira
 
-13 de octubre de 2026 · @david · *versión 5: las conexiones entre secuaces y jefes, para más adelante*
+15 de octubre de 2026 · @david · *versión 7: Chema, con dibujo y con su refresco*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
@@ -69,7 +69,7 @@ Las arenas son las que propusiste. Los cinco rivales que ya estaban en el juego 
 
 **Cómo leer las fichas.** Los números son los cinco parámetros de la IA, de 0 a 10, como en el documento de diseño: **A** agresividad (cuánto envida con buenas cartas), **F** faroleo, **M** miedo al órdago, **Me** memoria (cuánto se acuerda de tus faroles) y **O** ojo (cuánto te pilla). Cada tic dice qué lo provoca y cuántas veces de cada 10 acierta.
 
-**El diseño de todos los personajes se hace de nuevo desde cero**, también el de los cinco que ya tienen dibujo. Lo que pone en «Idea de aspecto» es solo un punto de partida para cuando los diseñes. Mientras no estén los dibujos nuevos, los personajes nuevos salen con un marcador y esos cinco, con su dibujo de ahora. De los cinco pongo un resumen; su ficha completa está en el documento de diseño.
+**El diseño de todos los personajes se hace de nuevo desde cero**, también el de los cinco que ya tienen dibujo. Lo que pone en «Idea de aspecto» es solo un punto de partida para cuando los diseñes. **[cambiado]** Los dibujos de esos cinco se han borrado: hasta que estén los nuevos, todos salen con un marcador. Cómo hacerlos, en [Cómo hacer los personajes](personajes.md). De los cinco pongo un resumen; su ficha completa está en el documento de diseño.
 
 ---
 
@@ -107,11 +107,11 @@ La cafetería de una universidad pública en una ciudad castellana (Salamanca, p
 
 #### Nivel 4 · Chema, el Repetidor (jefe)
 
-- **Idea de aspecto:** barba de tres días, sudadera gastada, gafas de sol en la cabeza y un café con leche que no se acaba nunca. Lleva ocho años matriculado y no ha pisado un aula.
+- **[cambiado] Aspecto (ya dibujado):** pelirrojo de pelo rizado, barba de tres días, sudadera negra con capucha, las gafas de sol subidas en la cabeza y una lata de refresco. Lleva ocho años matriculado y no ha pisado un aula.
 - **Cómo juega:** el rey de la cafetería. Envida mucho, farolea a menudo y quiere los órdagos por chulería. · A 7 · F 5 · M 3 · Me 3 · O 3
 - **Tics:**
   - Se baja las gafas de sol → lleva una mano fuerte (8 de cada 10).
-  - Remueve el café sin parar → está faroleando (7 de cada 10).
+  - **[cambiado]** Le da un trago al refresco → está faroleando (7 de cada 10). Antes removía el café.
 - **Regla, «Se viene arriba»:**
   - Cuando va ganando por 5 o más, se crece (sale *¡CRECIDO!*): farolea el doble y te lo quiere todo.
   - Cuando va perdiendo por 5 o más, se arruga (*ARRUGADO*): no farolea y casi no quiere.
@@ -474,18 +474,18 @@ No se venden en la taberna: solo los da el jefe al ganarle, y solo si lo eliges 
 
 ## 6. Lo que habría que dibujar
 
-Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falten, el juego usa marcadores. Como todos los personajes se diseñan de nuevo desde cero, también entran Agustín, Aurelio, Doña Ignacia, Don Francisco y Don Rodrigo: hasta que estén, el juego usa sus dibujos de ahora.
+Para que lo vayas planeando. **[cambiado]** Cómo se hace cada personaje, paso a paso y con las peticiones para la IA, está en [Cómo hacer los personajes](personajes.md). Mientras falten, el juego usa marcadores para todos, también para Agustín, Aurelio, Doña Ignacia, Don Francisco y Don Rodrigo, cuyos dibujos de antes se han borrado.
 
 | Qué | Cuántos | Para cuándo |
 | --- | --- | --- |
-| La facultad: Lucía, Dani, Rubén y Chema | 4 | Fase 4: la primera arena |
+| La facultad: Lucía, Dani, Rubén y Chema | 4 (**[nuevo]** Chema, hecho) | Lo primero: ya se juegan |
 | El bar: Toño, Agustín, Aurelio y Manolo | 4 | Más adelante |
 | La familia: Martina, María, Fernando y el abuelo Pepe | 4 | Más adelante |
 | Las fiestas: Doña Ignacia, Don Francisco, Don Agapito y el tío Arturo | 4 | Más adelante |
 | El casino: Sergio, Doña Isabel, Don Pelayo y Don Rodrigo | 4 | Más adelante |
-| Compañeros | 11 (2 en la fase 4: el Lazarillo y la Recaudadora) | Fase 4 y después |
-| La tabernera de la taberna y la monja de la plaza | 2 | Fase 4 la tabernera |
-| Iconos de objetos | Unos 30 | Fase 4 los primeros 5 |
+| Compañeros | 11 (el Lazarillo y la Recaudadora ya se juegan) | Con la facultad los dos primeros |
+| La tabernera de la taberna y la monja de la plaza | 2 | Con la facultad la tabernera |
+| Iconos de objetos | Unos 30 | Con la facultad los seis primeros |
 | Fondos de cada arena para el mapa | 5 | Fase 5 (pulido) |
 
 ## Historial de versiones
@@ -508,3 +508,5 @@ Para que lo vayas planeando. Todo sale de tus hojas de personaje; mientras falte
   - **Confirmados:** las reglas de Chema, de la familia y del tío Arturo; la Gaseosa; el Chato de vino; la monja; el Caldo; la parada antes de repetir contra un jefe; y el orden de las arenas.
 - **Versión 4 (13 de octubre de 2026).** David eligió las pantallas (el mapa A1, la taberna T1, la bolsa arriba a la izquierda, y elegir compañero y después del duelo tal como estaban) y cambió el nombre de siete compañeros: el Pastor pasa a ser el Lazarillo; la Tabernera, la Recaudadora (de Hacienda); la Cotilla, la Maruja; el Sacristán, el Monaguillo; la Moza del Molino, la Moza; el Alguacil, el Militar; y el Forastero, el Afilador. La primera arena ya se juega entera (fase 4).
 - **Versión 5 (13 de octubre de 2026).** Lo que pasa «En la gira» entre secuaces y jefes queda para más adelante: no se programa de momento y se añadirá si la gira resulta demasiado fácil.
+- **Versión 6 (14 de octubre de 2026).** Los dibujos de antes, borrados: todos los personajes salen con un marcador hasta que estén los nuevos. Guía para hacerlos: [Cómo hacer los personajes](personajes.md).
+- **Versión 7 (15 de octubre de 2026).** Chema ya tiene dibujo (el de David) y su tic del café pasa a ser un trago de refresco: significa lo mismo, que va de farol.

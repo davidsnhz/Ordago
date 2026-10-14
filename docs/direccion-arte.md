@@ -12,8 +12,7 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Tipografías | **Cerradas** | `assets/fuentes/` |
 | Piezas de mesa: botones, piedras, lances, Cara, paneles | **Cerradas** | esta guía + `00_guia_estilo` |
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
-| Rivales (los cinco del juego) | **Cerrado el estilo**. **Diseños por rehacer desde cero** (13 de octubre de 2026); hasta entonces, los dibujos de ahora | `assets/personajes/` → `npm run personajes` |
-| Compañeros, secuaces (los cuatro de la facultad ya juegan), tabernera y sucesos de la plaza | **PENDIENTE** | marcador: recuadro de puntos almagre con el nombre |
+| Personajes: rivales, compañeros, tabernera y sucesos de la plaza | **En marcha: todos se diseñan desde cero.** Los dibujos de antes se borraron el 14 de octubre de 2026. **Chema, hecho** (15 de octubre): marca el estilo | guía: `docs/personajes.md`; mientras, marcador (recuadro de puntos almagre con el nombre) |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
 | Mapa ilustrado | Provisional: la facultad con formas planas (el edificio, la arena, el bar en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
 
@@ -118,52 +117,54 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 
 ## Personajes
 
-**Diseños desde cero (13 de octubre de 2026):** David va a diseñar de nuevo a todos los personajes, también a los cinco que ya están en el juego. Además, les ha cambiado el nombre: Ruperto pasa a ser Agustín; Doña Engracia, Doña Ignacia; Don Anselmo, Don Francisco; Fulgencio, Aurelio, y Don Bonifacio, Don Rodrigo. Lo que se cuenta abajo (la imprenta, los retoques, el manifiesto) vale igual para los dibujos nuevos. Lo que se dice de cada personaje es de los dibujos de ahora, que se usan hasta que estén los nuevos. Las carpetas siguen con los nombres antiguos (`ruperto/`, `engracia/`…), que son sus ids en el código.
+**Desde cero (14 de octubre de 2026).** David ha decidido no reutilizar los dibujos de antes (las hojas en 3D de los cinco primeros rivales): se han borrado del proyecto y, hasta que estén los nuevos, todos los personajes salen con el marcador. Cómo se hacen los nuevos, paso a paso y con las peticiones para la IA, está en **[Cómo hacer los personajes](personajes.md)** (también en PDF). Los de antes siguen en el historial de git (el último commit que los tiene es d36d39c). Las carpetas usan el id del código: `lucia`, `chema`, `ruperto` para Agustín, `fulgencio` para Aurelio…
 
-**Estilo (decidido el 11 de octubre de 2026):** ilustración en 3D de estilo de animación, la de las hojas de personaje de David (`assets/personajes/<id>/hoja.webp`). Para que no choque con el naipe impreso, **todo personaje pasa por la imprenta** antes de entrar en el juego. No se redibuja: se conserva su aspecto y se le aplica lo mismo que llevan las demás piezas.
+**Estilo: el de Chema (15 de octubre de 2026).** David hizo a Chema y es el primero en el juego: ilustración 2D de cómic, con línea de tinta negra, colores planos con un sombreado suave y caricatura cálida (mofletes y nariz sonrosados). Su reposo (`assets/personajes/chema/reposo.webp`) es la imagen de referencia de estilo para los demás. Todo personaje pasa por la imprenta antes de entrar en el juego para que case con el naipe y los paneles.
+
+**Chema en el juego.** Ocho imágenes: reposo, sus dos tics (se baja las gafas, bebe el refresco), crecido, arrugado, sorprendido, riendo y enfadado. Sin parpadeo (a David no le hace falta). En el mapa, su cara va en el disco del jefe.
+
+**Lo que llega de cada personaje** (detalle en la guía):
+
+- una imagen por pose, en PNG o WebP, **apaisada como las de Chema** (1448 × 1086 o más);
+- el mismo encuadre en todas: de codos sobre la mesa, de frente, con la cabeza a la misma altura y del mismo tamaño;
+- fondo transparente;
+- reposo, una por tic, las caras (sorprendido, riendo, enfadado) y, en Rubén y Chema, crecido y arrugado. El parpadeo, no hace falta. Un tic con movimiento puede llegar en dos imágenes.
 
 ### La imprenta (`scripts/personajes.mjs`)
 
-`npm run personajes` lee las hojas y `assets/personajes/personajes.json` (qué zona de la hoja es cada pose y qué retoques lleva cada animación) y escribe `public/arte/personajes/`.
+`npm run personajes` lee las imágenes de `assets/personajes/` y `assets/personajes/personajes.json` (de dónde sale cada animación) y escribe `public/arte/personajes/`: los fotogramas, el `manifiesto.json` de cada uno y el `indice.json`, que dice quién tiene dibujo y quién, cara para el mapa.
 
-**Las hojas ampliadas.** Las hojas originales miden 1983 × 793 px: la figura de frente apenas tiene 300 px y las poses, 110. Por eso cada hoja se ha ampliado ×4 con **Real-ESRGAN** (modelo `realesrgan-x4plus-anime`, pensado para ilustración: deja líneas limpias y sombreado plano) y se guarda al lado como `hoja_x4.webp`. Si no está, se usa la original. Para rehacerla:
+**Una imagen por pose (15 de octubre de 2026).** En `personajes.json`, cada personaje dice qué archivo es cada animación (`imagenes`), por qué fila se corta (`corte`: lo de debajo lo tapa el acta) y de qué cuadro sale la cara del mapa (`medallon`). Cada imagen se ajusta al ancho del **fotograma de 310 × 236 px de pantalla** (×3: 930 × 708), se centra y se apoya abajo, y pasa por la **imprenta ligera**: tinta en lugar de negro, papel en lugar de blanco, color templado, grano suave, contorno de tinta de 3 px y sombra dura de 4 px, sin tonos planos. Con `--crudo carpeta` saca cada fotograma sin imprenta y con una regla.
 
-`realesrgan-ncnn-vulkan -i hoja.png -o hoja_x4.png -n realesrgan-x4plus-anime` (y pasarla a WebP).
+*Las hojas de antes* (todas las poses en una imagen) seguían los pasos de abajo, que el script todavía sabe hacer. Si una imagen llega pequeña, se amplía ×4 con **Real-ESRGAN** (modelo `realesrgan-x4plus-anime`, pensado para ilustración: deja las líneas limpias y el sombreado plano):
+
+`realesrgan-ncnn-vulkan -i imagen.png -o imagen_x4.png -n realesrgan-x4plus-anime`
 
 Para cada fotograma:
 
-1. **Recorte:** la silueta se saca de la hoja **original** (quita el fondo gris de estudio creciendo desde los bordes y limpia los huecos entre brazo y cuerpo); luego se amplía y se encoge medio píxel para recortar la hoja ampliada. Así no se cuela el halo claro que deja la ampliación alrededor de los bordes.
-2. **Encuadre:** de cintura para arriba, en un cuadrado de 660 px (220 px de pantalla ×3). La cabeza va siempre en el mismo sitio: centrada y a 40 px del borde de arriba. Los tics se escalan por la altura de la figura (cabeza a pies) para que encajen con el reposo.
+1. **Recorte:** se quita el fondo y se limpian los huecos entre brazo y cuerpo. (Con las hojas ampliadas, la silueta se sacaba de la original para que no se colara el halo claro que deja la ampliación.)
+2. **Encuadre:** de cintura para arriba, en un cuadrado de 660 px (220 px de pantalla ×3). La cabeza va siempre en el mismo sitio: centrada y a 40 px del borde de arriba.
 3. **Retoques** pintados, si los hay (ver abajo).
 4. **Tonos planos:** la luminosidad se reparte en escalones de 12 (de 0 a 100), con una transición corta para que no queden bordes dentados.
 5. **Tinta y papel:** el negro más oscuro pasa a negro de humo y el blanco más claro a papel; el color se apaga un 10 % y se tiñe un poco hacia la tinta en las sombras y hacia el papel en las luces.
 6. **Grano de impresión** suave, el mismo en todos los fotogramas para que no «hierva» al cambiar de pose.
 7. **Contorno de tinta de 3 px y sombra dura de 4 px** abajo a la derecha (en px de pantalla), como los paneles. El corte de abajo no lleva contorno: lo tapa el acta. Antes se quitan las motas sueltas para que no salgan con su propio contorno.
 
-Los números están al principio del script (`IMPRENTA`) y en `personajes.json`; para retocar un personaje se cambia ahí y se vuelve a lanzar. Con `--crudo carpeta` saca cada fotograma sin imprenta y con una regla, para medir dónde va un retoque.
+Los pasos 4 a 6 se pensaron para quitarle a un 3D el aspecto de 3D; con los dibujos de ahora, que ya traen su línea de tinta, sobran los tonos planos (es la imprenta ligera de arriba). Los números están al principio del script (`IMPRENTA`) y en `personajes.json`. Con `--crudo carpeta` saca cada fotograma sin imprenta y con una regla, para medir dónde va un retoque.
 
 ### Retoques: animaciones pintadas sobre el dibujo
 
-Lo que no está en las hojas se pinta sobre el reposo, antes de la imprenta, para que salga con los mismos tonos, grano y contorno (`scripts/personajes/retoques.mjs`, coordenadas en píxeles del fotograma):
+Lo que no está en las imágenes se puede pintar sobre el reposo, antes de la imprenta, para que salga con los mismos tonos, grano y contorno (`scripts/personajes/retoques.mjs`, coordenadas en píxeles del fotograma). Con una imagen por pose hecha por la IA, deberían quedar para lo pequeño:
 
-- **párpado:** baja el párpado de arriba (medio o del todo), con la piel de alrededor del ojo y una línea de pestañas curvada. Con él se hacen los **parpadeos** de los cinco (medio, cerrado, medio, a 18 fotogramas por segundo) y los ojos entornados.
+- **párpado:** baja el párpado de arriba (medio o del todo). Sirve para el parpadeo si no llega la imagen con los ojos cerrados.
 - **mirada:** repinta el blanco del ojo y mueve el iris.
 - **girar:** inclina la cabeza deformando suavemente alrededor, sin cortes.
-- **mover:** recorta una zona, la mueve y la gira, y pinta lo que queda al descubierto (el pelo bajo el sombrero de Aurelio).
-- **dibujo:** formas SVG encima o debajo de la figura, con una zona que queda por delante (los dedos que agarran la vara).
+- **mover:** recorta una zona, la mueve y la gira, y pinta lo que queda al descubierto.
+- **dibujo:** formas SVG encima o debajo de la figura, con una zona que queda por delante.
 - **acercar:** agranda la figura alrededor de un punto: el rival se inclina hacia ti.
-- **arrastrar:** lleva una parte de un sitio a otro deformando lo de alrededor. Sirve para movimientos pequeños; para juntar las manos de Don Francisco deformaba la cruz y la estola, y se descartó.
-- **desplazar:** mueve la figura entera (el bote al golpear con la vara).
-- **plantilla:** una lista de retoques con nombre, que se reutiliza (la vara y el diente de Aurelio salen en todos sus fotogramas).
-
-Hechos así:
-
-| Rival | Pintado sobre su dibujo |
-| --- | --- |
-| Los cinco | Parpadeo |
-| Doña Ignacia | *Te mira fijamente:* entorna los ojos y se inclina hacia ti (antes era la pose con las cartas, que se confundía con la del rosario) |
-| Aurelio | El diente de oro y la vara, en todos sus fotogramas. *Diente de oro:* entorna los ojos y le brilla el diente. *Se quita el sombrero:* lo levanta y lo ladea, con el pelo debajo. *Golpea la vara:* dos golpes con un bote |
-| Don Rodrigo | *Mira al cielo:* pone los ojos en blanco hacia arriba y ladea la cabeza |
+- **arrastrar:** lleva una parte de un sitio a otro deformando lo de alrededor. Solo para movimientos pequeños: en los brazos se nota.
+- **desplazar:** mueve la figura entera (un bote, por ejemplo).
+- **plantilla:** una lista de retoques con nombre, que se reutiliza en varios fotogramas.
 
 ### En la mesa
 
@@ -171,25 +172,14 @@ Hechos así:
 - **Respira:** se ensancha un pelo desde abajo y vuelve, cada 3,8 s (se quita con «reducir movimiento»).
 - **Parpadea** cada 2,6–6,2 s, nunca durante un tic.
 - **Tic dibujado:** cambio de pose con un fundido de 0,18 s, sin texto; si tiene varios fotogramas, se reproducen y se queda en el último. Al acabar, vuelve al reposo con otro fundido.
-- **Efectos** encima del personaje, solos o con un tic dibujado: el **humo** (bocanadas de papel con contorno de tinta que suben, para el puro de Don Rodrigo) y el **destello** (una estrella de papel con contorno de tinta que gira y se apaga dos veces, para el diente de oro de Aurelio).
-- **Tic sin dibujo:** la figura se sacude y sale la acotación con el gesto, como con el marcador.
-- Si un rival no está en `indice.json`, se usa el marcador (ARTE PENDIENTE).
+- **Efectos** encima del personaje, solos o con un tic dibujado: el **humo** (bocanadas de papel con contorno de tinta que suben) y el **destello** (una estrella de papel con contorno de tinta que gira y se apaga dos veces). Se hicieron para el puro de Don Rodrigo y el diente de oro de Aurelio, y siguen en el código.
+- **Tic sin dibujo:** la figura (o el marcador) se sacude y sale la acotación con el gesto.
+- **Postura y cara** (15 de octubre de 2026): por debajo del tic, se ve la cara que acaba de poner (sorprendido, riendo, enfadado, unos 2,4 s; al acabar el duelo, se queda) o, si no, su postura (crecido, arrugado, enfadado) o, si no, el reposo. Todas las imágenes están puestas a la vez y cambian con un fundido de 0,18 s: la que entra aparece encima y la que se va se queda debajo hasta que acaba, para que la figura no se transparente.
+- **El recuadro** mide 310 × 236 (antes 220 × 220) y se apoya en el acta.
+- Si un rival no está en `indice.json`, se usa el marcador (ARTE PENDIENTE), más estrecho para no llegar a la bolsa ni a SALIR.
 
 ### El manifiesto
 
-Cada personaje tiene `public/arte/personajes/<id>/manifiesto.json` con sus animaciones: `reposo` (obligatoria), `parpadeo` (opcional) y una por tic (`tic_<id del tic>`). Cada animación es una hoja de sprites horizontal o una secuencia de WebP (con fotogramas por segundo y si va en bucle), y puede llevar un `efecto` encima; o es solo un efecto (`{ "tipo": "efecto", "efecto": "humo", "x", "y" }`, con la posición en fracciones del fotograma). Lo genera la imprenta. `pruebas/personajes.test.ts` comprueba que los archivos existen y que cada tic es un tic del rival. Pesan entre 220 y 600 KB por rival, y solo se carga el del duelo.
+Cada personaje tiene `public/arte/personajes/<id>/manifiesto.json` con sus animaciones: `reposo` (obligatoria), `parpadeo` (opcional) y una por tic (`tic_<id del tic>`). Cada animación es una hoja de sprites horizontal o una secuencia de WebP (con fotogramas por segundo y si va en bucle), y puede llevar un `efecto` encima; o es solo un efecto (`{ "tipo": "efecto", "efecto": "humo", "x", "y" }`, con la posición en fracciones del fotograma). Lo genera la imprenta. `pruebas/personajes.test.ts` comprueba que los archivos existen y que cada tic es un tic del rival. Los de antes pesaban entre 220 y 600 KB por rival, y solo se carga el del duelo.
 
-### Lo que falta
-
-Quedan **tres gestos de brazos** que no están en ninguna hoja y no se pueden sacar deformando el dibujo sin que se note. Siguen con sacudida y acotación hasta que haya una pose dibujada:
-
-| Rival | Pose que falta |
-| --- | --- |
-| Don Francisco | **Bebe un sorbo de vino** (no lleva vaso) y **junta las manos** (en el reposo las tiene separadas, para que el gesto se note) |
-| Don Rodrigo | **Junta las manos** |
-
-Para que encajen: la misma figura que la vista de frente, de cintura para arriba, misma luz y fondo gris liso, cambiando solo los brazos; si se saca retocando la vista de frente, mejor, para que no cambien el pelo ni los bordados.
-
-También mejorarían con poses nuevas: los tics que salen de las miniaturas (la ampliación inventa algún detalle, como un brillo en la mejilla de Doña Ignacia al pasar el rosario) y Aurelio al quitarse el sombrero, que debería además «ponerse serio» y hoy sigue sonriendo.
-
-Las seis expresiones de cada hoja (neutral, contento, enfadado…) no se usan todavía: servirán para la pantalla de ¡Órdago! y el final del duelo.
+Las caras también servirán para la pantalla de ¡Órdago! cuando se haga.

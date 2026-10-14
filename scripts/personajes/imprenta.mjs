@@ -314,15 +314,15 @@ const ruido = (x, y) => {
   return v - Math.floor(v) - 0.5;
 };
 
-/** Tonos planos, rango de tinta a papel, color templado y grano. */
+/** Tonos planos (si `pasoTono` no es 0), rango de tinta a papel, color templado y grano. */
 export function entintar(l, { pasoTono: paso, suavidadTono, color, calidez, grano }) {
   for (let p = 0; p < l.w * l.h; p++) {
     const i = p * 4;
     if (l.d[i + 3] === 0) continue;
     const [L, a, b] = aLab(l.d[i], l.d[i + 1], l.d[i + 2]);
-    const t = L / paso;
+    const t = paso ? L / paso : 0;
     const base = Math.floor(t);
-    const Lq = Math.min(100, (base + suave(1 - suavidadTono, 1, t - base)) * paso);
+    const Lq = paso ? Math.min(100, (base + suave(1 - suavidadTono, 1, t - base)) * paso) : L;
     const k = Lq / 100;
     const x = p % l.w;
     const y = (p - x) / l.w;
@@ -337,10 +337,11 @@ export function entintar(l, { pasoTono: paso, suavidadTono, color, calidez, gran
 }
 
 /**
- * Contorno de tinta y sombra dura debajo de la figura. Devuelve un lienzo de `lado` × `lado`
- * (el sobrante de abajo se recorta: así el corte de la figura no lleva contorno).
+ * Contorno de tinta y sombra dura debajo de la figura. Devuelve un lienzo de `lado` × `alto`
+ * (el sobrante de abajo se recorta: así el corte de la figura no lleva contorno; por debajo del
+ * lienzo, la figura se da por seguida).
  */
-export function contornear(l, lado, contorno, sombra) {
+export function contornear(l, lado, contorno, sombra, alto = lado) {
   const { w: W, h: H } = l;
   const r = contorno;
   const R = r + 1;
@@ -370,8 +371,8 @@ export function contornear(l, lado, contorno, sombra) {
     }
 
   const s = sombra;
-  const salida = Buffer.alloc(lado * lado * 4);
-  for (let y = 0; y < lado; y++)
+  const salida = Buffer.alloc(lado * alto * 4);
+  for (let y = 0; y < alto; y++)
     for (let x = 0; x < lado; x++) {
       const p = y * W + x;
       const o = (y * lado + x) * 4;
@@ -383,5 +384,5 @@ export function contornear(l, lado, contorno, sombra) {
       for (let c = 0; c < 3; c++) salida[o + c] = Math.round((l.d[p * 4 + c] * af + TINTA[c] * tinta * (1 - af)) / a);
       salida[o + 3] = Math.round(a * 255);
     }
-  return { d: salida, w: lado, h: lado };
+  return { d: salida, w: lado, h: alto };
 }

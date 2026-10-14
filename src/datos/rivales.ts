@@ -166,7 +166,7 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
     mus: { corta: [...CORTES_COMUNES], guarda: ['reyes', 'parejas'], farolDeCorte: 0.1 },
     tics: [
       { id: 'bajaGafas', disparador: 'manoFuerte', fiabilidad: 0.8, lances: TODOS },
-      { id: 'remueveCafe', disparador: 'farol', fiabilidad: 0.7, lances: TODOS },
+      { id: 'bebeRefresco', disparador: 'farol', fiabilidad: 0.7, lances: TODOS },
     ],
     seVieneArriba: { ventaja: 5 },
   },
@@ -234,3 +234,14 @@ export function ticsActivos(perfil: PerfilRival, piedrasMaximas: number): Defini
   for (const fase of perfil.fasesDeTics ?? []) if (piedrasMaximas >= fase.desdePiedras) tics = fase.tics;
   return tics;
 }
+
+/**
+ * Tics que han cambiado de nombre: lo apuntado en la Libreta con el nombre de antes pasa al nuevo.
+ * Chema remueve el café → bebe un refresco (15 de octubre de 2026; significa lo mismo).
+ */
+export const TICS_RENOMBRADOS: Partial<Record<IdRival, Record<string, string>>> = {
+  chema: { remueveCafe: 'bebeRefresco' },
+};
+
+/** El nombre de hoy de un tic. */
+export const ticVigente = (rival: IdRival, tic: string): string => TICS_RENOMBRADOS[rival]?.[tic] ?? tic;

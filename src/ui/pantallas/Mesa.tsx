@@ -13,7 +13,7 @@ import {
   type Partida,
 } from '../../estado/partida';
 import { empezarSuelto, useDuelo } from '../../estado/useDuelo';
-import { textosDe, ultimoDelRival, type EstadoMesa, type LineaActa } from '../../estado/mesa';
+import { poseDelRival, textosDe, ultimoDelRival, type EstadoMesa, type LineaActa } from '../../estado/mesa';
 import { idCarta, mismaCarta, type Carta } from '../../nucleo/carta';
 import type { Lado } from '../../nucleo/comun';
 import { accionesValidas, type AccionDuelo, type EstadoDuelo, type OpcionDuelo } from '../../nucleo/duelo';
@@ -65,6 +65,9 @@ export type ModoMesa =
       onSalir: () => void;
     };
 
+/** Posturas y caras que se pueden ver con el botón de pruebas (`null`: lo que toque). */
+const POSES_DE_PRUEBA: (string | null)[] = [null, 'crecido', 'arrugado', 'sorprendido', 'riendo', 'enfadado'];
+
 /** La mesa: un duelo contra un rival, en vertical. */
 export function Mesa({ modo }: { modo: ModoMesa }) {
   const enGira = modo.tipo === 'gira';
@@ -74,6 +77,9 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
   const pruebas = useModoPruebas();
   const [depuracion, alternarDepuracion] = useDepuracion(pruebas);
   const [eligiendoRival, setEligiendoRival] = useState(false);
+  // Modo de pruebas: enseñar a mano cada postura y cada cara del rival, para revisar su arte.
+  const [poseDePrueba, setPoseDePrueba] = useState<string | null>(null);
+  const siguientePose = () => setPoseDePrueba((p) => POSES_DE_PRUEBA[(POSES_DE_PRUEBA.indexOf(p) + 1) % POSES_DE_PRUEBA.length]!);
   // Mientras lees qué es la Cara o miras la bolsa, el rival espera.
   const [ayudaCara, setAyudaCara] = useState(false);
   const [bolsaAbierta, setBolsaAbierta] = useState(false);
@@ -110,6 +116,8 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
           id={partida.rivalId}
           nombre={textos.titulo}
           tic={estado.tic}
+          pose={poseDePrueba ?? poseDelRival(partida)}
+          reaccion={poseDePrueba ? null : estado.reaccion}
           acotacion={estado.tic ? (textos.tics[estado.tic.id] ?? null) : null}
           depuracion={
             estado.tic && estado.tic.explicado
@@ -148,6 +156,9 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
             </button>
             <button type="button" className="mesa__boton-pequeno" onClick={ensayarTics}>
               {M.ensayarTics}
+            </button>
+            <button type="button" className="mesa__boton-pequeno" onClick={siguientePose}>
+              {M.ensayarPoses(poseDePrueba)}
             </button>
           </div>
         )}

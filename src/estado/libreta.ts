@@ -1,4 +1,4 @@
-import { ORDEN_RIVALES, RIVALES, type IdRival } from '../datos/rivales';
+import { ORDEN_RIVALES, RIVALES, ticVigente, type IdRival } from '../datos/rivales';
 import { ES } from '../textos/es';
 import { almacenDelNavegador, cargarConVersion, guardarConVersion, type Almacen } from './guardado';
 import type { TicObservado } from './partida';
@@ -55,9 +55,10 @@ export function apuntar(
   if (observaciones.length === 0) return { libreta, cambios: [] };
   const notas: Record<string, NotaTic> = { ...(libreta.rivales[rival] ?? {}) };
   const antes = new Map(Object.entries(notas).map(([tic, nota]) => [tic, nivelDe(nota)]));
-  for (const { id, verdadero } of observaciones) {
+  for (const observacion of observaciones) {
+    const id = ticVigente(rival, observacion.id);
     const nota = notas[id] ?? { vistos: 0, aciertos: 0 };
-    notas[id] = { vistos: nota.vistos + peso, aciertos: nota.aciertos + (verdadero ? peso : 0) };
+    notas[id] = { vistos: nota.vistos + peso, aciertos: nota.aciertos + (observacion.verdadero ? peso : 0) };
   }
   const cambios: CambioNota[] = [];
   for (const [tic, nota] of Object.entries(notas)) {
@@ -102,7 +103,23 @@ function esLibreta(valor: unknown): valor is Libreta {
 }
 
 export function cargarLibreta(almacen: Almacen | null = almacenDelNavegador()): Libreta {
-  return cargarConVersion(CLAVE, VERSION_LIBRETA, esLibreta, almacen) ?? libretaVacia();
+  const libreta = cargarConVersion(CLAVE, VERSION_LIBRETA, esLibreta, almacen);
+  return libreta ? conTicsVigentes(libreta) : libretaVacia();
+}
+
+/** Lo apuntado con el nombre antiguo de un tic se suma al nombre de hoy. */
+function conTicsVigentes(libreta: Libreta): Libreta {
+  const rivales: Libreta['rivales'] = {};
+  for (const [rival, notas] of Object.entries(libreta.rivales) as [IdRival, Record<string, NotaTic>][]) {
+    const nuevas: Record<string, NotaTic> = {};
+    for (const [tic, nota] of Object.entries(notas)) {
+      const id = ticVigente(rival, tic);
+      const previa = nuevas[id] ?? { vistos: 0, aciertos: 0 };
+      nuevas[id] = { vistos: previa.vistos + nota.vistos, aciertos: previa.aciertos + nota.aciertos };
+    }
+    rivales[rival] = nuevas;
+  }
+  return { rivales };
 }
 
 export function guardarLibreta(libreta: Libreta, almacen: Almacen | null = almacenDelNavegador()): boolean {

@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { Azar } from '../../nucleo/azar';
-import { rutaArte } from '../arte';
+import { cargarIndicePersonajes, rutaArte } from '../arte';
 import { clases } from './piezas';
 
 /**
  * Retrato del rival, preparado para recibir arte sin tocar código:
  * - public/arte/personajes/indice.json dice qué personajes tienen arte.
  * - Cada uno tiene public/arte/personajes/<id>/manifiesto.json con sus animaciones: `reposo`
- *   (obligatoria), `parpadeo` (si la hay) y una `tic_<id>` por tic. Cada animación es una hoja
- *   de sprites horizontal o una secuencia de WebP, y puede llevar además un efecto dibujado encima
- *   (el brillo del diente de oro); un tic también puede ser solo un efecto sobre el reposo (el humo
- *   del puro). `npm run personajes` los genera desde las hojas de assets/personajes.
- * - El reposo respira, el parpadeo sale cada pocos segundos y el tic entra y sale con un fundido.
+ *   (obligatoria), `parpadeo` (si la hay), una `tic_<id>` por tic y, si las tiene, sus posturas
+ *   (`crecido`, `arrugado`) y sus caras (`sorprendido`, `riendo`, `enfadado`). Cada animación es
+ *   una hoja de sprites horizontal o una secuencia de WebP, y puede llevar además un efecto
+ *   dibujado encima (el brillo de un diente de oro); un tic también puede ser solo un efecto sobre
+ *   el reposo (el humo de un puro). `npm run personajes` los genera desde assets/personajes.
+ * - La figura respira y el parpadeo sale cada pocos segundos. Lo que se ve, por orden: el tic, la
+ *   cara que acaba de poner, su postura (crecido…) y, si no, el reposo. Todo cambia con un fundido.
  * Sin arte se dibuja el marcador (ARTE PENDIENTE). Un tic sin dibujo, con arte o sin él, se
  * señala con una sacudida y una acotación con el gesto.
  */
@@ -47,10 +49,18 @@ const FUNDIDO = 180;
 /** Cada cuánto parpadea, en milisegundos. */
 const PARPADEO = { minimo: 2600, maximo: 6200 };
 
+/** Cara que pone el rival (`sorprendido`, `riendo`, `enfadado`). */
+export interface ReaccionEnRetrato {
+  tipo: string;
+  clave: number;
+}
+
 export function Retrato({
   id,
   nombre,
   tic,
+  pose = null,
+  reaccion = null,
   acotacion,
   depuracion,
   textoPendiente,
@@ -58,6 +68,10 @@ export function Retrato({
   id: string;
   nombre: string;
   tic: TicEnRetrato | null;
+  /** Cómo está mientras dura (`crecido`, `arrugado`…); sin dibujo, se queda en reposo. */
+  pose?: string | null;
+  /** Cara que acaba de poner; sin dibujo, no se ve. */
+  reaccion?: ReaccionEnRetrato | null;
   /** Gesto que se ve («se rasca la barba»). */
   acotacion: string | null;
   /** Significado del tic, solo en modo de depuración. */
@@ -71,7 +85,7 @@ export function Retrato({
   return (
     <div className="retrato" aria-label={nombre} role="img">
       {manifiesto === undefined ? null : manifiesto ? (
-        <Figura personaje={id} manifiesto={manifiesto} tic={tic} />
+        <Figura personaje={id} manifiesto={manifiesto} tic={tic} pose={pose} reaccion={reaccion} />
       ) : (
         <div key={tic ? `tic${tic.clave}` : 'quieto'} className={clases('retrato__marcador', tic && 'retrato__marcador--tic')}>
           <span>{textoPendiente}</span>
@@ -87,16 +101,40 @@ export function Retrato({
   );
 }
 
-/** El personaje con arte: reposo que respira, parpadeo y tics con fundido. */
-function Figura({ personaje, manifiesto, tic }: { personaje: string; manifiesto: ManifiestoPersonaje; tic: TicEnRetrato | null }) {
+/** Animaciones que no son tics ni el parpadeo: el reposo, las posturas y las caras. */
+const esPostura = (nombre: string) => nombre !== 'parpadeo' && !nombre.startsWith('tic_');
+
+/** El personaje con arte: respira, parpadea y cambia de postura, de cara y de tic con fundido. */
+function Figura({
+  personaje,
+  manifiesto,
+  tic,
+  pose,
+  reaccion,
+}: {
+  personaje: string;
+  manifiesto: ManifiestoPersonaje;
+  tic: TicEnRetrato | null;
+  pose: string | null;
+  reaccion: ReaccionEnRetrato | null;
+}) {
   const { animaciones } = manifiesto;
+  const dibujada = (nombre: string | null | undefined): AnimacionDibujada | null => {
+    const animacion = nombre ? animaciones[nombre] : undefined;
+    return animacion && animacion.tipo !== 'efecto' ? animacion : null;
+  };
   const mostrado = useConSalida(tic, FUNDIDO);
   const animacionTic = mostrado.valor ? animaciones[`tic_${mostrado.valor.id}`] : undefined;
   const ticDibujado = animacionTic && animacionTic.tipo !== 'efecto' ? animacionTic : null;
   const efecto = animacionTic?.tipo === 'efecto' ? animacionTic : (ticDibujado?.efecto ?? null);
   const tapaReposo = ticDibujado !== null && !mostrado.saliendo;
+  // Cuando el tic se va, lo de debajo ya está puesto (sin fundido): así no se transparenta.
+  const destapando = ticDibujado !== null && mostrado.saliendo;
+  // Debajo del tic: la cara del momento, si no la postura y, si no, el reposo.
+  const fondo = (reaccion && dibujada(reaccion.tipo) && reaccion.tipo) || (dibujada(pose) && pose) || 'reposo';
+  const posturas = Object.keys(animaciones).filter((nombre) => esPostura(nombre) && dibujada(nombre));
   const parpadeo = animaciones['parpadeo'];
-  const parpadeando = useParpadeo(personaje, parpadeo && parpadeo.tipo !== 'efecto' ? duracion(parpadeo) : 0, tic !== null);
+  const parpadeando = useParpadeo(personaje, parpadeo && parpadeo.tipo !== 'efecto' ? duracion(parpadeo) : 0, tic !== null || fondo !== 'reposo');
 
   // Tic sin dibujo: la figura se sacude (sin volver a montar las imágenes).
   const capa = useRef<HTMLDivElement>(null);
@@ -107,18 +145,26 @@ function Figura({ personaje, manifiesto, tic }: { personaje: string; manifiesto:
     capa.current.animate(SACUDIDA, { duration: 700, easing: 'ease-in-out' });
   }, [sinDibujo, tic?.clave]);
 
-  const reposo = animaciones['reposo'] as AnimacionDibujada;
   return (
     <div className="retrato__figura">
       <div ref={capa} className="retrato__capa">
-        <div className={clases('retrato__capa', tapaReposo && 'retrato__capa--oculta')}>
-          <Animacion personaje={personaje} animacion={reposo} />
-          {parpadeando && parpadeo && parpadeo.tipo !== 'efecto' && (
-            <div className="retrato__capa">
-              <Animacion personaje={personaje} animacion={parpadeo} />
+        {/* Todas las posturas están puestas (ya cargadas); solo se ve una y cambian con fundido. */}
+        {posturas.map((nombre) => {
+          const vista = nombre === fondo && !tapaReposo;
+          return (
+            <div
+              key={nombre}
+              className={clases('retrato__capa', 'retrato__postura', vista && 'retrato__postura--vista', vista && destapando && 'retrato__postura--de-golpe')}
+            >
+              <Animacion personaje={personaje} animacion={dibujada(nombre)!} />
+              {nombre === 'reposo' && parpadeando && parpadeo && parpadeo.tipo !== 'efecto' && (
+                <div className="retrato__capa">
+                  <Animacion personaje={personaje} animacion={parpadeo} />
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          );
+        })}
         {ticDibujado && mostrado.valor && (
           <div key={`t${mostrado.valor.clave}`} className={clases('retrato__capa', 'retrato__capa--tic', mostrado.saliendo && 'retrato__capa--saliendo')}>
             <Animacion personaje={personaje} animacion={ticDibujado} />
@@ -220,8 +266,8 @@ function useManifiesto(id: string): ManifiestoPersonaje | null | undefined {
     const sinArte = () => vigente && setManifiesto(null);
     (async () => {
       try {
-        const indice = (await (await fetch(rutaArte('personajes/indice.json'))).json()) as { personajes?: unknown };
-        if (!Array.isArray(indice.personajes) || !indice.personajes.includes(id)) return sinArte();
+        const indice = await cargarIndicePersonajes();
+        if (!indice.personajes.includes(id)) return sinArte();
         const datos = (await (await fetch(rutaArte(`personajes/${id}/manifiesto.json`))).json()) as ManifiestoPersonaje;
         const reposo = datos?.animaciones?.['reposo'];
         if (!reposo || reposo.tipo === 'efecto') return sinArte();

@@ -134,7 +134,7 @@ const RIVALES: Record<IdRival, TextosRival> = {
       corto: ['«Corto. Esta la tengo estudiada.»', '«No hay mus. Matrícula de honor.»'],
       descarte: ['«Estas, a septiembre.»', '«Fuera, que estas suspenden.»'],
       paso: ['«Paso, como de clase.»', '«Paso. Tengo todo el curso.»'],
-      envido: ['«Envido. Ocho años de cafetería, chaval.»', '«Envido, y pido otro café.»'],
+      envido: ['«Envido. Ocho años de cafetería, chaval.»', '«Envido, y me pido otra lata.»'],
       mas: ['«¿Más? Más.»', '«Subo, que esto es mi carrera.»'],
       quiero: ['«Lo quiero. A ver qué traes.»', '«Quiero, novato.»'],
       noQuiero: ['«Esta te la dejo, que eres de primero.»', '«No quiero. Por esta vez.»'],
@@ -145,8 +145,8 @@ const RIVALES: Record<IdRival, TextosRival> = {
       crecido: '«¡Esto está hecho, novato!»',
       arrugado: '«Bueno, bueno… Con calma.»',
     },
-    tics: { bajaGafas: 'se baja las gafas de sol', remueveCafe: 'remueve el café sin parar' },
-    significadoTics: { bajaGafas: 'lleva una mano fuerte', remueveCafe: 'está faroleando' },
+    tics: { bajaGafas: 'se baja las gafas de sol', bebeRefresco: 'le da un trago al refresco' },
+    significadoTics: { bajaGafas: 'lleva una mano fuerte', bebeRefresco: 'está faroleando' },
   },
 
   // ——— Los cinco que ya estaban ———
@@ -398,6 +398,7 @@ export const ES = {
     artePendiente: 'ARTE PENDIENTE',
     depurar: 'Depurar',
     ensayarTics: 'Tics',
+    ensayarPoses: (pose: string | null) => (pose ? `Pose: ${pose}` : 'Poses'),
     rival: 'Rival',
     elegirRival: 'ELIGE RIVAL',
     elegirRivalNota: 'Empieza un duelo nuevo, de cero.',

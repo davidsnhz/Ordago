@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { aplicarNovedades, mesaInicial, narrarEnvite, sacarTic, ultimoDelRival } from '../src/estado/mesa';
+import { aplicarNovedades, mesaInicial, narrarEnvite, poseDelRival, reaccionDe, sacarTic, ultimoDelRival } from '../src/estado/mesa';
 import { nuevaPartida, type Novedades, type ResultadoPartida } from '../src/estado/partida';
 import type { EventoDuelo } from '../src/nucleo/eventos';
+import type { AccionDuelo, EstadoDuelo } from '../src/nucleo/duelo';
 import { ES } from '../src/textos/es';
+import { a, dueloCon, jugar, pasanLosDos } from './ayudas';
 
 const base = () => mesaInicial(nuevaPartida('mesa').partida);
 const con = (eventos: EventoDuelo[], extra: Partial<Novedades> = {}): ResultadoPartida => ({
@@ -154,3 +156,51 @@ describe('lo que enseña la mesa', () => {
     ]);
   });
 });
+
+describe('la cara que pone el rival', () => {
+  /** La cara que pone tras jugar las acciones, con su postura de partida. */
+  const reaccion = (reparto: { jugador: string; rival: string }, acciones: AccionDuelo[]) => {
+    const { estado, eventos } = jugar(dueloCon(reparto), acciones);
+    return reaccionDe(eventos, { ...base().partida, duelo: estado });
+  };
+  const FLOJA = 'A 4 5 6';
+  const BUENA = 'R R R 7';
+
+  it('se sorprende cuando le echas un órdago', () => {
+    expect(reaccion({ jugador: BUENA, rival: 'C C 5 4' }, [a.corto('jugador'), a.ordago('jugador')])).toEqual({ tipo: 'sorprendido', final: false });
+  });
+
+  it('al acabar el duelo se ríe si gana y se enfada si pierde, y se queda así', () => {
+    expect(reaccion({ jugador: FLOJA, rival: BUENA }, [a.corto('jugador'), a.ordago('jugador'), a.quiero('rival')])).toEqual({ tipo: 'riendo', final: true });
+    expect(reaccion({ jugador: BUENA, rival: FLOJA }, [a.corto('jugador'), a.ordago('jugador'), a.quiero('rival')])).toEqual({ tipo: 'enfadado', final: true });
+  });
+
+  it('se ríe cuando te pilla un farol y se enfada cuando le pillas el suyo', () => {
+    const tuFarol = [a.corto('jugador'), a.envido('jugador'), a.quiero('rival'), ...pasanLosDos('jugador'), ...pasanLosDos('jugador')];
+    expect(reaccion({ jugador: FLOJA, rival: 'C C 5 4' }, tuFarol)).toEqual({ tipo: 'riendo', final: false });
+    const suFarol = [a.corto('jugador'), a.paso('jugador'), a.envido('rival'), a.quiero('jugador'), ...pasanLosDos('jugador')];
+    expect(reaccion({ jugador: BUENA, rival: FLOJA }, suFarol)).toEqual({ tipo: 'enfadado', final: false });
+  });
+
+  it('lo demás no le cambia la cara, y la última se queda hasta que se le pase', () => {
+    expect(reaccion({ jugador: BUENA, rival: FLOJA }, [a.corto('jugador'), a.envido('jugador')])).toBeNull();
+    const fin: EventoDuelo = { tipo: 'finDuelo', ganador: 'rival', motivo: 'piedras', marcador: { jugador: 4, rival: 20 } };
+    const tras = aplicarNovedades(base(), con([fin]));
+    expect(tras.reaccion).toMatchObject({ tipo: 'riendo', final: true });
+    const paso: EventoDuelo = { tipo: 'envite', lance: 'chica', lado: 'rival', accion: { tipo: 'paso' } };
+    expect(aplicarNovedades(tras, con([paso])).reaccion).toBe(tras.reaccion);
+  });
+
+  it('su postura: crecido o arrugado según el marcador (Chema); al acabar, como siempre', () => {
+    const p = nuevaPartida('pose', 'chema').partida;
+    const con = (rival: number, jugador: number, fase: EstadoDuelo['fase'] = p.duelo.fase) => ({ ...p, duelo: { ...p.duelo, fase, marcador: { rival, jugador } } });
+    expect(poseDelRival(con(0, 0))).toBeNull();
+    expect(poseDelRival(con(12, 6))).toBe('crecido');
+    expect(poseDelRival(con(4, 11))).toBe('arrugado');
+    expect(poseDelRival(con(20, 6, 'finDuelo'))).toBeNull();
+    // Lucía no tiene ánimo.
+    const lucia = nuevaPartida('pose', 'lucia').partida;
+    expect(poseDelRival({ ...lucia, duelo: { ...lucia.duelo, marcador: { rival: 12, jugador: 2 } } })).toBeNull();
+  });
+});
+

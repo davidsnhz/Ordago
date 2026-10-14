@@ -419,6 +419,29 @@ David mandó las hojas de personaje de los cinco rivales (3D de estilo de animac
 - **Sin dibujo:** los personajes, los objetos y los compañeros que no tienen dibujo salen con un marcador (recuadro rojo de puntos con el nombre), como pide CLAUDE.md.
 - **Lo que pasa «En la gira» entre secuaces y jefes** no está programado. Por ejemplo, «Rubén le avisa». *Decidido por David después:* de momento no se hará; si la gira resulta demasiado fácil, o él lo ve bien, se añadirá.
 
+## Los dibujos de antes, borrados (14 de octubre de 2026)
+
+David decidió olvidar los diseños que había («no me acababan de gustar») y hacerlos todos de nuevo, con IA.
+
+- **Borrado:** las hojas de los cinco primeros rivales (`assets/personajes/<id>/hoja.webp` y `hoja_x4.webp`), lo que la imprenta sacaba de ellas (`public/arte/personajes/<id>/`) y sus recortes y retoques en `personajes.json`. Siguen en el historial de git (el último commit que los tiene es d36d39c), por si algún día hicieran falta.
+- **Se queda** la maquinaria: la imprenta (`npm run personajes`), los retoques, el retrato que respira, parpadea y cambia de pose, y los efectos de humo y destello. Con `personajes` vacío, la imprenta escribe un `indice.json` sin nadie y todos los rivales salen con el marcador. Las pruebas de arte se quedan para cuando lleguen los nuevos (330 pruebas: las 15 de los dibujos de antes ya no se generan).
+- **La guía** para hacerlos, en `docs/personajes.md` (y en PDF): ficha, estilo, bocetos, diseño final y poses, con las peticiones para la IA de los cuatro de la facultad. Dos cosas aprendidas de las hojas de antes: **una imagen por pose y grande** (las poses en miniatura salían borrosas al ampliarlas) y **el mismo encuadre en todas** (para que el rival no «salte» al hacer el tic).
+- **El estilo se vuelve a elegir:** se prueba a Chema en cuatro estilos y se montan en la mesa para que David elija viéndolos, como con las pantallas. Mi propuesta es el «naipe ilustrado» (contorno de tinta y colores planos), que casa con la baraja sin tener que disimularlo con la imprenta.
+- **Cuando lleguen las imágenes nuevas** (una por pose), la imprenta se adapta para leer un archivo por pose en lugar de recortar una hoja.
+
+## Chema, el primero con dibujo nuevo (15 de octubre de 2026)
+
+David mandó ocho imágenes de Chema (fondo transparente, 1448 × 1086, el mismo encuadre: de codos sobre la mesa) y pidió meterlas «de la mejor manera posible» sin romper la armonía del juego. También cambió su tic del café por un trago de refresco, y dijo que el parpadeo no hace falta.
+
+- **Qué es cada imagen:** la barbilla en el puño, el **reposo**; bajándose las gafas, su tic de mano fuerte; bebiendo la lata, el de farol; los brazos abiertos con sonrisa de chulo, **crecido**; los brazos cruzados mirando de reojo, **arrugado**; la boca abierta, **sorprendido**; la carcajada, **riendo**; el ceño con los brazos cruzados, **enfadado**.
+- **Cuándo pone cada cara** (pura, en `estado/mesa.ts`, con pruebas): sorprendido cuando le echas un órdago; riendo si te pilla un farol; enfadado si le pillas el suyo; al acabar el duelo, riendo si gana y enfadado si pierde, y así se queda. Duran 2,4 s. Su postura (crecido, arrugado) dura lo que dura su ánimo. Un tic siempre va por encima: es lo que hay que leer.
+- **El recuadro del retrato** pasa de 220 × 220 a **310 × 236**, apaisado como los dibujos, apoyado en el acta (que tapa el corte de abajo). El marcador de los que no tienen dibujo se queda más estrecho para no llegar a la bolsa ni a SALIR.
+- **Imprenta ligera**: con un dibujo que ya trae su línea de tinta, sin tonos planos; solo tinta en lugar de negro, papel en lugar de blanco, color templado, grano suave, contorno de 3 px y sombra dura de 4 px. Se corta por la fila 1056 (lo de debajo lo tapa el acta). Las ocho, 320 KB.
+- **Sin parpadeo**, como pidió David. El retrato lo sigue sabiendo hacer si algún personaje lo trae.
+- **En el mapa**, el disco del jefe lleva su cara (un medallón que saca la imprenta del reposo), con el candado en una chapa al borde en vez de taparle la cara.
+- **El tic renombrado** (`remueveCafe` → `bebeRefresco`): lo que ya estuviera apuntado en la Libreta con el nombre de antes pasa al nuevo.
+- **Modo de pruebas:** el botón *Poses* va pasando por las posturas y las caras, para revisar el arte.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

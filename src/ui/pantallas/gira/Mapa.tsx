@@ -1,6 +1,9 @@
+import type { ReactNode } from 'react';
 import { ARENAS, GIRA, NIVEL_JEFE } from '../../../datos/gira';
 import { esJefe, nivelesDe, type Gira } from '../../../estado/gira';
 import { ES } from '../../../textos/es';
+import type { IdRival } from '../../../datos/rivales';
+import { useMedallon } from '../../arte';
 import { BotonApuesta, clases } from '../../componentes/piezas';
 import { Hud } from './Piezas';
 
@@ -77,8 +80,7 @@ export function Mapa({ gira, onJugar, onLibreta, onSalir }: { gira: Gira; onJuga
             style={{ left: p.left, top: p.top - p.tamano / 2 }}
           >
             {aqui && <div className="nodo__aqui">{MAPA.aquiEstas}</div>}
-            <div className="nodo__disco marcador marcador--redondo" style={{ width: p.tamano, height: p.tamano }}>
-              {nombre}
+            <Disco id={id} nombre={nombre} tamano={p.tamano}>
               {esJefe(nivel) && <span className="nodo__jefe">{MAPA.jefe}</span>}
               {!aqui && resultado && (
                 <span className={`nodo__sello nodo__sello--${resultado}`} aria-label={resultado}>
@@ -90,7 +92,7 @@ export function Mapa({ gira, onJugar, onLibreta, onSalir }: { gira: Gira; onJuga
                   <Candado />
                 </span>
               )}
-            </div>
+            </Disco>
             <div className="nodo__nombre">{ES.rivales[id].titulo}</div>
             {esJefe(nivel) && MAPA.reglas[id] && (
               <>
@@ -133,5 +135,23 @@ function Candado() {
       <path d="M7 11 V8 a5 5 0 0 1 10 0 V11" fill="none" stroke="#f2e8d2" strokeWidth="2.5" />
       <rect x="5" y="11" width="14" height="10" rx="2" fill="#f2e8d2" stroke="#231915" strokeWidth="1.5" />
     </svg>
+  );
+}
+
+/** El disco de un nivel: la cara del rival si tiene dibujo; si no, el marcador con su nombre. */
+function Disco({ id, nombre, tamano, children }: { id: IdRival; nombre: string; tamano: number; children: ReactNode }) {
+  const medallon = useMedallon(id);
+  if (medallon)
+    return (
+      <div className="nodo__disco nodo__disco--cara" style={{ width: tamano, height: tamano }}>
+        <img className="nodo__cara" src={medallon} alt={nombre} draggable={false} />
+        {children}
+      </div>
+    );
+  return (
+    <div className="nodo__disco marcador marcador--redondo" style={{ width: tamano, height: tamano }}>
+      {nombre}
+      {children}
+    </div>
   );
 }

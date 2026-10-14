@@ -1,9 +1,11 @@
 import type { AccionEnvite } from '../nucleo/apuestas';
 import type { Lado } from '../nucleo/comun';
+import { cambiosDeCara } from '../nucleo/cara';
+import type { EventoDuelo } from '../nucleo/eventos';
 import type { DecisionRival } from '../nucleo/ia/rival';
 import type { TicDisparado } from '../nucleo/ia/tics';
 import { tieneJuego, tienePares } from '../nucleo/mano';
-import { RIVALES } from '../datos/rivales';
+import { animoDe, RIVALES } from '../datos/rivales';
 import { ES, nombreCarta, type TextosRival } from '../textos/es';
 import type { Partida, ResultadoPartida } from './partida';
 
@@ -38,6 +40,8 @@ export interface EstadoMesa {
   avisoCara: { delta: number; motivos: string[]; clave: number } | null;
   /** Cara a 0: se te acaba de notar el tic. */
   seTeNota: number | null;
+  /** Cara que acaba de poner el rival; `final` si se queda así porque se ha acabado el duelo. */
+  reaccion: { tipo: ReaccionRival; final: boolean; clave: number } | null;
   /** Contador para ir rotando las frases del rival. */
   frases: number;
   claveTic: number;
@@ -60,6 +64,7 @@ export function mesaInicial(partida: Partida): EstadoMesa {
     decision: null,
     avisoCara: null,
     seTeNota: null,
+    reaccion: null,
     frases: 0,
     claveTic: 0,
     claveAviso: 0,
@@ -209,9 +214,13 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
     avisoCara = { delta: novedades.cambiosCara.reduce((s, c) => s + c.delta, 0), motivos, clave: ++claveAviso };
   }
 
+  const nueva = reaccionDe(novedades.eventos, partida);
+  const reaccion = nueva ? { ...nueva, clave: ++claveAviso } : previo.reaccion;
+
   return {
     ...previo,
     partida,
+    reaccion,
     acta: acta.slice(-LINEAS_ACTA),
     frases,
     avisoCara,
@@ -220,6 +229,36 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
     colaTics: [...previo.colaTics, ...novedades.tics],
     decision: novedades.decision ?? previo.decision,
   };
+}
+
+/** Cara que pone el rival un momento, o hasta el final si se acaba el duelo. */
+export type ReaccionRival = 'sorprendido' | 'riendo' | 'enfadado';
+
+/** Cómo está el rival mientras dura: crecido o arrugado (Rubén y Chema), enfadado (Agustín, Doña Ignacia). */
+export type PoseRival = 'crecido' | 'arrugado' | 'enfadado';
+
+/**
+ * La cara que pone el rival por lo que acaba de pasar: se ríe si gana el duelo o te pilla un
+ * farol, se enfada si lo pierde o le pillas el suyo, y se sorprende cuando le echas un órdago.
+ */
+export function reaccionDe(eventos: readonly EventoDuelo[], partida: Partida): { tipo: ReaccionRival; final: boolean } | null {
+  const fin = eventos.find((e) => e.tipo === 'finDuelo');
+  if (fin) return { tipo: fin.ganador === 'rival' ? 'riendo' : 'enfadado', final: true };
+  if (eventos.some((e) => e.tipo === 'envite' && e.lado === 'jugador' && e.accion.tipo === 'ordago')) return { tipo: 'sorprendido', final: false };
+  const pillado = (lado: Lado) => cambiosDeCara(eventos, partida.duelo, lado).some((c) => c.motivo === 'farolPillado');
+  if (pillado('rival')) return { tipo: 'enfadado', final: false };
+  if (pillado('jugador')) return { tipo: 'riendo', final: false };
+  return null;
+}
+
+/** Cómo está el rival ahora por sus reglas especiales; `null` si está como siempre. */
+export function poseDelRival(partida: Partida): PoseRival | null {
+  const { duelo, memoria } = partida;
+  if (duelo.fase === 'finDuelo') return null;
+  const animo = animoDe(RIVALES[partida.rivalId], duelo.marcador.rival - duelo.marcador.jugador);
+  if (animo) return animo;
+  if (memoria.manosEnfadado > 0 || memoria.ofendidaHastaMano >= duelo.numeroMano) return 'enfadado';
+  return null;
 }
 
 /**
