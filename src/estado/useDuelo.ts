@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CARA } from '../datos/cara';
-import { IA } from '../datos/ia';
 import { ORDEN_RIVALES, RIVALES, type IdRival } from '../datos/rivales';
 import type { AccionDuelo } from '../nucleo/duelo';
 import { borrarPartida, cargarPartida, guardarPartida } from './guardado';
@@ -11,7 +10,6 @@ import {
   jugarJugador,
   jugarRival,
   leTocaAlRival,
-  mirarAlRival,
   nuevaPartida,
   type Partida,
   type ResultadoPartida,
@@ -67,7 +65,6 @@ export interface OpcionesDuelo {
 
 export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
   const [estado, setEstado] = useState(inicio);
-  const [mirando, setMirando] = useState(false);
   /** Algo tapa la mesa (la ayuda de la Cara, la bolsa): el rival espera. */
   const [pausa, setPausa] = useState(false);
   const { partida } = estado;
@@ -101,11 +98,6 @@ export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
     setEstado((previo) => empezarDueloSuelto(rival ?? previo.partida.rivalId));
   }, []);
 
-  /** Termina una mirada al rival que ha durado `segundos`. */
-  const mirar = useCallback((segundos: number) => {
-    setEstado((previo) => aplicarNovedades(previo, mirarAlRival(previo.partida, segundos)));
-  }, []);
-
   /** Modo de pruebas: subir o bajar la Cara a mano. */
   const cambiarCara = useCallback((delta: number) => {
     setEstado((previo) => ({ ...previo, partida: ajustarCara(previo.partida, delta) }));
@@ -121,20 +113,20 @@ export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
     });
   }, []);
 
-  // El rival habla cuando le toca, con una pausa para que se le pueda seguir. Mientras le
-  // miras, o mientras lees una ayuda, espera.
+  // El rival habla cuando le toca, con una pausa para que se le pueda seguir. Mientras lees una
+  // ayuda, espera.
   useEffect(() => {
-    if (!leTocaAlRival(partida) || mirando || pausa) return;
+    if (!leTocaAlRival(partida) || pausa) return;
     const reloj = setTimeout(() => {
       setEstado((previo) => (leTocaAlRival(previo.partida) ? aplicarNovedades(previo, jugarRival(previo.partida)) : previo));
     }, RITMO.rival);
     return () => clearTimeout(reloj);
-  }, [partida, mirando, pausa]);
+  }, [partida, pausa]);
 
-  // Los tics salen de uno en uno; mirando al rival duran más.
+  // Los tics salen de uno en uno.
   useEffect(() => {
     if (estado.tic) {
-      const duracion = RITMO.tic * (mirando ? IA.tics.duracionMirando : 1) * (estado.tic.explicado ? 1.5 : 1);
+      const duracion = RITMO.tic * (estado.tic.explicado ? 1.5 : 1);
       const reloj = setTimeout(() => setEstado((previo) => ({ ...previo, tic: null })), duracion);
       return () => clearTimeout(reloj);
     }
@@ -143,7 +135,7 @@ export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
       return () => clearTimeout(reloj);
     }
     return undefined;
-  }, [estado.tic, estado.colaTics, mirando]);
+  }, [estado.tic, estado.colaTics]);
 
   // Los avisos de la Cara y del pulso se van solos.
   useEffect(() => {
@@ -184,13 +176,10 @@ export function useDuelo({ inicio, alGuardar }: OpcionesDuelo) {
     jugar,
     aplicar,
     nuevoDuelo,
-    mirar,
-    mirando,
-    setMirando,
     cambiarCara,
     ensayarTics,
     pausa,
     setPausa,
-    rivalPiensa: leTocaAlRival(partida) && !mirando && !pausa,
+    rivalPiensa: leTocaAlRival(partida) && !pausa,
   };
 }

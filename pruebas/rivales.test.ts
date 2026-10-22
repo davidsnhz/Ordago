@@ -3,8 +3,9 @@ import { accionAleatoria } from '../src/depuracion/jugadorAleatorio';
 import { CARA } from '../src/datos/cara';
 import { IA } from '../src/datos/ia';
 import { ORDEN_RIVALES, RIVALES, type IdRival } from '../src/datos/rivales';
-import { ajustarCara, jugarJugador, jugarRival, leTocaAlRival, mirarAlRival, nuevaPartida, type Partida, type ResultadoPartida } from '../src/estado/partida';
+import { ajustarCara, jugarJugador, jugarRival, leTocaAlRival, nuevaPartida, type Partida, type ResultadoPartida } from '../src/estado/partida';
 import { Azar } from '../src/nucleo/azar';
+import { accionesValidas } from '../src/nucleo/duelo';
 import { crearBaraja } from '../src/nucleo/baraja';
 import { idCarta } from '../src/nucleo/carta';
 import type { EventoDuelo } from '../src/nucleo/eventos';
@@ -15,6 +16,16 @@ import { todasLasCartas } from './ayudas';
 function paso(p: Partida, azar: Azar): ResultadoPartida {
   if (leTocaAlRival(p)) return jugarRival(p);
   return jugarJugador(p, p.duelo.fase === 'finMano' ? { tipo: 'siguienteMano' } : accionAleatoria(p.duelo, azar));
+}
+
+/** Juega al azar hasta que el jugador pueda tirar un órdago (o se acabe el duelo). */
+function hastaQueMePuedaTirarOrdago(p: Partida, azar: Azar): Partida {
+  for (let i = 0; i < 500 && p.duelo.fase !== 'finDuelo'; i++) {
+    const { lado, opciones } = accionesValidas(p.duelo);
+    if (lado === 'jugador' && opciones.some((o) => o.tipo === 'ordago')) return p;
+    p = paso(p, azar).partida;
+  }
+  return p;
 }
 
 /** Juega `duelos` duelos completos contra `rival` y devuelve todos los eventos y novedades. */
@@ -103,30 +114,37 @@ describe('reglas especiales en partida', () => {
     expect(duelos.some((d) => d.resultados.some((r) => r.novedades.seEnfada))).toBe(true);
   }, 120_000);
 
-  it('Doña Ignacia se ofende si la miras demasiado, y entonces no hace tics', () => {
-    let ofendida: Partida | null = null;
-    for (let s = 0; s < 20 && !ofendida; s++) {
-      const r = mirarAlRival(nuevaPartida(`mirar-${s}`, 'engracia').partida, 3);
-      if (r.novedades.seOfende) ofendida = r.partida;
-    }
-    expect(ofendida).not.toBeNull();
-    expect(ofendida!.memoria.ofendidaHastaMano).toBe(ofendida!.duelo.numeroMano + 1);
+  it('Doña Ignacia se ofende si le tiras un órdago antes de la tercera mano, y entonces no hace tics', () => {
+    const inicio = hastaQueMePuedaTirarOrdago(nuevaPartida('ofendida', 'engracia').partida, Azar.conSemilla('hasta-ordago'));
+    expect(inicio.duelo.fase).not.toBe('finDuelo');
+    expect(inicio.duelo.numeroMano).toBeLessThan(3);
+    const r = jugarJugador(inicio, { tipo: 'ordago', lado: 'jugador' });
+    expect(r.novedades.seOfende).toBe(true);
+    expect(r.novedades.tics).toEqual([]);
+    const ofendida = r.partida;
+    expect(ofendida.memoria.ofendidaHastaMano).toBe(inicio.duelo.numeroMano + 1);
 
     // Mientras dura, ni un tic.
     const azar = Azar.conSemilla('ofendida');
-    let p = ofendida!;
-    while (p.duelo.numeroMano <= ofendida!.memoria.ofendidaHastaMano && p.duelo.fase !== 'finDuelo') {
-      const r = paso(p, azar);
-      if (r.partida.duelo.numeroMano <= ofendida!.memoria.ofendidaHastaMano) expect(r.novedades.tics).toEqual([]);
-      p = r.partida;
+    let p = ofendida;
+    while (p.duelo.numeroMano <= ofendida.memoria.ofendidaHastaMano && p.duelo.fase !== 'finDuelo') {
+      const paso1 = paso(p, azar);
+      if (paso1.partida.duelo.numeroMano <= ofendida.memoria.ofendidaHastaMano) expect(paso1.novedades.tics).toEqual([]);
+      p = paso1.partida;
     }
   });
 
-  it('mirar poco, o a otro rival, no tiene consecuencias', () => {
-    const engracia = nuevaPartida('poco', 'engracia').partida;
-    expect(mirarAlRival(engracia, 1).partida).toBe(engracia);
-    const ruperto = nuevaPartida('ruperto', 'ruperto').partida;
-    expect(mirarAlRival(ruperto, 5).partida).toBe(ruperto);
+  it('un órdago desde la tercera mano, o a otro rival, no ofende a nadie', () => {
+    const azar = Azar.conSemilla('tercera');
+    let p = nuevaPartida('tercera', 'engracia').partida;
+    while (p.duelo.numeroMano < 3 && p.duelo.fase !== 'finDuelo') p = paso(p, azar).partida;
+    p = hastaQueMePuedaTirarOrdago(p, azar);
+    if (p.duelo.fase !== 'finDuelo') {
+      expect(p.duelo.numeroMano).toBeGreaterThanOrEqual(3);
+      expect(jugarJugador(p, { tipo: 'ordago', lado: 'jugador' }).novedades.seOfende).toBe(false);
+    }
+    const ruperto = hastaQueMePuedaTirarOrdago(nuevaPartida('ruperto', 'ruperto').partida, Azar.conSemilla('ruperto'));
+    expect(jugarJugador(ruperto, { tipo: 'ordago', lado: 'jugador' }).novedades.seOfende).toBe(false);
   });
 });
 

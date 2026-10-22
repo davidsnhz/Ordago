@@ -81,8 +81,11 @@ export interface PerfilRival {
   enfado?: { lancesSeguidos: number; manos: number };
   /** Doña Ignacia: nunca acepta un órdago antes de esta mano. */
   ordagoDesdeMano?: number;
-  /** Doña Ignacia: si la miras demasiado, se ofende y no hace tics durante `manos` manos. */
-  alSerMirado?: { manos: number };
+  /**
+   * Doña Ignacia: si le tiras un órdago antes de `ordagoDesdeMano`, se ofende y no hace tics en lo
+   * que queda de mano ni en las `manos` siguientes.
+   */
+  ofendeOrdagoTemprano?: { manos: number };
   /** Don Francisco: en estos lances, si habla sin envite delante, envida siempre. */
   siempreEnvidaA?: readonly Lance[];
   /** Don Francisco: si te pilla un farol, tu próximo envite le da `piedras` más si lo gana él. */
@@ -190,7 +193,7 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
       { id: 'miraFijamente', disparador: 'sospecha', fiabilidad: 0.9, lances: TODOS },
     ],
     ordagoDesdeMano: 3,
-    alSerMirado: { manos: 1 },
+    ofendeOrdagoTemprano: { manos: 1 },
   },
   anselmo: {
     id: 'anselmo',

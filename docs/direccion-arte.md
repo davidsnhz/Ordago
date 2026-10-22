@@ -9,11 +9,13 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Baraja (40 cartas + 2 reversos) | **Cerrada** | `assets/cartas/` |
 | Palos sueltos y logotipo | **Cerrado** | `assets/palos/`, `assets/marca/` |
 | Tintas (paleta) | **Cerrada** | esta guía |
-| Tipografías | **Cerradas** | `assets/fuentes/` |
+| Tipografías | **Cerradas** (**[cambiado]** 22 de octubre de 2026: Alegreya en lugar de IM Fell) | `assets/fuentes/` |
 | Piezas de mesa: botones, piedras, lances, Cara, paneles | **Cerradas** | esta guía + `00_guia_estilo` |
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
 | Personajes: rivales, compañeros, tabernera y sucesos de la plaza | **En marcha: todos se diseñan desde cero.** Los dibujos de antes se borraron el 14 de octubre de 2026. **Chema, hecho** (15 de octubre): marca el estilo | guía: `docs/personajes.md`; mientras, marcador (recuadro de puntos almagre con el nombre) |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
+| Movimiento y sonido de la mesa | **Prototipo** (22 de octubre de 2026): la mesa viva, para comparar con la de antes | «La mesa viva», abajo |
+| Distribución de la mesa | **Prototipo** (22 de octubre de 2026): la mesa nueva, sin acta a la vista | «La mesa nueva», abajo |
 | Mapa ilustrado | Provisional: la facultad con formas planas (el edificio, la arena, el bar en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
 
 Todo lo pendiente se dibuja con **marcadores** (rectángulo de trazo discontinuo en almagre, fondo nogal translúcido y el texto «ARTE PENDIENTE»), detrás de una interfaz que permita cambiar el arte sin tocar código.
@@ -39,12 +41,18 @@ Textura: los fondos de papel llevan un punteado muy suave (puntos de 1 px de `rg
 
 ## La letra
 
+**[cambiado] 22 de octubre de 2026.** A David no le convencía IM Fell: es una letra de imprenta del siglo XVII, de bordes irregulares, que en el móvil y a tamaño pequeño se ve borrosa y le da a todo aire de documento viejo. Vio cuatro propuestas aplicadas a piezas de la mesa y eligió Alfa Slab One para lo que se grita, Alegreya Sans SC para los rótulos y Alegreya para el texto, con los nombres en Spectral SC.
+
 | Fuente | Archivo | Uso |
 | --- | --- | --- |
-| Alfa Slab One | `AlfaSlabOne-Regular.ttf` | lo que se grita en la mesa: títulos, botones, cifras, «¡ÓRDAGO!» (siempre en mayúsculas) |
-| IM Fell English SC | `IMFellEnglishSC-Regular.ttf` | rótulos, lances, menús, marcadores, etiquetas (versalitas, interletraje amplio) |
-| IM Fell English (cursiva) | `IMFellEnglish-Italic.ttf` | la voz de los rivales, refranes, descripciones |
-| IM Fell English | `IMFellEnglish-Regular.ttf` | texto corrido |
+| Alfa Slab One | `AlfaSlabOne-Regular.ttf` | lo que se grita en la mesa: títulos, cifras, sellos, «¡ÓRDAGO!» y su botón (siempre en mayúsculas). **[cambiado]** Ya no los demás botones |
+| **[nuevo]** Bitter Black | `Bitter-Black.woff2` | los botones (PASO, ENVIDO, QUIERO, SIGUIENTE MANO…, los de la portada y la gira, la bolsa y el «−/+» del selector); un poco de interletraje. Gorda y con carácter, pero no cansa al pulsarla una y otra vez. Es de Huerta Tipográfica, los mismos de Alegreya |
+| **[cambiado]** Alegreya Sans SC (negrita) | `AlegreyaSansSC-Bold.woff2` | rótulos, lances, menús, marcadores, etiquetas (versalitas, interletraje amplio). Solo hay un grueso: vale para cualquier peso |
+| **[cambiado]** Alegreya (cursiva) | `Alegreya-Italic.woff2` | la voz de los rivales, refranes, descripciones |
+| **[cambiado]** Alegreya | `Alegreya-Regular.woff2` y `Alegreya-Bold.woff2` | texto corrido |
+| **[nuevo]** Spectral SC (seminegrita) | `SpectralSC-SemiBold.woff2` | los nombres de quien juega: en la cabecera (*Chema*, *Tú*) y en los sellos |
+
+En las variables de estilo son `--letra-grito`, `--letra-boton`, `--letra-rotulo`, `--letra-texto` y `--letra-nombre`. Alegreya es de Huerta Tipográfica (Argentina), pensada para leer mucho y bien en español. Las tres nuevas, solo con el alfabeto latino (acentos, eñe, ¡ ¿ « »), en WOFF2: unos 23–29 KB cada una. **Donde esta guía dice IM Fell English SC, léase Alegreya Sans SC; donde dice IM Fell English, Alegreya.** IM Fell sigue en `assets/fuentes/`, pero ya no se publica.
 
 Todas tienen licencia OFL (incluida en la carpeta).
 
@@ -56,7 +64,7 @@ Las medidas están en píxeles del escenario de referencia (1280 × 590). Pasa e
 
 **Paneles.** Fondo papel, borde de 3 px negro de humo, radio de 6–8 px. Los paneles importantes llevan una sombra dura desplazada (3–4 px abajo a la derecha, negro de humo, sin difuminar). Nunca degradados ni sombras suaves en la interfaz.
 
-**Botones de apuesta.** Alfa Slab One de 20–24 px, borde de 3 px, radio de 10 px y sombra dura de 3 px.
+**Botones de apuesta.** **[cambiado]** Bitter Black (antes Alfa Slab One) de 20–24 px, borde de 3 px, radio de 10 px y sombra dura de 3 px.
 - PASO y QUIERO: fondo papel.
 - ENVIDO / ENVIDO MÁS: fondo gualda.
 - NO QUIERO: fondo papel con borde **discontinuo** y sin sombra, porque es rendirse.
@@ -83,6 +91,40 @@ Las medidas están en píxeles del escenario de referencia (1280 × 590). Pasa e
 - En la mano se abren en abanico con rotaciones de −9°, −3°, 3° y 9°, y sombra dura de 3–4 px.
 - Las del rival van boca abajo, pequeñas y también en abanico.
 - Al seleccionarlas para el descarte suben unos 20 px.
+
+## La mesa viva (prototipo, 22 de octubre de 2026)
+
+Lo que hace que Balatro parezca profesional no es su dibujo sino que **todo se mueve y todo suena**. La mesa viva aplica eso a Órdago sin cambiar su estilo de naipe impreso: mismas tintas, misma letra, mismos contornos y sombras duras. Se elige en la portada (*Mesa: nueva / viva / de antes*). El código está en `src/ui/componentes/MesaViva.tsx`, `FondoVivo.tsx` y `mesaViva.css`; el sonido, en `src/ui/sonido.ts`.
+
+**Cartas.** Mazo (tres reversos apilados) a la izquierda del tapete y descartes (tres reversos revueltos) a la derecha, de 28 × 50. Cada carta sale del mazo con un muelle hasta su hueco del abanico; el reparto alterna rival y tú cada 0,12 s, y las tuyas se dan la vuelta al llegar. Mientras esperan flotan 3 px (cada una a su ritmo). Se inclinan hasta unos 12° hacia el puntero, suben 6 px y las cruza una franja de barniz de borde duro, recortada con la propia carta. Las elegidas para tirar suben 20 px y tiemblan ±1,3°. Las que se van vuelan girando a los descartes.
+
+**Sellos.** Lo que se dice cae sobre el tapete, encima de las cartas del rival: panel con contorno de tinta de 3 px y sombra dura de 4 px; arriba, quién lo dice en IM Fell English SC (almagre el rival, añil tú); debajo, lo dicho en Alfa Slab One (21 px *MUS* y *PASO*, 28 px *QUIERO* y *ENVIDO*, 34 px los envites de 5 o más y las subidas). *ENVIDO* y *MÁS* en gualda, *QUIERO* en verde con letra papel, *CORTO* en tinta, *NO QUIERO* discontinuo y sin sombra. Entra desde 2,4 veces su tamaño, ladeado (−6° el rival, 5° tú), con una onda de tinta que se abre al caer.
+
+**¡Órdago!** Fondo almagre al 90 % con los rayos de `04_ordago` girando despacio; «¡ÓRDAGO!» en Alfa Slab One de 56 px, papel con contorno y sombra dura de tinta, que cae desde tres veces su tamaño; debajo, en una cinta de tinta, quién lo tira. La mesa tiembla. Es el primer paso hacia la pantalla de órdago de las referencias.
+
+**Piedras.** Amarracos de 18 px (gualda, contorno de tinta, sombra dura de 2 px) que vuelan en arco desde el centro del tapete hasta el número de quien cobra; el número salta (de 1,6 veces a su tamaño, en gualda oscuro) al llegar cada uno.
+
+**La taberna.** La luz del quinqué tiembla. Un lienzo pinta motas de polvo que suben y brillan cerca de la luz, y un humo de papel muy suave; otro, unas pocas motas más gordas por delante del rival. Las esquinas, en sombra. Por encima de todo, un grano de imprenta al 10 %. Estos degradados son de ambiente, no de interfaz: paneles, botones y cartas siguen sin degradados ni sombras suaves.
+
+**Rebotes.** Los botones nuevos, el selector de envite, cada línea nueva del acta y el panel del recuento entran con un pequeño rebote; en el recuento, las cartas se dan la vuelta de una en una y los cobros entran uno tras otro. El botón de órdago late cuando se puede tirar.
+
+## La mesa nueva (prototipo, 22 de octubre de 2026)
+
+La mesa viva con otra distribución: sin el acta a la vista. Lo que pasa lo cuentan los sellos, junto a quien habla, y las casillas de los lances. Código: `src/ui/componentes/MesaNueva.tsx` y `mesaNueva.css`; lo que enseña cada casilla sale de `src/estado/casillas.ts` (pura, con pruebas).
+
+**De arriba abajo** (escenario de 390 × 844): la cabecera (sin los lances, que pasan al tapete); el rival, escalado 1,15 desde abajo y con la figura apoyada en el borde del tapete, que la tapa por la cintura; el tapete, un óvalo de 840 × 700 que empieza en y = 392, más ancho para que su borde sea casi recto bajo el rival; sus cartas en y = 414, entre el mazo y los descartes; las cuatro casillas en y = 478; tu mano en y = 616, y la barra de abajo.
+
+**Casillas.** Cuatro de 88 × 72 con 6 px entre ellas. Por jugar: hueco de puntos de papel al 50 % sobre el tapete. La que se juega: papel, borde almagre de 3 px, sombra dura de 3 px, sube 4 px y late. Jugadas: papel de fondo con borde de tinta de 2 px. Dentro, el nombre del lance en IM Fell English SC de 13 px y lo que pasó en cursiva; lo envidado, un montoncito de amarracos (15 px) con la cifra en Alfa Slab One de 22 px. Quién lleva pares o juego: un círculo de 19 px en la esquina de arriba a la derecha (el rival, almagre si lo lleva) y otro en la de abajo (tú, añil); gris con ✗ si no. En el recuento, cada cobro cuelga del borde de abajo como un sello pequeño (Alfa Slab One de 15 px, papel sobre añil o almagre, contorno y sombra dura), uno cada 0,55 s desde los 0,7 s; lo que ya no se llegó a cobrar, en gris tachado.
+
+**Sellos junto a quien habla.** El del rival a la izquierda, bajo su retrato (y = 342); el tuyo a la derecha, encima de tus cartas (y = 568). Más pequeños que en la mesa viva (17, 22 y 26 px). Al acabar el lance se quedan 1,2 s y vuelan, encogiéndose, a su casilla.
+
+**Golpe de sello** (las dos mesas). Baja 34 px desde 1,3 veces su tamaño, ya entero; a los 0,15 s toca la mesa: se aplasta al 93 %, la sombra pasa de 10 × 12 px clara a pegada y vuelve a 4 px, se abre una onda de tinta, suena y, si es fuerte, tiembla la mesa. Sin rebotes. Lleva el doble marco de un sello de goma.
+
+**Bocadillo.** Papel, contorno de 3 px, radio de 14 px, sombra dura y cola hacia la cara; IM Fell English en cursiva de 15 px. Arriba a la derecha del rival, 150 px de ancho. «…» en Alfa Slab One mientras piensa.
+
+**Avisos.** Tira de gualda claro con contorno de 2 px y sombra dura, bajo el marcador, entre la bolsa y SALIR para no taparlos; IM Fell English de 13 px.
+
+**≡.** Botón redondo de papel de 44 px a la izquierda, entre las casillas y tu mano; abre el acta entera en un panel.
 
 ## Icono de la aplicación (12 de octubre de 2026)
 

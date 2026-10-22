@@ -53,8 +53,10 @@
   gap: 6px;
 }
 
+/* Los nombres, en Spectral SC (como en los sellos). */
 .cabecera__nombres .rotulo {
   overflow: hidden;
+  font-family: var(--letra-nombre);
   font-size: 13px;
   letter-spacing: 1px;
   white-space: nowrap;
@@ -344,42 +346,6 @@
   box-shadow: var(--sombra-dura);
   transform: rotate(-4deg);
   cursor: help;
-}
-
-.mesa__zona-mirar {
-  position: absolute;
-  left: 70px;
-  top: 150px;
-  width: 250px;
-  height: 222px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  cursor: zoom-in;
-  touch-action: none;
-  -webkit-touch-callout: none;
-}
-
-.mesa__zona-mirar:focus-visible {
-  outline-offset: -6px;
-}
-
-.retrato {
-  transition: transform 0.25s ease-out;
-}
-
-.mesa--mirando .retrato {
-  z-index: 30;
-  transform: scale(1.5);
-  transform-origin: 50% 40%;
-}
-
-.mesa__penumbra {
-  position: absolute;
-  inset: 0;
-  z-index: 29;
-  background: rgba(10, 7, 5, 0.75);
-  pointer-events: none;
 }
 
 /* Herramientas del modo de pruebas (solo en desarrollo o con ?pruebas). */
@@ -811,7 +777,7 @@
   height: 40px;
   flex: 0 0 40px;
   padding: 0;
-  font-family: var(--letra-grito);
+  font-family: var(--letra-boton);
   font-size: 22px;
   line-height: 1;
   color: var(--tinta);
@@ -1113,7 +1079,7 @@
   height: 52px;
   padding: 0;
   border-radius: 50%;
-  font-family: var(--letra-grito);
+  font-family: var(--letra-boton);
   font-size: 11px;
   letter-spacing: 0.5px;
   color: var(--tinta);

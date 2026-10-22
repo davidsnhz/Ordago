@@ -1,3 +1,4 @@
+import { MotionConfig } from 'motion/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
@@ -11,6 +12,9 @@ if (!raiz) throw new Error('Falta el elemento #raiz en index.html');
 cargarFuentes();
 createRoot(raiz).render(
   <StrictMode>
-    <App />
+    {/* Con «reducir movimiento» en el sistema, las animaciones se quedan en lo mínimo. */}
+    <MotionConfig reducedMotion="user">
+      <App />
+    </MotionConfig>
   </StrictMode>,
 );

@@ -1,6 +1,6 @@
 import { CARA } from '../../datos/cara';
 import type { EstadoMesa } from '../../estado/mesa';
-import type { Lado } from '../../nucleo/comun';
+import type { Lado, PorLado } from '../../nucleo/comun';
 import type { EstadoDuelo } from '../../nucleo/duelo';
 import type { Lance } from '../../nucleo/lances';
 import { ES, type TextosRival } from '../../textos/es';
@@ -31,10 +31,30 @@ function pasosDe(duelo: EstadoDuelo): { etiqueta: string; estado: EstadoPaso }[]
  * y los lances como pasos; abajo tu Cara, con tu careto, lo que significa ahora y su barra.
  * Cuando la Cara cambia, la cifra sube un momento sobre la marca. «?» explica la Cara.
  */
-export function Cabecera({ estado, textos, onAyuda }: { estado: EstadoMesa; textos: TextosRival; onAyuda: () => void }) {
+export function Cabecera({
+  estado,
+  textos,
+  onAyuda,
+  vivo,
+}: {
+  estado: EstadoMesa;
+  textos: TextosRival;
+  onAyuda: () => void;
+  /** Mesa viva: el marcador que se ve (sube al llegar cada piedra) y un golpe por llegada, para que salte. */
+  vivo?: { marcador: PorLado<number>; golpes: PorLado<number> };
+}) {
   const { partida, avisoCara, seTeNota } = estado;
   const { duelo } = partida;
   const zona = zonaCara(partida.caraJugador);
+  const numero = (lado: Lado) => (
+    <b
+      key={vivo?.golpes[lado] ?? 0}
+      className={clases('cabecera__numero', vivo && vivo.golpes[lado] > 0 && 'cabecera__numero--golpe')}
+      data-numero={lado}
+    >
+      {(vivo?.marcador ?? duelo.marcador)[lado]}
+    </b>
+  );
   const mano = (lado: Lado) =>
     duelo.quienEsMano === lado && (
       <span className={clases('insignia', lado === 'jugador' && 'insignia--anil')} title={M.ayudaMano}>
@@ -51,13 +71,13 @@ export function Cabecera({ estado, textos, onAyuda }: { estado: EstadoMesa; text
       </div>
       <div className="cabecera__marcador">
         <span className="cabecera__lado">
-          <b className="cabecera__numero">{duelo.marcador.rival}</b>
+          {numero('rival')}
           {mano('rival')}
         </span>
         <PasosLances pasos={pasosDe(duelo)} />
         <span className="cabecera__lado cabecera__lado--tu">
           {mano('jugador')}
-          <b className="cabecera__numero">{duelo.marcador.jugador}</b>
+          {numero('jugador')}
         </span>
       </div>
       <div className="cabecera__cara">

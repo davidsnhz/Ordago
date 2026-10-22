@@ -1,6 +1,6 @@
 # Órdago — La gira
 
-15 de octubre de 2026 · @david · *versión 7: Chema, con dibujo y con su refresco*
+22 de octubre de 2026 · @david · *versión 8: ya no se mira al rival; Doña Ignacia se ofende con un órdago temprano*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
@@ -234,7 +234,7 @@ Las fiestas del pueblo: farolillos, casetas, la orquesta al fondo, olor a churro
 - **En las fiestas:** juega el concurso todos los años desde que enviudó.
 - **Cómo juega:** paciente y desconfiada. Casi nunca farolea; cuando envida, lleva cartas. · A 3 · F 1 · M 9 · Me 6 · O 7
 - **Tics:** pasa las cuentas del rosario más deprisa (lleva una mano fuerte) y te mira fijamente (sospecha que faroleas).
-- **Reglas:** no acepta un órdago antes de la tercera mano. Si la miras más de 2 segundos, se da cuenta 7 de cada 10 veces, se ofende y deja de hacer tics en lo que queda de mano y en la siguiente.
+- **Reglas:** no acepta un órdago antes de la tercera mano. ~~Si la miras más de 2 segundos, se da cuenta 7 de cada 10 veces, se ofende y deja de hacer tics en lo que queda de mano y en la siguiente.~~ **[cambiado]** Ya no se puede mirar al rival (22 de octubre de 2026): ahora se ofende **si le tiras un órdago antes de la tercera mano**, siempre, y deja de hacer tics en lo que queda de mano y en la siguiente.
 - **Frase:** «Treinta años jugando con mi difunto. A mí no me la das.»
 
 #### Nivel 2 · Don Francisco, el Cura (ya está en el juego)
@@ -398,7 +398,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Boina de la suerte | Ganas los empates aunque no seas mano | 8 |
 | Navaja de Albacete | Los órdagos que ganas dan +1 de Honra (máximo 3) | 12 |
 | Pañuelo de hierbas | Ves si el rival tiene pares antes de que lo declare | 9 |
-| Reloj de bolsillo | Puedes mirar al rival el doble de tiempo sin que se dé cuenta, y sus tics duran más. *Con Doña Ignacia aguantas 4 segundos mirándola antes de que se ofenda, en vez de 2* | 3, baratillo |
+| Reloj de bolsillo | **[cambiado] Por rehacer:** era mirar al rival el doble de tiempo sin que se diera cuenta, y ya no se puede mirar (22 de octubre de 2026). | 3, baratillo |
 | Gafas de culo de vaso | +1 nota automática en la Libreta por duelo | 6 |
 | Medalla de la Virgen | La primera vez en cada duelo que te pillan un farol, tu Cara no baja | 9 |
 | Hucha de barro | Al acabar cada arena, +1 real por cada 5 que tengas ahorrados (máximo +5). *Ejemplo: llegas al final de la arena con 23 reales y cobras 4* | 8 |
@@ -409,7 +409,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
 | Ristra de ajos | Los rivales no hacen tics falsos: Aurelio deja de golpear la vara, y en la familia nadie hace señas de mentira (ni Fernando ni el abuelo) | 7 |
-| Gorra calada | No se te ve la cara: los rivales tienen 3 menos de Ojo (te pillan menos cuando les miras y cuando haces trampas con el Tahúr) | 7 |
+| Gorra calada | No se te ve la cara: los rivales tienen 3 menos de Ojo (te pillan menos cuando haces trampas con el Tahúr) | 7 |
 | Carta del gobernador | Los jefes pierden su regla especial: Chema ni se crece ni se arruga, Manolo juega con calma todo el duelo, el abuelo no hace señas falsas, el tío Arturo hace sus tics como cualquiera y no te lee antes de tiempo, y Don Rodrigo ni tiene casa ni cambia cartas. Es el más caro de la taberna | 15 |
 
 ### Barajas

@@ -7,6 +7,7 @@ import { ES } from '../../textos/es';
 import { rutaArte } from '../arte';
 import { Escenario } from '../componentes/Escenario';
 import { BotonApuesta } from '../componentes/piezas';
+import { cambiarPreferencia, siguienteMesa, usePreferencias } from '../preferencias';
 import './gira/gira.css';
 
 const P = ES.portada;
@@ -26,6 +27,7 @@ export function Portada({
   onLibreta: () => void;
 }) {
   const [confirmando, setConfirmando] = useState(false);
+  const { mesa, sonido } = usePreferencias();
   return (
     <Escenario avisoGirar={ES.mesa.girar}>
       <div className="pantalla">
@@ -61,6 +63,14 @@ export function Portada({
           )}
           <BotonApuesta onClick={onSuelto}>{P.dueloSuelto}</BotonApuesta>
           <BotonApuesta onClick={onLibreta}>{P.libreta}</BotonApuesta>
+        </div>
+        <div className="portada__ajustes">
+          <button type="button" className="portada__ajuste" aria-pressed={mesa !== 'antes'} title={P.ayudaMesa} onClick={() => cambiarPreferencia('mesa', siguienteMesa(mesa))}>
+            {P.mesa(P.nombresMesa[mesa])}
+          </button>
+          <button type="button" className="portada__ajuste" aria-pressed={sonido} onClick={() => cambiarPreferencia('sonido', !sonido)}>
+            {P.sonido(sonido)}
+          </button>
         </div>
       </div>
     </Escenario>

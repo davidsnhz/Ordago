@@ -79,11 +79,13 @@
 
 /* ——— Botones de apuesta ——— */
 
+/* Bitter Black: gorda y con carácter, pero no cansa al pulsarla una y otra vez. */
 .boton-apuesta {
   width: 100%;
   min-height: 44px;
   padding: 9px 0;
-  font-family: var(--letra-grito);
+  font-family: var(--letra-boton);
+  letter-spacing: 0.5px;
   font-size: 22px;
   line-height: 1.1;
   color: var(--tinta);

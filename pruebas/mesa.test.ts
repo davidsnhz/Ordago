@@ -61,10 +61,10 @@ describe('lo que enseña la mesa', () => {
       cartas: { jugador: [], rival: [] },
     });
     const primera = aplicarNovedades(base(), con([reparto(1, 'rival')]));
-    expect(primera.acta[0]).toEqual({ quien: null, texto: 'Mano 1: es mano Agustín (habla primero y gana los empates)' });
+    expect(primera.acta[0]).toEqual({ quien: null, texto: 'Mano 1: es mano Agustín (habla primero y gana los empates)', aviso: true });
     expect(primera.acta[1]).toMatchObject({ quien: 'rival', texto: 'Agustín se sienta a la mesa' });
     const segunda = aplicarNovedades(primera, con([reparto(2, 'jugador')]));
-    expect(segunda.acta).toEqual([{ quien: null, texto: 'Mano 2: eres mano' }]);
+    expect(segunda.acta).toEqual([{ quien: null, texto: 'Mano 2: eres mano', aviso: true }]);
   });
 
   it('lo que pasa en la mesa se apunta sin dueño', () => {
@@ -111,7 +111,7 @@ describe('lo que enseña la mesa', () => {
     const tras = aplicarNovedades(base(), con([], { seEnfada: true }));
     expect(tras.acta.slice(-2)).toEqual([
       { quien: 'rival', texto: '¡Agustín se ha enfadado!', frase: ES.rivales.ruperto.frases.enfado },
-      { quien: null, texto: 'Durante dos manos lo aceptará todo' },
+      { quien: null, texto: 'Durante dos manos lo aceptará todo', aviso: true },
     ]);
   });
 

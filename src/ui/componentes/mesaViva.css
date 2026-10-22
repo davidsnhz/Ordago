@@ -1,0 +1,583 @@
+/*
+ * La mesa viva (prototipo, 22 de octubre de 2026): movimiento, luz, sellos y grano.
+ * Todo cuelga de .mesa--viva o de piezas que solo existen en ella; sin ella, la mesa es la de antes.
+ * Píxeles del escenario de 390 × 844.
+ */
+
+/* ——— El fondo: polvo, humo, el quinqué que tiembla, las esquinas en sombra y el grano ——— */
+
+.mesa__fondo-vivo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 530px;
+  pointer-events: none;
+}
+
+.mesa--viva .mesa__luz {
+  animation: quinque 4.6s ease-in-out infinite;
+}
+
+@keyframes quinque {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  8% {
+    opacity: 0.82;
+  }
+  11% {
+    opacity: 0.97;
+    transform: scale(1.025);
+  }
+  26% {
+    opacity: 0.9;
+  }
+  43% {
+    opacity: 1;
+    transform: scale(0.99);
+  }
+  58% {
+    opacity: 0.84;
+  }
+  61% {
+    opacity: 0.96;
+    transform: scale(1.03);
+  }
+  79% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* La luz está en el centro; las esquinas de la taberna, en sombra. */
+.mesa__vineta {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 82% 62% at 50% 36%, transparent 52%, rgba(10, 6, 4, 0.62) 100%);
+}
+
+/* Grano de imprenta por encima de todo, para que la pantalla parezca papel impreso. */
+.mesa--viva::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .14 0 0 0 0 .1 0 0 0 0 .08 0 0 0 1.5 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ——— Las cartas ——— */
+
+.carta-viva {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.carta-viva__flota {
+  width: 100%;
+  height: 100%;
+  perspective: 520px;
+  animation: flota 3.6s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i, 0) * -0.95s);
+}
+
+.carta-viva--rival .carta-viva__flota {
+  animation-duration: 4.3s;
+}
+
+@keyframes flota {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(-3px) rotate(0.7deg);
+  }
+}
+
+/* Elegida para tirarla: sube (con el muelle) y tiembla un poco, impaciente. */
+.carta-viva--elegida .carta-viva__flota {
+  animation: impaciente 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes impaciente {
+  from {
+    transform: rotate(-1.3deg);
+  }
+  to {
+    transform: rotate(1.3deg);
+  }
+}
+
+.carta-viva__inclina {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  transform-style: preserve-3d;
+  transform: translateY(var(--alzado, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.22s ease-out;
+  touch-action: none;
+}
+
+.carta-viva__boton {
+  cursor: pointer;
+}
+
+.carta-viva__inclina--activa {
+  --alzado: -6px;
+  transition: transform 0.08s linear;
+}
+
+.carta-viva__caras {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.carta-viva__cara {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: drop-shadow(3px 4px 0 rgba(35, 25, 21, 0.45));
+}
+
+.carta-viva--rival .carta-viva__cara {
+  filter: drop-shadow(2px 2px 0 rgba(35, 25, 21, 0.45));
+}
+
+.carta-viva__dorso {
+  transform: rotateY(180deg);
+}
+
+/* El barniz: una franja de luz que cruza la carta al inclinarla (recortada con la propia carta). */
+.carta-viva__brillo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  background: linear-gradient(105deg, transparent 0 47%, rgba(255, 249, 232, 0.6) 47% 52%, transparent 52% 100%);
+  background-size: 300% 100%;
+  background-position: var(--bx, 50%) 0;
+  opacity: 0;
+  transform: translateZ(1px);
+  transition: opacity 0.2s;
+}
+
+.carta-viva__inclina--activa .carta-viva__brillo {
+  opacity: 1;
+}
+
+.carta-viva--elegida .carta-viva__frente {
+  outline: 3px solid var(--almagre);
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
+@media (hover: hover) {
+  .carta-viva__boton:hover {
+    --alzado: -6px;
+  }
+}
+
+/* El mazo y los descartes. */
+.monton {
+  position: absolute;
+  width: 28px;
+  height: 50px;
+  pointer-events: none;
+}
+
+.monton__carta {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 0 rgba(35, 25, 21, 0.45));
+}
+
+/* ——— El marcador: las piedras vuelan a él y el número salta ——— */
+
+/* Por encima del velo del recuento, para ver subir el marcador. */
+.mesa--viva .cabecera {
+  z-index: 21;
+}
+
+.mesa--viva .mesa__velo:not(.mesa__velo--encima):not(.mesa__velo--bolsa) {
+  padding-top: 122px;
+}
+
+.capa-piedras {
+  position: absolute;
+  inset: 0;
+  z-index: 23;
+  pointer-events: none;
+}
+
+.piedra-viva {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  font-family: var(--letra-grito);
+  font-size: 9px;
+  line-height: 1;
+  color: var(--tinta);
+  background: var(--gualda);
+  border: 2.5px solid var(--tinta);
+  border-radius: 50%;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
+.cabecera__numero--golpe {
+  display: inline-block;
+  animation: golpe-numero 0.34s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+
+@keyframes golpe-numero {
+  from {
+    color: var(--gualda-oscuro);
+    transform: scale(1.6);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* ——— Sellos: lo que se dice cae sobre el tapete ——— */
+
+.sellos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 546px;
+  z-index: 16;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* La sombra, el golpe y la onda los anima MesaViva.tsx (SelloImpreso): baja, golpea y se queda. */
+.sello {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 16px 6px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 3px solid var(--tinta);
+  border-radius: 10px;
+  box-shadow: 4px 4px 0 var(--tinta);
+}
+
+/* El doble marco de un sello de goma. */
+.sello::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1.5px solid currentColor;
+  border-radius: 6px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Quién lo dice: el nombre, en Spectral SC. */
+.sello__quien {
+  font-family: var(--letra-nombre);
+  font-size: 13px;
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+
+.sello--rival .sello__quien {
+  color: var(--almagre);
+}
+
+.sello--jugador .sello__quien {
+  color: var(--anil);
+}
+
+.sello__texto {
+  font-family: var(--letra-grito);
+  font-size: 28px;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.sello--fuerza-0 .sello__texto {
+  font-size: 21px;
+}
+
+.sello--fuerza-2 .sello__texto {
+  font-size: 34px;
+}
+
+.sello--envido,
+.sello--mas {
+  background: var(--gualda);
+}
+
+.sello--quiero {
+  color: var(--papel);
+  background: var(--verde);
+}
+
+.sello--quiero .sello__quien {
+  color: var(--papel);
+}
+
+.sello--corto {
+  color: var(--papel);
+  background: var(--tinta);
+}
+
+.sello--corto .sello__quien {
+  color: var(--gualda);
+}
+
+/* El órdago que se queda puesto (mesa nueva) hasta que le contestan. */
+.sello--ordago {
+  color: var(--papel);
+  background: var(--almagre);
+}
+
+.sello--ordago .sello__quien {
+  color: var(--gualda);
+}
+
+/* NO QUIERO, como su botón: discontinuo y sin sombra, porque es rendirse. */
+.sello--noQuiero {
+  border-style: dashed;
+  box-shadow: none;
+}
+
+/* La onda de tinta que se abre al golpear la mesa (a los 0,15 s, cuando el sello toca). */
+.sello__onda {
+  position: absolute;
+  inset: -3px;
+  border: 3px solid var(--tinta);
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  animation: onda 0.45s ease-out 0.15s forwards;
+}
+
+@keyframes onda {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.3, 1.7);
+  }
+}
+
+/* ——— ¡ÓRDAGO! ——— */
+
+.estallido {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  overflow: hidden;
+  pointer-events: none;
+  background: rgba(176, 42, 35, 0.9);
+}
+
+/* Los rayos de la pantalla de órdago de las referencias, girando. */
+.estallido__rayos {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1100px;
+  height: 1100px;
+  margin: -550px 0 0 -550px;
+  background: repeating-conic-gradient(from 0deg, rgba(35, 25, 21, 0.2) 0deg 6deg, transparent 6deg 15deg);
+  animation: rayos 10s linear infinite;
+}
+
+@keyframes rayos {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.estallido__texto {
+  position: relative;
+  font-family: var(--letra-grito);
+  font-size: 56px;
+  line-height: 1;
+  color: var(--papel);
+  white-space: nowrap;
+  text-shadow: 5px 5px 0 var(--tinta);
+  -webkit-text-stroke: 2px var(--tinta);
+}
+
+.estallido__quien {
+  position: relative;
+  padding: 4px 14px;
+  font-family: var(--letra-rotulo);
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--papel);
+  background: var(--tinta);
+  border-radius: 4px;
+}
+
+/* El botón de órdago, cuando se puede tirar, late. */
+.mesa--viva .boton-ordago:not(:disabled) {
+  animation: ordago-late 1.8s ease-in-out infinite;
+}
+
+@keyframes ordago-late {
+  0%,
+  100% {
+    outline-offset: 2px;
+  }
+  50% {
+    outline-offset: 5px;
+  }
+}
+
+/* ——— Lo que aparece entra con un rebote ——— */
+
+.mesa--viva .botonera__acciones > * {
+  animation: boton-entra 0.3s cubic-bezier(0.3, 1.7, 0.5, 1) backwards;
+}
+
+.mesa--viva .botonera__acciones > :nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.mesa--viva .botonera__acciones > :nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+@keyframes boton-entra {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.85);
+  }
+}
+
+.mesa--viva .cantidades {
+  transform-origin: 50% 100%;
+  animation: panel-entra 0.28s cubic-bezier(0.2, 1.5, 0.4, 1) backwards;
+}
+
+.mesa--viva .acta__linea--ultima {
+  animation: linea-entra 0.32s ease-out backwards;
+}
+
+@keyframes linea-entra {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Recuento y final: el panel salta, las cartas se dan la vuelta y los cobros van llegando. */
+.mesa--viva .final {
+  animation: panel-entra 0.38s cubic-bezier(0.2, 1.5, 0.4, 1) backwards;
+}
+
+@keyframes panel-entra {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.82);
+  }
+}
+
+.mesa--viva .final__cartas .carta {
+  animation: carta-voltea 0.42s cubic-bezier(0.3, 1.4, 0.5, 1) backwards;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.07s);
+}
+
+@keyframes carta-voltea {
+  from {
+    transform: perspective(400px) rotateY(90deg) scale(0.8);
+  }
+}
+
+.mesa--viva .final__cobros li {
+  animation: cobro-entra 0.3s ease-out backwards;
+  animation-delay: calc(0.5s + var(--i, 0) * 0.28s);
+}
+
+@keyframes cobro-entra {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+
+/* ——— Confeti al ganar el duelo ——— */
+
+.confeti {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confeti span {
+  position: absolute;
+  top: -24px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--tinta);
+  animation-name: cae;
+  animation-timing-function: cubic-bezier(0.3, 0.1, 0.6, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes cae {
+  to {
+    transform: translate(var(--deriva), 900px) rotate(var(--giro));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mesa--viva .mesa__luz,
+  .carta-viva__flota,
+  .estallido__rayos,
+  .mesa--viva .boton-ordago:not(:disabled) {
+    animation: none;
+  }
+  .confeti {
+    display: none;
+  }
+}

@@ -1,0 +1,513 @@
+/*
+ * La mesa nueva (prototipo, 22 de octubre de 2026): sin el acta a la vista. El tapete sube hasta
+ * el rival, que se ve más grande y sentado a la mesa; en medio, las cuatro casillas de los lances.
+ * Píxeles del escenario de 390 × 844 (las cuentas, en MesaNueva.tsx y DISPOSICION_NUEVA).
+ * Este archivo se carga antes que mesa.css: por eso todo va con `.mesa.mesa--nueva`.
+ */
+
+/* ——— El sitio de cada cosa ——— */
+
+/* Los lances ya están en el tapete. */
+.mesa.mesa--nueva .cabecera .pasos {
+  visibility: hidden;
+}
+
+.mesa.mesa--nueva .mesa__luz {
+  top: 170px;
+}
+
+/* El rival, más grande y sentado a la mesa: el borde del tapete tapa el corte de la figura. */
+.mesa.mesa--nueva .retrato {
+  top: 176px;
+  scale: 1.15;
+  transform-origin: 50% 100%;
+}
+
+/* Un óvalo más ancho y más alto: su borde casi recto por arriba tapa al rival por igual. */
+.mesa.mesa--nueva .mesa__madera {
+  left: -225px;
+  top: 392px;
+  width: 840px;
+  height: 700px;
+}
+
+.mesa.mesa--nueva .mesa__tapete {
+  left: -213px;
+  top: 404px;
+  width: 816px;
+  height: 676px;
+}
+
+.mesa.mesa--nueva .mesa__cartas-rival {
+  top: 414px;
+  transform-origin: 50% 100%;
+  transition: scale 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+/* Al acabar la mano, sus cartas se dan la vuelta y se levantan para que se lean. */
+.mesa.mesa--nueva.mesa--mano-acabada .mesa__cartas-rival {
+  scale: 1.45;
+}
+
+.mesa.mesa--nueva .mesa__mano {
+  top: 616px;
+}
+
+/* ——— Las casillas de los lances ——— */
+
+.casillas {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 478px;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Por jugar: un hueco de puntos sobre el tapete. */
+.casilla {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  height: 72px;
+  padding: 5px 4px 6px;
+  box-sizing: border-box;
+  color: rgba(242, 232, 210, 0.75);
+  background: rgba(20, 14, 11, 0.14);
+  border: 2px dashed rgba(242, 232, 210, 0.5);
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+/* Ya jugada: papel, con lo que pasó. */
+.casilla:not(.casilla--falta) {
+  color: var(--tinta);
+  background: var(--papel-fondo);
+  border: 2px solid var(--tinta);
+}
+
+/* La que se juega: papel claro, borde almagre y sombra dura; sube y late. */
+.casilla.casilla--actual {
+  background: var(--papel);
+  border: 3px solid var(--almagre);
+  box-shadow: 3px 3px 0 var(--tinta);
+  animation: casilla-late 1.6s ease-in-out infinite;
+}
+
+@keyframes casilla-late {
+  0%,
+  100% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.casilla__nombre {
+  font-family: var(--letra-rotulo);
+  font-size: 13px;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.casilla__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  font-size: 13px;
+  line-height: 1.1;
+  animation: casilla-golpe 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) backwards;
+}
+
+.casilla__contenido i {
+  font-family: var(--letra-texto);
+}
+
+@keyframes casilla-golpe {
+  from {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+.casilla--nadie i {
+  color: var(--tachado);
+  text-decoration: line-through;
+}
+
+.casilla__grito {
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 13px;
+  color: var(--almagre);
+}
+
+.casilla__para {
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 13px;
+}
+
+.casilla__para--jugador {
+  color: var(--anil);
+}
+
+.casilla__para--rival {
+  color: var(--almagre);
+}
+
+/* Lo que hay en juego: un montoncito de amarracos y la cifra. */
+.bote {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding-left: 27px;
+}
+
+.bote__ficha {
+  position: absolute;
+  margin-top: 4px;
+  width: 15px;
+  height: 15px;
+  box-sizing: border-box;
+  background: var(--gualda);
+  border: 2px solid var(--tinta);
+  border-radius: 50%;
+}
+
+.bote__cifra {
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Quién lleva pares o juego: arriba el rival (almagre), abajo tú (añil); gris, si no lo lleva. */
+.casilla__tiene {
+  position: absolute;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  box-sizing: border-box;
+  font: 700 11px/1 system-ui, sans-serif;
+  color: var(--papel);
+  background: var(--tachado);
+  border: 2px solid var(--tinta);
+  border-radius: 50%;
+  animation: casilla-golpe 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) backwards;
+}
+
+.casilla__tiene--rival {
+  top: -8px;
+}
+
+.casilla__tiene--jugador {
+  bottom: -8px;
+}
+
+.casilla__tiene--si.casilla__tiene--rival {
+  background: var(--almagre);
+}
+
+.casilla__tiene--si.casilla__tiene--jugador {
+  background: var(--anil);
+}
+
+/* El recuento: cada cobro cae en su casilla como un sello, a su tiempo (el retraso, en MesaNueva.tsx). */
+/* Cuelgan del borde de abajo, a la izquierda (a la derecha va la marca de si llevas pares o juego). */
+.casilla__cobros {
+  position: absolute;
+  left: 3px;
+  right: 16px;
+  bottom: -12px;
+  display: flex;
+  gap: 3px;
+}
+
+.casilla__cobro {
+  padding: 0 6px;
+  font-family: var(--letra-grito);
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--papel);
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 var(--tinta);
+  animation: cobro-cae 0.3s cubic-bezier(0.3, 1.5, 0.5, 1) backwards;
+}
+
+.casilla__cobro--jugador {
+  background: var(--anil);
+}
+
+.casilla__cobro--rival {
+  background: var(--almagre);
+}
+
+/* Lo que ya no se llegó a cobrar (alguien llegó a 20 antes). */
+.casilla__cobro--sin {
+  color: var(--papel);
+  background: var(--tachado);
+  box-shadow: none;
+  text-decoration: line-through;
+}
+
+@keyframes cobro-cae {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(1.5);
+  }
+}
+
+/* ——— Los sellos, junto a quien habla ——— */
+
+/* Por encima de las cartas y las casillas, pero debajo de la barra de botones y su selector de envite (15). */
+.sellos-lado {
+  position: absolute;
+  z-index: 14;
+  pointer-events: none;
+}
+
+/* El rival, bajo su retrato, a la izquierda. */
+.sellos-lado--rival {
+  left: 10px;
+  top: 342px;
+}
+
+/* Tú, encima de tus cartas, a la derecha. */
+.sellos-lado--jugador {
+  right: 12px;
+  top: 568px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sellos-lado .sello {
+  padding: 2px 12px 5px;
+}
+
+.sellos-lado .sello__quien {
+  font-size: 11px;
+}
+
+.sellos-lado .sello__texto {
+  font-size: 22px;
+}
+
+.sellos-lado .sello--fuerza-0 .sello__texto {
+  font-size: 17px;
+}
+
+.sellos-lado .sello--fuerza-2 .sello__texto {
+  font-size: 26px;
+}
+
+/* ——— El bocadillo del rival y los avisos ——— */
+
+.bocadillo-hueco {
+  position: absolute;
+  right: 6px;
+  top: 196px;
+  z-index: 18;
+  width: 150px;
+  pointer-events: none;
+}
+
+.bocadillo {
+  position: relative;
+  padding: 7px 11px 8px;
+  font-family: var(--letra-texto);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 3px solid var(--tinta);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--tinta);
+  transform-origin: 0% 100%;
+}
+
+/* La cola, hacia su cara. */
+.bocadillo::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  bottom: 14px;
+  width: 14px;
+  height: 14px;
+  background: var(--papel);
+  border-left: 3px solid var(--tinta);
+  border-bottom: 3px solid var(--tinta);
+  transform: rotate(45deg);
+}
+
+/* Piensa: solo los puntos, en letra gruesa. */
+.bocadillo--piensa {
+  display: inline-block;
+  padding: 0 14px 6px;
+  font-family: var(--letra-grito);
+  font-style: normal;
+  font-size: 22px;
+  letter-spacing: 3px;
+}
+
+/* Entre la bolsa (a la izquierda, en la gira) y SALIR (a la derecha), sin taparlos. */
+.avisos {
+  position: absolute;
+  left: 70px;
+  right: 84px;
+  top: 122px;
+  z-index: 22;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.aviso {
+  padding: 4px 10px;
+  font-family: var(--letra-texto);
+  font-size: 13px;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--tinta);
+  background: var(--gualda-claro);
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 var(--tinta);
+}
+
+.aviso p {
+  margin: 0;
+}
+
+/* El trato, mientras hay que contestarlo: encima de los botones. */
+.mesa__nota-trato {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 74px;
+  z-index: 16;
+  padding: 8px 12px;
+  font-family: var(--letra-texto);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+/* ——— ≡: la mano entera ——— */
+
+.mesa__historial {
+  position: absolute;
+  left: 12px;
+  top: 572px;
+  z-index: 14;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-family: var(--letra-grito);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 3px solid var(--tinta);
+  border-radius: 50%;
+  box-shadow: 3px 3px 0 var(--tinta);
+  cursor: pointer;
+}
+
+.mesa__historial:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--tinta);
+}
+
+.historial {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-height: 100%;
+  padding: 12px 14px 14px;
+  box-sizing: border-box;
+}
+
+.historial__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.historial__titulo {
+  font-family: var(--letra-grito);
+  font-weight: normal;
+  font-size: 21px;
+}
+
+.historial__cerrar {
+  min-height: 44px;
+  font-family: var(--letra-rotulo);
+  font-size: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.historial__lineas {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.historial .acta__linea {
+  opacity: 1;
+}
+
+.historial .acta__linea--rival .acta__texto {
+  font-size: 18px;
+}
+
+/* ——— El final del duelo espera a que se vea el recuento (o el órdago) ——— */
+
+.mesa__velo--tarde {
+  animation: velo-tarde 0.3s ease-out both;
+  animation-delay: var(--espera, 0s);
+}
+
+.mesa .mesa__velo--tarde .final {
+  animation-delay: var(--espera, 0s);
+}
+
+@keyframes velo-tarde {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .casilla.casilla--actual {
+    animation: none;
+    transform: translateY(-4px);
+  }
+}

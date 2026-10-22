@@ -442,6 +442,62 @@ David mandó ocho imágenes de Chema (fondo transparente, 1448 × 1086, el mismo
 - **El tic renombrado** (`remueveCafe` → `bebeRefresco`): lo que ya estuviera apuntado en la Libreta con el nombre de antes pasa al nuevo.
 - **Modo de pruebas:** el botón *Poses* va pasando por las posturas y las caras, para revisar el arte.
 
+## La mesa viva, prototipo (22 de octubre de 2026)
+
+David veía el juego «muy cutre» y quería un aspecto profesional como el de Balatro. Se le explicó que lo que falta no es arte sino movimiento y sonido, y pidió un prototipo de la mesa para compararla con la de ahora.
+
+- **Se enciende y se apaga en la portada** (*Mesa viva: sí/no*, y *Sonido: sí/no*), se recuerda en el navegador y viene encendida. `?viva=0` o `?viva=1` en la dirección la cambia sin guardarlo; en el modo de pruebas, el botón *Viva*. Apagada, la mesa es exactamente la de antes.
+- **Librería de animación:** Motion (antes Framer Motion, la que pedían las instrucciones), versión 13.5.1: la 14 había salido tres semanas antes y cambiaba casi a diario.
+- **Un lienzo (canvas) solo para el fondo** (el polvo y el humo): las instrucciones piden proponerlo antes, y se propuso y se aceptó. Todo lo demás es CSS y Motion.
+- **Degradados solo en el ambiente** (la luz del quinqué, el humo, las esquinas en sombra): la regla de «sin degradados ni sombras suaves» sigue valiendo para paneles, botones y cartas. El brillo de las cartas es una franja de borde duro.
+- **Sonido fabricado en el momento** con el audio del navegador, sin archivos: así se prueba dónde va cada sonido sin descargar nada. Los definitivos serán grabaciones.
+- **Lo que se dice cae como un sello sobre el tapete** (también el mus y el paso, más pequeños). Hace temblar la mesa una subida o un envite de 5 o más. El órdago no es un sello: tiene su propia pantalla de un segundo y medio.
+- **Lo que se ve sale de los eventos del duelo**, en una función pura (`estado/efectos.ts`) con pruebas; la mesa la anima.
+- **Durante el recuento, el marcador queda por encima del velo**, para ver llegar las piedras; el panel baja un poco para no quedar debajo.
+
+## La mesa nueva, prototipo (22 de octubre de 2026)
+
+David vio la mesa viva y le gustaron las cartas, las piedras y el órdago. Los sellos le encantaron como idea, pero su animación no estaba pulida, y propuso que, si los sellos cuentan lo que pasa, sobra el acta. Pidió analizar cómo lo resuelven otros juegos y montar la mejor distribución para compararla.
+
+- **Lo que se copia de cada uno:** del póker en el móvil, la última palabra de cada jugador junto a él y lo que hay en juego en el centro; de Marvel Snap, las zonas que se ganan por separado y se resuelven al final (los lances); de Clash Royale, el rival hablando en bocadillos; de Hearthstone, el historial escondido; de Balatro, la resolución paso a paso.
+- **Tres mesas** para comparar, en la portada: la nueva (por defecto), la viva y la de antes. `?mesa=nueva|viva|antes` en la dirección.
+- **Lo que hacía el acta, y dónde va ahora:** lo que dice cada uno, a los sellos; su frase, al bocadillo; en paso, querido, no quiero, quién lleva pares o juego y el recuento, a las casillas; los cambios de Cara, a la barra (ya estaba); lo que significa un tic, junto al retrato (ya estaba); las reglas especiales del rival, los objetos y quién es mano, a los avisos (las líneas del acta llevan ahora la marca `aviso`); el trato, encima de los botones mientras se contesta. Todo lo demás, detrás de ≡.
+- **Quién lleva pares o juego** se calcula de las cartas, pero solo se enseña cuando ya se ha declarado (al llegar a ese lance).
+- **Por qué los sellos no estaban pulidos:** el muelle rebotaba dos veces (amortiguación de 0,45), aparecían creciendo desde transparentes, caían todos en el centro tapando las cartas del rival y se iban flotando. Ahora: un golpe seco a los 0,15 s, ya enteros, junto a quien habla, y se guardan en su casilla.
+- **Recuento sobre la mesa:** sin el panel; las piedras salen de la casilla de cada cobro, en el mismo orden y al mismo ritmo que sus sellos. El panel del final del duelo espera a que se vea (1,5 s si fue por órdago).
+- **El rival, sentado a la mesa:** el tapete le tapa el corte de la figura (lo que antes hacía el acta).
+
+## Fuera mirar al rival (22 de octubre de 2026)
+
+David pidió quitar la opción de ampliar al rival (mantener pulsado el retrato): no le veía sentido.
+
+- **Quitado de la mesa:** la zona que se mantenía pulsada, la penumbra y el zoom. Los tics duran siempre lo mismo (antes, 1,6 veces más mientras mirabas) y el rival ya no espera mientras le miras.
+- **Lo que dependía de ello:** la regla de Doña Ignacia (si la miras más de 2 s, se ofende y deja de hacer tics) ya no puede pasar. El motor sigue sabiendo ofenderla (`mirarAlRival` y `alSerMirado`, con su prueba), sin que nada lo llame, hasta que David decida otro motivo. En el catálogo de la gira, el Reloj de bolsillo queda por rehacer y la Gorra calada ya no habla de mirar.
+
+## La letra nueva (22 de octubre de 2026)
+
+A David no le acababa de convencer la letra. Se le enseñaron cuatro propuestas aplicadas a las mismas piezas de la mesa (Naipe limpio, Cómic de bar, Taberna y Cartel de verbena) y eligió una mezcla: **Alfa Slab One** para lo que se grita (como antes), **Alegreya Sans SC** para los rótulos y **Alegreya** para el texto, de la opción Taberna, y para el nombre **Spectral SC**, de la opción Naipe limpio.
+
+- **Dónde va el nombre:** en los sellos (quién lo dice) y en la cabecera (*Chema*, *Tú*), que es el mismo nombre. Las frases que llevan el nombre dentro («Chema pide mus», en el acta) siguen en la letra de los rótulos.
+- **Un solo grueso por letra de rótulo y de nombre:** Alegreya Sans SC en negrita y Spectral SC en seminegrita, como en las muestras que vio David. El cargador las declara para cualquier peso, así que no hay que tocar cada estilo.
+- **Archivos:** WOFF2 con el alfabeto latino, sacados de los paquetes de Fontsource (licencia OFL, incluida). Están en `assets/fuentes/` y en `public/arte/fuentes/`. IM Fell se queda en `assets/fuentes/`, pero ya no se publica.
+
+## Los botones, en Bitter Black (22 de octubre de 2026)
+
+A David Alfa Slab One le gusta para los títulos, pero no para los botones. Buscaba una letra gorda y con estilo, «una mezcla entre Alfa Slab One y Alegreya Black»: vio letras gordas de varios tipos y luego seis egipcias humanistas, y eligió **Bitter Black**.
+
+- **Dónde va:** los botones de apuesta y todos los de `BotonApuesta` (portada, gira, taberna, ayudas), el botón de la bolsa, el «−/+» del selector de envite y las paradas después del duelo. Con 0,5 px de interletraje.
+- **Dónde no:** el botón de ¡ÓRDAGO! sigue en Alfa Slab One, para que sea el único botón que grita; también los títulos, las cifras y los sellos. ≡ también, porque es un signo.
+- **El archivo:** `Bitter-Black.woff2` (alfabeto latino, de Fontsource, licencia OFL incluida), declarado para cualquier peso como las otras de un solo grueso.
+- **De paso:** en la mesa nueva, tu sello quedaba por encima del selector de envite y tapaba parte de un botón; ahora los sellos van por debajo de la barra de botones.
+
+## Doña Ignacia se ofende con un órdago temprano (22 de octubre de 2026)
+
+Sin mirar al rival, su regla de ofenderse se había quedado sin motivo. David aprobó la propuesta: **si le tiras un órdago antes de la tercera mano, se ofende** y no hace tics en lo que queda de mano ni en la siguiente. Le pega: ya tenía la regla de no aceptar órdagos hasta la tercera mano.
+
+- **Siempre**, sin tirar dados: un órdago se ve, no hay que pillarlo (mirarla dependía de su Ojo).
+- **En el código**, `ofendeOrdagoTemprano` en su perfil (antes `alSerMirado`), aplicado al jugar tú (`jugarJugador`). Se quita `mirarAlRival`, que ya no usaba nadie. Sale en la mesa como antes: OFENDIDA junto al retrato, su frase («¡Qué descaro! Así no se juega.») y el aviso.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

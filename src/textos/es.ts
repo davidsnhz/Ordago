@@ -399,6 +399,25 @@ export const ES = {
     depurar: 'Depurar',
     ensayarTics: 'Tics',
     ensayarPoses: (pose: string | null) => (pose ? `Pose: ${pose}` : 'Poses'),
+    mesaPrueba: (cual: string) => `Mesa ${cual}`,
+    /** La mesa nueva (prototipo, octubre de 2026): casillas de los lances, avisos y el acta detrás de ≡. */
+    nueva: {
+      casillas: 'Los lances de la mano',
+      tu: 'tú',
+      lleva: (rival: string | null, si: boolean, lance: string) =>
+        rival ? `${rival} ${si ? 'lleva' : 'no lleva'} ${lance}` : `${si ? 'Llevas' : 'No llevas'} ${lance}`,
+      ordago: '¡ÓRDAGO!',
+      seJuega: 'se juega',
+      enPaso: 'en paso',
+      querido: 'querido',
+      noQuiso: 'no quiso',
+      solo: (quien: string) => `solo ${quien}`,
+      noVa: 'no va',
+      trato: 'trato',
+      verMano: 'La mano entera',
+      titulo: (n: number) => `La mano ${n}`,
+      cerrar: 'CERRAR',
+    },
     rival: 'Rival',
     elegirRival: 'ELIGE RIVAL',
     elegirRivalNota: 'Empieza un duelo nuevo, de cero.',
@@ -409,7 +428,7 @@ export const ES = {
     enfadado: '¡ENFADADO!',
     ayudaEnfadado: 'Ha perdido tres lances seguidos: dos manos aceptándolo todo',
     estadoOfendida: 'OFENDIDA',
-    ayudaOfendida: 'La has mirado demasiado: no hará tics esta mano ni la siguiente',
+    ayudaOfendida: 'Le has echado un órdago antes de la tercera mano: no hará tics esta mano ni la siguiente',
     crecido: '¡CRECIDO!',
     ayudaCrecido: (quiereTodo: boolean) => `Va ganando de 5 o más: farolea el doble${quiereTodo ? ' y te lo quiere todo' : ''}`,
     arrugado: 'ARRUGADO',
@@ -516,6 +535,12 @@ export const ES = {
     sueltoNota: 'Contra quien quieras, sin gira: ni Honra ni reales. Lo que veas va a la Libreta.',
     volver: 'VOLVER',
     libreta: 'LIBRETA',
+    /** Prototipos de octubre de 2026: para comparar las tres mesas. */
+    mesa: (nombre: string) => `Mesa: ${nombre}`,
+    nombresMesa: { nueva: 'nueva', viva: 'viva', antes: 'de antes' },
+    sonido: (si: boolean) => `Sonido: ${si ? 'sí' : 'no'}`,
+    ayudaMesa:
+      'Prototipos para comparar. Nueva: sin acta, con sellos junto a quien habla y los lances en casillas. Viva: la de antes con movimiento y sonido. De antes: la mesa quieta.',
   },
 
   arenas: {

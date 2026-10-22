@@ -173,6 +173,35 @@
   gap: 12px;
 }
 
+/* La mesa y el sonido (prototipos): pequeños, debajo, con borde de puntos como las herramientas. */
+.portada__ajustes {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  bottom: 52px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.portada__ajuste {
+  min-height: 44px;
+  padding: 0 12px;
+  font-family: var(--letra-rotulo);
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 2px dashed var(--tinta);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.portada__ajuste[aria-pressed='true'] {
+  border-style: solid;
+  box-shadow: 2px 2px 0 var(--tinta);
+}
+
 .portada__vas {
   margin: -4px 0 4px;
   font-family: var(--letra-rotulo);
@@ -729,7 +758,7 @@
 
 .parada b {
   display: block;
-  font-family: var(--letra-grito);
+  font-family: var(--letra-boton);
   font-weight: normal;
   font-size: 19px;
   line-height: 1.1;

@@ -66,8 +66,6 @@ export const IA = {
      * Ignacia (no sale de las cartas, así que se fija aquí).
      */
     tasaSospecha: 0.25,
-    /** Mirando al rival, los tics duran más en pantalla. */
-    duracionMirando: 1.6,
   },
   /**
    * Cara a 0: «se te nota todo». Durante el duelo el rival ve uno de tus tics: te tiembla el
@@ -86,6 +84,4 @@ export const IA = {
     /** …o, de farol, con esta probabilidad aunque espere ganarlos. */
     farol: 0.3,
   },
-  /** Mirar al rival: a partir de estos segundos se considera mirar demasiado. */
-  mirarDemasiado: 2,
 } as const;

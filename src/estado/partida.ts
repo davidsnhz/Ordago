@@ -202,7 +202,22 @@ export function jugarJugador(partida: Partida, accion: AccionDuelo): ResultadoPa
   if ('lado' in accion && accion.lado !== 'jugador') throw new ErrorJugada('El jugador solo puede jugar por sí mismo');
   const azar = new Azar(partida.azarIA);
   const { estado, eventos } = aplicarAccion(partida.duelo, accion, modificadoresDe(partida, azar.siguiente()));
-  return procesar({ ...partida, duelo: estado }, eventos, azar, { marcadorAntes: partida.duelo.marcador });
+  return ofendePorOrdagoTemprano(partida, accion, procesar({ ...partida, duelo: estado }, eventos, azar, { marcadorAntes: partida.duelo.marcador }));
+}
+
+/**
+ * Doña Ignacia: un órdago antes de la mano en que empieza a aceptarlos le parece una falta de
+ * respeto. Se ofende siempre (no hay que pillarlo: se ve) y no hace tics en lo que queda de mano
+ * ni en la siguiente.
+ */
+function ofendePorOrdagoTemprano(antes: Partida, accion: AccionDuelo, resultado: ResultadoPartida): ResultadoPartida {
+  const perfil = RIVALES[antes.rivalId];
+  const { numeroMano } = antes.duelo;
+  if (accion.tipo !== 'ordago' || !perfil.ofendeOrdagoTemprano || !perfil.ordagoDesdeMano || numeroMano >= perfil.ordagoDesdeMano) {
+    return resultado;
+  }
+  const memoria = { ...resultado.partida.memoria, ofendidaHastaMano: numeroMano + perfil.ofendeOrdagoTemprano.manos };
+  return { partida: { ...resultado.partida, memoria }, novedades: { ...resultado.novedades, tics: [], seOfende: true } };
 }
 
 /** El rival decide y juega su acción. */
@@ -246,24 +261,6 @@ export function jugarRival(partida: Partida): ResultadoPartida {
     seTeNota: senal === 'seNota',
     marcadorAntes: duelo.marcador,
   });
-}
-
-/**
- * Mirar al rival (pulsación larga en el retrato). Doña Ignacia, si la miras demasiado, puede
- * darse cuenta (según su Ojo) y ofenderse: no hace tics en lo que queda de mano ni en la siguiente.
- */
-export function mirarAlRival(partida: Partida, segundos: number): ResultadoPartida {
-  const perfil = RIVALES[partida.rivalId];
-  const { duelo } = partida;
-  if (!perfil.alSerMirado || segundos < IA.mirarDemasiado || duelo.fase === 'finDuelo') {
-    return { partida, novedades: sinNovedades() };
-  }
-  const azar = new Azar(partida.azarIA);
-  const seDaCuenta = azar.probabilidad(perfil.parametros.ojo / 10);
-  const memoria = seDaCuenta
-    ? { ...partida.memoria, ofendidaHastaMano: duelo.numeroMano + perfil.alSerMirado.manos }
-    : partida.memoria;
-  return { partida: { ...partida, memoria, azarIA: azar.estado() }, novedades: { ...sinNovedades(), seOfende: seDaCuenta } };
 }
 
 /** Para probar (modo de depuración): cambia la Cara a mano. */

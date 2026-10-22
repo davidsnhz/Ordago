@@ -7,6 +7,7 @@ import type { TicDisparado } from '../nucleo/ia/tics';
 import { tieneJuego, tienePares } from '../nucleo/mano';
 import { animoDe, RIVALES } from '../datos/rivales';
 import { ES, nombreCarta, type TextosRival } from '../textos/es';
+import { efectosDe, type EfectoMesa } from './efectos';
 import type { Partida, ResultadoPartida } from './partida';
 
 /**
@@ -19,6 +20,12 @@ export interface LineaActa {
   texto: string;
   /** Frase del rival, solo en lo que dice él. */
   frase?: string;
+  /**
+   * Hay que contarlo aunque no se vea el acta (en la mesa nueva sale como aviso): las reglas
+   * especiales del rival, lo que hace un objeto, el trato o quién es mano. Lo demás ya lo
+   * enseñan los sellos, las casillas y la Cara.
+   */
+  aviso?: true;
 }
 
 /**
@@ -42,6 +49,9 @@ export interface EstadoMesa {
   seTeNota: number | null;
   /** Cara que acaba de poner el rival; `final` si se queda así porque se ha acabado el duelo. */
   reaccion: { tipo: ReaccionRival; final: boolean; clave: number } | null;
+  /** Lo que se ve y se oye por la última acción (mesa viva); `claveEfectos` cambia con cada tanda. */
+  efectos: EfectoMesa[];
+  claveEfectos: number;
   /** Contador para ir rotando las frases del rival. */
   frases: number;
   claveTic: number;
@@ -65,6 +75,8 @@ export function mesaInicial(partida: Partida): EstadoMesa {
     avisoCara: null,
     seTeNota: null,
     reaccion: null,
+    efectos: [],
+    claveEfectos: 0,
     frases: 0,
     claveTic: 0,
     claveAviso: 0,
@@ -109,6 +121,7 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
   const dice = (quien: Lado, texto: string, fraseRival?: string) =>
     acta.push(quien === 'rival' && fraseRival ? { quien, texto, frase: fraseRival } : { quien, texto });
   const pasa = (texto: string) => acta.push({ quien: null, texto });
+  const avisa = (texto: string, quien: Lado | null = null) => acta.push({ quien, texto, aviso: true });
   const nombre = (lado: Lado) => (lado === 'rival' ? textos.nombre : null);
 
   for (const evento of novedades.eventos) {
@@ -117,7 +130,7 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
         // Cada mano empieza un acta nueva; la primera, con el saludo del rival.
         const saludo = evento.numeroMano === 1 ? acta.find((l) => l.quien === 'rival') : undefined;
         acta = [];
-        pasa(M.acta.reparto(evento.numeroMano, nombre(evento.quienEsMano), evento.numeroMano === 1));
+        avisa(M.acta.reparto(evento.numeroMano, nombre(evento.quienEsMano), evento.numeroMano === 1));
         if (saludo) acta.push(saludo);
         break;
       }
@@ -151,7 +164,7 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
       case 'trato':
         if (evento.ofrece === 'rival') {
           dice('rival', M.narra.trato(textos.nombre), textos.frases.trato);
-          pasa(M.tratoExplica(textos.nombre));
+          avisa(M.tratoExplica(textos.nombre));
         }
         break;
       case 'tratoResuelto':
@@ -172,40 +185,40 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
 
   if (novedades.seEnfada) {
     dice('rival', M.narra.enfado(textos.nombre), textos.frases.enfado);
-    pasa(M.acta.enfadado);
+    avisa(M.acta.enfadado);
   }
   if (novedades.imponePenitencia) {
     dice('rival', M.narra.penitencia(textos.nombre), textos.frases.penitencia);
-    pasa(M.acta.penitencia);
+    avisa(M.acta.penitencia);
   }
   if (novedades.seOfende) {
     dice('rival', M.narra.ofendida(textos.nombre), textos.frases.ofendida);
-    pasa(M.acta.ofendida);
+    avisa(M.acta.ofendida);
   }
   if (novedades.animo) {
     const { despues } = novedades.animo;
     const quiereTodo = Boolean(RIVALES[partida.rivalId].seVieneArriba);
     if (despues === 'crecido') {
       dice('rival', M.narra.crecido(textos.nombre), textos.frases.crecido);
-      pasa(M.acta.crecido(quiereTodo));
+      avisa(M.acta.crecido(quiereTodo));
     } else if (despues === 'arrugado') {
       dice('rival', M.narra.arrugado(textos.nombre), textos.frases.arrugado);
-      pasa(M.acta.arrugado);
+      avisa(M.acta.arrugado);
     }
   }
   if (novedades.efecto) {
     const N = ES.gira.narra;
     const e = novedades.efecto;
-    if (e.tipo === 'orujo') dice('jugador', N.orujo);
-    if (e.tipo === 'chato') pasa(N.chato(textos.nombre));
-    if (e.tipo === 'conversacion') pasa(N.conversacion(textos.nombre));
-    if (e.tipo === 'apuntes') pasa(N.apuntes);
-    if (e.tipo === 'lazarillo') pasa(N.lazarillo(textos.nombre, nombreCarta(e.carta).toLowerCase()));
-    if (e.tipo === 'recaudadora') pasa(N.recaudadora);
+    if (e.tipo === 'orujo') avisa(N.orujo, 'jugador');
+    if (e.tipo === 'chato') avisa(N.chato(textos.nombre));
+    if (e.tipo === 'conversacion') avisa(N.conversacion(textos.nombre));
+    if (e.tipo === 'apuntes') avisa(N.apuntes);
+    if (e.tipo === 'lazarillo') avisa(N.lazarillo(textos.nombre, nombreCarta(e.carta).toLowerCase()));
+    if (e.tipo === 'recaudadora') avisa(N.recaudadora);
   }
-  if (novedades.medalla) pasa(ES.gira.narra.medalla);
+  if (novedades.medalla) avisa(ES.gira.narra.medalla);
   if (novedades.seTeNota) {
-    pasa(M.acta.seTeNota);
+    avisa(M.acta.seTeNota);
     seTeNota = ++claveAviso;
   }
   if (novedades.cambiosCara.length > 0) {
@@ -216,11 +229,13 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
 
   const nueva = reaccionDe(novedades.eventos, partida);
   const reaccion = nueva ? { ...nueva, clave: ++claveAviso } : previo.reaccion;
+  const efectos = efectosDe(novedades.eventos);
 
   return {
     ...previo,
     partida,
     reaccion,
+    ...(efectos.length > 0 && { efectos, claveEfectos: previo.claveEfectos + 1 }),
     acta: acta.slice(-LINEAS_ACTA),
     frases,
     avisoCara,
