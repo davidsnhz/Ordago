@@ -30,9 +30,12 @@ export function Portada({
   const { sonido } = usePreferencias();
   return (
     <Escenario avisoGirar={ES.mesa.girar}>
-      <div className="pantalla">
-        <img className="portada__marca" src={rutaArte('marca/ordago_wordmark.webp')} alt="Órdago" draggable={false} />
-        <p className="portada__lema">{P.lema}</p>
+      {/* De fondo, la taberna con Salamanca al fondo; el letrero y el lema van en un cartel de papel para que se lean. */}
+      <div className="pantalla pantalla--portada" style={{ backgroundImage: `url(${rutaArte('fondos/portada.webp')})` }}>
+        <div className="portada__cartel">
+          <img className="portada__marca" src={rutaArte('marca/ordago_wordmark.webp')} alt="Órdago" draggable={false} />
+          <p className="portada__lema">{P.lema}</p>
+        </div>
         <div className="portada__botones">
           {confirmando ? (
             <div className="panel panel--sombra portada__confirmar">

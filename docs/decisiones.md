@@ -536,6 +536,10 @@ Como no sirve para lo que se buscaba, **se deshace** (vuelve a / 200). Lo que de
 
 David prefiere la mesa nueva. Se quitan la mesa viva con acta y la de antes: el botón *Mesa* de la portada, `?mesa=` y `?viva=` en la dirección, el acta a la vista, la mano y las cartas del rival sin animar, el sello del centro y sus estilos. Se queda el acta entera detrás de ≡ (sus líneas usan los mismos estilos). El panel del final del duelo solo sale al acabar el duelo, cuando ya se ha visto el recuento. La preferencia guardada `mesa` de quien la tuviera se ignora.
 
+## El fondo de la portada (24 de octubre de 2026)
+
+David mandó una ilustración para el fondo del menú principal (941 × 1670) y preguntó qué medidas debía tener. **Ideal: 1170 × 2532** (el escenario de 390 × 844 a 3 píxeles por punto, como lo pintan los móviles de ahora; proporción 9 : 19,5); como mínimo, 780 × 1688. Mientras llega, la de ahora ya está puesta: llena la pantalla recortando unos 85 px por lado. El letrero y el lema van en un cartel de papel, porque su tinta no se lee sobre la foto. Se le avisó del paquete de Marlboro: una marca real, y de tabaco, mejor fuera.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

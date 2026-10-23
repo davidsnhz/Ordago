@@ -16,6 +16,7 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
 | Movimiento y sonido de la mesa | **[cambiado] Hecho** (23 de octubre de 2026): la mesa viva, ya sin elegir | «La mesa viva», abajo |
 | Distribución de la mesa | **[cambiado] Elegida** (23 de octubre de 2026): la mesa nueva, sin acta a la vista, es la única | «La mesa nueva», abajo |
+| Fondo de la portada | **[nuevo] Provisional** (24 de octubre de 2026): la taberna con Salamanca al fondo, de David, a 941 × 1670 | `assets/fondos/portada.webp`; la buena, a 1170 × 2532 (ver «Pantallas») |
 | Mapa ilustrado | Provisional: la facultad con formas planas (el edificio, la arena, el bar en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
 
 Todo lo pendiente se dibuja con **marcadores** (rectángulo de trazo discontinuo en almagre, fondo nogal translúcido y el texto «ARTE PENDIENTE»), detrás de una interfaz que permita cambiar el arte sin tocar código.
@@ -169,7 +170,10 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 
 **En vertical (13 de octubre de 2026).** David eligió entre prototipos (`referencias/prototipos-gira/`) y así están en el juego:
 
-- **La portada:** en papel, el letrero grande y el lema en cursiva; debajo, los botones (el principal en gualda).
+- **La portada:** en papel, el letrero grande y el lema en cursiva; debajo, los botones (el principal en gualda). **[cambiado] 24 de octubre de 2026:** de fondo, una ilustración de David: una mesa de taberna con cartas, vino y la libreta de las cuentas, el letrero «Jugador de chica, perdedor de mus» y Salamanca por la ventana. Llena el escenario (`background-size: cover`), así que se recortan los lados. El letrero y el lema van en un **cartel de papel** (contorno de tinta, sombra dura, girado −1,5°), porque la tinta sobre la foto no se lee; también «Vas por…» y «Empezar otra gira» llevan su papel.
+  - **Tamaño del fondo:** el escenario mide 390 × 844 y los móviles lo pintan a 3 píxeles por punto, así que la imagen ideal es de **1170 × 2532** (proporción 9 : 19,5); como mínimo, 780 × 1688. La de ahora (941 × 1670, proporción 9 : 16) es más ancha: se pierden unos 85 px por cada lado y en los móviles de más resolución se ve algo blanda.
+  - **Dónde va cada cosa** (en la de 1170 × 2532): el cartel del letrero ocupa más o menos de y = 290 a y = 750; los botones, de y = 1400 a y = 2280. Lo importante de la ilustración (Salamanca, la ventana) va entre los dos; lo de abajo queda medio tapado por los botones.
+  - **Ojo con las marcas reales:** la de ahora lleva un paquete de Marlboro. Una marca real (y además de tabaco) no conviene en el juego: mejor un paquete sin marca o quitarlo.
 - **Elegir compañero (C):** cartas de papel con su marcador, el nombre en letra gruesa y, en versalitas almagre, *Siempre* y *Su seña*; la elegida, con anillo gualda. Abajo, los que faltan, con «?» en círculos de puntos.
 - **El mapa (A1):** como las arenas de Clash Royale. La arena en curso de arriba abajo en su color (la facultad, ocre de piedra de Salamanca con su edificio de arcos); los niveles, discos sobre un camino punteado de tinta; la siguiente arena arriba, en madera con niebla de papel y cinta negra. Cintas en almagre con el nombre de la arena. La barra de la gira (Honra en bolitas almagre, reales con la moneda de oros, Cara y compañero) es la de las referencias.
 - **La bolsa en la mesa (M3):** botón redondo gualda, arriba a la izquierda, con una cuenta en almagre; al abrirla, un panel de papel que sube desde abajo. *SALIR* va enfrente, discreto, con borde de puntos.
