@@ -218,23 +218,45 @@
   box-shadow: 2px 2px 0 var(--tinta);
 }
 
-/* Sobre la foto, lo que va suelto (Vas por…, Empezar otra gira) lleva su papel. */
-.pantalla--portada .portada__vas,
-.pantalla--portada .enlace {
-  align-self: center;
-  padding: 2px 10px;
-  background: var(--papel);
-  border: 2px solid var(--tinta);
-  border-radius: 6px;
+/* «SEGUIR LA GIRA» lleva debajo, en pequeño, por dónde vas: la arena y sus cuatro niveles. */
+.portada__seguir {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 0 9px;
 }
 
-.portada__vas {
-  margin: -4px 0 4px;
+.portada__progreso {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--letra-rotulo);
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: 1px;
-  text-align: center;
-  color: var(--tinta);
+  word-spacing: normal;
+}
+
+.portada__niveles {
+  display: flex;
+  gap: 5px;
+}
+
+/* Los niveles pasados, rellenos de tinta; el de ahora, en almagre; los que faltan, vacíos. */
+.portada__nivel {
+  box-sizing: border-box;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--tinta);
+  border-radius: 50%;
+}
+
+.portada__nivel--hecho {
+  background: var(--tinta);
+}
+
+.portada__nivel--actual {
+  background: var(--almagre);
 }
 
 .portada__confirmar {
@@ -245,22 +267,6 @@
 .portada__confirmar p {
   margin: 0 0 10px;
   font-size: 17px;
-}
-
-.enlace {
-  padding: 4px;
-  font-family: var(--letra-rotulo);
-  font-size: 15px;
-  letter-spacing: 1px;
-  color: var(--tinta);
-  text-decoration: underline;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.enlace--tinta {
-  color: var(--tinta);
 }
 
 /* ——— Elegir compañero (C) ——— */

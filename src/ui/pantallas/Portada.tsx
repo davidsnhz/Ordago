@@ -51,13 +51,9 @@ export function Portada({
             </div>
           ) : guardada ? (
             <>
-              <BotonApuesta variante="gualda" onClick={onSeguir} autoFocus>
-                {P.continuar}
-              </BotonApuesta>
-              <div className="portada__vas">{P.vasPor(ES.arenas[ARENAS[guardada.arena]!.id].nombre, guardada.nivel + 1)}</div>
-              <button type="button" className="enlace" onClick={() => setConfirmando(true)}>
-                {P.otraGira}
-              </button>
+              <BotonSeguir gira={guardada} onClick={onSeguir} />
+              {/* Con una gira a medias, empezar otra pasa a segundo plano y pide confirmación. */}
+              <BotonApuesta onClick={() => setConfirmando(true)}>{P.nueva}</BotonApuesta>
             </>
           ) : (
             <BotonApuesta variante="gualda" onClick={onNueva} autoFocus>
@@ -74,6 +70,33 @@ export function Portada({
         </div>
       </div>
     </Escenario>
+  );
+}
+
+/** «SEGUIR LA GIRA» con, debajo y en pequeño, por dónde vas: la arena y sus cuatro niveles, el de ahora en almagre. */
+function BotonSeguir({ gira, onClick }: { gira: Gira; onClick: () => void }) {
+  const arena = ES.arenas[ARENAS[gira.arena]!.id].nombre;
+  return (
+    <BotonApuesta
+      variante="gualda"
+      className="portada__seguir"
+      onClick={onClick}
+      autoFocus
+      aria-label={`${P.continuar}. ${P.vasPor(arena, gira.nivel + 1)}`}
+    >
+      {P.continuar}
+      <span className="portada__progreso">
+        {arena}
+        <span className="portada__niveles">
+          {[0, 1, 2, 3].map((n) => (
+            <span
+              key={n}
+              className={`portada__nivel portada__nivel--${n < gira.nivel ? 'hecho' : n === gira.nivel ? 'actual' : 'falta'}`}
+            />
+          ))}
+        </span>
+      </span>
+    </BotonApuesta>
   );
 }
 

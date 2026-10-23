@@ -526,7 +526,6 @@ export const ES = {
     continuar: 'SEGUIR LA GIRA',
     vasPor: (arena: string, nivel: number) => `Vas por ${arena}, nivel ${nivel} de 4`,
     nueva: 'EMPEZAR LA GIRA',
-    otraGira: 'Empezar otra gira',
     confirmar: '¿Empezar otra? La gira que llevas se pierde.',
     siEmpezar: 'SÍ, OTRA',
     no: 'NO',
