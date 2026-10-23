@@ -30,8 +30,8 @@ export interface SituacionEnvite {
   siempreEnvida?: boolean;
   /** Se suma al valor para aceptar un envite (no un órdago): Chema crecido quiere más; arrugado, menos. */
   ajusteAceptar?: number;
-  /** «Darle conversación»: en esta mano no puede tirar órdago. */
-  sinOrdago?: boolean;
+  /** «Darle conversación»: en esta mano no puede tirar órdago ni subir (solo quiere o no quiere). */
+  distraido?: boolean;
 }
 
 export interface DecisionEnvite {
@@ -102,6 +102,7 @@ export function decidirEnvite(s: SituacionEnvite, p: ParametrosRival, azar: Azar
   // Le han envidado.
   if (envite.envidador) {
     if (
+      !s.distraido &&
       s.F > umbral + IA.subir.margen &&
       envite.apuesta < IA.subir.apuestaMaxima &&
       azar.probabilidad(IA.subir.porAgresividad * p.agresividad)
@@ -117,10 +118,10 @@ export function decidirEnvite(s: SituacionEnvite, p: ParametrosRival, azar: Azar
   }
 
   // Habla sin envite delante.
-  if (!s.sinOrdago && s.F > IA.ordago.fuerzaMinima && azar.probabilidad(IA.ordago.porAgresividad * p.agresividad)) {
+  if (!s.distraido && s.F > IA.ordago.fuerzaMinima && azar.probabilidad(IA.ordago.porAgresividad * p.agresividad)) {
     return { accion: { tipo: 'ordago' }, motivo: `órdago con F ${fmt(s.F)}`, farol: false, umbral };
   }
-  if (!s.sinOrdago && s.diferencia <= -IA.ordago.desesperacion && azar.probabilidad(IA.ordago.farolPorFaroleo * p.faroleo)) {
+  if (!s.distraido && s.diferencia <= -IA.ordago.desesperacion && azar.probabilidad(IA.ordago.farolPorFaroleo * p.faroleo)) {
     return { accion: { tipo: 'ordago' }, motivo: 'órdago de farol: va perdiendo', farol, umbral };
   }
   if (s.F > umbral) {

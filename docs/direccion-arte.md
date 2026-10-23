@@ -14,8 +14,8 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
 | Personajes: rivales, compañeros, tabernera y sucesos de la plaza | **En marcha: todos se diseñan desde cero.** Los dibujos de antes se borraron el 14 de octubre de 2026. **Chema, hecho** (15 de octubre): marca el estilo | guía: `docs/personajes.md`; mientras, marcador (recuadro de puntos almagre con el nombre) |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
-| Movimiento y sonido de la mesa | **Prototipo** (22 de octubre de 2026): la mesa viva, para comparar con la de antes | «La mesa viva», abajo |
-| Distribución de la mesa | **Prototipo** (22 de octubre de 2026): la mesa nueva, sin acta a la vista | «La mesa nueva», abajo |
+| Movimiento y sonido de la mesa | **[cambiado] Hecho** (23 de octubre de 2026): la mesa viva, ya sin elegir | «La mesa viva», abajo |
+| Distribución de la mesa | **[cambiado] Elegida** (23 de octubre de 2026): la mesa nueva, sin acta a la vista, es la única | «La mesa nueva», abajo |
 | Mapa ilustrado | Provisional: la facultad con formas planas (el edificio, la arena, el bar en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
 
 Todo lo pendiente se dibuja con **marcadores** (rectángulo de trazo discontinuo en almagre, fondo nogal translúcido y el texto «ARTE PENDIENTE»), detrás de una interfaz que permita cambiar el arte sin tocar código.
@@ -45,14 +45,34 @@ Textura: los fondos de papel llevan un punteado muy suave (puntos de 1 px de `rg
 
 | Fuente | Archivo | Uso |
 | --- | --- | --- |
-| Alfa Slab One | `AlfaSlabOne-Regular.ttf` | lo que se grita en la mesa: títulos, cifras, sellos, «¡ÓRDAGO!» y su botón (siempre en mayúsculas). **[cambiado]** Ya no los demás botones |
-| **[nuevo]** Bitter Black | `Bitter-Black.woff2` | los botones (PASO, ENVIDO, QUIERO, SIGUIENTE MANO…, los de la portada y la gira, la bolsa y el «−/+» del selector); un poco de interletraje. Gorda y con carácter, pero no cansa al pulsarla una y otra vez. Es de Huerta Tipográfica, los mismos de Alegreya |
+| ~~Alfa Slab One~~ | ~~`AlfaSlabOne-Regular.ttf`~~ | **[cambiado]** Ya no se usa (23 de octubre de 2026): lo que llevaba, títulos, cifras, sellos, «¡ÓRDAGO!» y su botón, va en Bitter Black |
+| **[nuevo]** Bitter Black | `Bitter-Black.woff2` | los botones (PASO, ENVIDO, QUIERO, SIGUIENTE MANO…, los de la portada y la gira, la bolsa y el «−/+» del selector), con un poco de interletraje, y **[cambiado]** desde el 23 de octubre también títulos, cifras, sellos y el órdago. Gorda y con carácter, pero no cansa. Es de Huerta Tipográfica, los mismos de Alegreya |
 | **[cambiado]** Alegreya Sans SC (negrita) | `AlegreyaSansSC-Bold.woff2` | rótulos, lances, menús, marcadores, etiquetas (versalitas, interletraje amplio). Solo hay un grueso: vale para cualquier peso |
 | **[cambiado]** Alegreya (cursiva) | `Alegreya-Italic.woff2` | la voz de los rivales, refranes, descripciones |
 | **[cambiado]** Alegreya | `Alegreya-Regular.woff2` y `Alegreya-Bold.woff2` | texto corrido |
 | **[nuevo]** Spectral SC (seminegrita) | `SpectralSC-SemiBold.woff2` | los nombres de quien juega: en la cabecera (*Chema*, *Tú*) y en los sellos |
 
 En las variables de estilo son `--letra-grito`, `--letra-boton`, `--letra-rotulo`, `--letra-texto` y `--letra-nombre`. Alegreya es de Huerta Tipográfica (Argentina), pensada para leer mucho y bien en español. Las tres nuevas, solo con el alfabeto latino (acentos, eñe, ¡ ¿ « »), en WOFF2: unos 23–29 KB cada una. **Donde esta guía dice IM Fell English SC, léase Alegreya Sans SC; donde dice IM Fell English, Alegreya.** IM Fell sigue en `assets/fuentes/`, pero ya no se publica.
+
+> **[cambiado] Decidido el 23 de octubre de 2026:** Alfa Slab One sale del juego. David vio los 38 sitios donde estaba en Bitter Black y se queda con Bitter en todos. **Donde esta guía dice Alfa Slab One, léase Bitter Black**; el logotipo de la portada no cambia, porque es una imagen. El «¡ÓRDAGO!» de la escena lleva el contorno hecho con sombras (con el trazo de contorno, Bitter enseñaba las uniones internas de las letras y parecía dañada). Comparaciones en `referencias/alfa-a-bitter-*.png`. Alfa Slab One sigue en `assets/fuentes/`, pero ya no se publica.
+
+### Qué letra lleva cada cosa (22 de octubre de 2026)
+
+Sacado de los estilos del juego. **IM Fell ya no sale en ningún sitio.** Lo que no aparece aquí va en Alegreya, que es la letra de toda la página.
+
+**[cambiado] Bitter Black (hasta el 23 de octubre, Alfa Slab One): títulos, cifras y lo que se grita.**
+- *Mesa:* los números del marcador; la cifra de la Cara, su «+8 / −12» y el «?»; ¡ENFADADO!, OFENDIDA y ¡CRECIDO! junto al rival; el botón de ¡ÓRDAGO! y su escena; el texto de los sellos (*ENVIDO DOS*); lo que está en juego (la ficha del acta y la cifra del selector de envite); los títulos del recuento y del final (*RECUENTO · Mano 1*, *¡HAS GANADO EL DUELO!*); los títulos de la bolsa, la ayuda de la Cara y el historial (con sus «+8» y «−15»); en las casillas, la cifra del bote, los cobros (*+2*), *¡ÓRDAGO!* y *+1 Chema*; el «…» del bocadillo; ≡; la cifra de las piedras que vuelan.
+- *Gira:* los títulos de pantalla (*¿Con quién vas?*, *LA LIBRETA*, *LA TABERNA*); las cifras de la barra (Honra, reales, Cara); el nombre de cada compañero en su carta y los «?» de los que faltan; las cintas de las arenas; *JEFE* y *AQUÍ ESTÁS* en el mapa; el nombre del siguiente rival; el resultado y el tanteo después del duelo, el total de la cuenta y las cifras de reales y Cara; los precios y los títulos de las fichas de la taberna; los títulos de los sucesos; el nombre de cada rival en la Libreta.
+
+**Bitter Black: los botones.** Todos los botones de apuesta y de pantalla (PASO, ENVIDO, QUIERO, NO QUIERO, MÁS, CORTO, MUS, TIRAR, SIGUIENTE MANO, REVANCHA, EMPEZAR LA GIRA, ¡A LA MESA!, ENTENDIDO, CERRAR…), el botón de la bolsa, el «−/+» del selector de envite y las paradas después del duelo (taberna, plaza, era). El de ¡ÓRDAGO! también (antes iba en Alfa Slab One).
+
+**Alegreya Sans SC: rótulos y etiquetas.** Los rótulos de todas las pantallas (*Tu Cara*, *Te cobras*, *Honra*, *Reales*…); en la mesa, *A 20 piedras*, la insignia MANO, *SE TE NOTA*, el nombre de cada casilla, los lances como pasos (mesa de antes y viva), la pestaña del acta y lo que dice el rival en ella (versalitas rojas), *Toda la mano*, *Le toca a Chema…*, el 4 y el 19 del selector, SALIR, los botones de pruebas, el marcador del panel final, la lista de rivales, *Lo tira Chema* en el órdago, *Cerrar* de la bolsa y del historial y el nombre de cada cosa en la bolsa; en la gira, los títulos y el compañero de la barra, *Siempre* y *Su seña* de los compañeros, el nombre de cada nivel en el mapa, *Vas por…*, los rótulos de las baldas y las etiquetas de la taberna, el lugar de cada suceso y el premio; en la portada, *Mesa* y *Sonido*.
+
+**Spectral SC: los nombres.** *Chema* y *Tú* en la cabecera de la mesa y encima de cada sello.
+
+**Alegreya: el texto.** Todo lo demás. En cursiva: tus jugadas en el acta (azul), las frases del rival (en el acta y en el bocadillo), lo que significa tu Cara (*te creen: a veces cuela*), el lema de la portada, las notas bajo los títulos, las reglas en el mapa, las descripciones de compañeros, objetos y sucesos, lo que dice la tabernera y, en la Libreta, los apuntes que aún no sabes del todo (*¿está faroleando?*). En redonda: lo que pasa en la mesa, los avisos, la nota del trato, las ayudas, las casillas (*en paso*, *querido*) y los apuntes de la Libreta que ya sabes (*acierta 8 de cada 10*).
+
+**Fuera de la guía:** los recuadros de ARTE PENDIENTE y las ✓ / ✗ de las casillas van en la letra del sistema (son marcadores y señales); el panel de depuración del modo de pruebas, en letra de máquina.
 
 Todas tienen licencia OFL (incluida en la carpeta).
 
@@ -94,7 +114,7 @@ Las medidas están en píxeles del escenario de referencia (1280 × 590). Pasa e
 
 ## La mesa viva (prototipo, 22 de octubre de 2026)
 
-Lo que hace que Balatro parezca profesional no es su dibujo sino que **todo se mueve y todo suena**. La mesa viva aplica eso a Órdago sin cambiar su estilo de naipe impreso: mismas tintas, misma letra, mismos contornos y sombras duras. Se elige en la portada (*Mesa: nueva / viva / de antes*). El código está en `src/ui/componentes/MesaViva.tsx`, `FondoVivo.tsx` y `mesaViva.css`; el sonido, en `src/ui/sonido.ts`.
+Lo que hace que Balatro parezca profesional no es su dibujo sino que **todo se mueve y todo suena**. La mesa viva aplica eso a Órdago sin cambiar su estilo de naipe impreso: mismas tintas, misma letra, mismos contornos y sombras duras. **[cambiado]** Desde el 23 de octubre de 2026 es la única mesa, con la distribución de «La mesa nueva» (el acta a la vista y los sellos en el centro, que son de este apartado, ya no están). El código está en `src/ui/componentes/MesaViva.tsx`, `FondoVivo.tsx` y `mesaViva.css`; el sonido, en `src/ui/sonido.ts`.
 
 **Cartas.** Mazo (tres reversos apilados) a la izquierda del tapete y descartes (tres reversos revueltos) a la derecha, de 28 × 50. Cada carta sale del mazo con un muelle hasta su hueco del abanico; el reparto alterna rival y tú cada 0,12 s, y las tuyas se dan la vuelta al llegar. Mientras esperan flotan 3 px (cada una a su ritmo). Se inclinan hasta unos 12° hacia el puntero, suben 6 px y las cruza una franja de barniz de borde duro, recortada con la propia carta. Las elegidas para tirar suben 20 px y tiemblan ±1,3°. Las que se van vuelan girando a los descartes.
 
@@ -108,9 +128,9 @@ Lo que hace que Balatro parezca profesional no es su dibujo sino que **todo se m
 
 **Rebotes.** Los botones nuevos, el selector de envite, cada línea nueva del acta y el panel del recuento entran con un pequeño rebote; en el recuento, las cartas se dan la vuelta de una en una y los cobros entran uno tras otro. El botón de órdago late cuando se puede tirar.
 
-## La mesa nueva (prototipo, 22 de octubre de 2026)
+## La mesa nueva (22 de octubre de 2026; la única desde el 23)
 
-La mesa viva con otra distribución: sin el acta a la vista. Lo que pasa lo cuentan los sellos, junto a quien habla, y las casillas de los lances. Código: `src/ui/componentes/MesaNueva.tsx` y `mesaNueva.css`; lo que enseña cada casilla sale de `src/estado/casillas.ts` (pura, con pruebas).
+La mesa viva con otra distribución: sin el acta a la vista. **[cambiado]** David la eligió el 23 de octubre de 2026 y las otras dos se quitaron. Bitter tiene el espacio estrecho, así que los títulos y botones con «·» («TU CARA · 60», «ARENA 2 · EL BAR», «COMPRAR · 8 r.») llevan un poco más de espacio entre palabras. Lo que pasa lo cuentan los sellos, junto a quien habla, y las casillas de los lances. Código: `src/ui/componentes/MesaNueva.tsx` y `mesaNueva.css`; lo que enseña cada casilla sale de `src/estado/casillas.ts` (pura, con pruebas).
 
 **De arriba abajo** (escenario de 390 × 844): la cabecera (sin los lances, que pasan al tapete); el rival, escalado 1,15 desde abajo y con la figura apoyada en el borde del tapete, que la tapa por la cintura; el tapete, un óvalo de 840 × 700 que empieza en y = 392, más ancho para que su borde sea casi recto bajo el rival; sus cartas en y = 414, entre el mazo y los descartes; las cuatro casillas en y = 478; tu mano en y = 616, y la barra de abajo.
 
@@ -153,7 +173,7 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 - **Elegir compañero (C):** cartas de papel con su marcador, el nombre en letra gruesa y, en versalitas almagre, *Siempre* y *Su seña*; la elegida, con anillo gualda. Abajo, los que faltan, con «?» en círculos de puntos.
 - **El mapa (A1):** como las arenas de Clash Royale. La arena en curso de arriba abajo en su color (la facultad, ocre de piedra de Salamanca con su edificio de arcos); los niveles, discos sobre un camino punteado de tinta; la siguiente arena arriba, en madera con niebla de papel y cinta negra. Cintas en almagre con el nombre de la arena. La barra de la gira (Honra en bolitas almagre, reales con la moneda de oros, Cara y compañero) es la de las referencias.
 - **La bolsa en la mesa (M3):** botón redondo gualda, arriba a la izquierda, con una cuenta en almagre; al abrirla, un panel de papel que sube desde abajo. *SALIR* va enfrente, discreto, con borde de puntos.
-- **Después del duelo (R):** el resultado en letra gruesa (verde si ganas, almagre si pierdes), la cuenta de reales en un panel, tres cajitas con reales, Honra y Cara, la Libreta como hoja de cuaderno con renglones azules y las tres paradas como botones de papel.
+- **Después del duelo (R):** el resultado en letra gruesa (verde si ganas, almagre si pierdes), la cuenta de reales en un panel, tres cajitas con reales (**[cambiado]** 22 de octubre de 2026: solo los que tienes ahora, sin «antes → ahora»), Honra y Cara, la Libreta como hoja de cuaderno con renglones azules y las tres paradas como botones de papel.
 - **La taberna (T1):** la de las referencias, en vertical: las baldas arriba, la ficha de lo que tocas en medio y tu bolsa abajo.
 - **La plaza, la era, el premio y el final:** una ficha de papel en el centro, con el lugar en versalitas almagre.
 

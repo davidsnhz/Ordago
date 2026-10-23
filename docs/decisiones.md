@@ -498,6 +498,44 @@ Sin mirar al rival, su regla de ofenderse se había quedado sin motivo. David ap
 - **Siempre**, sin tirar dados: un órdago se ve, no hay que pillarlo (mirarla dependía de su Ojo).
 - **En el código**, `ofendeOrdagoTemprano` en su perfil (antes `alSerMirado`), aplicado al jugar tú (`jugarJugador`). Se quita `mirarAlRival`, que ya no usaba nadie. Sale en la mesa como antes: OFENDIDA junto al retrato, su frase («¡Qué descaro! Así no se juega.») y el aviso.
 
+## Lo que vale cada objeto de la taberna (22 de octubre de 2026)
+
+David vio jugando que el Chato de vino era muy barato para lo útil que es y pidió duplicar su precio (de 4 a 8, hecho) y analizar el resto.
+
+**Cómo se ha medido** (`pruebas/objetos.sim.ts`, va con `npm run equilibrio`): el jugador sensato de las simulaciones de equilibrio contra los cuatro rivales de la facultad, 250 duelos contra cada uno (1.000 en total), primero sin nada y luego con cada objeto, **con los mismos repartos** para que la diferencia sea solo el objeto. Con el Chato, el jugador usa lo que ve: si sabe que gana el lance, tira órdago o quiere; si sabe que lo pierde, se retira. Se repite con un jugador farolero (faroleo 8), para quien deberían contar más el Orujo y la Medalla. Diferencias de un punto o menos son ruido.
+
+| Objeto | Precio | Duelos ganados de más (de cada 100) |
+| --- | --- | --- |
+| Chato de vino, en una mano | 8 (antes 4) | **+9** (+8,8 el sensato, +9,6 el farolero) en ese duelo |
+| Boina de la suerte | 8 | **+2,5** en cada duelo, durante toda la gira |
+| Darle conversación, en la 1.ª mano / al ir ganando | 4 | +1 / −0,6: nada |
+| Orujo, al empezar / cuando te pillan | 4 | −1,7 / 0: nada (con la Cara bien, subirla no ayuda; y el farolero casi nunca baja de 35) |
+| Medalla de la Virgen | 9 | 0 (sensato y farolero) |
+
+**Lo que se saca:** el Chato vale lo que cuesta ahora; la Boina, que suma en cada duelo, se queda barata; el Orujo, la Medalla y Darle conversación casi no cambian nada contra la facultad. Se le propusieron cuatro cambios y **David decidió**: Boina a 12; Orujo a 2; la Medalla se queda en 9, pero libra todos los faroles pillados del duelo; Darle conversación se queda en 4, pero el rival tampoco puede subir (en la IA, `distraido`; la Medalla ya no necesita `medallaUsada`).
+
+**Medido otra vez con los efectos nuevos** (mismos 1.000 duelos): la Medalla que libra todos los faroles pillados, −0,2 (sensato) y −0,1 (farolero); Darle conversación sin órdago ni subir, +0,4 en la primera mano y 0 al ir ganando. Siguen sin notarse. No es el efecto: la Cara apenas cambia cómo juega el rival, y los de la facultad casi nunca suben ni tiran órdago. Lo que de verdad les daría valor es que la Cara pese más en la IA (propuesto a David el 23 de octubre). De paso: la Cara cambia poco los duelos con la IA de ahora, y eso es lo que deja flojos al Orujo y a la Medalla.
+
+## Bitter Black en lugar de Alfa Slab One (23 de octubre de 2026)
+
+A David no le gustaba Alfa Slab One en algunos sitios. Se le enseñó el catálogo numerado de los 38 sitios donde sale (`referencias/alfa-slab-donde-*.png`) y pidió ver los 38 en Bitter Black. Se ha hecho cambiando solo la variable `--letra-grito`: para volver atrás basta con devolverle `'Alfa Slab One'`. Bitter Black es más estrecha, así que todo cabe igual o con más aire (el «¡ÓRDAGO!» de la escena ya no se sale de la pantalla). Comparaciones, sitio a sitio y por pantallas, en `referencias/alfa-a-bitter-*.png`.
+
+**Decidido por David:** se queda Bitter Black en los 38 sitios. Solo el 24, el «¡ÓRDAGO!» de la escena, se veía como dañado: llevaba un contorno de tinta hecho con `-webkit-text-stroke`, que en Bitter marca las uniones internas de cada letra. Ahora el contorno se hace con sombras alrededor y se ve limpio; quieto ocupa 272 de los 390 px de ancho. Alfa Slab One deja de cargarse y de publicarse (sigue en `assets/fuentes/`).
+
+## Prueba: la Cara con el doble de peso (23 de octubre de 2026), deshecha
+
+Para que la Medalla y el Orujo valieran algo, se probó a que la Cara pesara el doble al aceptar un envite: (50 − Cara) / 100 en lugar de / 200. Medido con las simulaciones de equilibrio (300 duelos por rival) y de objetos (1.000 por objeto):
+
+- **Los rivales siguen equilibrados** contra el jugador sensato: Lucía 52 %, Dani 54 %, Rubén 61 %, Chema 64 %, Agustín 55 %, Aurelio 53 %, Doña Ignacia 45 %, Don Francisco 40 %, Don Rodrigo 56 %.
+- **Pero los objetos de la Cara siguen igual**: la Medalla −0,2 y −0,3; el Orujo al empezar −2,9 (con la Cara alta, el rival rechaza más tus manos buenas); el Orujo «cuando te pillan» nunca llega a usarse.
+- **Por qué:** quien farolea ve su Cara subir sola (cada farol creído +8, cada envite cobrado +4; en la simulación, Cara media de 60 a 66) y casi nunca baja de 35, así que protegerla o subirla no cambia nada. Darle más peso solo cambia el reparto, no eso.
+
+Como no sirve para lo que se buscaba, **se deshace** (vuelve a / 200). Lo que de verdad daría valor a esos objetos es cambiar cómo se mueve la Cara (que suba menos o que baje más), una decisión de diseño para más adelante. Mientras, la Medalla (9) y Darle conversación (4) quedan flojas para lo que cuestan.
+
+## Una sola mesa (23 de octubre de 2026)
+
+David prefiere la mesa nueva. Se quitan la mesa viva con acta y la de antes: el botón *Mesa* de la portada, `?mesa=` y `?viva=` en la dirección, el acta a la vista, la mano y las cartas del rival sin animar, el sello del centro y sus estilos. Se queda el acta entera detrás de ≡ (sus líneas usan los mismos estilos). El panel del final del duelo solo sale al acabar el duelo, cuando ya se ha visto el recuento. La preferencia guardada `mesa` de quien la tuviera se ignora.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

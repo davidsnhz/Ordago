@@ -39,10 +39,8 @@ export interface ExtrasPartida {
   fiesta: boolean;
   /** Chato de vino: en esta mano el rival canta su mano (0 si no). */
   cartasVistasMano: number;
-  /** Darle conversación: en esta mano el rival no puede tirar órdago (0 si no). */
+  /** Darle conversación: en esta mano el rival no puede tirar órdago ni subir (0 si no). */
   sinOrdagoMano: number;
-  /** La Medalla de la Virgen ya ha librado un farol en este duelo. */
-  medallaUsada: boolean;
   /** Los Apuntes de Chema: el próximo tic se explica. */
   explicarTic: boolean;
   apuntesUsados: boolean;
@@ -142,7 +140,6 @@ export function extrasVacios(): ExtrasPartida {
     fiesta: false,
     cartasVistasMano: 0,
     sinOrdagoMano: 0,
-    medallaUsada: false,
     explicarTic: false,
     apuntesUsados: false,
     cartaEnsenada: null,
@@ -235,8 +232,8 @@ export function jugarRival(partida: Partida): ResultadoPartida {
   }
 
   const vista = vistaDe(duelo, 'rival');
-  const sinOrdago = partida.extras.sinOrdagoMano === duelo.numeroMano;
-  const decision = decidirRival(vista, { perfil, memoria: partida.memoria, caraJugador: partida.caraJugador, senal, sinOrdago }, azar);
+  const distraido = partida.extras.sinOrdagoMano === duelo.numeroMano;
+  const decision = decidirRival(vista, { perfil, memoria: partida.memoria, caraJugador: partida.caraJugador, senal, distraido }, azar);
 
   // Los tics pueden escaparse justo al decidir un envite.
   const ticsAlDecidir =
@@ -529,16 +526,11 @@ function procesar(
 
   const { memoria, seEnfada, imponePenitencia } = recordar(partida.memoria, todos, perfil, modo);
 
-  // La Medalla de la Virgen libra el primer farol pillado del duelo.
+  // La Medalla de la Virgen libra todos los faroles pillados del duelo (desde el 22-10-2026; antes, solo el primero).
   let cambiosCara = cambiosDeCara(todos, duelo);
   let extras = partida.extras;
-  let medalla = false;
-  const pillado = cambiosCara.findIndex((c) => c.motivo === 'farolPillado');
-  if (pillado >= 0 && extras.amuletos.includes('medalla') && !extras.medallaUsada) {
-    cambiosCara = cambiosCara.filter((_, i) => i !== pillado);
-    extras = { ...extras, medallaUsada: true };
-    medalla = true;
-  }
+  const medalla = extras.amuletos.includes('medalla') && cambiosCara.some((c) => c.motivo === 'farolPillado');
+  if (medalla) cambiosCara = cambiosCara.filter((c) => c.motivo !== 'farolPillado');
   const caraJugador = aplicarCambiosDeCara(partida.caraJugador, cambiosCara);
 
   const contadas = contarEstadisticas(partida.estadisticas, todos, duelo, cambiosCara, extras);

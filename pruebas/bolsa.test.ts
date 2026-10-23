@@ -82,7 +82,7 @@ describe('objetos de un uso', () => {
     expect(puedeUsarObjeto(r.partida, 'chato')).toBe(false);
   });
 
-  it('darle conversación: en esa mano el rival no tira órdago aunque lleve la mano perfecta', () => {
+  it('darle conversación: en esa mano el rival ni tira órdago ni sube, aunque lleve la mano perfecta', () => {
     const azarSiempre = { siguiente: () => 0, probabilidad: () => true } as unknown as Azar;
     const situacion = {
       F: 0.99,
@@ -94,7 +94,11 @@ describe('objetos de un uso', () => {
       aceptaTodo: false,
     };
     expect(decidirEnvite(situacion, RIVALES.chema.parametros, azarSiempre).accion.tipo).toBe('ordago');
-    expect(decidirEnvite({ ...situacion, sinOrdago: true }, RIVALES.chema.parametros, azarSiempre).accion.tipo).not.toBe('ordago');
+    expect(decidirEnvite({ ...situacion, distraido: true }, RIVALES.chema.parametros, azarSiempre).accion.tipo).not.toBe('ordago');
+    // Le envidas dos: con esa mano subiría; distraído, solo quiere o no quiere.
+    const envidado = { ...situacion, envite: { ...iniciarEnvite('rival'), envidador: 'jugador' as const, apuesta: 2 } };
+    expect(decidirEnvite(envidado, RIVALES.chema.parametros, azarSiempre).accion.tipo).toBe('mas');
+    expect(['quiero', 'noQuiero']).toContain(decidirEnvite({ ...envidado, distraido: true }, RIVALES.chema.parametros, azarSiempre).accion.tipo);
     const r = usarObjeto(nuevaPartida('charla', 'chema').partida, 'conversacion');
     expect(r.partida.extras.sinOrdagoMano).toBe(r.partida.duelo.numeroMano);
   });
@@ -110,7 +114,7 @@ describe('objetos de un uso', () => {
 describe('amuletos', () => {
   const manos = { jugador: '4 5 6 7', rival: 'R R R C' };
 
-  it('la Medalla de la Virgen libra el primer farol pillado del duelo', () => {
+  it('la Medalla de la Virgen libra los faroles pillados del duelo', () => {
     const enfadado = (p: Partida) => ({ ...p, memoria: { ...memoriaInicial(), manosEnfadado: 3 } });
     const sin = jugarMano(enfadado(partidaCon('ruperto', manos)), true);
     const conMedalla = jugarMano(enfadado(partidaCon('ruperto', manos, { amuletos: ['medalla'] })), true);
@@ -118,7 +122,6 @@ describe('amuletos', () => {
     expect(pillados(sin.resultados).length).toBeGreaterThan(0);
     expect(pillados(conMedalla.resultados)).toEqual([]);
     expect(conMedalla.resultados.some((r) => r.novedades.medalla)).toBe(true);
-    expect(conMedalla.partida.extras.medallaUsada).toBe(true);
   });
 
   it('la Boina de la suerte gana los empates aunque no seas mano', () => {

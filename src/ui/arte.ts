@@ -54,7 +54,6 @@ export function useMedallon(id: string): string | null {
 export function cargarFuentes(): void {
   if (typeof document === 'undefined' || document.getElementById('fuentes-ordago')) return;
   const fuentes: [familia: string, archivo: string, estilo: string, peso: string][] = [
-    ['Alfa Slab One', 'AlfaSlabOne-Regular.ttf', 'normal', '400'],
     ['Alegreya', 'Alegreya-Regular.woff2', 'normal', '400'],
     ['Alegreya', 'Alegreya-Italic.woff2', 'italic', '400'],
     ['Alegreya', 'Alegreya-Bold.woff2', 'normal', '700'],

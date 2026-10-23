@@ -173,7 +173,7 @@
   gap: 12px;
 }
 
-/* La mesa y el sonido (prototipos): pequeños, debajo, con borde de puntos como las herramientas. */
+/* El sonido: pequeño, debajo, con borde de puntos como las herramientas. */
 .portada__ajustes {
   position: absolute;
   left: 40px;
@@ -388,6 +388,8 @@
 }
 
 .cinta {
+  /* Bitter tiene el espacio estrecho: un poco más de aire alrededor del «·» («TU CARA · 60»). */
+  word-spacing: 0.15em;
   position: absolute;
   left: 50%;
   z-index: 5;

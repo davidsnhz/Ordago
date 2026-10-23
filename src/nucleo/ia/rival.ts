@@ -70,7 +70,7 @@ export interface ContextoRival {
   /** Cara a 0: si al jugador se le ha notado (o no) el tic en este lance. */
   senal?: 'seNota' | 'noSeNota' | null;
   /** «Darle conversación»: en esta mano no puede tirar órdago. */
-  sinOrdago?: boolean;
+  distraido?: boolean;
 }
 
 /** Cuánto más (o menos) quiere tus envites según su ánimo: crecido te lo quiere todo; arrugado, casi nada. */
@@ -124,7 +124,7 @@ export function decidirRival(vista: VistaRival, ctx: ContextoRival, azar: Azar):
           ordagoDesdeMano: ctx.perfil.ordagoDesdeMano,
           siempreEnvida: ctx.perfil.siempreEnvidaA?.includes(lance) ?? false,
           ajusteAceptar,
-          sinOrdago: ctx.sinOrdago ?? false,
+          distraido: ctx.distraido ?? false,
         },
         parametros,
         azar,

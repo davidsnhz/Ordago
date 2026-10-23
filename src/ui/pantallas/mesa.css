@@ -1,7 +1,7 @@
 /*
  * La mesa en vertical, en píxeles del escenario de 390 × 844 (un móvil):
- * arriba el marcador y la Cara; en medio el rival y el acta de la mano; abajo el tapete,
- * tu mano y la barra de acciones.
+ * arriba el marcador y la Cara; en medio el rival; abajo el tapete, tu mano y la barra de
+ * acciones. La distribución de ahora (sin acta, con las casillas) la retoca mesaNueva.css.
  */
 
 .mesa {
@@ -234,6 +234,8 @@
 }
 
 .ayuda-cara__titulo {
+  /* Bitter tiene el espacio estrecho: un poco más de aire alrededor del «·» («TU CARA · 60»). */
+  word-spacing: 0.15em;
   font-family: var(--letra-grito);
   font-size: 22px;
   line-height: 1.1;
@@ -306,7 +308,7 @@
 /* ——— El rival ——— */
 
 /*
- * El busto acaba por debajo del borde de arriba del acta, que tapa el corte de la figura. Es
+ * El busto acaba por debajo del borde del tapete, que tapa el corte de la figura (mesaNueva.css). Es
  * apaisado, como los dibujos (de codos sobre la mesa): 310 × 236, el fotograma de la imprenta.
  */
 .mesa .retrato {
@@ -378,115 +380,14 @@
 }
 
 /*
- * ——— El acta de la mano, contada ———
- * Un panel bajo el retrato: la pestaña dice el lance y la ficha roja lo que hay en juego. Lo
- * tuyo va en cursiva azul («Has envidado dos.»), lo del rival en versalitas rojas con su frase
- * debajo («Agustín sube cuatro más»), y lo que pasa en la mesa en letra corriente.
+ * ——— Las líneas del acta de la mano ———
+ * Se ven en el historial (≡): lo tuyo en cursiva azul («Has envidado dos.»), lo del rival en
+ * versalitas rojas con su frase debajo («Agustín sube cuatro más») y lo que pasa en la mesa en letra
+ * corriente.
  */
 
-.acta {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  top: 374px;
-  z-index: 12;
-}
-
-.acta__caja {
-  padding: 16px 16px 10px;
-  background: var(--papel);
-  border: var(--borde);
-  border-radius: 10px;
-  box-shadow: var(--sombra-dura-grande);
-}
-
 /* Que nada se meta debajo de la ficha. */
-.acta--con-ficha .acta__caja {
-  padding-right: 50px;
-}
-
 /* La cola apunta al retrato: lo de arriba lo dice el rival. */
-.acta__cola {
-  position: absolute;
-  left: 50%;
-  top: -19px;
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 18px solid var(--tinta);
-  transform: translateX(-50%);
-}
-
-.acta__pestana {
-  position: absolute;
-  left: 14px;
-  top: -14px;
-  padding: 0 10px;
-  font-family: var(--letra-rotulo);
-  font-size: 14px;
-  letter-spacing: 2px;
-  line-height: 1.6;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--papel);
-  background: var(--tinta);
-  border-radius: 6px;
-}
-
-.acta__ficha {
-  position: absolute;
-  right: -10px;
-  top: -22px;
-  width: 58px;
-  height: 58px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--papel);
-  background: var(--almagre);
-  border: var(--borde);
-  border-radius: 50%;
-  box-shadow: var(--sombra-dura);
-  animation: ficha 0.35s ease-out;
-}
-
-.acta__ficha b {
-  font-family: var(--letra-grito);
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1;
-}
-
-.acta__ficha span {
-  font-family: var(--letra-rotulo);
-  font-size: 10px;
-}
-
-.acta__ficha--todo b {
-  font-size: 15px;
-}
-
-@keyframes ficha {
-  from {
-    transform: scale(0.6);
-  }
-}
-
-.acta__lineas {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 3px;
-  /* Cerrada nunca pisa las cartas del rival: si no cabe, se esconde lo más antiguo (Mesa.tsx). */
-  max-height: 140px;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 /* Lo antiguo, algo apagado; lo último, bien marcado. */
 .acta__linea {
   opacity: 0.72;
@@ -534,34 +435,6 @@
   line-height: 1.2;
 }
 
-.acta__ver {
-  position: absolute;
-  right: 10px;
-  bottom: -28px;
-  min-height: 26px;
-  padding: 1px 10px;
-  font-family: var(--letra-rotulo);
-  font-size: 13px;
-  color: var(--tinta);
-  background: var(--papel);
-  border: 2px solid var(--tinta);
-  border-radius: 14px;
-  cursor: pointer;
-}
-
-.acta--abierta {
-  z-index: 19;
-}
-
-.acta--abierta .acta__caja {
-  max-height: 380px;
-  overflow: auto;
-}
-
-.acta--abierta .acta__lineas {
-  max-height: none;
-}
-
 /* ——— El tapete ——— */
 
 /* El tapete ocupa algo más del tercio de abajo de la pantalla, con aire entre las cartas del rival y las tuyas. */
@@ -597,11 +470,6 @@
   height: 58px;
 }
 
-.mesa .carta--rival {
-  width: 30px;
-  height: 54px;
-}
-
 /* ——— Tu mano ——— */
 
 .mesa__mano {
@@ -610,27 +478,6 @@
   top: 622px;
   width: 290px;
   height: 160px;
-}
-
-.mesa__carta {
-  position: absolute;
-  transition: transform 0.15s ease-out;
-}
-
-.mesa__carta-boton {
-  position: absolute;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.15s ease-out;
-}
-
-.mesa__carta-boton--elegida .carta--mano {
-  outline: 3px solid var(--almagre);
-  outline-offset: -3px;
-  border-radius: 8px;
 }
 
 /* ——— Barra de acciones (abajo, limpia, el órdago aparte) ——— */
@@ -905,6 +752,8 @@
 }
 
 .final__titulo {
+  /* Bitter tiene el espacio estrecho: un poco más de aire alrededor del «·» («TU CARA · 60»). */
+  word-spacing: 0.15em;
   font-family: var(--letra-grito);
   font-size: 24px;
   line-height: 1.1;
@@ -1128,10 +977,6 @@
 }
 
 /* Cartas del rival boca arriba (el Chato de vino, la seña del Lazarillo). */
-.carta--rival-vista {
-  box-shadow: 0 0 0 2px var(--gualda), 2px 2px 0 var(--tinta);
-}
-
 .mesa__velo--bolsa {
   z-index: 30;
   align-items: flex-end;

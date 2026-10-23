@@ -81,6 +81,8 @@
 
 /* Bitter Black: gorda y con carácter, pero no cansa al pulsarla una y otra vez. */
 .boton-apuesta {
+  /* Aire alrededor del «·» de «COMPRAR · 8 r.». */
+  word-spacing: 0.12em;
   width: 100%;
   min-height: 44px;
   padding: 9px 0;

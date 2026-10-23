@@ -23,9 +23,10 @@
   --almagre-claro: #e8ccb8;
   --bandas: #140e0b;
 
-  /* Letra (22 de octubre de 2026: Alegreya en lugar de IM Fell, Spectral SC para los nombres y
-     Bitter Black para los botones; Alfa Slab One se queda para títulos, cifras, sellos y el órdago) */
-  --letra-grito: 'Alfa Slab One', 'Rockwell', serif;
+  /* Letra: Alegreya en lugar de IM Fell y Spectral SC para los nombres (22-10-2026); Bitter Black
+     para los botones y, desde el 23-10-2026, también en lugar de Alfa Slab One para títulos, cifras,
+     sellos y el órdago (decidido por David). Grito y botón son la misma letra, pero van separados. */
+  --letra-grito: 'Bitter', 'Rockwell', serif;
   --letra-boton: 'Bitter', 'Georgia', serif;
   --letra-rotulo: 'Alegreya Sans SC', 'Trebuchet MS', sans-serif;
   --letra-texto: 'Alegreya', 'Georgia', serif;

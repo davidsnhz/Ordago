@@ -272,17 +272,6 @@
 
 /* ——— Sellos: lo que se dice cae sobre el tapete ——— */
 
-.sellos {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 546px;
-  z-index: 16;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-
 /* La sombra, el golpe y la onda los anima MesaViva.tsx (SelloImpreso): baja, golpea y se queda. */
 .sello {
   position: relative;
@@ -441,8 +430,19 @@
   line-height: 1;
   color: var(--papel);
   white-space: nowrap;
-  text-shadow: 5px 5px 0 var(--tinta);
-  -webkit-text-stroke: 2px var(--tinta);
+  /* El contorno, con sombras alrededor y no con -webkit-text-stroke: el trazo marcaba las uniones
+     internas de las letras de Bitter y se veían como dañadas. Después, la sombra dura de siempre. */
+  text-shadow:
+    -2px -2px 0 var(--tinta),
+    0 -2px 0 var(--tinta),
+    2px -2px 0 var(--tinta),
+    -2px 0 0 var(--tinta),
+    2px 0 0 var(--tinta),
+    -2px 2px 0 var(--tinta),
+    0 2px 0 var(--tinta),
+    2px 2px 0 var(--tinta),
+    5px 5px 0 var(--tinta),
+    6px 6px 0 var(--tinta);
 }
 
 .estallido__quien {
@@ -495,17 +495,6 @@
 .mesa--viva .cantidades {
   transform-origin: 50% 100%;
   animation: panel-entra 0.28s cubic-bezier(0.2, 1.5, 0.4, 1) backwards;
-}
-
-.mesa--viva .acta__linea--ultima {
-  animation: linea-entra 0.32s ease-out backwards;
-}
-
-@keyframes linea-entra {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
 }
 
 /* Recuento y final: el panel salta, las cartas se dan la vuelta y los cobros van llegando. */

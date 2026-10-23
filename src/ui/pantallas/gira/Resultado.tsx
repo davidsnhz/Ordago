@@ -70,9 +70,8 @@ export function Resultado({ gira, resumen, onParada, onSeguir }: { gira: Gira; r
         <div className="estado-gira">
           <div className="panel">
             <div className="rotulo">{R.reales}</div>
-            <div className="estado-gira__valor">
-              {resumen.reales.antes} → {resumen.reales.despues}
-            </div>
+            {/* Solo lo que tienes ahora: lo que has ganado ya está en la cuenta de arriba. */}
+            <div className="estado-gira__valor">{resumen.reales.despues}</div>
           </div>
           <div className="panel">
             <div className="rotulo">{R.honra}</div>

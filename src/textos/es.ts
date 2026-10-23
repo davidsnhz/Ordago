@@ -399,7 +399,6 @@ export const ES = {
     depurar: 'Depurar',
     ensayarTics: 'Tics',
     ensayarPoses: (pose: string | null) => (pose ? `Pose: ${pose}` : 'Poses'),
-    mesaPrueba: (cual: string) => `Mesa ${cual}`,
     /** La mesa nueva (prototipo, octubre de 2026): casillas de los lances, avisos y el acta detrás de ≡. */
     nueva: {
       casillas: 'Los lances de la mano',
@@ -535,12 +534,7 @@ export const ES = {
     sueltoNota: 'Contra quien quieras, sin gira: ni Honra ni reales. Lo que veas va a la Libreta.',
     volver: 'VOLVER',
     libreta: 'LIBRETA',
-    /** Prototipos de octubre de 2026: para comparar las tres mesas. */
-    mesa: (nombre: string) => `Mesa: ${nombre}`,
-    nombresMesa: { nueva: 'nueva', viva: 'viva', antes: 'de antes' },
     sonido: (si: boolean) => `Sonido: ${si ? 'sí' : 'no'}`,
-    ayudaMesa:
-      'Prototipos para comparar. Nueva: sin acta, con sellos junto a quien habla y los lances en casillas. Viva: la de antes con movimiento y sonido. De antes: la mesa quieta.',
   },
 
   arenas: {
@@ -554,8 +548,8 @@ export const ES = {
   objetos: {
     orujo: { nombre: 'Orujo', efecto: '+15 de Cara al momento.', corto: '+15 de Cara' },
     chato: { nombre: 'Chato de vino', efecto: 'El rival se va de la lengua: canta su mano. Vale para esa mano.', corto: 'el rival canta su mano' },
-    conversacion: { nombre: 'Darle conversación', efecto: 'El rival se distrae: en esta mano no puede tirar órdago.', corto: 'no puede tirar órdago' },
-    medalla: { nombre: 'Medalla de la Virgen', efecto: 'La primera vez en cada duelo que te pillan un farol, tu Cara no baja.', corto: 'un farol pillado, gratis' },
+    conversacion: { nombre: 'Darle conversación', efecto: 'El rival se distrae: en esta mano no puede tirar órdago ni subir.', corto: 'ni órdago ni subir' },
+    medalla: { nombre: 'Medalla de la Virgen', efecto: 'Cuando te pillan un farol, tu Cara no baja.', corto: 'faroles pillados, gratis' },
     boina: { nombre: 'Boina de la suerte', efecto: 'Ganas los empates aunque no seas mano.', corto: 'empates a tu favor' },
     apuntesChema: {
       nombre: 'Los Apuntes de Chema',
@@ -640,7 +634,7 @@ export const ES = {
     narra: {
       orujo: 'Te has tomado un orujo.',
       chato: (rival: string) => `${rival} se va de la lengua: canta su mano`,
-      conversacion: (rival: string) => `Le das conversación a ${rival}: esta mano no tirará órdago`,
+      conversacion: (rival: string) => `Le das conversación a ${rival}: esta mano no tirará órdago ni subirá`,
       apuntes: 'Abres los Apuntes de Chema: el próximo tic te lo explican.',
       lazarillo: (rival: string, carta: string) => `El Lazarillo te enseña una carta de ${rival}: ${carta}.`,
       recaudadora: 'La Recaudadora apunta: si ganas el próximo órdago, cobras el triple.',

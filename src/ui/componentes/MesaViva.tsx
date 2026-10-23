@@ -52,13 +52,7 @@ export interface Disposicion {
   descartes: Punto;
   origen: PorLado<Punto>;
 }
-/** La mesa viva: el tapete en el tercio de abajo, con el acta encima. */
-export const DISPOSICION_VIVA: Disposicion = {
-  mazo: { x: 76, y: 587 },
-  descartes: { x: 314, y: 587 },
-  origen: { jugador: { x: 50, y: 622 }, rival: { x: 135, y: 552 } },
-};
-/** La mesa nueva: sin acta, el tapete sube hasta el rival (`.mesa--nueva` en mesaNueva.css). */
+/** Sin acta a la vista, el tapete sube hasta el rival (`.mesa--nueva` en mesaNueva.css). */
 export const DISPOSICION_NUEVA: Disposicion = {
   mazo: { x: 80, y: 444 },
   descartes: { x: 310, y: 444 },
@@ -67,16 +61,11 @@ export const DISPOSICION_NUEVA: Disposicion = {
 const CARTA_MONTON = { ancho: 28, alto: 50 };
 const TAMANO: PorLado<{ ancho: number; alto: number }> = { jugador: { ancho: 80, alto: 145 }, rival: { ancho: 30, alto: 54 } };
 /** De dónde salen las piedras que se cobran, si no salen de la casilla de su lance: el centro del tapete. */
-export const BOTE: Punto = { x: 195, y: 590 };
-export const desdeElBote = (): Punto => BOTE;
-/** El recuento de la mesa viva va en su panel: el primer cobro a los 0,5 s y cada uno 0,28 s después (como `.final__cobros`). */
-export const RITMO_VIVA: RitmoRecuento = { inicio: 0.5, cada: 0.28 };
+const BOTE: Punto = { x: 195, y: 520 };
 
 /** Ritmo, en segundos: el reparto alterna rival y tú; al descartar, las nuevas llegan después de irse las viejas. */
 const REPARTO = { inicio: 0.1, cada: 0.12 };
 const ROBO = { inicio: 0.4, cada: 0.14 };
-/** Cuánto dura cada sello según su fuerza, en milisegundos. */
-const DURA_SELLO: Record<FuerzaSello, number> = { 0: 900, 1: 1150, 2: 1400 };
 const DURA_ORDAGO = 1500;
 const DURA_CONFETI = 3400;
 const LADOS: Lado[] = ['rival', 'jugador'];
@@ -398,7 +387,6 @@ function piedrasDe(lado: Lado, piedras: number, desde: Punto, empieza: number, m
  */
 export function useMarcadorVivo(
   marcador: PorLado<number>,
-  viva: boolean,
   tanda: { efectos: EfectoMesa[]; clave: number },
   origenDe: (lance: Lance) => Punto,
   ritmo: RitmoRecuento,
@@ -413,12 +401,6 @@ export function useMarcadorVivo(
   const usada = useRef(tanda.clave);
 
   useEffect(() => {
-    if (!viva) {
-      enCamino.current = { jugador: 0, rival: 0 };
-      setVuelos([]);
-      if (mostrado.jugador !== marcador.jugador || mostrado.rival !== marcador.rival) setMostrado(marcador);
-      return;
-    }
     const cobros = usada.current === tanda.clave ? [] : tanda.efectos.filter((e) => e.tipo === 'cobro');
     const enRecuento = tanda.efectos.some((e) => e.tipo === 'cartasVistas');
     const nuevos: Vuelo[] = [];
@@ -449,7 +431,7 @@ export function useMarcadorVivo(
       setVuelos((v) => [...v, ...nuevos]);
     }
     // `origenDe` no cambia de significado entre jugadas: solo se lee al salir las piedras.
-  }, [marcador.jugador, marcador.rival, viva, mostrado, tanda.clave, tanda.efectos, ritmo.inicio, ritmo.cada]);
+  }, [marcador.jugador, marcador.rival, mostrado, tanda.clave, tanda.efectos, ritmo.inicio, ritmo.cada]);
 
   const llega = useCallback((vuelo: Vuelo) => {
     enCamino.current[vuelo.lado] -= vuelo.vale;
@@ -462,7 +444,7 @@ export function useMarcadorVivo(
     if (vuelos.length === 0) racha.current = 0;
   }, [vuelos.length]);
 
-  return { marcador: viva ? mostrado : marcador, golpes, vuelos, llega };
+  return { marcador: mostrado, golpes, vuelos, llega };
 }
 
 /** Si no se encuentra el número del marcador, más o menos aquí está. */
@@ -577,11 +559,9 @@ const RETIRO = 1200;
 /**
  * Lo que se ve y se oye por cada tanda de efectos de la mesa: los sellos, el órdago, el
  * temblor, el saltito del rival, el confeti y los sonidos. También suena la Cara al cambiar.
- * `sello` es el último que se ha dicho (mesa viva: uno en el centro, que se va solo); `sellos`,
- * lo último de cada uno (mesa nueva: se queda junto a quien lo dijo hasta que acaba su lance).
+ * `sellos` es lo último que ha dicho cada uno: se queda junto a quien lo dijo hasta que acaba su lance.
  */
-export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObject<HTMLDivElement | null>, ritmo: RitmoRecuento) {
-  const [sello, setSello] = useState<SelloVivo | null>(null);
+export function useEfectosVivos(estado: EstadoMesa, raiz: RefObject<HTMLDivElement | null>, ritmo: RitmoRecuento) {
   const [sellos, setSellos] = useState<PorLado<SelloVivo | null>>({ jugador: null, rival: null });
   const [ordago, setOrdago] = useState<{ lado: Lado; clave: number } | null>(null);
   const [fin, setFin] = useState<{ ganador: Lado; clave: number } | null>(null);
@@ -591,7 +571,6 @@ export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObje
   useEffect(() => {
     if (clave === visto.current) return;
     visto.current = clave;
-    if (!viva) return;
     const enRecuento = efectos.some((e) => e.tipo === 'cartasVistas');
     for (const efecto of efectos) {
       switch (efecto.tipo) {
@@ -609,7 +588,6 @@ export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObje
           break;
         case 'sello': {
           const nuevo = { ...efecto, clave };
-          setSello(nuevo);
           setSellos((s) => ({ ...s, [efecto.lado]: nuevo }));
           sonar(SONIDO_SELLO[efecto.dice](efecto.fuerza), { retraso: GOLPE });
           if (efecto.fuerza === 2) sacudir(raiz.current, false, GOLPE);
@@ -617,8 +595,7 @@ export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObje
           break;
         }
         case 'ordago':
-          setSello(null);
-          // En la mesa nueva, el órdago se queda puesto junto a quien lo tira hasta que le contestan.
+          // El órdago se queda puesto junto a quien lo tira hasta que le contestan.
           setSellos((s) => ({ ...s, [efecto.lado]: { lado: efecto.lado, dice: 'ordago', piedras: 0, fuerza: 2, lance: efecto.lance, clave } }));
           setOrdago({ lado: efecto.lado, clave });
           sonar('ordago');
@@ -637,16 +614,16 @@ export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObje
           break;
       }
     }
-  }, [clave, efectos, viva, raiz, ritmo]);
+  }, [clave, efectos, raiz, ritmo]);
 
   const caraVista = useRef(avisoCara?.clave ?? 0);
   useEffect(() => {
     if (!avisoCara || avisoCara.clave === caraVista.current) return;
     caraVista.current = avisoCara.clave;
-    if (viva) sonar(avisoCara.delta > 0 ? 'caraSube' : 'caraBaja', { retraso: 0.15 });
-  }, [avisoCara, viva]);
+    sonar(avisoCara.delta > 0 ? 'caraSube' : 'caraBaja', { retraso: 0.15 });
+  }, [avisoCara]);
 
-  // Mesa nueva: lo dicho en un lance que ya ha acabado se queda un momento y se guarda en su casilla.
+  // Lo dicho en un lance que ya ha acabado se queda un momento y se guarda en su casilla.
   const etapa = etapaDe(estado.partida.duelo);
   useEffect(() => {
     const reloj = setTimeout(() => {
@@ -656,11 +633,6 @@ export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObje
     return () => clearTimeout(reloj);
   }, [etapa]);
 
-  useEffect(() => {
-    if (!sello) return;
-    const reloj = setTimeout(() => setSello(null), DURA_SELLO[sello.fuerza]);
-    return () => clearTimeout(reloj);
-  }, [sello]);
   useEffect(() => {
     if (!ordago) return;
     const reloj = setTimeout(() => setOrdago(null), DURA_ORDAGO);
@@ -672,7 +644,7 @@ export function useEfectosVivos(estado: EstadoMesa, viva: boolean, raiz: RefObje
     return () => clearTimeout(reloj);
   }, [fin]);
 
-  return { sello, sellos, ordago, fin };
+  return { sellos, ordago, fin };
 }
 
 function textoSello({ dice, piedras }: SelloVivo): string {
@@ -722,17 +694,8 @@ function SelloImpreso({ sello, nombre, giro, retiro }: { sello: SelloVivo; nombr
   );
 }
 
-/** Mesa viva: lo que se dice cae en el centro del tapete y se va solo. */
-export function Sellos({ sello, nombre }: { sello: SelloVivo | null; nombre: string }) {
-  return (
-    <div className="sellos" aria-hidden="true">
-      <AnimatePresence>{sello && <SelloImpreso key={sello.clave} sello={sello} nombre={nombre} giro={sello.lado === 'rival' ? -6 : 5} />}</AnimatePresence>
-    </div>
-  );
-}
-
 /**
- * Mesa nueva: lo último que ha dicho cada uno, junto a él (el rival bajo su retrato, tú encima
+ * Lo último que ha dicho cada uno, junto a él (el rival bajo su retrato, tú encima
  * de tus cartas), hasta que acaba el lance; entonces vuela a su casilla (`retiroDe`).
  */
 export function SellosPorLado({

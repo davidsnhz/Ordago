@@ -1,6 +1,6 @@
 # Órdago — La gira
 
-22 de octubre de 2026 · @david · *versión 8: ya no se mira al rival; Doña Ignacia se ofende con un órdago temprano*
+22 de octubre de 2026 · @david · *versión 10: precios y efectos de la taberna medidos (Chato 8, Orujo 2, Boina 12; Medalla y Darle conversación, más fuertes)*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
@@ -372,8 +372,8 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
-| Chato de vino | El rival se va de la lengua: nada más bebérselo, dice en voz alta qué mano lleva (*«¡Llevo dos reyes, un caballo y un cinco!»*). Vale para la mano en que lo usas | 4 |
-| Orujo | +15 de Cara al momento | 4 |
+| Chato de vino | El rival se va de la lengua: nada más bebérselo, dice en voz alta qué mano lleva (*«¡Llevo dos reyes, un caballo y un cinco!»*). Vale para la mano en que lo usas | **[cambiado]** 8 (antes 4: David vio jugando que era muy barato para lo útil que es, y la simulación lo confirma) |
+| Orujo | +15 de Cara al momento. Para cuando «se te nota» o te pillan | **[cambiado]** 2 (antes 4) |
 | Café de puchero | Una ronda de mus extra en la mano actual | 3 |
 | Gaseosa | La que rebaja el vino… y lo que pierdes. Después de ver las cartas en el recuento, si has perdido un envite que tú quisiste, haces como si hubieras dicho «no quiero»: pagas lo del «no quiero» en vez de todo lo apostado. No vale para órdagos. *Ejemplo: quisiste un envite de ocho a la Grande y en el recuento ves que el rival lleva tres reyes: con la gaseosa pagas 1 en vez de 8* | 6 |
 | Copa de anís | En esta mano ganas los empates, aunque no seas mano | 3 |
@@ -385,7 +385,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
 | Invitar a una ronda | El rival rechaza tu próximo envite, lleve lo que lleve | 5 |
-| Darle conversación | El rival se distrae: en esta mano no puede tirar órdago | 4 |
+| Darle conversación | El rival se distrae: en esta mano no puede tirar órdago **[cambiado]** ni subir: solo quiere o no quiere | 4 |
 | Pisotón por debajo de la mesa | En esta mano el rival no puede subir: solo quiere o no quiere | 4 |
 | Silla coja | En la mano siguiente, el rival pierde la mano: la mano eres tú | 3 |
 | Echarle orujo al café | El rival se achispa: durante 3 manos farolea el doble y no te pilla nada (Ojo 0) | 6 |
@@ -395,12 +395,12 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
-| Boina de la suerte | Ganas los empates aunque no seas mano | 8 |
+| Boina de la suerte | Ganas los empates aunque no seas mano | **[cambiado]** 12 (antes 8) |
 | Navaja de Albacete | Los órdagos que ganas dan +1 de Honra (máximo 3) | 12 |
 | Pañuelo de hierbas | Ves si el rival tiene pares antes de que lo declare | 9 |
 | Reloj de bolsillo | **[cambiado] Por rehacer:** era mirar al rival el doble de tiempo sin que se diera cuenta, y ya no se puede mirar (22 de octubre de 2026). | 3, baratillo |
 | Gafas de culo de vaso | +1 nota automática en la Libreta por duelo | 6 |
-| Medalla de la Virgen | La primera vez en cada duelo que te pillan un farol, tu Cara no baja | 9 |
+| Medalla de la Virgen | **[cambiado]** Cuando te pillan un farol, tu Cara no baja: todas las veces (antes, solo la primera de cada duelo) | 9 |
 | Hucha de barro | Al acabar cada arena, +1 real por cada 5 que tengas ahorrados (máximo +5). *Ejemplo: llegas al final de la arena con 23 reales y cobras 4* | 8 |
 | Yesquero | Cuando tiras un órdago y el rival no lo quiere, cobras 2 piedras más | 9 |
 
@@ -510,3 +510,4 @@ Para que lo vayas planeando. **[cambiado]** Cómo se hace cada personaje, paso a
 - **Versión 5 (13 de octubre de 2026).** Lo que pasa «En la gira» entre secuaces y jefes queda para más adelante: no se programa de momento y se añadirá si la gira resulta demasiado fácil.
 - **Versión 6 (14 de octubre de 2026).** Los dibujos de antes, borrados: todos los personajes salen con un marcador hasta que estén los nuevos. Guía para hacerlos: [Cómo hacer los personajes](personajes.md).
 - **Versión 7 (15 de octubre de 2026).** Chema ya tiene dibujo (el de David) y su tic del café pasa a ser un trago de refresco: significa lo mismo, que va de farol.
+- **Versión 10 (22 de octubre de 2026).** Precios y efectos de la taberna, medidos con una simulación de 1.000 duelos por objeto: el Chato de vino pasa de 4 a 8, el Orujo de 4 a 2 y la Boina de 8 a 12; la Medalla de la Virgen libra todos los faroles pillados y, con Darle conversación, el rival tampoco puede subir. Lo pidió y lo eligió David.

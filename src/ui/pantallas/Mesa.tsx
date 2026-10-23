@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { COMPANEROS } from '../../datos/companeros';
 import { esDeUnUso, OBJETOS, type IdObjeto } from '../../datos/objetos';
 import { animoDe, ORDEN_RIVALES, RIVALES, type IdRival } from '../../datos/rivales';
@@ -13,8 +13,8 @@ import {
   type Partida,
 } from '../../estado/partida';
 import { empezarSuelto, useDuelo } from '../../estado/useDuelo';
-import { poseDelRival, textosDe, ultimoDelRival, type EstadoMesa, type LineaActa } from '../../estado/mesa';
-import { idCarta, mismaCarta, type Carta } from '../../nucleo/carta';
+import { poseDelRival, textosDe, type EstadoMesa } from '../../estado/mesa';
+import { idCarta, type Carta } from '../../nucleo/carta';
 import type { Lado } from '../../nucleo/comun';
 import { accionesValidas, type AccionDuelo, type EstadoDuelo, type OpcionDuelo } from '../../nucleo/duelo';
 import { calcularFuerza } from '../../nucleo/ia/fuerza';
@@ -28,21 +28,16 @@ import {
   CapaPiedras,
   CartasRivalVivas,
   Confeti,
-  desdeElBote,
   DISPOSICION_NUEVA,
-  DISPOSICION_VIVA,
   EstallidoOrdago,
   ManoViva,
   Montones,
-  RITMO_VIVA,
-  Sellos,
   SellosPorLado,
   useEfectosVivos,
   useMarcadorVivo,
 } from '../componentes/MesaViva';
-import { BotonApuesta, CartaReverso, CartaVista, clases } from '../componentes/piezas';
+import { BotonApuesta, CartaVista, clases } from '../componentes/piezas';
 import { Retrato } from '../componentes/Retrato';
-import { cambiarPreferencia, siguienteMesa, usePreferencias } from '../preferencias';
 import { AyudaCara, Cabecera } from './Cabecera';
 import './mesa.css';
 
@@ -51,8 +46,6 @@ const G = ES.gira;
 /** Envites rápidos; el resto, con la barra. */
 const RAPIDAS = [2, 3];
 const BARRA = { minimo: 4, maximo: 19 };
-/** Líneas del acta que se ven sin abrirla. */
-const LINEAS_VISIBLES = 3;
 /** Abanico de la mano: posición y giro de cada carta (escenario vertical de 390 × 844). */
 const ABANICO = [
   { left: 0, top: 8, giro: -9 },
@@ -122,38 +115,23 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
     nuevoDuelo(rival);
   };
 
-  // Las mesas de prueba (octubre de 2026), que se eligen en la portada. La viva: movimiento,
-  // sonido y fondo. La nueva, además: sin acta a la vista, con sellos junto a quien habla, las
-  // casillas de los lances, el bocadillo del rival y el recuento hecho sobre la mesa.
-  const { mesa: tipoMesa } = usePreferencias();
-  const viva = tipoMesa !== 'antes';
-  const nueva = tipoMesa === 'nueva';
-  const ritmo = nueva ? RITMO_NUEVA : RITMO_VIVA;
-  const disposicion = nueva ? DISPOSICION_NUEVA : DISPOSICION_VIVA;
+  // La mesa (23 de octubre de 2026, la «mesa nueva» que eligió David): con movimiento, sonido y
+  // fondo vivo; sin acta a la vista, con sellos junto a quien habla, las casillas de los lances, el
+  // bocadillo del rival, el recuento hecho sobre la mesa y el acta entera detrás de ≡.
   const raiz = useRef<HTMLDivElement>(null);
-  const vivo = useEfectosVivos(estado, viva, raiz, ritmo);
-  const marcadorVivo = useMarcadorVivo(
-    duelo.marcador,
-    viva,
-    { efectos: estado.efectos, clave: estado.claveEfectos },
-    nueva ? centroDeCasilla : desdeElBote,
-    ritmo,
-  );
+  const vivo = useEfectosVivos(estado, raiz, RITMO_NUEVA);
+  const marcadorVivo = useMarcadorVivo(duelo.marcador, { efectos: estado.efectos, clave: estado.claveEfectos }, centroDeCasilla, RITMO_NUEVA);
   const manoAcabada = duelo.fase === 'finMano' || duelo.fase === 'finDuelo';
 
   return (
     <Escenario avisoGirar={M.girar}>
-      <div ref={raiz} className={clases('mesa', viva && 'mesa--viva', nueva && 'mesa--nueva', nueva && manoAcabada && 'mesa--mano-acabada')}>
+      <div ref={raiz} className={clases('mesa', 'mesa--viva', 'mesa--nueva', manoAcabada && 'mesa--mano-acabada')}>
         <div className="mesa__pared" />
         <div className="mesa__luz" />
-        {viva && (
-          <>
-            <FondoVivo />
-            <div className="mesa__vineta" />
-          </>
-        )}
+        <FondoVivo />
+        <div className="mesa__vineta" />
 
-        <Cabecera estado={estado} textos={textos} onAyuda={() => setAyudaCara(true)} vivo={viva ? marcadorVivo : undefined} />
+        <Cabecera estado={estado} textos={textos} onAyuda={() => setAyudaCara(true)} vivo={marcadorVivo} />
 
         <Retrato
           id={partida.rivalId}
@@ -171,7 +149,7 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
           }
           textoPendiente={`${textos.etiqueta} · ${M.artePendiente}`}
         />
-        {viva && <FondoVivo capa="delante" />}
+        <FondoVivo capa="delante" />
         <EstadoDelRival partida={partida} />
         {modo.tipo === 'gira' && (
           <BotonBolsa partida={partida} bolsa={modo.bolsa} onAbrir={() => setBolsaAbierta(true)} />
@@ -195,64 +173,35 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
             <button type="button" className="mesa__boton-pequeno" onClick={siguientePose}>
               {M.ensayarPoses(poseDePrueba)}
             </button>
-            <button type="button" className="mesa__boton-pequeno" aria-pressed={viva} onClick={() => cambiarPreferencia('mesa', siguienteMesa(tipoMesa))}>
-              {M.mesaPrueba(ES.portada.nombresMesa[tipoMesa])}
-            </button>
           </div>
         )}
 
-        {nueva ? (
-          <>
-            <Bocadillo acta={estado.acta} piensa={rivalPiensa} />
-            <Avisos acta={estado.acta} />
-          </>
-        ) : (
-          <Acta duelo={duelo} acta={estado.acta} />
-        )}
+        <Bocadillo acta={estado.acta} piensa={rivalPiensa} />
+        <Avisos acta={estado.acta} />
 
         <div className="mesa__madera" />
         <div className="mesa__tapete" />
-        {viva ? (
-          <>
-            <Montones disposicion={disposicion} />
-            {/* En la mesa nueva, al acabar la mano sus cartas se dan la vuelta en el tapete. */}
-            <CartasRivalVivas
-              cartas={duelo.cartas.rival}
-              aLaVista={nueva && manoAcabada ? duelo.cartas.rival : aLaVista}
-              numeroMano={duelo.numeroMano}
-              abanico={ABANICO_RIVAL}
-              etiqueta={M.susCartas(textos.nombre)}
-              disposicion={disposicion}
-            />
-            {nueva && <Casillas duelo={duelo} nombre={textos.nombre} />}
-            <ManoViva
-              cartas={duelo.cartas.jugador}
-              numeroMano={duelo.numeroMano}
-              abanico={ABANICO}
-              seleccionables={descartando}
-              seleccion={seleccion}
-              onAlternar={alternarCarta}
-              disposicion={disposicion}
-            />
-            {nueva && <BotonHistorial onAbrir={() => setHistorial(true)} />}
-          </>
-        ) : (
-          <>
-            <div className="mesa__cartas-rival" aria-label={M.susCartas(textos.nombre)}>
-              {ABANICO_RIVAL.map((p, i) => {
-                const carta = duelo.cartas.rival[i];
-                const estilo = { left: p.left, top: p.top, transform: `rotate(${p.giro}deg)` };
-                // Con el Chato de vino o la seña del Lazarillo, se ven boca arriba.
-                return carta && aLaVista.some((c) => mismaCarta(c, carta)) ? (
-                  <CartaVista key={idCarta(carta)} carta={carta} className="carta--rival carta--rival-vista" style={estilo} />
-                ) : (
-                  <CartaReverso key={i} className="carta--rival" style={estilo} />
-                );
-              })}
-            </div>
-            <ManoDelJugador cartas={duelo.cartas.jugador} seleccionables={descartando} seleccion={seleccion} onAlternar={alternarCarta} />
-          </>
-        )}
+        <Montones disposicion={DISPOSICION_NUEVA} />
+        {/* Al acabar la mano, sus cartas se dan la vuelta en el tapete. */}
+        <CartasRivalVivas
+          cartas={duelo.cartas.rival}
+          aLaVista={manoAcabada ? duelo.cartas.rival : aLaVista}
+          numeroMano={duelo.numeroMano}
+          abanico={ABANICO_RIVAL}
+          etiqueta={M.susCartas(textos.nombre)}
+          disposicion={DISPOSICION_NUEVA}
+        />
+        <Casillas duelo={duelo} nombre={textos.nombre} />
+        <ManoViva
+          cartas={duelo.cartas.jugador}
+          numeroMano={duelo.numeroMano}
+          abanico={ABANICO}
+          seleccionables={descartando}
+          seleccion={seleccion}
+          onAlternar={alternarCarta}
+          disposicion={DISPOSICION_NUEVA}
+        />
+        <BotonHistorial onAbrir={() => setHistorial(true)} />
 
         <Botonera
           duelo={duelo}
@@ -261,25 +210,19 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
           onAccion={jugar}
           opciones={opciones}
           espera={rivalPiensa ? M.leToca(textos.nombre) : null}
-          onSiguiente={nueva && duelo.fase === 'finMano' ? () => jugar({ tipo: 'siguienteMano' }) : null}
+          onSiguiente={duelo.fase === 'finMano' ? () => jugar({ tipo: 'siguienteMano' }) : null}
         />
-        {nueva && puedo('trato') && <div className="panel panel--sombra mesa__nota-trato">{M.tratoExplica(textos.nombre)}</div>}
-        {nueva ? (
-          <SellosPorLado sellos={vivo.sellos} nombre={textos.nombre} retiroDe={retiroDelSello} />
-        ) : (
-          viva && <Sellos sello={vivo.sello} nombre={textos.nombre} />
-        )}
+        {puedo('trato') && <div className="panel panel--sombra mesa__nota-trato">{M.tratoExplica(textos.nombre)}</div>}
+        <SellosPorLado sellos={vivo.sellos} nombre={textos.nombre} retiroDe={retiroDelSello} />
 
-        {depuracion &&<PanelDepuracion estado={estado} textos={textos} onCara={cambiarCara} />}
+        {depuracion && <PanelDepuracion estado={estado} textos={textos} onCara={cambiarCara} />}
         <PanelFinal
           duelo={duelo}
           textos={textos}
           rivalActual={partida.rivalId}
-          onSiguiente={() => jugar({ tipo: 'siguienteMano' })}
           onOtroDuelo={elegirRival}
           alAcabar={modo.tipo === 'gira' ? () => modo.onTerminar(partida) : null}
           onSalir={modo.onSalir}
-          enLaMesa={nueva}
         />
         {modo.tipo === 'gira' && bolsaAbierta && (
           <PanelBolsa
@@ -304,13 +247,9 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
         {eligiendoRival && (
           <SelectorDeRival actual={partida.rivalId} onElegir={elegirRival} onCancelar={() => setEligiendoRival(false)} />
         )}
-        {viva && (
-          <>
-            <CapaPiedras vuelos={marcadorVivo.vuelos} onLlega={marcadorVivo.llega} />
-            <EstallidoOrdago ordago={vivo.ordago} nombre={textos.nombre} />
-            {vivo.fin?.ganador === 'jugador' && <Confeti key={vivo.fin.clave} />}
-          </>
-        )}
+        <CapaPiedras vuelos={marcadorVivo.vuelos} onLlega={marcadorVivo.llega} />
+        <EstallidoOrdago ordago={vivo.ordago} nombre={textos.nombre} />
+        {vivo.fin?.ganador === 'jugador' && <Confeti key={vivo.fin.clave} />}
       </div>
     </Escenario>
   );
@@ -338,129 +277,6 @@ function EstadoDelRival({ partida }: { partida: Partida }) {
           {e.texto}
         </span>
       ))}
-    </div>
-  );
-}
-
-/**
- * El acta de la mano, contada, en un solo panel bajo el retrato. La pestaña dice el lance y la
- * ficha roja, lo que hay en juego; dentro, las últimas cosas: lo tuyo en cursiva azul, lo del
- * rival en versalitas rojas con su frase, y lo que pasa en la mesa en letra corriente. «La mano»
- * la abre entera.
- */
-function Acta({ duelo, acta }: { duelo: EstadoDuelo; acta: LineaActa[] }) {
-  const [abierta, setAbierta] = useState(false);
-  useEffect(() => setAbierta(false), [duelo.numeroMano]);
-  const ficha = fichaActa(duelo);
-  // Si las últimas líneas no caben (frases largas), se esconden enteras las más antiguas en vez
-  // de cortarse a medias; siguen en «Toda la mano».
-  const lineas = useRef<HTMLOListElement>(null);
-  const [sobran, setSobran] = useState(0);
-  useLayoutEffect(() => setSobran(0), [acta.length, abierta]);
-  const desde = abierta ? 0 : Math.min(acta.length - 1, Math.max(0, acta.length - LINEAS_VISIBLES) + sobran);
-  useLayoutEffect(() => {
-    const ol = lineas.current;
-    const primera = ol?.firstElementChild;
-    // Con las líneas pegadas abajo, lo que no cabe asoma por arriba: la primera empieza antes que la caja.
-    if (ol && primera && !abierta && desde < acta.length - 1 && primera.getBoundingClientRect().top < ol.getBoundingClientRect().top - 1) {
-      setSobran((s) => s + 1);
-    }
-  });
-  const conFrase = ultimoDelRival(acta);
-  const ultima = acta.length - 1;
-
-  return (
-    <section className={clases('acta', abierta && 'acta--abierta', ficha && 'acta--con-ficha')} aria-label="Lo que pasa en la mano">
-      <div className="acta__caja">
-        <ol ref={lineas} className="acta__lineas" aria-live="polite">
-          {acta.slice(desde).map((linea, i) => {
-            const indice = desde + i;
-            return (
-              <li
-                key={indice}
-                className={clases('acta__linea', `acta__linea--${linea.quien ?? 'mesa'}`, indice === ultima && 'acta__linea--ultima')}
-              >
-                <span className="acta__texto">{linea.texto}</span>
-                {linea.frase && indice === conFrase && <span className="acta__frase">{linea.frase}</span>}
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-      <span className="acta__cola" aria-hidden="true" />
-      <span className="acta__pestana">{pestanaActa(duelo)}</span>
-      {ficha && (
-        <span className={clases('acta__ficha', ficha.todo && 'acta__ficha--todo')} aria-label={`${ficha.cifra} ${ficha.pie}`}>
-          <b>{ficha.cifra}</b>
-          <span>{ficha.pie}</span>
-        </span>
-      )}
-      {(abierta || desde > 0) && (
-        <button type="button" className="acta__ver" aria-expanded={abierta} onClick={() => setAbierta((a) => !a)}>
-          {abierta ? `▴ ${M.cerrarMano}` : `≡ ${M.verMano}`}
-        </button>
-      )}
-    </section>
-  );
-}
-
-/** En qué estamos: el lance con su artículo, o la fase con el número de mano. */
-function pestanaActa(duelo: EstadoDuelo): string {
-  const mano = M.mano(duelo.numeroMano);
-  switch (duelo.fase) {
-    case 'mus':
-      return `${M.fases.mus} · ${mano}`;
-    case 'descarte':
-      return `${M.fases.descarte} · ${mano}`;
-    case 'trato':
-      return M.fases.trato;
-    case 'envite':
-      return duelo.lanceActual ? M.lanceConArticulo[duelo.lanceActual] : mano;
-    default:
-      return `${M.fases.recuento} · ${mano}`;
-  }
-}
-
-/** Lo que hay en juego, si hay envite: la cifra, o TODO si es un órdago. */
-function fichaActa(duelo: EstadoDuelo): { cifra: string; pie: string; todo: boolean } | null {
-  const envite = duelo.fase === 'envite' ? duelo.envite : null;
-  if (!envite) return null;
-  if (envite.ordago) return { cifra: M.ficha.todo, pie: M.ficha.elDuelo, todo: true };
-  return envite.apuesta > 0 ? { cifra: String(envite.apuesta), pie: M.ficha.enJuego, todo: false } : null;
-}
-
-function ManoDelJugador({
-  cartas,
-  seleccionables,
-  seleccion,
-  onAlternar,
-}: {
-  cartas: Carta[];
-  seleccionables: boolean;
-  seleccion: string[];
-  onAlternar: (carta: Carta) => void;
-}) {
-  return (
-    <div className={clases('mesa__mano', seleccionables && 'mesa__mano--descarte')}>
-      {cartas.map((carta, i) => {
-        const p = ABANICO[i]!;
-        const elegida = seleccion.includes(idCarta(carta));
-        const estilo = { left: p.left, top: p.top, transform: `rotate(${p.giro}deg) translateY(${elegida ? -20 : 0}px)` };
-        return seleccionables ? (
-          <button
-            key={idCarta(carta)}
-            type="button"
-            className={clases('mesa__carta-boton', elegida && 'mesa__carta-boton--elegida')}
-            style={estilo}
-            aria-pressed={elegida}
-            onClick={() => onAlternar(carta)}
-          >
-            <CartaVista carta={carta} className="carta--mano" />
-          </button>
-        ) : (
-          <CartaVista key={idCarta(carta)} carta={carta} className="carta--mano mesa__carta" style={estilo} />
-        );
-      })}
     </div>
   );
 }
@@ -655,40 +471,35 @@ function SelectorCantidad({
   );
 }
 
-/** Al acabar la mano: el recuento. Al acabar el duelo: el órdago o el resultado, y la revancha. */
+/** Al acabar el duelo: el órdago o el recuento, el resultado y la revancha (o seguir con la gira). */
 function PanelFinal({
   duelo,
   textos,
   rivalActual,
-  onSiguiente,
   onOtroDuelo,
   alAcabar,
   onSalir,
-  enLaMesa,
 }: {
   duelo: EstadoDuelo;
   textos: TextosRival;
   rivalActual: IdRival;
-  onSiguiente: () => void;
   onOtroDuelo: (rival: IdRival) => void;
   /** En la gira: al acabar el duelo se sigue con la gira (en vez de revancha). */
   alAcabar: (() => void) | null;
   onSalir: () => void;
-  /** Mesa nueva: el recuento se hace sobre la mesa; el panel solo sale al acabar el duelo, cuando ya se ha visto. */
-  enLaMesa: boolean;
 }) {
-  if (duelo.fase !== 'finMano' && duelo.fase !== 'finDuelo') return null;
-  if (enLaMesa && duelo.fase === 'finMano') return null;
+  // El recuento de cada mano se hace sobre la mesa; el panel solo sale al acabar el duelo.
+  if (duelo.fase !== 'finDuelo') return null;
   const nombre = (lado: Lado) => (lado === 'jugador' ? M.tu : textos.nombre);
   const ultimo = duelo.lances[duelo.lances.length - 1];
   const resultado = ultimo?.envite?.resultado;
-  const porOrdago = duelo.fase === 'finDuelo' && duelo.motivoFin === 'ordago' && ultimo && resultado?.tipo === 'ordagoQuerido';
+  const porOrdago = duelo.motivoFin === 'ordago' && ultimo && resultado?.tipo === 'ordagoQuerido';
   const recuento = duelo.recuento;
 
-  // En la mesa nueva, el panel espera a que pase el órdago o a que cobre la última casilla.
+  // El panel espera a que pase el órdago o a que cobre la última casilla.
   const espera = porOrdago ? 1.5 : RITMO_NUEVA.inicio + (recuento?.aplicados ?? 0) * RITMO_NUEVA.cada + 0.9;
   return (
-    <div className={clases('mesa__velo', enLaMesa && 'mesa__velo--tarde')} style={enLaMesa ? ({ '--espera': `${espera}s` } as CSSProperties) : undefined}>
+    <div className="mesa__velo mesa__velo--tarde" style={{ '--espera': `${espera}s` } as CSSProperties}>
       <div className={clases('panel panel--sombra final', porOrdago && 'final--ordago')} role="dialog" aria-modal="true">
         {porOrdago ? (
           <>
@@ -720,17 +531,13 @@ function PanelFinal({
         <div className="final__marcador">
           {textos.nombre} {duelo.marcador.rival} · {M.tu} {duelo.marcador.jugador}
         </div>
-        {duelo.fase === 'finDuelo' && duelo.ganador && (
+        {duelo.ganador && (
           <div className="final__resultado">
             {duelo.ganador === 'jugador' ? M.hasGanado : M.teGana(textos.nombre)}
             <span className="final__motivo">{duelo.motivoFin === 'ordago' ? M.porOrdago : M.aPiedras}</span>
           </div>
         )}
-        {duelo.fase === 'finMano' ? (
-          <BotonApuesta variante="gualda" className="final__boton" onClick={onSiguiente} autoFocus>
-            {M.botones.siguienteMano}
-          </BotonApuesta>
-        ) : alAcabar ? (
+        {alAcabar ? (
           <BotonApuesta variante="gualda" className="final__boton" onClick={alAcabar} autoFocus>
             {ES.gira.finDuelo}
           </BotonApuesta>

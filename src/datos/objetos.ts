@@ -16,11 +16,14 @@ export interface DefinicionObjeto {
 }
 
 export const OBJETOS: Record<IdObjeto, DefinicionObjeto> = {
-  orujo: { id: 'orujo', tipo: 'bebida', precio: 4 },
-  chato: { id: 'chato', tipo: 'bebida', precio: 4 },
+  // Precios del 22-10-2026, medidos con pruebas/objetos.sim.ts: el Orujo apenas cambia un duelo
+  // (vale como emergencia) y la Boina suma en todos los de la gira.
+  orujo: { id: 'orujo', tipo: 'bebida', precio: 2 },
+  // Ver todas sus cartas en una mano vale mucho más que el resto de bebidas (decidido por David el 22-10-2026).
+  chato: { id: 'chato', tipo: 'bebida', precio: 8 },
   conversacion: { id: 'conversacion', tipo: 'jugarreta', precio: 4 },
   medalla: { id: 'medalla', tipo: 'amuleto', precio: 9 },
-  boina: { id: 'boina', tipo: 'amuleto', precio: 8 },
+  boina: { id: 'boina', tipo: 'amuleto', precio: 12 },
   apuntesChema: { id: 'apuntesChema', tipo: 'raro', precio: 10 },
 };
 
