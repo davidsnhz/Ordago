@@ -7,6 +7,7 @@ import { ES } from '../../textos/es';
 import { rutaArte } from '../arte';
 import { Escenario } from '../componentes/Escenario';
 import { BotonApuesta } from '../componentes/piezas';
+import { lemaDeEstaVez } from '../lema';
 import { cambiarPreferencia, usePreferencias } from '../preferencias';
 import './gira/gira.css';
 
@@ -57,7 +58,7 @@ export function Portada({
               {P.titulo.slice(1)}
             </span>
           </h1>
-          <p className="portada__lema">{P.lema}</p>
+          <p className="portada__lema">{lemaDeEstaVez()}</p>
         </div>
         <div className="portada__botones">
           {confirmando ? (

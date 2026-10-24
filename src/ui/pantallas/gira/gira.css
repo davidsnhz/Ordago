@@ -270,12 +270,16 @@
   fill: var(--tinta);
 }
 
+/* Los lemas se turnan y no miden lo mismo: cada uno se parte donde dice su texto (tras los dos puntos o
+   la coma) y, si aun así no cupiera, las líneas se igualan para que no quede una palabra sola. */
 .portada__lema {
   margin: 5px 4px 0;
   font-style: italic;
   font-size: 14px;
   line-height: 1.25;
   text-align: center;
+  white-space: pre-line;
+  text-wrap: balance;
   color: var(--tinta);
 }
 

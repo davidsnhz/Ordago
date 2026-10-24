@@ -523,7 +523,14 @@ export const ES = {
   /** La portada: empezar o seguir la gira, el duelo suelto y la Libreta. */
   portada: {
     titulo: 'ÓRDAGO',
-    lema: 'No gana quien lleva mejores cartas, gana quien hace creer que las lleva.',
+    /** Se turnan: cada vez que se abre el juego sale el siguiente (src/ui/lema.ts). El «\n», donde se parte la línea. */
+    lemas: [
+      'Hazte con Castilla a mus:\nlee sus tics y échales un órdago.',
+      'Castilla se gana a mus:\npueblo a pueblo, farol a farol.',
+      'Recorre Castilla a mus:\nlee a cada rival y gánale de farol.',
+      'Por los pueblos de Castilla,\nel mus se juega con la cara.',
+      'Cruza Castilla a golpe de mus y de farol.',
+    ],
     continuar: 'SEGUIR LA GIRA',
     vasPor: (arena: string, nivel: number) => `Vas por ${arena}, nivel ${nivel} de 4`,
     nueva: 'EMPEZAR LA GIRA',
