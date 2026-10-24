@@ -739,13 +739,19 @@
   border-radius: 50%;
 }
 
-/* Con cara, el candado va en una chapa en el borde: al rival se le ve venir. */
+/* Con cara, el candado va en una chapa en el borde: al rival se le ve venir. A la medida del
+   disco, para que en los pequeños no tape media cara. */
 .nodo__disco--cara .nodo__candado {
-  inset: auto -4px -4px auto;
-  width: 32px;
-  height: 32px;
+  inset: auto -6% -6% auto;
+  width: 36%;
+  height: 36%;
   background: var(--tinta);
   border: 2px solid var(--papel);
+}
+
+.nodo__disco--cara .nodo__candado svg {
+  width: 62%;
+  height: 62%;
 }
 
 .nodo--aqui .nodo__disco {

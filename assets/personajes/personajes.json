@@ -1,5 +1,5 @@
 {
-  "_nota": "Cómo sale cada personaje. Los de ahora llegan con una imagen por pose (imagenes: animación → archivo de assets/personajes/<id>/, fondo transparente y el mismo encuadre en todas): se cortan por la fila «corte» (lo de debajo lo tapa el acta), se ajustan al ancho del «fotograma» (px de pantalla; margen para el contorno y la sombra) y se apoyan abajo. Animaciones: reposo (obligatoria), tic_<id del tic>, crecido y arrugado (Rubén y Chema), sorprendido, riendo y enfadado; parpadeo, opcional. medallon: la cara para el mapa (imagen y cuadro x, y, lado en px de esa imagen). «marco» y los recortes con retoques eran para las hojas de antes, con todas las poses juntas (ver scripts/personajes.mjs). Después: npm run personajes.",
+  "_nota": "Cómo sale cada personaje. Los de ahora llegan con una imagen por pose (imagenes: animación → archivo de assets/personajes/<id>/, fondo transparente y el mismo encuadre en todas): se cortan por la fila «corte» (lo de debajo lo tapa el acta), se ajustan al ancho del «fotograma» (si llegan más apaisadas, solo el tramo «encuadre»: x y ancho en px de la imagen) (px de pantalla; margen para el contorno y la sombra) y se apoyan abajo. Animaciones: reposo (obligatoria), tic_<id del tic>, crecido y arrugado (Rubén y Chema), sorprendido, riendo y enfadado; parpadeo, opcional. medallon: la cara para el mapa (imagen y cuadro x, y, lado en px de esa imagen). «marco» y los recortes con retoques eran para las hojas de antes, con todas las poses juntas (ver scripts/personajes.mjs). Después: npm run personajes.",
   "fotograma": {
     "ancho": 310,
     "alto": 236,
@@ -15,6 +15,67 @@
     "escala": 1.925
   },
   "personajes": {
+    "lucia": {
+      "corte": 1060,
+      "medallon": {
+        "imagen": "reposo.webp",
+        "cuadro": [
+          345,
+          0,
+          730
+        ]
+      },
+      "imagenes": {
+        "reposo": "reposo.webp",
+        "tic_limpiaMocos": "tic_mocos.webp",
+        "sorprendido": "sorprendido.webp",
+        "riendo": "riendo.webp",
+        "enfadado": "enfadado.webp"
+      }
+    },
+    "dani": {
+      "corte": 1050,
+      "medallon": {
+        "imagen": "reposo.webp",
+        "cuadro": [
+          410,
+          0,
+          620
+        ]
+      },
+      "imagenes": {
+        "reposo": "reposo.webp",
+        "tic_rasgueaBandurria": "tic_bandurria.webp",
+        "tic_colocaCintas": "tic_cintas.webp",
+        "sorprendido": "sorprendido.webp",
+        "riendo": "riendo.webp",
+        "enfadado": "enfadado.webp"
+      }
+    },
+    "ruben": {
+      "corte": 965,
+      "encuadre": [
+        130,
+        1330
+      ],
+      "medallon": {
+        "imagen": "reposo.webp",
+        "cuadro": [
+          560,
+          0,
+          640
+        ]
+      },
+      "imagenes": {
+        "reposo": "reposo.webp",
+        "tic_muerdeBocadillo": "tic_bocadillo.webp",
+        "tic_levantaPulgar": "tic_pulgar.webp",
+        "crecido": "crecido.webp",
+        "sorprendido": "sorprendido.webp",
+        "riendo": "riendo.webp",
+        "enfadado": "enfadado.webp"
+      }
+    },
     "chema": {
       "corte": 1056,
       "medallon": {

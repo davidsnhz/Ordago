@@ -204,20 +204,20 @@ describe('los rivales de la facultad', () => {
 describe('la Libreta', () => {
   it('apunta lo visto y sube de nivel con las veces', () => {
     let libreta = libretaVacia();
-    const una = apuntar(libreta, 'lucia', [{ id: 'mordisqueaBoli', verdadero: true }]);
-    expect(una.cambios).toEqual([{ rival: 'lucia', tic: 'mordisqueaBoli', nivel: 1 }]);
+    const una = apuntar(libreta, 'lucia', [{ id: 'limpiaMocos', verdadero: true }]);
+    expect(una.cambios).toEqual([{ rival: 'lucia', tic: 'limpiaMocos', nivel: 1 }]);
     libreta = una.libreta;
-    expect(textoNota('lucia', 'mordisqueaBoli', libreta.rivales.lucia!.mordisqueaBoli)).toBe('Mordisquea el boli… ¿qué querrá decir?');
+    expect(textoNota('lucia', 'limpiaMocos', libreta.rivales.lucia!.limpiaMocos)).toBe('Se limpia los mocos… ¿qué querrá decir?');
     libreta = apuntar(libreta, 'lucia', [
-      { id: 'mordisqueaBoli', verdadero: true },
-      { id: 'mordisqueaBoli', verdadero: false },
-      { id: 'mordisqueaBoli', verdadero: true },
+      { id: 'limpiaMocos', verdadero: true },
+      { id: 'limpiaMocos', verdadero: false },
+      { id: 'limpiaMocos', verdadero: true },
     ]).libreta;
-    expect(textoNota('lucia', 'mordisqueaBoli', libreta.rivales.lucia!.mordisqueaBoli)).toBe('Mordisquea el boli… ¿pares o mejor?');
-    const diez = apuntar(libreta, 'lucia', Array.from({ length: 6 }, (_, i) => ({ id: 'mordisqueaBoli', verdadero: i < 5 })));
+    expect(textoNota('lucia', 'limpiaMocos', libreta.rivales.lucia!.limpiaMocos)).toBe('Se limpia los mocos… ¿pares o mejor?');
+    const diez = apuntar(libreta, 'lucia', Array.from({ length: 6 }, (_, i) => ({ id: 'limpiaMocos', verdadero: i < 5 })));
     expect(diez.cambios[0]?.nivel).toBe(3);
-    expect(textoNota('lucia', 'mordisqueaBoli', diez.libreta.rivales.lucia!.mordisqueaBoli)).toBe(
-      'Mordisquea el boli: pares o mejor (acierta 8 de cada 10)',
+    expect(textoNota('lucia', 'limpiaMocos', diez.libreta.rivales.lucia!.limpiaMocos)).toBe(
+      'Se limpia los mocos: pares o mejor (acierta 8 de cada 10)',
     );
   });
 
@@ -230,6 +230,12 @@ describe('la Libreta', () => {
     const antigua = { rivales: { chema: { remueveCafe: { vistos: 3, aciertos: 2 }, bajaGafas: { vistos: 1, aciertos: 1 } } } };
     guardarLibreta(antigua, almacen);
     expect(cargarLibreta(almacen).rivales.chema).toEqual({ bebeRefresco: { vistos: 3, aciertos: 2 }, bajaGafas: { vistos: 1, aciertos: 1 } });
+  });
+
+  it('la gorra de Rubén ahora es el pulgar: lo apuntado de la gorra pasa al pulgar', () => {
+    const { libreta } = apuntar(libretaVacia(), 'ruben', [{ id: 'ajustaGorra', verdadero: false }]);
+    expect(libreta.rivales.ruben).toEqual({ levantaPulgar: { vistos: 1, aciertos: 0 } });
+    expect(textoNota('ruben', 'levantaPulgar', libreta.rivales.ruben!.levantaPulgar)).toBe('Levanta el pulgar… ¿qué querrá decir?');
   });
 
   it('con el Lazarillo cuenta doble', () => {

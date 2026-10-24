@@ -8,8 +8,9 @@
  * Los personajes de ahora llegan con **una imagen por pose** (`imagenes`: nombre de la animación →
  * archivo), con el fondo transparente y todas con el mismo encuadre. Cada una se corta por la fila
  * `corte` (lo de debajo lo tapa el acta), se ajusta al ancho del fotograma (`fotograma`, en px de
- * pantalla), se apoya abajo y pasa por una imprenta ligera: tinta en lugar de negro y papel en
- * lugar de blanco, color templado, grano suave, contorno de tinta de 3 px y sombra dura de 4 px.
+ * pantalla; si llega más apaisada, solo el tramo `encuadre`), se apoya abajo y pasa por una
+ * imprenta ligera: tinta en lugar de negro y papel en lugar de blanco, color templado, grano
+ * suave, contorno de tinta de 3 px y sombra dura de 4 px.
  *
  * Los de antes venían en hojas con todas las poses (hoja.webp, y hoja_x4.webp ampliada), y cada
  * fotograma salía de una de dos maneras:
@@ -251,11 +252,14 @@ async function prepararConImagenes(id, def) {
     const fuente = path.join(ORIGEN, id, archivo);
     const { width, height } = await sharp(fuente).metadata();
     const corte = Math.min(height, def.corte ?? height);
-    const escala = (W - 2 * margen) / width;
-    const [ancho, alto] = [Math.round(width * escala), Math.round(corte * escala)];
+    // A lo ancho se aprovecha toda la imagen o solo el tramo `encuadre` ([x, ancho]): así se acerca
+    // al personaje que llega en una imagen más apaisada, para que la cabeza salga como la de los demás.
+    const [x, anchoUtil] = def.encuadre ?? [0, width];
+    const escala = (W - 2 * margen) / anchoUtil;
+    const [ancho, alto] = [Math.round(anchoUtil * escala), Math.round(corte * escala)];
     const imagen = await sharp(fuente)
       .ensureAlpha()
-      .extract({ left: 0, top: 0, width, height: corte })
+      .extract({ left: x, top: 0, width: anchoUtil, height: corte })
       .resize(ancho, alto, { kernel: 'lanczos3', fit: 'fill' })
       .raw()
       .toBuffer();

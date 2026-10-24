@@ -16,7 +16,7 @@ Sale con la moneda de oros, a pantalla completa y en vertical.
 
 ## Cómo está ahora mismo
 
-Ya se puede jugar **la primera arena de la gira, la facultad**: eliges compañero (el Lazarillo o la Recaudadora), subes por el mapa contra Lucía, Dani, Rubén y Chema, y entre duelo y duelo paras en la taberna, en la plaza o en la era. Tienes tres de Honra: si pierdes contra un secuaz, sigues; si pierdes contra Chema, te toca repetir; y sin Honra, se acaba la gira. Lo que vas viendo de cada rival se apunta solo en la Libreta.
+Ya se puede jugar **la primera arena de la gira, la facultad**: eliges compañero (el Lazarillo o la Recaudadora), subes por el mapa contra Miguel, Dani, Rubén y Chema, y entre duelo y duelo paras en la taberna, en la plaza o en la era. Tienes tres de Honra: si pierdes contra un secuaz, sigues; si pierdes contra Chema, te toca repetir; y sin Honra, se acaba la gira. Lo que vas viendo de cada rival se apunta solo en la Libreta.
 
 También se pueden jugar **duelos sueltos** contra cualquiera de los nueve rivales, sin gira.
 
@@ -88,9 +88,9 @@ O sea que a veces compensa dejarte pillar un farol barato para que luego te quie
 
 ### Los rivales
 
-Los de la facultad, que son los primeros de la gira (de momento, solo Chema tiene dibujo):
+Los de la facultad, que son los primeros de la gira (los cuatro tienen ya su dibujo):
 
-- **Lucía, la de primero.** Aprendió ayer: envida cuando lleva algo y no farolea nunca.
+- **Miguel, el novato.** Aprendió ayer: envida cuando lleva algo y no farolea nunca. Ocupa el sitio de Lucía.
 - **Dani, el Tuno.** Alegre y despistado. Pide mus siempre la primera vez.
 - **Rubén, el colega de la cafetería.** Envida fuerte y, cuando va ganando de cinco, se crece y farolea el doble.
 - **Chema, el Repetidor.** El jefe: lleva ocho años sin pisar clase. Cuando va ganando de cinco se viene arriba (farolea el doble y te lo quiere todo); cuando va perdiendo de cinco, se arruga.
@@ -122,7 +122,7 @@ Otros comandos:
 - `npm run equilibrio`: simulaciones de cientos de duelos contra cada rival para ajustar números. Tardan unos minutos.
 - `npm run build`: la versión para publicar.
 - `npm run documento`: vuelve a generar los PDF (el documento de diseño, la gira y cómo hacer los personajes).
-- `npm run personajes`: pasa mis dibujos de personaje (`assets/personajes/`) por la «imprenta» para que casen con el estilo de la mesa. De momento está Chema; los demás los estoy haciendo de nuevo, con la guía [Cómo hacer los personajes](docs/personajes.md).
+- `npm run personajes`: pasa mis dibujos de personaje (`assets/personajes/`) por la «imprenta» para que casen con el estilo de la mesa. De momento están los cuatro de la facultad (Miguel, Dani, Rubén y Chema); los demás los estoy haciendo de nuevo, con la guía [Cómo hacer los personajes](docs/personajes.md).
 - `npm run iconos`: genera los iconos de la app.
 
 Con `?pruebas` en la dirección salen unos botones para probar: elegir rival, ver lo que piensa la IA y ver todos los tics de un rival seguidos.

@@ -1,0 +1,46 @@
+{
+  "ancho": 930,
+  "alto": 708,
+  "animaciones": {
+    "reposo": {
+      "tipo": "secuencia",
+      "archivos": [
+        "reposo.webp"
+      ],
+      "fps": 1,
+      "bucle": true
+    },
+    "tic_limpiaMocos": {
+      "tipo": "secuencia",
+      "archivos": [
+        "tic_limpiaMocos.webp"
+      ],
+      "fps": 1,
+      "bucle": false
+    },
+    "sorprendido": {
+      "tipo": "secuencia",
+      "archivos": [
+        "sorprendido.webp"
+      ],
+      "fps": 1,
+      "bucle": false
+    },
+    "riendo": {
+      "tipo": "secuencia",
+      "archivos": [
+        "riendo.webp"
+      ],
+      "fps": 1,
+      "bucle": false
+    },
+    "enfadado": {
+      "tipo": "secuencia",
+      "archivos": [
+        "enfadado.webp"
+      ],
+      "fps": 1,
+      "bucle": false
+    }
+  }
+}

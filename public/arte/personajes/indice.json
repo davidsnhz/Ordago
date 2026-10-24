@@ -1,9 +1,15 @@
 {
   "_nota": "Personajes con arte: cada id tiene una carpeta con su manifiesto.json, y algunos, su cara para el mapa (medallones). Lo genera npm run personajes; los que no están usan el marcador.",
   "personajes": [
+    "lucia",
+    "dani",
+    "ruben",
     "chema"
   ],
   "medallones": {
+    "lucia": "lucia/medallon.webp",
+    "dani": "dani/medallon.webp",
+    "ruben": "ruben/medallon.webp",
     "chema": "chema/medallon.webp"
   }
 }

@@ -54,9 +54,9 @@ const SIGNIFICADO_CURA = { bebeVino: 'lleva juego', miraAlCielo: 'está farolean
 const RIVALES: Record<IdRival, TextosRival> = {
   // ——— La facultad ———
   lucia: {
-    nombre: 'Lucía',
-    etiqueta: 'LUCÍA',
-    titulo: 'Lucía, la de primero',
+    nombre: 'Miguel',
+    etiqueta: 'MIGUEL',
+    titulo: 'Miguel, el novato',
     comarca: 'La facultad',
     saludo: { accion: 'HOLA', frase: '«¿Los treses eran reyes? Vale, vale, ya me acuerdo.»' },
     frases: {
@@ -65,7 +65,7 @@ const RIVALES: Record<IdRival, TextosRival> = {
       descarte: ['«Fuera las feas.»', '«Estas fuera, que no sé ni qué son.»'],
       paso: ['«Paso, paso. Por si acaso.»', '«Yo de momento paso.»'],
       envido: ['«Envido. ¡Ay, que lo he dicho!»', '«Envido… ¿se hace así?»'],
-      mas: ['«¿Y si subo? Subo.»', '«Más. Me lo ha dicho mi compañera de piso.»'],
+      mas: ['«¿Y si subo? Subo.»', '«Más. Me lo ha dicho mi compañero de piso.»'],
       quiero: ['«Vale, lo quiero.»', '«Quiero. Creo.»'],
       noQuiero: ['«Uy, no, no quiero.»', '«Mejor que no.»'],
       ordago: ['«¡Órdago! Eso era todo o nada, ¿verdad?»'],
@@ -73,8 +73,8 @@ const RIVALES: Record<IdRival, TextosRival> = {
       gana: '«¡He ganado! Se lo voy a contar a todo el grupo.»',
       pierde: '«Vale, me tengo que leer las reglas otra vez.»',
     },
-    tics: { mordisqueaBoli: 'mordisquea el boli' },
-    significadoTics: { mordisqueaBoli: 'pares o mejor' },
+    tics: { limpiaMocos: 'se limpia los mocos' },
+    significadoTics: { limpiaMocos: 'pares o mejor' },
   },
   dani: {
     nombre: 'Dani',
@@ -120,8 +120,8 @@ const RIVALES: Record<IdRival, TextosRival> = {
       pierde: '«Bueno, me voy a por otro bocata.»',
       crecido: '«¡Hoy estoy que me salgo!»',
     },
-    tics: { muerdeBocadillo: 'le da un mordisco al bocadillo', ajustaGorra: 'se ajusta la gorra' },
-    significadoTics: { muerdeBocadillo: 'pares o mejor', ajustaGorra: 'lleva 31' },
+    tics: { muerdeBocadillo: 'le da un mordisco al bocadillo', levantaPulgar: 'levanta el pulgar' },
+    significadoTics: { muerdeBocadillo: 'pares o mejor', levantaPulgar: 'lleva 31' },
   },
   chema: {
     nombre: 'Chema',

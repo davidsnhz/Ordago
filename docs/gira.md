@@ -1,6 +1,6 @@
 # Órdago — La gira
 
-22 de octubre de 2026 · @david · *versión 10: precios y efectos de la taberna medidos (Chato 8, Orujo 2, Boina 12; Medalla y Darle conversación, más fuertes)*
+24 de octubre de 2026 · @david · *versión 11: la facultad, ya dibujada entera: Miguel, el novato (en lugar de Lucía), Dani y Rubén (con el pulgar en lugar de la gorra)*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
@@ -23,7 +23,7 @@
 >
 > Los números (precios, reales, parámetros) son un punto de partida: se ajustan jugando.
 
-> **[cambiado] Lo que ya se puede jugar (fase 4).** La primera arena entera, la facultad: Lucía, Dani, Rubén y Chema con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de Chema y el final de la gira. En la taberna hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte, más los Apuntes de Chema como premio. Los compañeros son el Lazarillo y la Recaudadora. En la plaza salen el forastero, la fiesta patronal, el timador y la monja; la partida en la calle, todavía no. Lo que pasa «En la gira» entre secuaces y jefes tampoco está: queda para más adelante. Al ganar a Chema, la gira acaba con victoria hasta que esté el bar.
+> **[cambiado] Lo que ya se puede jugar (fase 4).** La primera arena entera, la facultad: **[cambiado]** Miguel, Dani, Rubén y Chema con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de Chema y el final de la gira. En la taberna hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte, más los Apuntes de Chema como premio. Los compañeros son el Lazarillo y la Recaudadora. En la plaza salen el forastero, la fiesta patronal, el timador y la monja; la partida en la calle, todavía no. Lo que pasa «En la gira» entre secuaces y jefes tampoco está: queda para más adelante. Al ganar a Chema, la gira acaba con victoria hasta que esté el bar.
 
 ## 1. Cómo es una gira
 
@@ -77,17 +77,19 @@ Las arenas son las que propusiste. Los cinco rivales que ya estaban en el juego 
 
 La cafetería de una universidad pública en una ciudad castellana (Salamanca, por ejemplo): piedra dorada, mesas de formica, la máquina de café y el tablón lleno de carteles. Aquí es donde casi todos los chavales aprenden a jugar al mus, entre clase y clase o en vez de ir a clase. Son novatos y se les ve todo: es la arena para aprender que los tics existen.
 
-#### Nivel 1 · Lucía, la de primero
+#### Nivel 1 · [cambiado] Miguel, el novato
 
-- **Idea de aspecto:** sudadera de la facultad, mochila, apuntes subrayados con fosforito y un boli en la mano.
+**[cambiado]** Ocupa el sitio de Lucía, la de primero (lo decidió David el 24 de octubre de 2026). Juega igual que ella; cambian el personaje y su tic.
+
+- **Aspecto (ya dibujado por David):** flacucho y con la nariz roja de estar siempre acatarrado (le cae el moquillo), gafas de pasta negras enormes, el pelo castaño muy corto y las orejas de soplillo; camisa de cuadros abierta sobre una camiseta blanca y la mochila puesta. Nervioso: suda, mira de reojo y se ríe hasta llorar.
 - **Cómo juega:** aprendió ayer. Envida cuando lleva algo, no farolea nunca y quiere poco. · A 4 · F 0 · M 3 · Me 1 · O 1
-- **Tic:** mordisquea el boli → lleva pares o mejor (9 de cada 10).
+- **Tic [cambiado]:** se limpia los mocos con un pañuelo, sonriendo → lleva pares o mejor (9 de cada 10). Antes, el de Lucía: mordisquear el boli.
 - **Manía:** ninguna.
 - **Frase:** «¿Los treses eran reyes? Vale, vale, ya me acuerdo.»
 
 #### Nivel 2 · Dani, el Tuno
 
-- **Idea de aspecto:** la capa negra de la tuna llena de cintas de colores y la bandurria apoyada en la silla.
+- **Aspecto [cambiado] (ya dibujado por David):** pelo moreno rizado, bigote de puntas retorcidas, nariz y mofletes colorados; la capa negra de la tuna llena de cintas de colores y escudos bordados, camisa blanca y correajes de cuero; la bandurria y un vaso rojo de plástico.
 - **Cómo juega:** alegre y despistado. Le encanta cambiar cartas. · A 4 · F 2 · M 4 · Me 2 · O 2
 - **Tics:**
   - Rasguea la bandurria → lleva 31 (8 de cada 10).
@@ -97,11 +99,11 @@ La cafetería de una universidad pública en una ciudad castellana (Salamanca, p
 
 #### Nivel 3 · Rubén, el colega de la cafetería (mano derecha de Chema)
 
-- **Idea de aspecto:** gorra hacia atrás, chándal y un bocadillo de tortilla a medio comer.
+- **Aspecto [cambiado] (ya dibujado por David):** gorra verde oscuro hacia atrás, pelo castaño revuelto, barba de dos días, chaqueta de chándal negra con tres rayas blancas en las mangas sobre una camiseta blanca, y el bocadillo de tortilla. Chulito: sonrisa de medio lado, la barbilla en el puño.
 - **Cómo juega:** lleva un año sin pisar clase, aprendiendo de Chema. Envida fuerte y se crece. · A 6 · F 3 · M 3 · Me 2 · O 2
 - **Tics:**
   - Le da un mordisco al bocadillo → lleva pares o mejor (8 de cada 10).
-  - Se ajusta la gorra → lleva 31 (8 de cada 10).
+  - **[cambiado]** Levanta el pulgar → lleva 31 (8 de cada 10). Antes se ajustaba la gorra; David lo dibujó con el pulgar arriba.
 - **Manía: «Se crece».** Cuando va ganando por 5 o más, farolea el doble. Es lo de Chema en pequeño.
 - **Frase:** «¿Clase? ¿Qué clase?»
 
@@ -478,7 +480,7 @@ Para que lo vayas planeando. **[cambiado]** Cómo se hace cada personaje, paso a
 
 | Qué | Cuántos | Para cuándo |
 | --- | --- | --- |
-| La facultad: Lucía, Dani, Rubén y Chema | 4 (**[nuevo]** Chema, hecho) | Lo primero: ya se juegan |
+| La facultad: **[cambiado]** Miguel, Dani, Rubén y Chema | 4, **[cambiado]** todos hechos (Chema el 15 de octubre; Miguel, Dani y Rubén el 24) | Lo primero: ya se juegan |
 | El bar: Toño, Agustín, Aurelio y Manolo | 4 | Más adelante |
 | La familia: Martina, María, Fernando y el abuelo Pepe | 4 | Más adelante |
 | Las fiestas: Doña Ignacia, Don Francisco, Don Agapito y el tío Arturo | 4 | Más adelante |
@@ -511,3 +513,4 @@ Para que lo vayas planeando. **[cambiado]** Cómo se hace cada personaje, paso a
 - **Versión 6 (14 de octubre de 2026).** Los dibujos de antes, borrados: todos los personajes salen con un marcador hasta que estén los nuevos. Guía para hacerlos: [Cómo hacer los personajes](personajes.md).
 - **Versión 7 (15 de octubre de 2026).** Chema ya tiene dibujo (el de David) y su tic del café pasa a ser un trago de refresco: significa lo mismo, que va de farol.
 - **Versión 10 (22 de octubre de 2026).** Precios y efectos de la taberna, medidos con una simulación de 1.000 duelos por objeto: el Chato de vino pasa de 4 a 8, el Orujo de 4 a 2 y la Boina de 8 a 12; la Medalla de la Virgen libra todos los faroles pillados y, con Darle conversación, el rival tampoco puede subir. Lo pidió y lo eligió David.
+- **Versión 11 (24 de octubre de 2026).** Lucía, la de primero, deja su sitio a **Miguel, el novato**, que juega igual que ella. Lo dibujó David (cinco imágenes: reposo, su tic y tres caras) y ya sale en el juego. Su tic es limpiarse los mocos con un pañuelo, sonriendo: significa lo mismo que el boli de Lucía, que lleva pares o mejor. **Rubén** también tiene ya dibujo (siete imágenes): su tic del 31 pasa de ajustarse la gorra a levantar el pulgar, que significa lo mismo. Y **Dani** (seis imágenes), con los tics de siempre: la bandurria y las cintas. La facultad ya está dibujada entera.

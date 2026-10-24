@@ -1,8 +1,14 @@
 # Órdago — Cómo hacer los personajes
 
-15 de octubre de 2026 · @david · *guía para diseñar los personajes con IA: del boceto al diseño final y a las poses*
+24 de octubre de 2026 · @david · *guía para diseñar los personajes con IA: del boceto al diseño final y a las poses*
 
 > **[nuevo] Chema ya está hecho y en el juego (15 de octubre de 2026).** Sus ocho imágenes son el modelo para los demás: el mismo estilo, el mismo encuadre (de codos sobre la mesa, apaisado) y la misma lista de poses. Para el estilo, sube su reposo como referencia: `assets/personajes/chema/reposo.webp`.
+
+> **[nuevo] Miguel, el novato, también (24 de octubre de 2026).** Ocupa el sitio de Lucía en la facultad. Cinco imágenes: reposo, su tic (se limpia los mocos con un pañuelo) y las tres caras. No cambia de ánimo, así que no le hacen falta crecido ni arrugado.
+
+> **[nuevo] Y Rubén (24 de octubre de 2026).** Siete imágenes: reposo, sus dos tics (el mordisco al bocadillo y, en lugar de la gorra, el pulgar arriba), crecido y las tres caras. Llegaron más apaisadas (1536 × 1024) y valen igual: las acerco yo para que la cabeza salga del tamaño de las de los demás.
+
+> **[nuevo] Y Dani: la facultad, completa (24 de octubre de 2026).** Seis imágenes: reposo (el pulgar arriba con su vaso), sus dos tics (la bandurria y las cintas) y las tres caras. Lo siguiente: el Lazarillo, la Recaudadora y la tabernera, que ya salen en el juego.
 
 > **En resumen.** Un personaje se hace en cinco pasos, siempre en este orden:
 >
@@ -19,15 +25,15 @@
 La IA dibuja, pero no decide. Lo que hace bueno a un personaje lo decides tú. En Órdago, cuatro cosas importan más que ninguna:
 
 - **La silueta.** Si pintas al personaje entero de negro, se tiene que seguir sabiendo quién es. En el móvil, el rival mide unos 5 cm: los botones de la chaqueta no se ven; la forma del cuerpo, el pelo, el sombrero y lo que lleva en la mano, sí. *Ejemplo: a Dani se le reconoce por la capa ancha de la tuna y el mástil de la bandurria; a Chema, por las gafas de sol subidas en la cabeza y la taza.*
-- **Sus objetos.** Cada personaje tiene una o dos cosas que lo cuentan todo, y en Órdago esas cosas son **sus tics**: Lucía mordisquea el boli, Rubén se ajusta la gorra, Chema se baja las gafas. Si el objeto no se ve bien, el tic tampoco. Hazlo grande y claro.
-- **Formas que dicen cómo es.** Lo redondo parece amable; lo cuadrado, sólido y testarudo; lo puntiagudo, peligroso. *Lucía, pequeña y redondita, no da miedo. Chema, grande, hundido en la silla y con la barba en pico, es el jefe.*
+- **Sus objetos.** Cada personaje tiene una o dos cosas que lo cuentan todo, y en Órdago esas cosas son **sus tics**: Miguel se limpia los mocos con el pañuelo, Rubén le da un mordisco al bocadillo, Chema se baja las gafas. Si el objeto no se ve bien, el tic tampoco. Hazlo grande y claro.
+- **Formas que dicen cómo es.** Lo redondo parece amable; lo cuadrado, sólido y testarudo; lo puntiagudo, peligroso. *Miguel, flacucho, con unas gafas enormes y la nariz roja, no da miedo. Chema, grande, hundido en la silla y con la barba en pico, es el jefe.*
 - **Que no se parezcan entre sí.** Los cuatro de cada arena, puestos en fila, tienen que tener alturas, anchuras y colores distintos. Si dos se confunden, cambia uno.
 
 Dos consejos más: **exagera** (un rasgo grande vale más que diez pequeños) y **menos es más** (el detalle que no se ve en pequeño sobra).
 
 ## La herramienta
 
-Lo que más importa no es que la IA dibuje bonito, sino que **sepa repetir al mismo personaje**: para las poses le darás la imagen buena y le pedirás «lo mismo, pero mordiendo el boli». Para eso, lo más cómodo es:
+Lo que más importa no es que la IA dibuje bonito, sino que **sepa repetir al mismo personaje**: para las poses le darás la imagen buena y le pedirás «lo mismo, pero limpiándose los mocos». Para eso, lo más cómodo es:
 
 - **ChatGPT** (su generador de imágenes) o **Gemini** (el suyo, al que llaman Nano Banana). Les hablas en español, les subes una imagen y les pides cambios como en una conversación. Son los que mejor mantienen al personaje igual de una imagen a otra. **Te recomiendo uno de estos dos.**
 - **Midjourney** saca imágenes muy bonitas y va bien para los bocetos y las pruebas de estilo, pero le cuesta más que el personaje salga idéntico en cada pose, y es de pago.
@@ -100,7 +106,7 @@ Esta imagen es **el reposo**: el rival tal como está en la mesa mientras no hac
 - **Las manos a la vista**, por encima de la cintura, porque casi todos los tics son con las manos. La parte de abajo la tapa el acta, así que lo importante va del pecho para arriba.
 - **Nada cortado:** que quede aire por encima de la cabeza y a los lados (que no se corte el sombrero ni la bandurria).
 - **Fondo transparente** si la herramienta lo permite (ChatGPT suele poder: pide «fondo transparente, en PNG»). Si no, **un color liso** que no lleve el personaje, sin sombra en el suelo.
-- **Grande y apaisada**, como las de Chema: 1448 × 1086 o más (4:3). **[cambiado]** Antes ponía cuadrada; las de Chema salieron apaisadas, de codos sobre la mesa, y así quedan mejor en la mesa.
+- **Grande y apaisada**, como las de Chema: 1448 × 1086 o más (4:3). **[nuevo]** Si sale más apaisada, como las de Rubén (1536 × 1024), también vale. **[cambiado]** Antes ponía cuadrada; las de Chema salieron apaisadas, de codos sobre la mesa, y así quedan mejor en la mesa.
 - **Sin letras** en la ropa, porque la IA se inventa letras raras. Si quieres un escudo o un rótulo, lo añadimos después.
 
 Antes de darla por buena: **cuenta los dedos** (a veces salen seis), mira que cuadren los dos ojos, los pendientes y los botones, y que sus objetos se vean bien.
@@ -126,7 +132,7 @@ Aprovecha para hacer también **las caras**: «la misma persona, de los hombros 
 | Reposo | Está así casi todo el duelo |
 | Una por tic | El tic se ve sin texto: el rival cambia de pose |
 | Sorprendido, riendo y enfadado | **[cambiado] Ya se usan:** sorprendido cuando le echas un órdago; riendo cuando te pilla un farol o gana el duelo; enfadado cuando le pillas el suyo o pierde |
-| Crecido y arrugado | Solo Rubén (crecido) y Chema (los dos) |
+| Crecido y arrugado | Solo Rubén (crecido) y Chema (los dos); Miguel no los necesita |
 
 **[cambiado] Sin ojos cerrados:** el parpadeo no hace falta (lo decidió David con Chema).
 
@@ -144,8 +150,8 @@ Lo demás lo hago yo: encuadrarlo, que case con la mesa (contorno de tinta y som
 
 1. **El estilo:** la ficha de Chema y sus cuatro pruebas. Me las pasas, las monto en la mesa y eliges.
 2. **Los bocetos de los cuatro de la facultad**, y la fila con los cuatro.
-3. **Lucía entera** (diseño final y poses), porque es la más sencilla: tiene un solo tic. La meto en el juego, la ves en el móvil y, si algo del proceso falla, se corrige antes de seguir.
-4. **Dani, Rubén y Chema.**
+3. **[cambiado] Miguel, el novato** (hecho, en el sitio de Lucía): el más sencillo, con un solo tic.
+4. **[cambiado] Rubén y Dani** (hechos): la facultad, completa.
 5. **El Lazarillo, la Recaudadora y la tabernera**, que ya salen en el juego.
 6. Después, arena por arena: el bar, la Montaña Palentina, las fiestas y el casino.
 
@@ -153,26 +159,18 @@ Lo demás lo hago yo: encuadrarlo, que case con la mesa (contorno de tinta y som
 
 Copia y pega. Donde pone [ESTILO], pega tu frase de estilo, y sube siempre la imagen de referencia de estilo. Las poses empiezan siempre con la fórmula de la regla de oro («Usa esta imagen. Mismo personaje…»); abajo solo va lo que cambia.
 
-### Lucía, la de primero (nivel 1)
+### Miguel, el novato (nivel 1) · **[nuevo] hecho**
 
-**Ficha:** 18 años, estudiante de primero; aprendió a jugar al mus ayer. Pequeña y redondita, con cara de buena y concentradísima. Sudadera de la facultad, mochila, apuntes subrayados con fosforito y un boli. Tímida y aplicada: se le nota todo. *Tic: mordisquea el boli cuando lleva pares o algo mejor.*
+**Ficha:** 18 años, estudiante de primero; aprendió a jugar al mus ayer. Flacucho y con la nariz roja de estar siempre acatarrado (le cae el moquillo), gafas de pasta negras enormes, el pelo castaño muy corto y las orejas de soplillo; camisa de cuadros abierta sobre una camiseta blanca y la mochila puesta. Nervioso: suda, mira de reojo y se ríe hasta llorar. Se le nota todo. *Tic: se limpia los mocos con un pañuelo, sonriendo, cuando lleva pares o algo mejor.* Ocupa el sitio de Lucía; ya está en el juego, con cinco imágenes en `assets/personajes/lucia/` (la carpeta usa el id del código): `reposo`, `tic_mocos`, `sorprendido`, `riendo` y `enfadado`.
 
-**Bocetos:**
+**Poses, por si quieres rehacer alguna:**
 
-> Bocetos a lápiz, en blanco y negro, de seis versiones distintas del mismo personaje, una al lado de otra, de cuerpo entero y de frente: Lucía, de 18 años, estudiante de primero en la Universidad de Salamanca que aprendió ayer a jugar al mus. Pequeña, con cara de buena y concentradísima. Sudadera de la facultad, mochila, apuntes subrayados con fosforito y un boli en la mano. Prueba peinados, cuerpos y ropa diferentes. Sin letras.
+- *Tic, el pañuelo:* «Cambia solo esto: se limpia la nariz con un pañuelo de papel, con los ojos cerrados y sonriendo, como si no pudiera disimular.»
+- *Caras:* riendo (hasta llorar), enfadado (con el moflete apoyado en el puño) y sorprendido (boca abierta, sudando y con las gafas torcidas).
 
-**Diseño final** (sube el boceto elegido y la imagen de estilo):
+### Dani, el Tuno (nivel 2) · **[nuevo] hecho**
 
-> Haz el diseño final de este personaje (el boceto que te paso) con el estilo de la otra imagen: Lucía, de 18 años, estudiante de primero que aprendió ayer a jugar al mus. [ESTILO]. De la cintura para arriba, de frente, mirando al espectador como si estuviera sentada al otro lado de una mesa de juego, con un boli en la mano a la altura del pecho. Nada cortado. Fondo transparente. Sin letras en la ropa. Imagen cuadrada en alta resolución.
-
-**Poses:**
-
-- *Tic, el boli:* «Cambia solo esto: se lleva el boli a la boca y lo mordisquea, intentando disimular.»
-- *Caras:* riendo (risa nerviosa), enfadada (de morros) y sorprendida (ojos como platos y el boli a punto de caérsele).
-
-### Dani, el Tuno (nivel 2)
-
-**Ficha:** 21 años, de la tuna. Alegre, despistado y siempre de broma. Alto y flaco; la capa negra de la tuna llena de cintas de colores (por ella su silueta es ancha) y la bandurria. *Tics: rasguea la bandurria cuando lleva 31; se coloca las cintas de la capa cuando lleva duples.*
+**Ficha:** 21 años, de la tuna. Alegre, despistado y siempre de broma. Alto y flaco; la capa negra de la tuna llena de cintas de colores (por ella su silueta es ancha) y la bandurria. *Tics: rasguea la bandurria cuando lleva 31; se coloca las cintas de la capa cuando lleva duples.* Ya está en el juego, con seis imágenes en `assets/personajes/dani/`: `reposo`, `tic_bandurria`, `tic_cintas`, `sorprendido`, `riendo` y `enfadado`. Dejo sus peticiones por si quieres rehacer alguna pose.
 
 **Bocetos:**
 
@@ -188,9 +186,9 @@ Copia y pega. Donde pone [ESTILO], pega tu frase de estilo, y sube siempre la im
 - *Tic, las cintas:* «Cambia solo esto: se coloca con cuidado las cintas de la capa sobre el hombro.»
 - *Caras:* riendo (cantando), enfadado (poco, y de broma) y sorprendido.
 
-### Rubén, el colega de la cafetería (nivel 3)
+### Rubén, el colega de la cafetería (nivel 3) · **[nuevo] hecho**
 
-**Ficha:** 20 años; lleva un año sin pisar clase, aprendiendo de Chema, del que es la mano derecha. Chulito y fanfarrón. Gorra hacia atrás, chándal y un bocadillo de tortilla a medio comer. *Tics: le da un mordisco al bocadillo cuando lleva pares o algo mejor; se ajusta la gorra cuando lleva 31. Se crece cuando va ganando.*
+**Ficha:** 20 años; lleva un año sin pisar clase, aprendiendo de Chema, del que es la mano derecha. Chulito y fanfarrón. Gorra hacia atrás, chándal y un bocadillo de tortilla a medio comer. *Tics: le da un mordisco al bocadillo cuando lleva pares o algo mejor; **[cambiado]** levanta el pulgar cuando lleva 31 (antes se ajustaba la gorra). Se crece cuando va ganando.* Ya está en el juego, con siete imágenes en `assets/personajes/ruben/`: `reposo`, `tic_bocadillo`, `tic_pulgar`, `crecido`, `sorprendido`, `riendo` y `enfadado`. Dejo sus peticiones por si quieres rehacer alguna pose.
 
 **Bocetos:**
 
@@ -203,7 +201,7 @@ Copia y pega. Donde pone [ESTILO], pega tu frase de estilo, y sube siempre la im
 **Poses:**
 
 - *Tic, el bocadillo:* «Cambia solo esto: le da un buen mordisco al bocadillo.»
-- *Tic, la gorra:* «Cambia solo esto: se ajusta la gorra con la mano, sin quitársela.»
+- *Tic, el pulgar:* «Cambia solo esto: levanta el pulgar hacia el espectador, chulito y con media sonrisa.» (**[cambiado]** Antes era la gorra.)
 - *Crecido:* «Cambia solo esto: sonrisa chula, la barbilla levantada y echado hacia atrás.»
 - *Caras:* riendo, enfadado y sorprendido.
 

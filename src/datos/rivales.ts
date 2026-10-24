@@ -5,7 +5,8 @@ import { LANCES, type Lance } from '../nucleo/lances';
 /**
  * Los ids de los cinco primeros son los nombres que tenían antes (Ruperto, Engracia, Anselmo,
  * Fulgencio y Bonifacio): los usan el guardado y las carpetas del arte. Los nombres que se ven
- * están en textos/es.ts. Los cuatro de la facultad son los de la primera arena de la gira.
+ * están en textos/es.ts. Los cuatro de la facultad son los de la primera arena de la gira;
+ * `lucia` es Miguel, el novato, que ocupa el sitio de Lucía desde el 24 de octubre de 2026.
  */
 export type IdRival =
   | 'lucia'
@@ -138,10 +139,10 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
   // ——— La facultad (arena 1) ———
   lucia: {
     id: 'lucia',
-    // Aprendió ayer: envida cuando lleva algo y no farolea nunca.
+    // Miguel, el novato. Aprendió ayer: envida cuando lleva algo y no farolea nunca.
     parametros: { agresividad: 4, faroleo: 0, miedoOrdago: 3, memoria: 1, ojo: 1 },
     mus: { corta: [...CORTES_COMUNES, 'parejaDeReyes'], guarda: ['reyes', 'parejas'], farolDeCorte: 0 },
-    tics: [{ id: 'mordisqueaBoli', disparador: 'pares', fiabilidad: 0.9, lances: ['pares'] }],
+    tics: [{ id: 'limpiaMocos', disparador: 'pares', fiabilidad: 0.9, lances: ['pares'] }],
   },
   dani: {
     id: 'dani',
@@ -159,7 +160,7 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
     mus: { corta: [...CORTES_COMUNES, 'parejaDeReyes'], guarda: ['reyes', 'parejas'], farolDeCorte: 0 },
     tics: [
       { id: 'muerdeBocadillo', disparador: 'pares', fiabilidad: 0.8, lances: ['pares'] },
-      { id: 'ajustaGorra', disparador: 'treintaYUna', fiabilidad: 0.8, lances: ['juego'] },
+      { id: 'levantaPulgar', disparador: 'treintaYUna', fiabilidad: 0.8, lances: ['juego'] },
     ],
     seCrece: { ventaja: 5 },
   },
@@ -243,6 +244,7 @@ export function ticsActivos(perfil: PerfilRival, piedrasMaximas: number): Defini
  * Chema remueve el café → bebe un refresco (15 de octubre de 2026; significa lo mismo).
  */
 export const TICS_RENOMBRADOS: Partial<Record<IdRival, Record<string, string>>> = {
+  ruben: { ajustaGorra: 'levantaPulgar' },
   chema: { remueveCafe: 'bebeRefresco' },
 };
 

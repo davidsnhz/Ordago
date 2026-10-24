@@ -198,7 +198,7 @@ describe('la cara que pone el rival', () => {
     expect(poseDelRival(con(12, 6))).toBe('crecido');
     expect(poseDelRival(con(4, 11))).toBe('arrugado');
     expect(poseDelRival(con(20, 6, 'finDuelo'))).toBeNull();
-    // Lucía no tiene ánimo.
+    // Miguel (su id es `lucia`) no tiene ánimo.
     const lucia = nuevaPartida('pose', 'lucia').partida;
     expect(poseDelRival({ ...lucia, duelo: { ...lucia.duelo, marcador: { rival: 12, jugador: 2 } } })).toBeNull();
   });

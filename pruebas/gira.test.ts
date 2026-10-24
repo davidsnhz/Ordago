@@ -89,7 +89,7 @@ describe('empezar la gira', () => {
     expect(conLazarillo.momento.tipo).toBe('mapa');
   });
 
-  it('la facultad va de Lucía a Chema', () => {
+  it('la facultad va de Miguel a Chema', () => {
     let g = enElMapa();
     const rivales = [];
     for (let i = 0; i < 4; i++) {

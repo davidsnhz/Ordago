@@ -542,6 +542,39 @@ David mandó una ilustración para el fondo del menú principal (941 × 1670) y 
 
 **[cambiado] Rehecha el mismo día.** David pidió que el menú se viera como una sola composición y que no se recortara la ilustración; lo vio en dos bocetos y eligió el segundo. La ilustración va entera de ancho y, para llenar lo que falta abajo, **la mesa sigue con su canto** (con los marrones de la propia mesa), en lugar de ampliarla o de poner una copia borrosa detrás. Con eso, la medida buena pasa a ser la de ahora en grande: **1170 × 2077**. Ajustes aún no tiene nada dentro (el sonido ya tiene su botón): por ahora avisa de que vendrán más, como pidió David.
 
+## Miguel, el novato, en lugar de Lucía (24 de octubre de 2026)
+
+David cambió el primer rival de la facultad: Lucía, la de primero, pasa a ser **Miguel, el novato**, y mandó su boceto y cinco imágenes (reposo, el tic del pañuelo, sorprendido, riendo y enfadado).
+
+- **El id sigue siendo `lucia`**, como Agustín sigue siendo `ruperto`: así no se pierde la gira guardada de quien esté jugando contra él. El nombre que se ve está en `textos/es.ts`, y su arte va en `assets/personajes/lucia/`.
+- **Juega igual que Lucía:** el mismo nivel, los mismos parámetros y un solo tic con el mismo significado (pares o mejor, 9 de cada 10). Cambia el gesto, que ahora sale del dibujo de David: se limpia los mocos con un pañuelo, sonriendo.
+- **La Libreta no pasa lo de Lucía a Miguel.** Es otro personaje y su tic se aprende de nuevo; lo apuntado del boli se queda guardado, pero ya no se ve.
+- **Sin crecido ni arrugado:** Miguel no cambia de ánimo con el marcador, como no cambiaba Lucía.
+
+## Rubén con dibujo: la gorra pasa a ser el pulgar (24 de octubre de 2026)
+
+David mandó ocho imágenes de Rubén sin decir cuál era cuál. Las repartí así:
+
+- **Reposo:** la sonrisa chula con la barbilla en el puño. Venía dos veces, casi igual, y se usa la primera.
+- **Tic de pares:** el mordisco al bocadillo.
+- **Tic del 31:** el pulgar arriba. No llegó la de ajustarse la gorra, así que el tic pasa a ser levantar el pulgar. Significa lo mismo (lleva 31, 8 de cada 10), y lo apuntado de la gorra en la Libreta pasa al pulgar.
+- **Crecido:** echado hacia atrás con la barbilla levantada, que es lo que pedía su pose en la guía.
+- **Las tres caras:** sorprendido, riendo y enfadado.
+- **Sin arrugado,** porque Rubén solo se crece.
+
+Las imágenes son de 1536 × 1024, más apaisadas que las de Chema. Si se ajustaran enteras al fotograma, Rubén saldría más pequeño, así que se aprovecha solo el tramo de 1330 px con la figura (`encuadre`). Si David prefiere otro reparto, se cambia en `assets/personajes/personajes.json`.
+
+## Dani con dibujo: la facultad, completa (24 de octubre de 2026)
+
+David mandó siete imágenes de Dani y pidió subirlo todo a GitHub y a Vercel. Una de ellas (un PNG de 1184 × 1184) llegó vacía: solo una mancha blanca sobre fondo transparente, sin dibujo. Con las otras seis se cubre todo lo que necesita Dani:
+
+- **Reposo:** el pulgar arriba con su vaso. Es alegre y despistado, y de las seis es la que más pega para estar así casi todo el duelo.
+- **Tics:** rasguea la bandurria (lleva 31) y se coloca las cintas de la capa (lleva duples), los de siempre.
+- **Las caras:** sorprendido (manos arriba y «!!»), riendo (señalando con el vaso) y enfadado (de morros, con el puño en la mejilla).
+- **Sin crecido ni arrugado,** porque Dani no cambia de ánimo con el marcador.
+
+Si la imagen vacía era otra pose (por ejemplo, otro reposo), basta con volver a mandarla.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

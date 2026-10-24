@@ -12,7 +12,7 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Tipografías | **Cerradas** (**[cambiado]** 22 de octubre de 2026: Alegreya en lugar de IM Fell) | `assets/fuentes/` |
 | Piezas de mesa: botones, piedras, lances, Cara, paneles | **Cerradas** | esta guía + `00_guia_estilo` |
 | Maquetación de pantallas | **Cerrada como referencia** | `referencias/pantallas/01–05` |
-| Personajes: rivales, compañeros, tabernera y sucesos de la plaza | **En marcha: todos se diseñan desde cero.** Los dibujos de antes se borraron el 14 de octubre de 2026. **Chema, hecho** (15 de octubre): marca el estilo | guía: `docs/personajes.md`; mientras, marcador (recuadro de puntos almagre con el nombre) |
+| Personajes: rivales, compañeros, tabernera y sucesos de la plaza | **En marcha: todos se diseñan desde cero.** Los dibujos de antes se borraron el 14 de octubre de 2026. **Chema, hecho** (15 de octubre): marca el estilo. **Miguel** (en el sitio de Lucía), **Dani y Rubén, hechos** (24 de octubre): la facultad, completa | guía: `docs/personajes.md`; mientras, marcador (recuadro de puntos almagre con el nombre) |
 | Iconos de objetos de taberna | **PENDIENTE** | usar marcadores |
 | Movimiento y sonido de la mesa | **[cambiado] Hecho** (23 de octubre de 2026): la mesa viva, ya sin elegir | «La mesa viva», abajo |
 | Distribución de la mesa | **[cambiado] Elegida** (23 de octubre de 2026): la mesa nueva, sin acta a la vista, es la única | «La mesa nueva», abajo |
@@ -193,6 +193,12 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 
 **Chema en el juego.** Ocho imágenes: reposo, sus dos tics (se baja las gafas, bebe el refresco), crecido, arrugado, sorprendido, riendo y enfadado. Sin parpadeo (a David no le hace falta). En el mapa, su cara va en el disco del jefe.
 
+**[nuevo] Miguel en el juego (24 de octubre de 2026).** Ocupa el sitio de Lucía, así que su carpeta es `lucia`. Cinco imágenes de David, de 1402 × 1122 y con el mismo encuadre que Chema: reposo, su tic (se limpia los mocos con un pañuelo), sorprendido, riendo y enfadado. Se cortan por la fila 1060 y su cara del mapa sale del reposo. Al lado de Chema en la mesa, la cabeza le queda del mismo tamaño y a la misma altura.
+
+**[nuevo] Rubén en el juego (24 de octubre de 2026).** Siete imágenes de David, de 1536 × 1024: reposo, sus dos tics (el mordisco al bocadillo y el pulgar arriba, que sustituye a la gorra), crecido, sorprendido, riendo y enfadado. Como son más apaisadas que las de Chema, solo se aprovecha el tramo de 1330 px donde está la figura (`encuadre` en `personajes.json`). Así se acerca y la cabeza sale del mismo tamaño que la de los demás. Se cortan por la fila 965. Mandó dos reposos casi iguales: se usa el primero.
+
+**[nuevo] Dani en el juego (24 de octubre de 2026).** Seis imágenes de David, de 1448 × 1086 como las de Chema: reposo (el pulgar arriba con su vaso), sus dos tics (la bandurria y las cintas), sorprendido, riendo y enfadado. Se cortan por la fila 1050. Las notas de la bandurria y los «!!» de la sorpresa llevan su contorno de tinta, como las gotas de Miguel.
+
 **Lo que llega de cada personaje** (detalle en la guía):
 
 - una imagen por pose, en PNG o WebP, **apaisada como las de Chema** (1448 × 1086 o más);
@@ -204,7 +210,7 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 
 `npm run personajes` lee las imágenes de `assets/personajes/` y `assets/personajes/personajes.json` (de dónde sale cada animación) y escribe `public/arte/personajes/`: los fotogramas, el `manifiesto.json` de cada uno y el `indice.json`, que dice quién tiene dibujo y quién, cara para el mapa.
 
-**Una imagen por pose (15 de octubre de 2026).** En `personajes.json`, cada personaje dice qué archivo es cada animación (`imagenes`), por qué fila se corta (`corte`: lo de debajo lo tapa el acta) y de qué cuadro sale la cara del mapa (`medallon`). Cada imagen se ajusta al ancho del **fotograma de 310 × 236 px de pantalla** (×3: 930 × 708), se centra y se apoya abajo, y pasa por la **imprenta ligera**: tinta en lugar de negro, papel en lugar de blanco, color templado, grano suave, contorno de tinta de 3 px y sombra dura de 4 px, sin tonos planos. Con `--crudo carpeta` saca cada fotograma sin imprenta y con una regla.
+**Una imagen por pose (15 de octubre de 2026).** En `personajes.json`, cada personaje dice qué archivo es cada animación (`imagenes`), por qué fila se corta (`corte`: lo de debajo lo tapa el acta) y de qué cuadro sale la cara del mapa (`medallon`). **[nuevo]** Si las imágenes llegan más apaisadas que el fotograma, `encuadre` (x y ancho, en px de la imagen) dice qué tramo se aprovecha a lo ancho. Cada imagen se ajusta al ancho del **fotograma de 310 × 236 px de pantalla** (×3: 930 × 708), se centra y se apoya abajo, y pasa por la **imprenta ligera**: tinta en lugar de negro, papel en lugar de blanco, color templado, grano suave, contorno de tinta de 3 px y sombra dura de 4 px, sin tonos planos. Con `--crudo carpeta` saca cada fotograma sin imprenta y con una regla.
 
 *Las hojas de antes* (todas las poses en una imagen) seguían los pasos de abajo, que el script todavía sabe hacer. Si una imagen llega pequeña, se amplía ×4 con **Real-ESRGAN** (modelo `realesrgan-x4plus-anime`, pensado para ilustración: deja las líneas limpias y el sombreado plano):
 
