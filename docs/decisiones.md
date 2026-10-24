@@ -540,6 +540,8 @@ David prefiere la mesa nueva. Se quitan la mesa viva con acta y la de antes: el 
 
 David mandó una ilustración para el fondo del menú principal (941 × 1670) y preguntó qué medidas debía tener. **Ideal: 1170 × 2532** (el escenario de 390 × 844 a 3 píxeles por punto, como lo pintan los móviles de ahora; proporción 9 : 19,5); como mínimo, 780 × 1688. Mientras llega, la de ahora ya está puesta: llena la pantalla recortando unos 85 px por lado. El letrero y el lema van en un cartel de papel, porque su tinta no se lee sobre la foto. Se le avisó del paquete de Marlboro: una marca real, y de tabaco, mejor fuera.
 
+**[cambiado] Rehecha el mismo día.** David pidió que el menú se viera como una sola composición y que no se recortara la ilustración; lo vio en dos bocetos y eligió el segundo. La ilustración va entera de ancho y, para llenar lo que falta abajo, **la mesa sigue con su canto** (con los marrones de la propia mesa), en lugar de ampliarla o de poner una copia borrosa detrás. Con eso, la medida buena pasa a ser la de ahora en grande: **1170 × 2077**. Ajustes aún no tiene nada dentro (el sonido ya tiene su botón): por ahora avisa de que vendrán más, como pidió David.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

@@ -522,10 +522,12 @@ export const ES = {
 
   /** La portada: empezar o seguir la gira, el duelo suelto y la Libreta. */
   portada: {
+    titulo: 'ÓRDAGO',
     lema: 'No gana quien lleva mejores cartas, gana quien hace creer que las lleva.',
     continuar: 'SEGUIR LA GIRA',
     vasPor: (arena: string, nivel: number) => `Vas por ${arena}, nivel ${nivel} de 4`,
     nueva: 'EMPEZAR LA GIRA',
+    otraGira: 'Empezar otra gira',
     confirmar: '¿Empezar otra? La gira que llevas se pierde.',
     siEmpezar: 'SÍ, OTRA',
     no: 'NO',
@@ -534,6 +536,8 @@ export const ES = {
     volver: 'VOLVER',
     libreta: 'LIBRETA',
     sonido: (si: boolean) => `Sonido: ${si ? 'sí' : 'no'}`,
+    ajustes: 'Ajustes',
+    ajustesPronto: 'Nuevos ajustes, muy pronto.',
   },
 
   arenas: {

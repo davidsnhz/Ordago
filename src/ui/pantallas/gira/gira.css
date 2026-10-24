@@ -141,112 +141,200 @@
 
 /* ——— Portada ——— */
 
-/* La portada (24-10-2026): la taberna de fondo, que llena el escenario recortando los lados. */
+/*
+ * La portada (24-10-2026, rehecha el mismo día): la ilustración entera de ancho, sin recortar los lados,
+ * y debajo la mesa sigue hasta el borde con su canto. Arriba, el letrero colgado; abajo, los botones.
+ */
 .pantalla--portada {
-  background-color: var(--taberna);
-  background-size: cover;
-  background-position: center;
+  /* Sacados de la mesa de la ilustración: la cara del canto, más oscura, y su arista, que coge luz. */
+  --canto-cara: #311a0f;
+  --canto-arista: #6b3d24;
+  background-color: var(--canto-cara);
 }
 
-/* El letrero y el lema, en un cartel de papel colgado: sobre la foto, la tinta no se leería. */
+.portada__fondo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sube 24 px: lo de arriba es viga y hiedra, y lo tapa el letrero. */
+.portada__ilustracion {
+  flex: none;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: -24px;
+}
+
+/* El canto de la mesa: la arista en luz y vetas de tinta. Si la ilustración llega abajo, no se ve. */
+.portada__canto {
+  flex: 1 0 0;
+  border-top: 3px solid var(--tinta);
+  background-color: var(--canto-cara);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='390' height='60'%3E%3Cg fill='none' stroke='%23231915' stroke-width='1.6' stroke-linecap='round' opacity='.55'%3E%3Cpath d='M-10 18 C 60 14, 120 22, 200 17 S 330 13, 400 19'/%3E%3Cpath d='M-10 44 C 80 48, 150 40, 240 45 S 350 49, 400 43'/%3E%3Cpath d='M40 31 C 70 29, 100 33, 130 31'/%3E%3Cpath d='M260 30 C 290 32, 320 28, 350 30'/%3E%3C/g%3E%3C/svg%3E");
+  background-position: 0 14px;
+  box-shadow:
+    inset 0 9px 0 var(--canto-arista),
+    inset 0 12px 0 var(--tinta);
+}
+
+/* El letrero, colgado del techo con dos cuerdas y meciéndose un poco. Gira desde donde se atan las cuerdas. */
 .portada__cartel {
   position: absolute;
-  left: 22px;
-  right: 22px;
-  top: 96px;
-  padding: 14px 16px 16px;
+  left: 46px;
+  right: 46px;
+  top: 52px;
+  padding: 16px 14px 12px;
   background-color: var(--papel);
   background-image: var(--punteado-papel);
   background-size: 6px 6px;
   border: var(--borde);
   border-radius: var(--radio-panel);
-  box-shadow: var(--sombra-dura-grande);
-  transform: rotate(-1.5deg);
+  box-shadow: var(--sombra-dura);
+  transform-origin: 50% -66px;
+  transform: rotate(-0.4deg);
+  animation: portada-vaiven 2.8s ease-in-out infinite alternate;
 }
 
-.portada__marca {
-  display: block;
-  width: 100%;
-  height: auto;
+@keyframes portada-vaiven {
+  from {
+    transform: rotate(-2.4deg);
+  }
+  to {
+    transform: rotate(1.6deg);
+  }
 }
 
-.portada__lema {
-  margin: 6px 0 0;
-  font-style: italic;
-  font-size: 18px;
-  line-height: 1.3;
+/* Cuerda de esparto trenzada: gruesa, clara y con contorno de tinta, para que se vea sobre la pared, la hiedra
+   y el cielo. Sale por arriba de la pantalla y abajo se ata al letrero con una argolla. */
+.portada__cuerda {
+  position: absolute;
+  top: -70px;
+  box-sizing: border-box;
+  width: 9px;
+  height: 70px;
+  background: repeating-linear-gradient(-55deg, var(--gualda-claro) 0 3.5px, var(--gualda-oscuro) 3.5px 5px);
+  border: 2px solid var(--tinta);
+  border-bottom: none;
+}
+
+/* Cerca de las esquinas, para que las argollas no toquen el acento de la Ó. */
+.portada__cuerda--izq {
+  left: 18px;
+}
+
+.portada__cuerda--der {
+  right: 18px;
+}
+
+.portada__cuerda::after {
+  content: '';
+  position: absolute;
+  left: -6.5px;
+  bottom: -8px;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  background: var(--papel);
+  border: 3px solid var(--tinta);
+  border-radius: 50%;
+}
+
+/* El título, en letra: Bitter Black, como los botones (decidido por David, 24-10-2026). */
+.portada__titulo {
+  margin: 0;
+  font-family: var(--letra-grito);
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 1px;
   text-align: center;
   color: var(--tinta);
 }
 
+/*
+ * La tilde de la Ó, con la forma de la de Alfa Slab One (pedido de David): su contorno sacado de la fuente
+ * (360 × 111 unidades) y a su escala respecto a la O, medida en Bitter Black: 0,335 em de ancho, 0,04 em por
+ * encima de la O (0,733 em sobre la línea base) y un poco a la derecha de su centro, como en Alfa.
+ * Va justo después de la O sin ocupar sitio: lo que se mete a la izquierda se devuelve a la derecha.
+ */
+.portada__tilde {
+  position: relative;
+  bottom: 0.777em;
+  width: 0.335em;
+  height: 0.1033em;
+  margin: 0 0.156em 0 -0.491em;
+  vertical-align: baseline;
+  fill: var(--tinta);
+}
+
+.portada__lema {
+  margin: 5px 4px 0;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--tinta);
+}
+
+/* Los botones: una columna del ancho del letrero. Arriba lo principal (gualda), luego DUELO SUELTO
+   y, abajo del todo, tres cuadrados de papel con su icono de tinta. */
 .portada__botones {
   position: absolute;
-  left: 40px;
-  right: 40px;
-  bottom: 120px;
+  left: 60px;
+  right: 60px;
+  bottom: 28px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
-/* El sonido: pequeño, debajo, con borde de puntos como las herramientas. */
-.portada__ajustes {
-  position: absolute;
-  left: 40px;
-  right: 40px;
-  bottom: 52px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.portada__ajuste {
+.portada__botones .boton-apuesta {
   min-height: 44px;
-  padding: 0 12px;
-  font-family: var(--letra-rotulo);
-  font-size: 15px;
-  letter-spacing: 1px;
-  color: var(--tinta);
-  background: var(--papel);
-  border: 2px dashed var(--tinta);
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 7px 0;
+  font-size: 19px;
 }
 
-.portada__ajuste[aria-pressed='true'] {
-  border-style: solid;
-  box-shadow: 2px 2px 0 var(--tinta);
+.portada__fila {
+  display: flex;
+  gap: 8px;
 }
 
 /* «SEGUIR LA GIRA» lleva debajo, en pequeño, por dónde vas: la arena y sus cuatro niveles. */
-.portada__seguir {
+.portada__botones .portada__seguir {
+  flex: 1;
+  width: auto;
+  min-height: 54px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  padding: 10px 0 9px;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 0 5px;
 }
 
 .portada__progreso {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-family: var(--letra-rotulo);
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 1px;
   word-spacing: normal;
 }
 
 .portada__niveles {
   display: flex;
-  gap: 5px;
+  gap: 4px;
 }
 
 /* Los niveles pasados, rellenos de tinta; el de ahora, en almagre; los que faltan, vacíos. */
 .portada__nivel {
   box-sizing: border-box;
-  width: 11px;
-  height: 11px;
+  width: 9px;
+  height: 9px;
   border: 2px solid var(--tinta);
   border-radius: 50%;
 }
@@ -259,14 +347,107 @@
   background: var(--almagre);
 }
 
+/* Los cuadrados 1:1: el de empezar otra, tan alto como SEGUIR; los de abajo, de 52. */
+.portada__botones .portada__cuadrado {
+  flex: none;
+  width: auto;
+  height: 52px;
+  min-height: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.portada__fila .portada__cuadrado {
+  height: 54px;
+}
+
+.portada__icono {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: var(--tinta);
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.portada__herramientas {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+/* «Nuevos ajustes, muy pronto»: un bocadillo sobre el engranaje (el último de los tres) que se va solo.
+   Se alinea con el borde derecho de la fila: tres cuadrados de 52 y dos huecos de 16 dan 188, la mitad 94. */
+.portada__aviso-hueco {
+  position: absolute;
+  right: calc(50% - 94px);
+  bottom: calc(100% + 12px);
+  pointer-events: none;
+}
+
+.portada__aviso {
+  position: relative;
+  margin: 0;
+  padding: 6px 12px 7px;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 3px solid var(--tinta);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--tinta);
+  transform-origin: calc(100% - 26px) 100%;
+  animation: portada-aviso 160ms ease-out;
+}
+
+/* La cola, hacia el centro del engranaje (a 26 px del borde derecho). */
+.portada__aviso::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  bottom: -9px;
+  width: 12px;
+  height: 12px;
+  background: var(--papel);
+  border-right: 3px solid var(--tinta);
+  border-bottom: 3px solid var(--tinta);
+  transform: rotate(45deg);
+}
+
+@keyframes portada-aviso {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+}
+
 .portada__confirmar {
-  padding: 12px;
+  padding: 10px 12px 12px;
   text-align: center;
 }
 
 .portada__confirmar p {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.portada__confirmar .boton-apuesta {
+  padding: 5px 0;
   font-size: 17px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portada__cartel,
+  .portada__aviso {
+    animation: none;
+  }
 }
 
 /* ——— Elegir compañero (C) ——— */
