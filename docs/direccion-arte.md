@@ -197,7 +197,7 @@ La moneda de oros (`public/arte/palos/oros.webp`) sobre el color de la taberna (
 
 **[nuevo] Rubén en el juego (24 de octubre de 2026).** Siete imágenes de David, de 1536 × 1024: reposo, sus dos tics (el mordisco al bocadillo y el pulgar arriba, que sustituye a la gorra), crecido, sorprendido, riendo y enfadado. Como son más apaisadas que las de Chema, solo se aprovecha el tramo de 1330 px donde está la figura (`encuadre` en `personajes.json`). Así se acerca y la cabeza sale del mismo tamaño que la de los demás. Se cortan por la fila 965. Mandó dos reposos casi iguales: se usa el primero.
 
-**[nuevo] Dani en el juego (24 de octubre de 2026).** Seis imágenes de David, de 1448 × 1086 como las de Chema: reposo (el pulgar arriba con su vaso), sus dos tics (la bandurria y las cintas), sorprendido, riendo y enfadado. Se cortan por la fila 1050. Las notas de la bandurria y los «!!» de la sorpresa llevan su contorno de tinta, como las gotas de Miguel.
+**[nuevo] Dani en el juego (24 de octubre de 2026).** Seis imágenes de David, de 1448 × 1086 como las de Chema: reposo (la barbilla en el puño, con el vaso en la mesa), sus dos tics (la bandurria y las cintas), sorprendido, riendo y enfadado. Se cortan por la fila 1050. Las notas de la bandurria y los «!!» de la sorpresa llevan su contorno de tinta, como las gotas de Miguel.
 
 **Lo que llega de cada personaje** (detalle en la guía):
 

@@ -568,12 +568,10 @@ Las imágenes son de 1536 × 1024, más apaisadas que las de Chema. Si se ajusta
 
 David mandó siete imágenes de Dani y pidió subirlo todo a GitHub y a Vercel. Una de ellas (un PNG de 1184 × 1184) llegó vacía: solo una mancha blanca sobre fondo transparente, sin dibujo. Con las otras seis se cubre todo lo que necesita Dani:
 
-- **Reposo:** el pulgar arriba con su vaso. Es alegre y despistado, y de las seis es la que más pega para estar así casi todo el duelo.
+- **Reposo [cambiado]:** la barbilla en el puño, con el vaso en la mesa, como el reposo de Chema. Era la imagen vacía: David la volvió a mandar. Mientras faltó, hizo de reposo el pulgar arriba con el vaso, que ya no se usa (está en el commit f01a82f).
 - **Tics:** rasguea la bandurria (lleva 31) y se coloca las cintas de la capa (lleva duples), los de siempre.
 - **Las caras:** sorprendido (manos arriba y «!!»), riendo (señalando con el vaso) y enfadado (de morros, con el puño en la mejilla).
 - **Sin crecido ni arrugado,** porque Dani no cambia de ánimo con el marcador.
-
-Si la imagen vacía era otra pose (por ejemplo, otro reposo), basta con volver a mandarla.
 
 ## Dudas para fases posteriores
 

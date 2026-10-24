@@ -8,7 +8,7 @@
 
 > **[nuevo] Y Rubén (24 de octubre de 2026).** Siete imágenes: reposo, sus dos tics (el mordisco al bocadillo y, en lugar de la gorra, el pulgar arriba), crecido y las tres caras. Llegaron más apaisadas (1536 × 1024) y valen igual: las acerco yo para que la cabeza salga del tamaño de las de los demás.
 
-> **[nuevo] Y Dani: la facultad, completa (24 de octubre de 2026).** Seis imágenes: reposo (el pulgar arriba con su vaso), sus dos tics (la bandurria y las cintas) y las tres caras. Lo siguiente: el Lazarillo, la Recaudadora y la tabernera, que ya salen en el juego.
+> **[nuevo] Y Dani: la facultad, completa (24 de octubre de 2026).** Seis imágenes: reposo (la barbilla en el puño, con el vaso en la mesa), sus dos tics (la bandurria y las cintas) y las tres caras. Lo siguiente: el Lazarillo, la Recaudadora y la tabernera, que ya salen en el juego.
 
 > **En resumen.** Un personaje se hace en cinco pasos, siempre en este orden:
 >
