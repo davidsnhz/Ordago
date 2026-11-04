@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { RIVALES } from '../src/datos/rivales';
+import { accionAleatoria } from '../src/depuracion/jugadorAleatorio';
+import { estaAchispado, parametrosEnLaMano, RIVALES } from '../src/datos/rivales';
+import { jugarJugador, jugarRival, leTocaAlRival, nuevaPartida } from '../src/estado/partida';
+import { probabilidadEnFalso, sortearTics } from '../src/nucleo/ia/tics';
 import { aplicarEnvite, iniciarEnvite } from '../src/nucleo/apuestas';
 import { Azar } from '../src/nucleo/azar';
 import { idCarta } from '../src/nucleo/carta';
@@ -149,5 +152,70 @@ describe('memoria de las reglas especiales', () => {
 
   it('el azar de la IA se usa igual en cada ejecución', () => {
     expect(Azar.conSemilla('x').siguiente()).toBe(Azar.conSemilla('x').siguiente());
+  });
+});
+
+describe('Toño: «Que tengo la barra llena»', () => {
+  it('corta siempre, lleve lo que lleve', () => {
+    for (let s = 0; s < 20; s++) {
+      const p = nuevaPartida(`tono-${s}`, 'tono').partida;
+      const conMus = p.duelo.turno === 'rival' ? p : jugarJugador(p, { tipo: 'mus', lado: 'jugador' }).partida;
+      expect(jugarRival(conMus).novedades.eventos[0]).toMatchObject({ tipo: 'mus', lado: 'rival', quiereMus: false });
+    }
+  });
+});
+
+describe('Manolo: «Una caña más»', () => {
+  const manolo = RIVALES.manolo;
+
+  it('dos manos de calma y desde la tercera, achispado', () => {
+    expect([1, 2, 3, 4].map((n) => estaAchispado(manolo, n))).toEqual([false, false, true, true]);
+    expect(parametrosEnLaMano(manolo, 2)).toMatchObject({ agresividad: 4, faroleo: 1 });
+    expect(parametrosEnLaMano(manolo, 3)).toMatchObject({ agresividad: 9, faroleo: 9, miedoOrdago: 2 });
+  });
+
+  it('si Aurelio le ha invitado, se suelta una mano antes', () => {
+    expect([1, 2].map((n) => estaAchispado(manolo, n, true))).toEqual([false, true]);
+    expect(parametrosEnLaMano(manolo, 2, true).faroleo).toBe(9);
+  });
+
+  it('los demás juegan como siempre', () => {
+    expect(estaAchispado(RIVALES.chema, 9)).toBe(false);
+    expect(parametrosEnLaMano(RIVALES.chema, 9)).toEqual(RIVALES.chema.parametros);
+  });
+
+  it('se achispa con el reparto de su mano, y se avisa una sola vez', () => {
+    const azar = Azar.conSemilla('canas');
+    let p = nuevaPartida('canas', 'manolo').partida;
+    const achispes: number[] = [];
+    for (let n = 0; p.duelo.fase !== 'finDuelo' && n < 3000; n++) {
+      const r = leTocaAlRival(p)
+        ? jugarRival(p)
+        : jugarJugador(p, p.duelo.fase === 'finMano' ? { tipo: 'siguienteMano' } : accionAleatoria(p.duelo, azar));
+      if (r.novedades.seAchispa) achispes.push(r.partida.duelo.numeroMano);
+      p = r.partida;
+    }
+    if (p.duelo.numeroMano >= 3) expect(achispes).toEqual([3]);
+  });
+
+  it('achispado, los tics salen siempre que tienen motivo, y aciertan lo mismo', () => {
+    const manoFuerte = cartas('R R R 4');
+    const ctx = { cartas: manoFuerte, modo: 8 as const, momento: { tipo: 'cartas' as const }, caraJugador: 60, faroleo: 9 };
+    const tic = manolo.tics.find((t) => t.id === 'rascaBarriga')!;
+    let conMotivo = 0;
+    const azar = Azar.conSemilla('tics');
+    for (let i = 0; i < 400; i++) if (sortearTics([tic], { ...ctx, siempreConMotivo: true }, azar).length > 0) conMotivo++;
+    expect(conMotivo).toBe(400);
+    expect(probabilidadEnFalso(tic, { modo: 8, faroleo: 9, siempreConMotivo: true })).toBeGreaterThan(probabilidadEnFalso(tic, { modo: 8, faroleo: 9 }));
+  });
+});
+
+describe('ajustar lo que se cobra por un «no quiero»', () => {
+  const JARRA: Modificador = { id: 'jarra', ajustarDeje: (piedras, ganador) => (ganador === 'jugador' ? piedras + 1 : piedras) };
+
+  it('el marcador y la casilla del lance cuentan lo que se ha cobrado de verdad', () => {
+    const { estado } = jugar(dueloCon({ jugador: 'R R R 7', rival: 'A 4 5 6' }), [a.corto('jugador'), a.envido('jugador', 5), a.noQuiero('rival')], [JARRA]);
+    expect(estado.marcador.jugador).toBe(2);
+    expect(estado.lances[0]?.envite?.resultado).toMatchObject({ tipo: 'noQuerido', piedras: 2 });
   });
 });

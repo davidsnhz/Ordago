@@ -1,6 +1,6 @@
 import { IA } from '../../datos/ia';
 import type { Reglas } from '../../datos/reglas';
-import { animoDe, type ParametrosRival, type PerfilRival } from '../../datos/rivales';
+import { animoDe, parametrosEnLaMano, type ParametrosRival, type PerfilRival } from '../../datos/rivales';
 import type { EstadoEnvite } from '../apuestas';
 import type { Azar } from '../azar';
 import type { Carta } from '../carta';
@@ -71,15 +71,22 @@ export interface ContextoRival {
   senal?: 'seNota' | 'noSeNota' | null;
   /** «Darle conversación»: en esta mano no puede tirar órdago. */
   distraido?: boolean;
+  /** Su secuaz le ha avisado: Chema, arrugado hasta que se crezca; Manolo, se suelta una mano antes. */
+  avisado?: boolean;
 }
 
 /** Cuánto más (o menos) quiere tus envites según su ánimo: crecido te lo quiere todo; arrugado, casi nada. */
 const AJUSTE_ANIMO = { crecido: 0.3, arrugado: -0.2 } as const;
 
 /** Parámetros con los que juega ahora: Rubén y Chema crecidos farolean el doble; Chema arrugado, nada. */
-export function parametrosConAnimo(perfil: PerfilRival, diferencia: number): { parametros: ParametrosRival; ajusteAceptar: number } {
-  const animo = animoDe(perfil, diferencia);
-  const p = perfil.parametros;
+export function parametrosConAnimo(
+  perfil: PerfilRival,
+  diferencia: number,
+  avisado = false,
+  numeroMano = 1,
+): { parametros: ParametrosRival; ajusteAceptar: number } {
+  const animo = animoDe(perfil, diferencia, avisado);
+  const p = parametrosEnLaMano(perfil, numeroMano, avisado);
   if (animo === 'crecido') {
     return { parametros: { ...p, faroleo: Math.min(10, p.faroleo * 2) }, ajusteAceptar: perfil.seVieneArriba ? AJUSTE_ANIMO.crecido : 0 };
   }
@@ -97,6 +104,9 @@ export function decidirRival(vista: VistaRival, ctx: ContextoRival, azar: Azar):
       if (ctx.perfil.pideMusSiempre && vista.rondasMus === 0) {
         return { tipo: 'mus', accion: { tipo: 'mus', lado }, mus: { corta: false, motivo: 'siempre' } };
       }
+      if (ctx.perfil.cortaSiempre) {
+        return { tipo: 'mus', accion: { tipo: 'corto', lado }, mus: { corta: true, motivo: 'siempre' } };
+      }
       const mus = decidirMus(ctx.perfil.mus, vista.cartas, modo, azar);
       return { tipo: 'mus', accion: { tipo: mus.corta ? 'corto' : 'mus', lado }, mus };
     }
@@ -110,13 +120,15 @@ export function decidirRival(vista: VistaRival, ctx: ContextoRival, azar: Azar):
         ctx.senal === 'seNota' ? IA.exposicion.ajusteSiSeNota : ctx.senal === 'noSeNota' ? IA.exposicion.ajusteSiNo : 0;
       const fuerzaUsada = Math.max(0, Math.min(1, fuerza[lance] + ajuste));
       const diferencia = vista.marcador[lado] - vista.marcador[otroLado(lado)];
-      const { parametros, ajusteAceptar } = parametrosConAnimo(ctx.perfil, diferencia);
+      const { parametros, ajusteAceptar } = parametrosConAnimo(ctx.perfil, diferencia, ctx.avisado, vista.numeroMano);
       const envite = decidirEnvite(
         {
           F: fuerzaUsada,
           envite: vista.envite,
           limites: limitesEnvite(vista.reglas),
           diferencia,
+          // En una mano suelta no hay principio ni final que esperar.
+          avance: vista.reglas.unaSolaMano ? 1 : Math.max(vista.marcador[lado], vista.marcador[otroLado(lado)]) / vista.reglas.piedrasParaGanar,
           caraJugador: ctx.caraJugador,
           tFarol: proporcionFaroles(ctx.memoria),
           aceptaTodo: ctx.memoria.manosEnfadado > 0,

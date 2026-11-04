@@ -25,6 +25,8 @@ export interface ContextoTic {
   caraJugador: number;
   /** Faroleo del rival (B), para saber con qué frecuencia farolea. */
   faroleo: number;
+  /** Manolo achispado: el tic sale siempre que tiene motivo. */
+  siempreConMotivo?: boolean;
 }
 
 export interface TicDisparado {
@@ -113,9 +115,9 @@ function frecuencia(disparador: DisparadorTic, ctx: Pick<ContextoTic, 'modo' | '
  * Probabilidad de hacer el tic en falso. Con p = probabilidad si se cumple, q = frecuencia y
  * f = fiabilidad: f = p·q / (p·q + falso·(1 − q))  ⇒  falso = p·q·(1 − f) / (f·(1 − q)).
  */
-export function probabilidadEnFalso(tic: DefinicionTic, ctx: Pick<ContextoTic, 'modo' | 'faroleo'>): number {
+export function probabilidadEnFalso(tic: DefinicionTic, ctx: Pick<ContextoTic, 'modo' | 'faroleo' | 'siempreConMotivo'>): number {
   if (tic.disparador === 'ninguno') return IA.tics.probabilidadSinSentido;
-  const p = IA.tics.probabilidadSiCumple;
+  const p = ctx.siempreConMotivo ? 1 : IA.tics.probabilidadSiCumple;
   const q = frecuencia(tic.disparador, ctx);
   const f = tic.fiabilidad;
   if (q <= 0) return 0;
@@ -129,7 +131,7 @@ export function sortearTics(tics: readonly DefinicionTic[], ctx: ContextoTic, az
     if (ctx.momento.tipo !== 'cartas' && !tic.lances.includes(ctx.momento.lance)) continue;
     const verdadero = cumpleDisparador(tic.disparador, ctx);
     if (verdadero === null) continue;
-    const probabilidad = verdadero ? IA.tics.probabilidadSiCumple : probabilidadEnFalso(tic, ctx);
+    const probabilidad = verdadero ? (ctx.siempreConMotivo ? 1 : IA.tics.probabilidadSiCumple) : probabilidadEnFalso(tic, ctx);
     if (azar.probabilidad(probabilidad)) disparados.push({ id: tic.id, verdadero });
   }
   return disparados;

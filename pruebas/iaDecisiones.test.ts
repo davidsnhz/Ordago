@@ -95,6 +95,15 @@ describe('Agustín habla sin envite delante', () => {
     expect(decide(0.9, sinEnvite(), 0.95)).toEqual({ tipo: 'envido', piedras: 5 });
   });
 
+  it('con buenas cartas no tira órdago hasta que alguien lleve la mitad de las piedras; envida', () => {
+    expect(decide(0.9, sinEnvite(), 0.2, { avance: 0.45 })).toEqual({ tipo: 'envido', piedras: 5 });
+    expect(decide(0.9, sinEnvite(), 0.2, { avance: 0.5 })).toEqual({ tipo: 'ordago' });
+  });
+
+  it('el órdago de farol, de quien va perdiendo de mucho, no espera', () => {
+    expect(decide(0.2, sinEnvite(), 0.02, { avance: 0.3, diferencia: -8 })).toEqual({ tipo: 'ordago' });
+  });
+
   it('envida con F por encima de su umbral (0,56)', () => {
     expect(decide(0.6, sinEnvite(), 0.5)).toEqual({ tipo: 'envido', piedras: 2 });
   });

@@ -13,14 +13,18 @@ export type IdRival =
   | 'dani'
   | 'ruben'
   | 'chema'
+  | 'tono'
+  | 'manolo'
   | 'ruperto'
   | 'engracia'
   | 'anselmo'
   | 'fulgencio'
-  | 'bonifacio';
+  | 'bonifacio'
+  /** El de la partida en la calle: no está en la lista de los duelos ni en la Libreta. */
+  | 'vecino';
 
 /** Todos los rivales, en el orden de la gira (la lista de los duelos sueltos). */
-export const ORDEN_RIVALES: IdRival[] = ['lucia', 'dani', 'ruben', 'chema', 'ruperto', 'fulgencio', 'engracia', 'anselmo', 'bonifacio'];
+export const ORDEN_RIVALES: IdRival[] = ['lucia', 'dani', 'ruben', 'chema', 'tono', 'ruperto', 'fulgencio', 'manolo', 'engracia', 'anselmo', 'bonifacio'];
 
 /** De 0 a 10 (tabla «Los 5 rivales» del documento). */
 export interface ParametrosRival {
@@ -99,6 +103,13 @@ export interface PerfilRival {
   cartasDeLaCasa?: { fuerzaMaxima: number };
   /** Dani: pide mus siempre la primera vez de cada mano. */
   pideMusSiempre?: true;
+  /** Toño: corta siempre el mus, para volver a la barra. */
+  cortaSiempre?: true;
+  /**
+   * Manolo: hasta `desdeMano` juega con calma y desde ahí, achispado. En cada tramo, sus
+   * parámetros cambian por estos; achispado, además, los tics salen siempre que tienen motivo.
+   */
+  unaCanaMas?: { desdeMano: number; calma: Partial<ParametrosRival>; achispado: Partial<ParametrosRival> };
   /** Rubén: cuando va ganando por `ventaja` piedras o más, farolea el doble. */
   seCrece?: { ventaja: number };
   /**
@@ -111,12 +122,32 @@ export interface PerfilRival {
 /** Cómo está el rival por el marcador (Rubén y Chema). */
 export type AnimoRival = 'crecido' | 'arrugado' | null;
 
-export function animoDe(perfil: PerfilRival, diferencia: number): AnimoRival {
+/** `avisado`: su secuaz le ha contado cómo juegas; está arrugado hasta que se crezca. */
+export function animoDe(perfil: PerfilRival, diferencia: number, avisado = false): AnimoRival {
   const regla = perfil.seVieneArriba ?? perfil.seCrece;
   if (!regla) return null;
   if (diferencia >= regla.ventaja) return 'crecido';
+  if (avisado) return 'arrugado';
   if (perfil.seVieneArriba && diferencia <= -regla.ventaja) return 'arrugado';
   return null;
+}
+
+/** Manolo: si va achispado en esta mano. Si Aurelio le ha invitado (`avisado`), se suelta una antes. */
+export function estaAchispado(perfil: PerfilRival, numeroMano: number, avisado = false): boolean {
+  const regla = perfil.unaCanaMas;
+  return Boolean(regla) && numeroMano >= regla!.desdeMano - (avisado ? 1 : 0);
+}
+
+/** La primera mano en que va achispado, o `null` si no es Manolo. */
+export function manoDeLaCana(perfil: PerfilRival, avisado = false): number | null {
+  return perfil.unaCanaMas ? perfil.unaCanaMas.desdeMano - (avisado ? 1 : 0) : null;
+}
+
+/** Sus parámetros en esta mano: los de siempre, salvo los de Manolo, que cambian con la bebida. */
+export function parametrosEnLaMano(perfil: PerfilRival, numeroMano: number, avisado = false): ParametrosRival {
+  const regla = perfil.unaCanaMas;
+  if (!regla) return perfil.parametros;
+  return { ...perfil.parametros, ...(estaAchispado(perfil, numeroMano, avisado) ? regla.achispado : regla.calma) };
 }
 
 /** La lista común: con estas manos corta cualquiera. */
@@ -175,6 +206,31 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
     seVieneArriba: { ventaja: 5 },
   },
 
+  // ——— El bar (arena 2); Agustín y Aurelio están con los cinco de abajo ———
+  tono: {
+    id: 'tono',
+    // Echa la partida entre ronda y ronda: farolea poco y corta siempre para acabar antes.
+    parametros: { agresividad: 5, faroleo: 2, miedoOrdago: 4, memoria: 2, ojo: 3 },
+    mus: { corta: [...CORTES_COMUNES], guarda: ['reyes', 'parejas'], farolDeCorte: 0 },
+    tics: [{ id: 'panoAlHombro', disparador: 'manoFuerte', fiabilidad: 0.8, lances: TODOS }],
+    cortaSiempre: true,
+  },
+  manolo: {
+    id: 'manolo',
+    parametros: { agresividad: 6, faroleo: 5, miedoOrdago: 4, memoria: 4, ojo: 5 },
+    mus: { corta: [...CORTES_COMUNES, 'parejaDeReyes'], guarda: ['reyes', 'parejas'], farolDeCorte: 0.1 },
+    tics: [
+      { id: 'rascaBarriga', disparador: 'manoFuerte', fiabilidad: 0.7, lances: TODOS },
+      { id: 'repeina', disparador: 'farol', fiabilidad: 0.7, lances: TODOS },
+      { id: 'tragoCana', disparador: 'juego', fiabilidad: 0.7, lances: ['juego'] },
+    ],
+    unaCanaMas: {
+      desdeMano: 3,
+      calma: { agresividad: 4, faroleo: 1 },
+      achispado: { agresividad: 9, faroleo: 9, miedoOrdago: 2 },
+    },
+  },
+
   // ——— Los cinco que ya estaban (el bar, las fiestas y el casino) ———
   ruperto: {
     id: 'ruperto',
@@ -229,6 +285,15 @@ export const RIVALES: Record<IdRival, PerfilRival> = {
     ],
     casa: { lances: ['grande'] },
     cartasDeLaCasa: { fuerzaMaxima: 0.6 },
+  },
+
+  // ——— La partida en la calle ———
+  vecino: {
+    id: 'vecino',
+    // Juega como cualquiera en su barrio. Sin tics que aprender: es una sola mano.
+    parametros: { agresividad: 5, faroleo: 2, miedoOrdago: 5, memoria: 0, ojo: 1 },
+    mus: { corta: [...CORTES_COMUNES], guarda: ['reyes', 'parejas'], farolDeCorte: 0 },
+    tics: [],
   },
 };
 

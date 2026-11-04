@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ARENAS } from '../src/datos/gira';
 import type { IdObjeto } from '../src/datos/objetos';
 import { CORTES_COMUNES, type IdRival, type PerfilRival } from '../src/datos/rivales';
 import {
@@ -19,7 +20,7 @@ import { ganadorLance } from '../src/nucleo/lances';
 
 /**
  * Lo que vale cada objeto de la taberna (npm run equilibrio): el jugador sensato contra los
- * cuatro rivales de la facultad, sin nada y con cada objeto, con los mismos repartos. Mide cuántos
+ * cuatro rivales de una arena (ARENA=1, el bar), sin nada y con cada objeto, con los mismos repartos. Mide cuántos
  * duelos de cada cien se ganan de más. Los Apuntes de Chema no se miden: el jugador sensato no lee
  * los tics.
  */
@@ -31,8 +32,9 @@ const SENSATO: PerfilRival = {
 };
 /** El que farolea mucho: para él sí cuentan la Cara (Orujo) y los faroles pillados (Medalla). */
 const FAROLERO: PerfilRival = { ...SENSATO, parametros: { ...SENSATO.parametros, agresividad: 6, faroleo: 8 } };
-const FACULTAD: IdRival[] = ['lucia', 'dani', 'ruben', 'chema'];
-const DUELOS = 250;
+const FACULTAD: readonly IdRival[] = ARENAS[Number(process.env.ARENA ?? 0)]!.niveles!;
+// Para medir unos pocos: SOLO='Copa|Café' DUELOS=150 ARENA=1 npm run equilibrio
+const DUELOS = Number(process.env.DUELOS ?? 250);
 
 interface Prueba {
   nombre: string;
@@ -52,6 +54,13 @@ const PRUEBAS: Prueba[] = [
   },
   { nombre: 'Medalla (amuleto)', amuletos: ['medalla'] },
   { nombre: 'Boina (amuleto)', amuletos: ['boina'] },
+  { nombre: 'Copa de anís, 1.ª mano', usa: { id: 'copaAnis', cuando: (p) => p.duelo.numeroMano === 1 } },
+  { nombre: 'Café de puchero, 1.ª mano', usa: { id: 'cafePuchero', cuando: (p) => p.duelo.numeroMano === 1 } },
+  { nombre: 'Invitar a una ronda, 1.ª mano', usa: { id: 'invitarRonda', cuando: (p) => p.duelo.numeroMano === 1 } },
+  { nombre: 'Hacerle la pelota, 1.ª mano', usa: { id: 'pelota', cuando: (p) => p.duelo.numeroMano === 1 } },
+  { nombre: 'Yesquero (amuleto)', amuletos: ['yesquero'] },
+  { nombre: 'Ristra de ajos (amuleto)', amuletos: ['ristra'] },
+  { nombre: 'Jarra de Manolo (raro)', amuletos: ['jarraManolo'] },
 ];
 
 /**
@@ -118,8 +127,10 @@ const PRUEBAS_FAROLERO: Prueba[] = [
   { nombre: 'farolero, Chato 1.ª mano', usa: { id: 'chato', cuando: (p) => p.duelo.numeroMano === 1 } },
 ];
 
-function tabla(pruebas: Prueba[], jugador: PerfilRival) {
+function tabla(todas: Prueba[], jugador: PerfilRival) {
   const total = FACULTAD.length * DUELOS;
+  const solo = process.env.SOLO ? new RegExp(process.env.SOLO) : null;
+  const pruebas = todas.filter((p, i) => i === 0 || !solo || solo.test(p.nombre));
   const filas = pruebas.map((prueba) => {
     const porRival = FACULTAD.map((rival) => medir(prueba, rival, jugador));
     const ganados = porRival.reduce((s, r) => s + r.ganados, 0);
@@ -140,11 +151,11 @@ function tabla(pruebas: Prueba[], jugador: PerfilRival) {
 }
 
 describe('lo que vale cada objeto de la taberna', () => {
-  it('jugador sensato contra la facultad, con los mismos repartos', () => {
+  it('jugador sensato, con los mismos repartos', () => {
     expect(tabla(PRUEBAS, SENSATO)).toBeGreaterThan(0.2);
   }, 1_800_000);
 
-  it('jugador farolero contra la facultad', () => {
+  it.skipIf(process.env.SOLO)('jugador farolero', () => {
     expect(tabla(PRUEBAS_FAROLERO, FAROLERO)).toBeGreaterThan(0.05);
   }, 1_800_000);
 });

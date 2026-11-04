@@ -21,6 +21,8 @@ const con = (eventos: EventoDuelo[], extra: Partial<Novedades> = {}): ResultadoP
     animo: null,
     efecto: null,
     medalla: false,
+    aviso: null,
+    seAchispa: false,
     ...extra,
   },
 });

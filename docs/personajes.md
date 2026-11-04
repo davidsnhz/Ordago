@@ -1,6 +1,6 @@
 # Órdago — Cómo hacer los personajes
 
-24 de octubre de 2026 · @david · *guía para diseñar los personajes con IA: del boceto al diseño final y a las poses*
+4 de noviembre de 2026 · @david · *guía para diseñar los personajes con IA: del boceto al diseño final y a las poses*
 
 > **[nuevo] Chema ya está hecho y en el juego (15 de octubre de 2026).** Sus ocho imágenes son el modelo para los demás: el mismo estilo, el mismo encuadre (de codos sobre la mesa, apaisado) y la misma lista de poses. Para el estilo, sube su reposo como referencia: `assets/personajes/chema/reposo.webp`.
 
@@ -224,6 +224,19 @@ Copia y pega. Donde pone [ESTILO], pega tu frase de estilo, y sube siempre la im
 - *Crecido:* «Cambia solo esto: se echa hacia delante con sonrisa de chulo, como diciendo "te lo quiero todo".»
 - *Arrugado:* «Cambia solo esto: hundido en la silla, serio y mirando de reojo.»
 - *Caras:* riendo, enfadado y sorprendido.
+
+## **[nuevo]** Lo que hace falta del bar
+
+Ya se juega, con marcadores. Lo mismo que los de la facultad: una imagen por pose, apaisada y con el fondo transparente. Sirven tal cual sus «Idea de aspecto» de [La gira](gira.md). Además de estas, los cuatro necesitan **reposo, sorprendido, riendo y enfadado**:
+
+| Personaje (carpeta) | Tics | Otras poses |
+| --- | --- | --- |
+| Toño, el Camarero (`tono`) | Se echa el paño al hombro | — |
+| Agustín, el Herrero (`ruperto`) | Se rasca la barba · Se arremanga | — (su enfadado sale cuando se enfada de verdad) |
+| Aurelio, el Tratante (`fulgencio`) | Sonríe enseñando el diente de oro · Se pone serio y se quita el sombrero · Golpea la vara contra el suelo | — |
+| Manolo, el Rey de la barra (`manolo`) | Se rasca la barriga · Se repeina los cuatro pelos · Le da un trago a la caña | **Achispado:** colorado, los ojos vidriosos y la caña en alto. Es como está desde la tercera mano; las dos primeras, en reposo y tranquilo |
+
+También salen ya con marcador **el vecino** de la partida en la calle (sin tics: reposo y las tres caras) y la tabernera y los compañeros, como hasta ahora.
 
 ## Los demás personajes
 

@@ -7,6 +7,7 @@ import {
   comprar,
   conPartida,
   elegirCompanero,
+  empezarCalle,
   elegirParada,
   elegirPremio,
   empezarDuelo,
@@ -15,6 +16,7 @@ import {
   otraRonda,
   responderPlaza,
   seguirDesdeResultado,
+  terminarCalle,
   terminarDuelo,
   vender,
   volverAlMapa,
@@ -66,6 +68,26 @@ export function useGira(inicial: Gira) {
     }
   }, []);
 
+  /** En la plaza: aceptar la partida en la calle lleva a la mesa; lo demás se resuelve allí mismo. */
+  const responder = useCallback(
+    (acepta: boolean) => {
+      const { momento } = actual.current;
+      if (!acepta || momento.tipo !== 'plaza' || momento.evento.tipo !== 'calle') {
+        paso((g) => responderPlaza(g, acepta));
+        return;
+      }
+      try {
+        const { gira: enLaCalle, inicio } = empezarCalle(actual.current);
+        guardarGira(enLaCalle);
+        setInicioDuelo(inicio);
+        setGira(enLaCalle);
+      } catch (error) {
+        if (!(error instanceof ErrorJugada)) throw error;
+      }
+    },
+    [paso],
+  );
+
   /** Al final de cada mano: se guarda la gira con el duelo como va. */
   const alGuardar = useCallback((partida: Partida) => {
     if (actual.current.momento.tipo === 'duelo') guardarGira(conPartida(actual.current, partida));
@@ -97,7 +119,11 @@ export function useGira(inicial: Gira) {
     comprar: (indice: number) => paso((g) => comprar(g, indice)),
     vender: (hueco: keyof Bolsa, indice: number) => paso((g) => vender(g, hueco, indice)),
     otraRonda: () => paso(otraRonda),
-    responderPlaza: (acepta: boolean) => paso((g) => responderPlaza(g, acepta)),
+    responderPlaza: responder,
+    terminarCalle: (partida: Partida) => {
+      setInicioDuelo(null);
+      paso((g) => terminarCalle(g, partida));
+    },
     premio: (p: Premio) => paso((g) => elegirPremio(g, p)),
   };
 }

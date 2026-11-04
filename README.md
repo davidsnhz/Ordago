@@ -16,17 +16,17 @@ Sale con la moneda de oros, a pantalla completa y en vertical.
 
 ## Cómo está ahora mismo
 
-Ya se puede jugar **la primera arena de la gira, la facultad**: eliges compañero (el Lazarillo o la Recaudadora), subes por el mapa contra Miguel, Dani, Rubén y Chema, y entre duelo y duelo paras en la taberna, en la plaza o en la era. Tienes tres de Honra: si pierdes contra un secuaz, sigues; si pierdes contra Chema, te toca repetir; y sin Honra, se acaba la gira. Lo que vas viendo de cada rival se apunta solo en la Libreta.
+Ya se pueden jugar **las dos primeras arenas de la gira, la facultad y el bar**: eliges compañero (el Lazarillo o la Recaudadora), subes por el mapa contra Miguel, Dani, Rubén y Chema, luego contra Toño, Agustín, Aurelio y Manolo, y entre duelo y duelo paras en la taberna, en la plaza o en la era. Tienes tres de Honra: si pierdes contra un secuaz, sigues; si pierdes contra un jefe, te toca repetir; y sin Honra, se acaba la gira. Lo que vas viendo de cada rival se apunta solo en la Libreta.
 
-También se pueden jugar **duelos sueltos** contra cualquiera de los nueve rivales, sin gira.
+También se pueden jugar **duelos sueltos** contra cualquiera de los once rivales, sin gira.
 
-Lo siguiente es jugarla mucho, ajustar números y después el pulido (dibujos, animaciones y sonido). Las demás arenas (el bar, la Montaña Palentina, las fiestas del pueblo y el casino) ya están pensadas en [la gira](docs/gira.md), pero todavía no están en el juego. Todo lo demás está en el [documento de diseño](docs/diseno-juego.md) (también en [PDF](<docs/Órdago — Documento de diseño.pdf>)).
+Lo siguiente es jugarla mucho, ajustar números y después el pulido (dibujos, animaciones y sonido). Las demás arenas (la Montaña Palentina, las fiestas del pueblo y el casino) ya están pensadas en [la gira](docs/gira.md), pero todavía no están en el juego. Todo lo demás está en el [documento de diseño](docs/diseno-juego.md) (también en [PDF](<docs/Órdago — Documento de diseño.pdf>)).
 
 ## Cómo se juega
 
 ### Lo básico
 
-- Es un duelo **a 20 piedras**. Gana el primero que llega, o el que gana un órdago.
+- Es un duelo **a 20 piedras** en el duelo suelto; en la gira, cada nivel pide más (25, 30, 35, 40). Gana el primero que llega, o el que gana un órdago.
 - Se juega con la **baraja española de 40 cartas, a 8 reyes**: los treses cuentan como reyes y los doses como ases. Las figuras y los reyes valen 10 para el juego; el resto, lo que marcan; los ases, 1.
 - Cada mano se reparten 4 cartas y luego va así: **mus → Grande → Chica → Pares → Juego (o Punto) → recuento.**
 - **Ser mano** significa que hablas primero y ganas los empates. Cambia en cada mano, y quien lo es lleva la etiqueta MANO arriba.
@@ -95,7 +95,12 @@ Los de la facultad, que son los primeros de la gira (los cuatro tienen ya su dib
 - **Rubén, el colega de la cafetería.** Envida fuerte y, cuando va ganando de cinco, se crece y farolea el doble.
 - **Chema, el Repetidor.** El jefe: lleva ocho años sin pisar clase. Cuando va ganando de cinco se viene arriba (farolea el doble y te lo quiere todo); cuando va perdiendo de cinco, se arruga.
 
-Y los cinco del principio, que en la gira irán en el bar, en las fiestas del pueblo y en el casino:
+Los dos nuevos del bar:
+
+- **Toño, el Camarero.** Echa la partida entre ronda y ronda y corta siempre: con él no hay mus.
+- **Manolo, el Rey de la barra.** El jefe del bar: dos manos de calma y, desde la tercera, achispado: farolea muchísimo y se le notan los tics.
+
+Y los cinco del principio: Agustín y Aurelio ya juegan en el bar, y los demás irán en las fiestas del pueblo y en el casino:
 
 - **Agustín, el Herrero.** Bruto y directo: cuando lleva cartas se le nota en todo, envida fuerte y casi nunca farolea. Si pierde tres lances seguidos se enfada y durante dos manos te lo quiere todo.
 - **Doña Ignacia, la Viuda.** Paciente y desconfiada. Casi nunca farolea y cuando envida es que lleva algo. No acepta un órdago antes de la tercera mano, y si la miras demasiado se ofende y deja de hacer tics.

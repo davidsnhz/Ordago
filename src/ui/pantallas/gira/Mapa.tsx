@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ARENAS, GIRA, NIVEL_JEFE } from '../../../datos/gira';
+import { ARENAS, GIRA, NIVEL_JEFE, type IdArena } from '../../../datos/gira';
 import { esJefe, nivelesDe, type Gira } from '../../../estado/gira';
 import { ES } from '../../../textos/es';
 import type { IdRival } from '../../../datos/rivales';
@@ -12,14 +12,14 @@ const MAPA = G.mapa;
 
 /** Dónde va cada nivel de la arena en el camino (centro del disco), de abajo arriba. */
 const NODOS = [
-  { left: 110, top: 632, tamano: 64 },
+  { left: 110, top: 622, tamano: 64 },
   { left: 272, top: 560, tamano: 76 },
   { left: 112, top: 474, tamano: 64 },
   { left: 250, top: 376, tamano: 96 },
 ] as const;
 
 /** El camino punteado que une los cuatro niveles. */
-const CAMINO = 'M110 622 C 140 582, 270 582, 272 544 S 120 502, 122 462 S 230 402, 236 367';
+const CAMINO = 'M110 612 C 140 576, 270 582, 272 544 S 120 502, 122 462 S 230 402, 236 367';
 
 /**
  * El mapa (prototipo A1, como las arenas de Clash Royale): la arena en curso ocupa la pantalla con
@@ -33,13 +33,14 @@ export function Mapa({ gira, onJugar, onLibreta, onSalir }: { gira: Gira; onJuga
   const rival = niveles[gira.nivel]!;
   const textos = ES.rivales[rival];
   const jefe = ES.rivales[niveles[NIVEL_JEFE]!].nombre;
-  const regla = esJefe(gira.nivel) ? MAPA.ayudaRegla[rival] : null;
+  const regla = MAPA.ayudaRegla[rival] ?? null;
+  const aviso = gira.pendiente.aviso ? G.avisos[gira.pendiente.aviso].mapa : null;
 
   return (
     <div className="pantalla">
       {siguienteArena && (
         <>
-          <div className="mapa__bar" />
+          <div className={clases('mapa__siguiente', `mapa__siguiente--${siguienteArena.id}`)} />
           <div className="mapa__niebla" />
           <div className="cinta cinta--tinta" style={{ top: 128 }}>
             {MAPA.arena(gira.arena + 2, ES.arenas[siguienteArena.id].nombre)}
@@ -47,18 +48,8 @@ export function Mapa({ gira, onJugar, onLibreta, onSalir }: { gira: Gira; onJuga
           </div>
         </>
       )}
-      <div className="mapa__facultad" />
-      <svg className="mapa__edificio" viewBox="0 0 330 120" aria-hidden="true">
-        <rect x="20" y="30" width="290" height="90" fill="#c99c55" stroke="#231915" strokeWidth="3" />
-        <polygon points="10,32 165,0 320,32" fill="#b98a45" stroke="#231915" strokeWidth="3" />
-        <g fill="#8c5629" stroke="#231915" strokeWidth="2.5">
-          <path d="M45 120 V70 a15 15 0 0 1 30 0 V120" />
-          <path d="M95 120 V70 a15 15 0 0 1 30 0 V120" />
-          <path d="M150 120 V62 a15 15 0 0 1 30 0 V120" />
-          <path d="M205 120 V70 a15 15 0 0 1 30 0 V120" />
-          <path d="M255 120 V70 a15 15 0 0 1 30 0 V120" />
-        </g>
-      </svg>
+      <div className={clases('mapa__suelo', `mapa__suelo--${arena.id}`)} />
+      <Fachada arena={arena.id} />
       <div className="cinta" style={{ top: 242 }}>
         {MAPA.arena(gira.arena + 1, ES.arenas[arena.id].nombre)}
       </div>
@@ -116,16 +107,51 @@ export function Mapa({ gira, onJugar, onLibreta, onSalir }: { gira: Gira; onJuga
 
       <div className="siguiente panel panel--sombra">
         <div className="siguiente__que">
-          {MAPA.nivel(gira.nivel + 1)} · {MAPA.gana(GIRA.realesPorNivel[gira.nivel]!)}
+          {MAPA.nivel(gira.nivel + 1)} · {MAPA.aPiedras(GIRA.piedrasPorNivel[gira.nivel]!)} · {MAPA.gana(GIRA.realesPorNivel[gira.nivel]!)}
           {gira.intento > 0 && ` · ${MAPA.otraVez}`}
         </div>
         <div className="siguiente__quien">{textos.titulo}</div>
         {regla && <p className="siguiente__regla">{regla}</p>}
+        {aviso && <p className="siguiente__regla siguiente__aviso">{aviso}</p>}
         <BotonApuesta variante="gualda" onClick={onJugar} autoFocus>
           {MAPA.aLaMesa}
         </BotonApuesta>
       </div>
     </div>
+  );
+}
+
+/** El edificio de cada arena, con formas planas hasta que esté su dibujo. */
+function Fachada({ arena }: { arena: IdArena }) {
+  if (arena === 'bar')
+    return (
+      <svg className="mapa__edificio" viewBox="0 0 330 120" aria-hidden="true">
+        <rect x="20" y="24" width="290" height="96" fill="#e7dcc0" stroke="#231915" strokeWidth="3" />
+        <rect x="34" y="2" width="114" height="34" rx="4" fill="#b02a1e" stroke="#231915" strokeWidth="3" />
+        <text className="mapa__rotulo" x="91" y="28" textAnchor="middle">
+          {MAPA.rotuloBar}
+        </text>
+        <g stroke="#231915" strokeWidth="2.5">
+          <path d="M34 48 H148 L156 66 H26 Z" fill="#2c54a0" />
+          <path d="M182 48 H296 L304 66 H174 Z" fill="#2c54a0" />
+          <rect x="40" y="66" width="96" height="40" fill="#8fb2b8" />
+          <rect x="194" y="66" width="96" height="40" fill="#8fb2b8" />
+          <rect x="146" y="72" width="38" height="48" fill="#8c5629" />
+        </g>
+      </svg>
+    );
+  return (
+    <svg className="mapa__edificio" viewBox="0 0 330 120" aria-hidden="true">
+      <rect x="20" y="30" width="290" height="90" fill="#c99c55" stroke="#231915" strokeWidth="3" />
+      <polygon points="10,32 165,0 320,32" fill="#b98a45" stroke="#231915" strokeWidth="3" />
+      <g fill="#8c5629" stroke="#231915" strokeWidth="2.5">
+        <path d="M45 120 V70 a15 15 0 0 1 30 0 V120" />
+        <path d="M95 120 V70 a15 15 0 0 1 30 0 V120" />
+        <path d="M150 120 V62 a15 15 0 0 1 30 0 V120" />
+        <path d="M205 120 V70 a15 15 0 0 1 30 0 V120" />
+        <path d="M255 120 V70 a15 15 0 0 1 30 0 V120" />
+      </g>
+    </svg>
   );
 }
 

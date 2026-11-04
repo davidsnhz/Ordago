@@ -558,7 +558,8 @@
 
 /* ——— El mapa (A1): cada arena es un tramo del camino ——— */
 
-.mapa__bar {
+/* La arena siguiente asoma arriba, tapada por la niebla. */
+.mapa__siguiente {
   position: absolute;
   left: 0;
   right: 0;
@@ -566,6 +567,10 @@
   height: 232px;
   background: #5c3f2b;
   background-image: repeating-linear-gradient(0deg, transparent 0 40px, rgba(0, 0, 0, 0.25) 40px 43px);
+}
+
+.mapa__siguiente--montana {
+  background-color: #566a4c;
 }
 
 .mapa__niebla {
@@ -577,7 +582,7 @@
   background: rgba(234, 223, 196, 0.55);
 }
 
-.mapa__facultad {
+.mapa__suelo {
   position: absolute;
   left: 0;
   right: 0;
@@ -586,6 +591,16 @@
   background-color: #dcb878;
   background-image: var(--punteado-papel);
   background-size: 6px 6px;
+}
+
+.mapa__suelo--bar {
+  background-color: #c9a98a;
+}
+
+.mapa__rotulo {
+  font-family: var(--letra-grito);
+  font-size: 24px;
+  fill: #f2e8d2;
 }
 
 .mapa__edificio {
@@ -828,6 +843,10 @@
   line-height: 1.2;
 }
 
+.siguiente__aviso {
+  color: var(--verde);
+}
+
 /* ——— Después del duelo (R) ——— */
 
 .resultado__titulo {
@@ -908,6 +927,10 @@
   font-style: italic;
   font-size: 12px;
   color: var(--almagre);
+}
+
+.estado-gira__aviso--gana {
+  color: var(--verde);
 }
 
 .libreta-nota {

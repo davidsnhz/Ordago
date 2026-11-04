@@ -4,6 +4,8 @@ import type { ModoReyes } from '../nucleo/carta';
 export interface Reglas {
   /** Piedras para ganar el duelo (4 amarracos). */
   piedrasParaGanar: number;
+  /** Una mano suelta (la partida en la calle): gana quien más piedras se lleve en ella. */
+  unaSolaMano?: boolean;
   /** Rondas de descarte permitidas en cada mano. */
   rondasMus: number;
   /** Envite más pequeño («envido» son 2). */

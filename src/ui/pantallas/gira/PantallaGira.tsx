@@ -28,13 +28,31 @@ export function PantallaGira({
   const { gira, inicioDuelo } = g;
   const { momento } = gira;
 
-  const partidaEnCurso = momento.tipo === 'duelo' ? momento.partida : null;
+  const partidaEnCurso = momento.tipo === 'duelo' || momento.tipo === 'calle' ? momento.partida : null;
   // La mesa empieza contando el reparto si el duelo es nuevo; si se retoma, desde donde se guardó.
   const inicioMesa = useCallback(
     () => (inicioDuelo ? aplicarNovedades(mesaInicial(inicioDuelo.partida), inicioDuelo) : mesaInicial(partidaEnCurso!)),
     // Solo cuenta al montar la mesa (una por duelo).
     [partidaEnCurso?.semilla],
   );
+
+  if (momento.tipo === 'calle') {
+    return (
+      <Mesa
+        key={momento.partida.semilla}
+        modo={{
+          tipo: 'gira',
+          inicio: inicioMesa,
+          // Es una sola mano: si sales a medias, vuelves a empezarla.
+          alGuardar: () => {},
+          bolsa: null,
+          onGastar: () => {},
+          onTerminar: g.terminarCalle,
+          onSalir: onPortada,
+        }}
+      />
+    );
+  }
 
   if (momento.tipo === 'duelo') {
     return (

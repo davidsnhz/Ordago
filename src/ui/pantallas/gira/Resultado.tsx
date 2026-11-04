@@ -1,3 +1,4 @@
+import { ARENAS } from '../../../datos/gira';
 import { esJefe, rivalActual, type Gira, type LineaReales, type Parada, type ResumenDuelo } from '../../../estado/gira';
 import { cargarLibreta, textoNota } from '../../../estado/libreta';
 import { ES } from '../../../textos/es';
@@ -5,6 +6,7 @@ import { BotonApuesta, clases } from '../../componentes/piezas';
 import { Honra, Moneda } from './Piezas';
 
 const R = ES.gira.resultado;
+const enMinuscula = (texto: string) => texto.charAt(0).toLowerCase() + texto.slice(1);
 
 function concepto(linea: LineaReales, resumen: ResumenDuelo): string {
   switch (linea.concepto) {
@@ -24,6 +26,8 @@ function concepto(linea: LineaReales, resumen: ResumenDuelo): string {
       return R.lineas.recaudadora;
     case 'forastero':
       return R.lineas.forastero(resumen.forastero === 'ganada');
+    case 'hucha':
+      return R.lineas.hucha;
   }
 }
 
@@ -77,12 +81,20 @@ export function Resultado({ gira, resumen, onParada, onSeguir }: { gira: Gira; r
             <div className="rotulo">{R.honra}</div>
             <Honra valor={resumen.honra.despues} />
             {resumen.honra.despues < resumen.honra.antes && <span className="estado-gira__aviso">{R.pierdeHonra}</span>}
+            {resumen.honra.despues > resumen.honra.antes && <span className="estado-gira__aviso estado-gira__aviso--gana">{R.ganaHonra}</span>}
           </div>
           <div className="panel">
             <div className="rotulo">{R.cara}</div>
             <div className="estado-gira__valor">{resumen.cara}</div>
           </div>
         </div>
+
+        {resumen.aviso && (
+          <div className="libreta-nota resultado__aviso">
+            <div className="rotulo">{R.aviso}</div>
+            <p>{ES.gira.avisos[resumen.aviso].resultado}</p>
+          </div>
+        )}
 
         {notas.length > 0 && (
           <div className="libreta-nota">
@@ -95,7 +107,7 @@ export function Resultado({ gira, resumen, onParada, onSeguir }: { gira: Gira; r
 
         {resumen.siguiente === 'paradas' ? (
           <>
-            <div className="ahora">{R.ahora}</div>
+            <div className="ahora">{esJefe(resumen.nivel) && resumen.ganado ? R.ahoraArena(enMinuscula(ES.arenas[ARENAS[gira.arena]!.id].nombre)) : R.ahora}</div>
             <div className="paradas">
               {PARADAS.map((p) => (
                 <button key={p} type="button" className="parada" onClick={() => onParada(p)}>

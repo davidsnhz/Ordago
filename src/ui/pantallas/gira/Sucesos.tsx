@@ -1,5 +1,6 @@
 import { COMPANEROS } from '../../../datos/companeros';
-import { ARENAS, GIRA } from '../../../datos/gira';
+import { ARENAS, GIRA, piedrasDeFiesta } from '../../../datos/gira';
+import type { IdObjeto } from '../../../datos/objetos';
 import {
   companeroDePremio,
   premioDisponible,
@@ -15,6 +16,13 @@ import { Hud, nombreCorto } from './Piezas';
 
 const G = ES.gira;
 const P = G.plaza;
+
+/** Lo que vende el timador, con su artículo («la Medalla», «el Yesquero»). */
+const conArticulo = (id: IdObjeto): string => {
+  const objeto: { nombre: string; articulo?: 'el' } = ES.objetos[id];
+  return `${objeto.articulo ?? 'la'} ${objeto.nombre}`;
+};
+const mayuscula = (texto: string) => texto.charAt(0).toUpperCase() + texto.slice(1);
 
 /** La plaza: pasa algo, se responde y se vuelve al mapa. */
 export function Plaza({
@@ -45,15 +53,13 @@ export function Plaza({
       break;
     case 'fiesta':
       titulo = P.fiesta.titulo;
-      texto = P.fiesta.texto(GIRA.plaza.fiesta);
+      texto = P.fiesta.texto(piedrasDeFiesta(GIRA.piedrasPorNivel[gira.nivel]!));
       aceptar = P.fiesta.aceptar;
       rechazar = null;
       break;
     case 'timador': {
-      const objeto = ES.objetos[evento.objeto].nombre;
       titulo = P.timador.titulo;
-      // Los amuletos que vende (la Medalla, la Boina) son femeninos.
-      texto = P.timador.texto(`la ${objeto}`, evento.precio);
+      texto = P.timador.texto(conArticulo(evento.objeto), evento.precio);
       aceptar = P.timador.aceptar(evento.precio);
       rechazar = P.timador.no;
       if (!puede) motivoNo = gira.reales < evento.precio ? P.timador.sinDinero : P.timador.sinHueco;
@@ -64,6 +70,12 @@ export function Plaza({
       texto = P.monja.texto;
       aceptar = P.monja.aceptar;
       rechazar = null;
+      break;
+    case 'calle':
+      titulo = P.calle.titulo;
+      texto = P.calle.texto(GIRA.plaza.calle.premio);
+      aceptar = P.calle.aceptar;
+      rechazar = P.calle.no;
       break;
   }
 
@@ -101,7 +113,7 @@ export function Plaza({
 }
 
 function textoDesenlace(evento: EventoPlaza, desenlace: DesenlacePlaza): string {
-  const objeto = evento.tipo === 'timador' ? ES.objetos[evento.objeto].nombre : '';
+  const objeto = evento.tipo === 'timador' ? conArticulo(evento.objeto) : '';
   switch (desenlace) {
     case 'apuestaAceptada':
       return P.forastero.aceptada;
@@ -110,13 +122,19 @@ function textoDesenlace(evento: EventoPlaza, desenlace: DesenlacePlaza): string 
     case 'fiesta':
       return P.fiesta.hecho;
     case 'timadorFalso':
-      return P.timador.falso(`La ${objeto}`);
+      return P.timador.falso(mayuscula(objeto));
     case 'timadorBueno':
-      return P.timador.bueno(`la ${objeto}`);
+      return P.timador.bueno(objeto);
     case 'timadorRechazado':
       return P.timador.rechazado;
     case 'monja':
       return P.monja.hecho;
+    case 'calleGanada':
+      return P.calle.ganada(GIRA.plaza.calle.premio);
+    case 'callePerdida':
+      return P.calle.perdida;
+    case 'calleRechazada':
+      return P.calle.rechazada;
   }
 }
 
@@ -196,14 +214,16 @@ export function PremioDelJefe({ gira, onElegir }: { gira: Gira; onElegir: (p: Pr
   );
 }
 
-/** El final de la gira: superada la arena (de momento, la única hecha) o sin Honra. */
+/** El final de la gira: superada la última arena hecha o sin Honra. */
 export function FinDeGira({ gira, victoria, onOtra, onPortada }: { gira: Gira; victoria: boolean; onOtra: () => void; onPortada: () => void }) {
   const F = G.fin;
+  const arena = ES.arenas[ARENAS[gira.arena]!.id].nombre;
+  const siguiente = ARENAS[gira.arena + 1];
   return (
     <div className="pantalla">
       <div className="suceso panel panel--sombra">
-        <h3>{victoria ? F.victoria : F.derrota}</h3>
-        <p>{victoria ? F.victoriaTexto : F.derrotaTexto}</p>
+        <h3>{victoria ? F.victoria(arena) : F.derrota}</h3>
+        <p>{victoria ? F.victoriaTexto(siguiente ? ES.arenas[siguiente.id].nombre : '') : F.derrotaTexto}</p>
         <p className="suceso__grande">{F.duelos(gira.cuenta.ganados, gira.cuenta.duelos)}</p>
         <p>{F.reales(gira.cuenta.reales)}</p>
         <BotonApuesta variante="gualda" onClick={onOtra} autoFocus>

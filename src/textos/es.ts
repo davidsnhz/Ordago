@@ -36,6 +36,8 @@ export interface TextosRival {
     trato?: string;
     tratoAceptado?: string;
     tratoRechazado?: string;
+    /** Manolo, cuando le cae la caña de más. */
+    achispado?: string;
     /** Rubén y Chema, cuando se vienen arriba o se arrugan. */
     crecido?: string;
     arrugado?: string;
@@ -52,6 +54,31 @@ const TICS_CURA = { bebeVino: 'bebe un sorbo de vino', miraAlCielo: 'mira al cie
 const SIGNIFICADO_CURA = { bebeVino: 'lleva juego', miraAlCielo: 'está faroleando', juntaManos: 'lleva duples' };
 
 const RIVALES: Record<IdRival, TextosRival> = {
+  // ——— La partida en la calle ———
+  vecino: {
+    nombre: 'El vecino',
+    etiqueta: 'VECINO',
+    titulo: 'Un vecino',
+    comarca: 'La plaza',
+    saludo: { accion: 'UNA MANO', frase: '«Una manita y me voy, que tengo el pan en el horno.»' },
+    frases: {
+      mus: ['«Mus, hombre.»', '«Dame mus, que con estas no voy a ningún lado.»'],
+      corto: ['«Corto, que tengo prisa.»', '«No, no, así me quedo.»'],
+      descarte: ['«Estas, fuera.»', '«A ver si cambia la cosa.»'],
+      paso: ['«Paso.»', '«Por mí, paso.»'],
+      envido: ['«Envido, que hoy me siento con suerte.»', '«Te envido, a ver qué haces.»'],
+      mas: ['«Más, que aquí me conocen.»', '«Subo.»'],
+      quiero: ['«Lo quiero.»', '«Venga, quiero.»'],
+      noQuiero: ['«Eso no lo quiero.»', '«Déjalo, déjalo.»'],
+      ordago: ['«¡Órdago! Total, es una mano.»'],
+      declara: ['«Esto llevo.»'],
+      gana: '«Te la gano y me voy, que se me quema el pan.»',
+      pierde: '«Toma, tus reales. Otro día te doy la revancha.»',
+    },
+    tics: {},
+    significadoTics: {},
+  },
+
   // ——— La facultad ———
   lucia: {
     nombre: 'Miguel',
@@ -147,6 +174,55 @@ const RIVALES: Record<IdRival, TextosRival> = {
     },
     tics: { bajaGafas: 'se baja las gafas de sol', bebeRefresco: 'le da un trago al refresco' },
     significadoTics: { bajaGafas: 'lleva una mano fuerte', bebeRefresco: 'está faroleando' },
+  },
+
+  // ——— El bar (Agustín y Aurelio están con los cinco de abajo) ———
+  tono: {
+    nombre: 'Toño',
+    etiqueta: 'TOÑO',
+    titulo: 'Toño, el Camarero',
+    comarca: 'El bar',
+    saludo: { accion: 'UNA RONDITA', frase: '«Echo una mano y vuelvo, que se me acumulan las cañas.»' },
+    frases: {
+      mus: ['«Mus, pero rapidito.»'],
+      corto: ['«Corto, que tengo la barra llena.»', '«Sin mus, que se me calientan las cañas.»', '«Corto. ¡Ya voy, ya voy!»'],
+      descarte: ['«Fuera, y a fregar.»'],
+      paso: ['«Paso, que me llaman de la tres.»', '«Paso. Apúntamelo.»'],
+      envido: ['«Envido, y marchando.»', '«Dos para la mesa y un envido para ti.»'],
+      mas: ['«Más, y una de bravas.»', '«Subo. Esta invita la casa.»'],
+      quiero: ['«Marchando un quiero.»', '«Lo quiero, con hielo.»'],
+      noQuiero: ['«Esa no la quiero, pero te la apunto.»', '«No quiero, que me pillas con las manos llenas.»'],
+      ordago: ['«¡Órdago! Y a cerrar, que son las doce.»'],
+      declara: ['«Lo que hay en la vitrina.»'],
+      gana: '«¿Ves? Y sin derramar ni una caña.»',
+      pierde: '«Te lo apunto en la cuenta. Y ahora déjame, que me llaman.»',
+    },
+    tics: { panoAlHombro: 'se echa el paño al hombro' },
+    significadoTics: { panoAlHombro: 'lleva una mano fuerte' },
+  },
+  manolo: {
+    nombre: 'Manolo',
+    etiqueta: 'MANOLO',
+    titulo: 'Manolo, el Rey de la barra',
+    comarca: 'El bar',
+    saludo: { accion: 'EL REY DE LA BARRA', frase: '«Aquí, el que no quiere, paga la ronda.»' },
+    frases: {
+      mus: ['«Mus, que hay tiempo.»', '«Mus, tranquilo, que esto es largo.»'],
+      corto: ['«Corto. Sin prisa.»', '«No hay mus, campeón.»'],
+      descarte: ['«Estas, con los cacahuetes.»', '«Fuera, que están aguadas.»'],
+      paso: ['«Paso. Se está bien aquí.»', '«Yo paso, que me pido otra.»'],
+      envido: ['«Envido, y pon otra.»', '«Envido. Esta la pagas tú.»'],
+      mas: ['«¡Más, y que corra la caña!»', '«Subo. Apúntalo en mi cuenta.»'],
+      quiero: ['«Quiero, que el que no quiere paga.»', '«Lo quiero, chaval.»'],
+      noQuiero: ['«No quiero. Pago la ronda, pago.»', '«Esa te la dejo. Ponle una a este.»'],
+      ordago: ['«¡Órdago! ¡Y otra ronda!»', '«¡Órdago, que para eso soy el rey de esta barra!»'],
+      declara: ['«Lo que hay, y a mucha honra.»'],
+      achispado: '«¡Ponme otra! Que esto ya se está poniendo bueno.»',
+      gana: '«El que no quiere, paga. Y tú has pagado.»',
+      pierde: '«Bah. Mañana, otra. Y hoy invitas tú.»',
+    },
+    tics: { rascaBarriga: 'se rasca la barriga', repeina: 'se repeina los cuatro pelos', tragoCana: 'le da un trago a la caña' },
+    significadoTics: { rascaBarriga: 'lleva una mano fuerte', repeina: 'está faroleando', tragoCana: 'lleva juego' },
   },
 
   // ——— Los cinco que ya estaban ———
@@ -324,7 +400,8 @@ export const ES = {
   } satisfies Record<Lance, string>,
 
   mesa: {
-    marcador: 'A 20 piedras',
+    marcador: (piedras: number) => `A ${piedras} piedras`,
+    unaMano: 'Una sola mano',
     esMano: 'mano',
     ayudaMano: 'Es mano: habla primero y gana los empates',
     tu: 'Tú',
@@ -391,9 +468,11 @@ export const ES = {
     ordagoA: (alLance: string) => `¡ÓRDAGO ${alLance.toUpperCase()}!`,
     tiraOrdago: (rival: string | null) => (rival ? `Lo tira ${rival}` : 'Lo tiras tú'),
     hasGanado: '¡HAS GANADO EL DUELO!',
+    hasGanadoMano: '¡LE HAS GANADO LA MANO!',
     teGana: (nombre: string) => `${nombre.toUpperCase()} TE GANA`,
     porOrdago: 'por órdago',
     aPiedras: 'a piedras',
+    aUnaMano: 'a una mano',
     girar: 'Pon el móvil en vertical para jugar',
     artePendiente: 'ARTE PENDIENTE',
     depurar: 'Depurar',
@@ -429,6 +508,8 @@ export const ES = {
     estadoOfendida: 'OFENDIDA',
     ayudaOfendida: 'Le has echado un órdago antes de la tercera mano: no hará tics esta mano ni la siguiente',
     crecido: '¡CRECIDO!',
+    achispado: '¡ACHISPADO!',
+    ayudaAchispado: 'Va achispado: farolea muchísimo, sube más y tira órdagos sin nada. Y se le notan los tics',
     ayudaCrecido: (quiereTodo: boolean) => `Va ganando de 5 o más: farolea el doble${quiereTodo ? ' y te lo quiere todo' : ''}`,
     arrugado: 'ARRUGADO',
     ayudaArrugado: 'Va perdiendo de 5 o más: no farolea y casi no quiere',
@@ -461,6 +542,7 @@ export const ES = {
       penitencia: (rival: string) => `${rival} te impone penitencia`,
       ofendida: (rival: string) => `${rival} se ofende`,
       crecido: (rival: string) => `${rival} se viene arriba`,
+      achispado: (rival: string) => `${rival} pide otra caña`,
       arrugado: (rival: string) => `${rival} se arruga`,
       gana: (rival: string) => `${rival} te gana el duelo`,
       pierde: (rival: string) => `${rival} se rinde`,
@@ -506,6 +588,7 @@ export const ES = {
       ofendida: 'No hará tics esta mano ni la siguiente',
       seTeNota: 'Se te ha notado el pulso',
       crecido: (quiereTodo: boolean) => `Va ganando: farolea el doble${quiereTodo ? ' y te lo quiere todo' : ''}`,
+      achispado: 'Va achispado: farolea muchísimo y se le notan los tics',
       arrugado: 'Va perdiendo: no farolea y casi no quiere',
     },
     mano: (n: number) => `Mano ${n}`,
@@ -566,7 +649,16 @@ export const ES = {
       efecto: 'Una vez por duelo, te explican el próximo tic del rival.',
       corto: 'te explican un tic',
     },
-  } satisfies Record<IdObjeto, { nombre: string; efecto: string; corto: string }>,
+    copaAnis: { nombre: 'Copa de anís', efecto: 'En esta mano ganas los empates, aunque no seas mano.', corto: 'empates, esta mano' },
+    cafePuchero: { nombre: 'Café de puchero', efecto: 'Una ronda de mus más en esta mano. Hay que tomárselo antes de la Grande.', corto: 'una ronda más de mus' },
+    invitarRonda: { nombre: 'Invitar a una ronda', efecto: 'El rival rechaza tu próximo envite, lleve lo que lleve.', corto: 'rechaza tu envite' },
+    pelota: { nombre: 'Hacerle la pelota', efecto: 'Se confía: durante dos manos te quiere más los envites, como si tu Cara estuviera 30 puntos más baja.', corto: 'te quiere más' },
+    ristra: { nombre: 'Ristra de ajos', efecto: 'Los rivales no hacen tics que no significan nada: Aurelio deja de golpear la vara.', corto: 'sin tics de mentira' },
+    yesquero: { nombre: 'Yesquero', articulo: 'el', efecto: 'Cuando tiras un órdago y no te lo quieren, cobras 2 piedras más.', corto: 'órdago rechazado, +2' },
+    hucha: { nombre: 'Hucha de barro', efecto: 'Al acabar cada arena, 1 real por cada 5 que tengas ahorrados (hasta 5).', corto: 'intereses por arena' },
+    navaja: { nombre: 'Navaja de Albacete', efecto: 'Si ganas un duelo con un órdago, recuperas 1 de Honra (hasta 3).', corto: 'órdago ganado, +1 de Honra' },
+    jarraManolo: { nombre: 'La Jarra de Manolo', efecto: 'Cuando el rival te dice «no quiero», cobras 1 piedra más.', corto: '«no quiero», +1' },
+  } satisfies Record<IdObjeto, { nombre: string; efecto: string; corto: string; articulo?: 'el' }>,
   tiposObjeto: { bebida: 'BEBIDA', jugarreta: 'JUGARRETA', amuleto: 'AMULETO', raro: 'OBJETO RARO' } satisfies Record<TipoObjeto, string>,
 
   companeros: {
@@ -614,13 +706,37 @@ export const ES = {
       aquiEstas: 'AQUÍ ESTÁS',
       jefe: 'JEFE',
       nivel: (n: number) => `Nivel ${n} de 4`,
-      gana: (reales: number) => `ganarle da ${reales} reales`,
+      aPiedras: (piedras: number) => `a ${piedras} piedras`,
+      gana: (reales: number) => `da ${reales} reales`,
       otraVez: 'otra vez',
       aLaMesa: '¡A LA MESA!',
       libreta: 'Libreta',
       salir: 'Salir',
-      reglas: { chema: 'Se viene arriba' } as Partial<Record<IdRival, string>>,
-      ayudaRegla: { chema: 'Si va ganando de 5 se crece y farolea; si va perdiendo, se arruga.' } as Partial<Record<IdRival, string>>,
+      /** El rótulo del bar, en su fachada. */
+      rotuloBar: 'BAR',
+      reglas: { chema: 'Se viene arriba', manolo: 'Una caña más' } as Partial<Record<IdRival, string>>,
+      ayudaRegla: {
+        ruben: 'Si le ganas de 10 o más, Chema empezará arrugado.',
+        chema: 'Si va ganando de 5 se crece y farolea; si va perdiendo, se arruga.',
+        tono: 'Corta siempre: con él no hay mus.',
+        ruperto: 'Si pierde 3 lances seguidos se enfada y te lo quiere todo.',
+        fulgencio: 'Si le ganas, le paga una ronda a Manolo, que se soltará antes.',
+        manolo: 'Dos manos de calma. Desde la tercera, achispado: farolea muchísimo y se le notan los tics.',
+      } as Partial<Record<IdRival, string>>,
+    },
+
+    /** Lo que un secuaz le cuenta a su jefe, en cada sitio donde se ve. */
+    avisos: {
+      rubenAvisa: {
+        resultado: 'Rubén se va corriendo a contárselo a Chema. Chema empezará arrugado.',
+        mapa: 'Rubén le ha avisado: empieza arrugado.',
+        mesa: 'Rubén le ha avisado: arrugado hasta que te saque 5 piedras.',
+      },
+      aurelioInvita: {
+        resultado: 'Aurelio, para consolarse, le paga una ronda a Manolo. Manolo se soltará una mano antes.',
+        mapa: 'Aurelio le ha invitado: se suelta una mano antes.',
+        mesa: 'Aurelio le ha pagado una ronda: Manolo se suelta desde la segunda mano.',
+      },
     },
 
     mesa: {
@@ -650,6 +766,10 @@ export const ES = {
       recaudadora: 'La Recaudadora apunta: si ganas el próximo órdago, cobras el triple.',
       medalla: 'La Medalla de la Virgen te salva: este farol no te baja la Cara.',
       explicado: (significado: string) => `Los Apuntes dicen: ${significado}`,
+      copaAnis: 'Una copa de anís: esta mano ganas los empates.',
+      cafePuchero: 'Un café de puchero: esta mano tienes una ronda más de mus.',
+      invitarRonda: (rival: string) => `Invitas a ${rival} a una ronda: no querrá tu próximo envite`,
+      pelota: (rival: string) => `Le haces la pelota a ${rival}: dos manos queriéndote más los envites`,
     },
 
     finDuelo: 'SEGUIR',
@@ -668,6 +788,7 @@ export const ES = {
         triple: 'Órdago al triple (la Recaudadora)',
         recaudadora: 'La Recaudadora',
         forastero: (ganada: boolean) => (ganada ? 'Apuesta del forastero: ganada' : 'Apuesta del forastero: perdida'),
+        hucha: 'La Hucha de barro',
       },
       total: 'Total',
       totalReales: (n: number) => `+${n} ${n === 1 ? 'real' : 'reales'}`,
@@ -675,8 +796,11 @@ export const ES = {
       honra: 'Honra',
       cara: 'Tu Cara',
       pierdeHonra: 'Pierdes 1 de Honra',
+      ganaHonra: 'Recuperas 1 de Honra',
       libreta: 'Apuntado en la Libreta',
+      aviso: 'Corre la voz',
       ahora: '¿Y ahora, adónde?',
+      ahoraArena: (arena: string) => `Te espera ${arena}. ¿Adónde vas antes?`,
       paradas: {
         taberna: { nombre: 'La taberna', texto: 'Comprar bebidas, jugarretas, amuletos o un compañero' },
         plaza: { nombre: 'La plaza', texto: 'Algo pasa: una apuesta, un timador… o una monja' },
@@ -714,7 +838,7 @@ export const ES = {
       seguir: 'SEGUIR',
       no: 'NO, GRACIAS',
       /** Lo que pone en el dibujo provisional de cada suceso. */
-      marca: { forastero: 'FORASTERO', fiesta: 'FIESTA', timador: 'TIMADOR', monja: 'MONJA' },
+      marca: { forastero: 'FORASTERO', fiesta: 'FIESTA', timador: 'TIMADOR', monja: 'MONJA', calle: 'VECINO' },
       forastero: {
         titulo: 'Un forastero apuesta contigo',
         texto: (apuesta: number, premio: number) =>
@@ -747,6 +871,15 @@ export const ES = {
         aceptar: 'AMÉN',
         hecho: 'Ganas 1 de Honra.',
       },
+      calle: {
+        titulo: 'Una partida en la calle',
+        texto: (premio: number) => `Un vecino te reta a una mano, en un banco de la plaza. Si se la ganas, ${premio} reales; si la pierdes, no pasa nada.`,
+        aceptar: 'UNA MANO',
+        no: 'AHORA NO',
+        ganada: (premio: number) => `Se la has ganado: ${premio} reales a tu bolsillo.`,
+        perdida: 'Te la ha ganado. Te da una palmada en la espalda y se va.',
+        rechazada: 'El vecino se encoge de hombros y busca a otro.',
+      },
     },
 
     era: {
@@ -771,8 +904,8 @@ export const ES = {
     },
 
     fin: {
-      victoria: '¡HAS SUPERADO LA FACULTAD!',
-      victoriaTexto: 'El bar abre en la próxima versión. De momento, la gira acaba aquí.',
+      victoria: (arena: string) => `¡HAS SUPERADO ${arena.toUpperCase()}!`,
+      victoriaTexto: (siguiente: string) => `${siguiente} abre en la próxima versión. De momento, la gira acaba aquí.`,
       derrota: 'TE HAS QUEDADO SIN HONRA',
       derrotaTexto: 'La gira se acaba. Vuelves al principio desde cero; lo que has apuntado en la Libreta se queda.',
       duelos: (ganados: number, jugados: number) => `Duelos ganados: ${ganados} de ${jugados}`,

@@ -22,6 +22,8 @@ export interface SituacionEnvite {
   tFarol: number;
   /** Regla especial de Agustín: acepta todo. */
   aceptaTodo: boolean;
+  /** Parte de las piedras del duelo que lleva quien va delante (de 0 a 1). */
+  avance?: number;
   /** Número de la mano en curso. */
   numeroMano?: number;
   /** Doña Ignacia: no acepta órdagos antes de esta mano. */
@@ -118,7 +120,7 @@ export function decidirEnvite(s: SituacionEnvite, p: ParametrosRival, azar: Azar
   }
 
   // Habla sin envite delante.
-  if (!s.distraido && s.F > IA.ordago.fuerzaMinima && azar.probabilidad(IA.ordago.porAgresividad * p.agresividad)) {
+  if (!s.distraido && (s.avance ?? 1) >= IA.ordago.desdeAvance && s.F > IA.ordago.fuerzaMinima && azar.probabilidad(IA.ordago.porAgresividad * p.agresividad)) {
     return { accion: { tipo: 'ordago' }, motivo: `órdago con F ${fmt(s.F)}`, farol: false, umbral };
   }
   if (!s.distraido && s.diferencia <= -IA.ordago.desesperacion && azar.probabilidad(IA.ordago.farolPorFaroleo * p.faroleo)) {

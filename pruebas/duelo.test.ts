@@ -273,6 +273,29 @@ describe('dejes y fin del duelo a 20', () => {
   });
 });
 
+describe('una sola mano (la partida en la calle)', () => {
+  const mano = (cartasDeLaMano: { jugador: string; rival: string }, quienEsMano: 'jugador' | 'rival' = 'jugador') =>
+    jugar(dueloCon(cartasDeLaMano, { quienEsMano, reglas: { unaSolaMano: true } }), hastaPares(quienEsMano));
+
+  it('acaba al hacer el recuento y gana quien más piedras se lleva', () => {
+    const e = mano({ jugador: 'R R R 4', rival: 'S 7 6 5' }).estado;
+    expect(e.fase).toBe('finDuelo');
+    expect(e.numeroMano).toBe(1);
+    expect(e.ganador).toBe('jugador');
+    expect(e.motivoFin).toBe('piedras');
+    expect(e.marcador.jugador).toBeGreaterThan(e.marcador.rival);
+  });
+
+  it('si empatan a piedras, gana la mano', () => {
+    // Grande (1) y 34 de juego (2) para uno; Chica (1) y medias (2) para el otro: 3 a 3.
+    const reparto = { jugador: 'R C S 4', rival: 'A A A 6' };
+    const jugandoDeMano = mano(reparto, 'jugador').estado;
+    expect(jugandoDeMano.marcador.jugador).toBe(jugandoDeMano.marcador.rival);
+    expect(jugandoDeMano.ganador).toBe('jugador');
+    expect(mano(reparto, 'rival').estado.ganador).toBe('rival');
+  });
+});
+
 describe('el órdago', () => {
   it('querido: se comparan las cartas de ese lance y el ganador se lleva el duelo', () => {
     const { estado, eventos } = jugar(dueloCon({ jugador: 'R R R 7', rival: 'R C C 4' }), [

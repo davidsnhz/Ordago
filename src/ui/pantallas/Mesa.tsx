@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { COMPANEROS } from '../../datos/companeros';
-import { esDeUnUso, OBJETOS, type IdObjeto } from '../../datos/objetos';
-import { animoDe, ORDEN_RIVALES, RIVALES, type IdRival } from '../../datos/rivales';
+import { esDeUnUso, vaSiemprePuesto, type IdObjeto } from '../../datos/objetos';
+import { animoDe, estaAchispado, ORDEN_RIVALES, RIVALES, type IdRival } from '../../datos/rivales';
 import type { Bolsa } from '../../estado/gira';
 import {
   cartasDelRivalALaVista,
@@ -68,7 +68,8 @@ export type ModoMesa =
       inicio: () => EstadoMesa;
       /** Al final de cada mano y al acabar: para guardar la gira. */
       alGuardar: (partida: Partida) => void;
-      bolsa: Bolsa;
+      /** `null` en la partida en la calle: allí no se saca nada de la bolsa. */
+      bolsa: Bolsa | null;
       /** Se ha usado en la mesa una bebida o jugarreta: sale de la bolsa. */
       onGastar: (id: IdObjeto) => void;
       onTerminar: (partida: Partida) => void;
@@ -76,7 +77,7 @@ export type ModoMesa =
     };
 
 /** Posturas y caras que se pueden ver con el botón de pruebas (`null`: lo que toque). */
-const POSES_DE_PRUEBA: (string | null)[] = [null, 'crecido', 'arrugado', 'sorprendido', 'riendo', 'enfadado'];
+const POSES_DE_PRUEBA: (string | null)[] = [null, 'crecido', 'arrugado', 'achispado', 'sorprendido', 'riendo', 'enfadado'];
 
 /** La mesa: un duelo contra un rival, en vertical. */
 export function Mesa({ modo }: { modo: ModoMesa }) {
@@ -151,7 +152,7 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
         />
         <FondoVivo capa="delante" />
         <EstadoDelRival partida={partida} />
-        {modo.tipo === 'gira' && (
+        {modo.tipo === 'gira' && modo.bolsa && (
           <BotonBolsa partida={partida} bolsa={modo.bolsa} onAbrir={() => setBolsaAbierta(true)} />
         )}
         <button type="button" className="mesa__salir" onClick={modo.onSalir} aria-label={ES.gira.mesa.salirAyuda}>
@@ -224,7 +225,7 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
           alAcabar={modo.tipo === 'gira' ? () => modo.onTerminar(partida) : null}
           onSalir={modo.onSalir}
         />
-        {modo.tipo === 'gira' && bolsaAbierta && (
+        {modo.tipo === 'gira' && modo.bolsa && bolsaAbierta && (
           <PanelBolsa
             partida={partida}
             bolsa={modo.bolsa}
@@ -262,12 +263,13 @@ export function Mesa({ modo }: { modo: ModoMesa }) {
 function EstadoDelRival({ partida }: { partida: Partida }) {
   const { memoria, duelo } = partida;
   const perfil = RIVALES[partida.rivalId];
-  const animo = duelo.fase === 'finDuelo' ? null : animoDe(perfil, duelo.marcador.rival - duelo.marcador.jugador);
+  const animo = duelo.fase === 'finDuelo' ? null : animoDe(perfil, duelo.marcador.rival - duelo.marcador.jugador, Boolean(partida.extras.aviso));
   const estados = [
     memoria.manosEnfadado > 0 ? { texto: M.enfadado, ayuda: M.ayudaEnfadado } : null,
     memoria.ofendidaHastaMano >= duelo.numeroMano ? { texto: M.estadoOfendida, ayuda: M.ayudaOfendida } : null,
     animo === 'crecido' ? { texto: M.crecido, ayuda: M.ayudaCrecido(Boolean(perfil.seVieneArriba)) } : null,
     animo === 'arrugado' ? { texto: M.arrugado, ayuda: M.ayudaArrugado } : null,
+    duelo.fase !== 'finDuelo' && estaAchispado(perfil, duelo.numeroMano, Boolean(partida.extras.aviso)) ? { texto: M.achispado, ayuda: M.ayudaAchispado } : null,
   ].filter((e) => e !== null);
   if (estados.length === 0) return null;
   return (
@@ -533,8 +535,8 @@ function PanelFinal({
         </div>
         {duelo.ganador && (
           <div className="final__resultado">
-            {duelo.ganador === 'jugador' ? M.hasGanado : M.teGana(textos.nombre)}
-            <span className="final__motivo">{duelo.motivoFin === 'ordago' ? M.porOrdago : M.aPiedras}</span>
+            {duelo.ganador === 'jugador' ? (duelo.reglas.unaSolaMano ? M.hasGanadoMano : M.hasGanado) : M.teGana(textos.nombre)}
+            <span className="final__motivo">{duelo.motivoFin === 'ordago' ? M.porOrdago : duelo.reglas.unaSolaMano ? M.aUnaMano : M.aPiedras}</span>
           </div>
         )}
         {alAcabar ? (
@@ -612,10 +614,10 @@ function PanelBolsa({
           </div>
         )}
         {cosas.map((id, i) => {
-          const usable = OBJETOS[id].tipo !== 'amuleto';
+          const usable = !vaSiemprePuesto(id);
           return (
             <div key={`${id}-${i}`} className="bolsa__fila">
-              <span className="marcador bolsa__icono">{ES.objetos[id].nombre.split(' ')[0]}</span>
+              <span className="marcador bolsa__icono">{ES.objetos[id].nombre.replace(/^(La|Los) /, '').split(' ')[0]}</span>
               <div className="bolsa__texto">
                 <b>{ES.objetos[id].nombre}</b>
                 <i>{ES.objetos[id].efecto}</i>

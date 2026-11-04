@@ -9,6 +9,8 @@ export const CARA = {
   farolPillado: -12,
   ordagoPerdido: -15,
   descanso: 20,
+  /** Hacerle la pelota: te quiere los envites como si tu Cara estuviera esto más baja. */
+  pelota: 30,
   /** El orujo de la taberna. */
   orujo: 15,
   /** Un envite es farol si las cartas tenían menos de esto de ganar el lance. */

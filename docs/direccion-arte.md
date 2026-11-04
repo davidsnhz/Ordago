@@ -17,7 +17,7 @@ Este documento manda sobre cualquier mención al arte en `diseno-juego.md`. Las 
 | Movimiento y sonido de la mesa | **[cambiado] Hecho** (23 de octubre de 2026): la mesa viva, ya sin elegir | «La mesa viva», abajo |
 | Distribución de la mesa | **[cambiado] Elegida** (23 de octubre de 2026): la mesa nueva, sin acta a la vista, es la única | «La mesa nueva», abajo |
 | Fondo de la portada | **[nuevo] Provisional** (24 de octubre de 2026): la taberna con Salamanca al fondo, de David, a 941 × 1670; **[cambiado]** el mismo día, por una versión con los colores más apagados | `assets/fondos/portada.webp`; **[cambiado]** la buena, con la misma proporción y a 1170 × 2077 (ver «Pantallas») |
-| Mapa ilustrado | Provisional: la facultad con formas planas (el edificio, la arena, el bar en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
+| Mapa ilustrado | Provisional: **[cambiado]** la facultad y el bar con formas planas (el edificio, la arena, la siguiente en niebla) | `src/ui/pantallas/gira/Mapa.tsx` |
 
 Todo lo pendiente se dibuja con **marcadores** (rectángulo de trazo discontinuo en almagre, fondo nogal translúcido y el texto «ARTE PENDIENTE»), detrás de una interfaz que permita cambiar el arte sin tocar código.
 
@@ -67,7 +67,7 @@ Sacado de los estilos del juego. **IM Fell ya no sale en ningún sitio.** Lo que
 
 **Bitter Black: los botones.** Todos los botones de apuesta y de pantalla (PASO, ENVIDO, QUIERO, NO QUIERO, MÁS, CORTO, MUS, TIRAR, SIGUIENTE MANO, REVANCHA, EMPEZAR LA GIRA, ¡A LA MESA!, ENTENDIDO, CERRAR…), el botón de la bolsa, el «−/+» del selector de envite y las paradas después del duelo (taberna, plaza, era). El de ¡ÓRDAGO! también (antes iba en Alfa Slab One).
 
-**Alegreya Sans SC: rótulos y etiquetas.** Los rótulos de todas las pantallas (*Tu Cara*, *Te cobras*, *Honra*, *Reales*…); en la mesa, *A 20 piedras*, la insignia MANO, *SE TE NOTA*, el nombre de cada casilla, los lances como pasos (mesa de antes y viva), la pestaña del acta y lo que dice el rival en ella (versalitas rojas), *Toda la mano*, *Le toca a Chema…*, el 4 y el 19 del selector, SALIR, los botones de pruebas, el marcador del panel final, la lista de rivales, *Lo tira Chema* en el órdago, *Cerrar* de la bolsa y del historial y el nombre de cada cosa en la bolsa; en la gira, los títulos y el compañero de la barra, *Siempre* y *Su seña* de los compañeros, el nombre de cada nivel en el mapa, los rótulos de las baldas y las etiquetas de la taberna, el lugar de cada suceso y el premio; en la portada, la arena dentro de *SEGUIR LA GIRA*.
+**Alegreya Sans SC: rótulos y etiquetas.** Los rótulos de todas las pantallas (*Tu Cara*, *Te cobras*, *Honra*, *Reales*…); en la mesa, *A 30 piedras* (**[cambiado]** las que pida el duelo) o *Una sola mano*, la insignia MANO, *SE TE NOTA*, el nombre de cada casilla, los lances como pasos (mesa de antes y viva), la pestaña del acta y lo que dice el rival en ella (versalitas rojas), *Toda la mano*, *Le toca a Chema…*, el 4 y el 19 del selector, SALIR, los botones de pruebas, el marcador del panel final, la lista de rivales, *Lo tira Chema* en el órdago, *Cerrar* de la bolsa y del historial y el nombre de cada cosa en la bolsa; en la gira, los títulos y el compañero de la barra, *Siempre* y *Su seña* de los compañeros, el nombre de cada nivel en el mapa, los rótulos de las baldas y las etiquetas de la taberna, el lugar de cada suceso y el premio; en la portada, la arena dentro de *SEGUIR LA GIRA*.
 
 **Spectral SC: los nombres.** *Chema* y *Tú* en la cabecera de la mesa y encima de cada sello.
 

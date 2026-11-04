@@ -22,6 +22,11 @@ export interface Modificador {
    * piedras (el trato de Aurelio), o null. El otro decide si lo acepta.
    */
   ofreceTrato?(estado: Readonly<EstadoDuelo>): Lado | null;
+  /**
+   * Cambia lo que cobra `ganador` por un «no quiero» (p. ej. la Jarra de Manolo). `ordago`: si lo
+   * que no han querido es un órdago (el Yesquero).
+   */
+  ajustarDeje?(piedras: number, ganador: Lado, ordago: boolean, estado: Readonly<EstadoDuelo>): number;
   /** Cambia los cobros del recuento antes de apuntarlos (p. ej. la Penitencia de Don Francisco). */
   ajustarCobros?(cobros: Cobro[], estado: Readonly<EstadoDuelo>, ganadores: CobrosDeLaMano['ganadores']): Cobro[];
 }
@@ -40,6 +45,10 @@ export function quienGanaEmpate(
   estado: Readonly<EstadoDuelo>,
 ): Lado {
   return modificadores.reduce((lado, m) => m.ganaEmpate?.(lado, lance, estado) ?? lado, estado.quienEsMano);
+}
+
+export function ajustarDeje(modificadores: readonly Modificador[], piedras: number, ganador: Lado, ordago: boolean, estado: Readonly<EstadoDuelo>): number {
+  return modificadores.reduce((total, m) => m.ajustarDeje?.(total, ganador, ordago, estado) ?? total, piedras);
 }
 
 export function quienOfreceTrato(modificadores: readonly Modificador[], estado: Readonly<EstadoDuelo>): Lado | null {

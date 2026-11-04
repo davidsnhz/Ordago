@@ -66,7 +66,7 @@ export function Cabecera({
     <div className="panel cabecera" aria-label={`${textos.nombre} ${duelo.marcador.rival}, tú ${duelo.marcador.jugador}`}>
       <div className="cabecera__nombres">
         <span className="rotulo">{textos.nombre}</span>
-        <span className="cabecera__meta">{M.marcador}</span>
+        <span className="cabecera__meta">{duelo.reglas.unaSolaMano ? M.unaMano : M.marcador(duelo.reglas.piedrasParaGanar)}</span>
         <span className="rotulo">{M.tu}</span>
       </div>
       <div className="cabecera__marcador">

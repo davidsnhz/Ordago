@@ -41,6 +41,12 @@ export const IA = {
      */
     fuerzaMinima: 0.85,
     porAgresividad: 0.03,
+    /**
+     * Con buenas cartas no lo tira hasta que alguien lleve esta parte de las piedras del duelo: el
+     * órdago es el clímax, y tirado al principio acortaba los duelos (docs/decisiones.md). El de
+     * farol, de quien va perdiendo de mucho, no espera.
+     */
+    desdeAvance: 0.5,
     /** De farol, si va perdiendo de `desesperacion` o más, con probabilidad farolPorFaroleo · B. */
     farolPorFaroleo: 0.01,
     desesperacion: 8,

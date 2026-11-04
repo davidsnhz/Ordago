@@ -573,6 +573,80 @@ David mandó siete imágenes de Dani y pidió subirlo todo a GitHub y a Vercel. 
 - **Las caras:** sorprendido (manos arriba y «!!»), riendo (señalando con el vaso) y enfadado (de morros, con el puño en la mejilla).
 - **Sin crecido ni arrugado,** porque Dani no cambia de ánimo con el marcador.
 
+## Duelos más largos en la gira (4 de noviembre de 2026)
+
+David, jugando: la primera arena «se me hace un poco corta», y con Balatro, «aunque sean solo tres partidas por ronda, se hacen más largas». No dijo cómo arreglarlo. Medido con el jugador sensato (`pruebas/duracion.sim.ts`):
+
+| | Antes: a 20, órdago cuando sea | Ahora: 25, 30, 35 y 40, órdago desde la mitad |
+| --- | --- | --- |
+| Miguel | 4,1 manos | 5,4 manos |
+| Dani | 4,1 | 6,3 |
+| Rubén | 3,5 | 6,3 |
+| Chema | 3,4 | 6,9 |
+| La arena entera | 15,2 manos | 24,8 manos |
+| Duelos de una o dos manos | del 10 al 22 % | casi ninguno |
+| Duelos que acaban por órdago | del 16 al 19 % | del 14 al 20 % |
+| Reales en toda la arena | 26 | 31 |
+| Ganas a cada uno (Miguel, Dani, Rubén, Chema) | 56, 52, 50 y 39 % | 49, 54, 39 y 37 % |
+
+Con 20, 25, 30 y 40 serían 21,7 manos; a 40 todos, unas 29.
+
+- **El problema no era solo el número.** A 20 piedras, el duelo contra el jefe era el más corto de la arena: Rubén y Chema apuestan más fuerte y se llega antes. En Balatro pasa al revés: cada ciega pide más que la anterior.
+- **Decidido:** 25, 30, 35, 40 piedras, nivel a nivel, en `GIRA.piedrasPorNivel`. Alarga la arena alrededor de un 60 % y el jefe pasa a ser el duelo más largo, a 40, que es a lo que se juega el mus de verdad. Si se hace largo o sigue corto, se cambia ese número y ya está.
+- **Se pone algo más difícil.** En un duelo largo pesa menos la suerte de una mano, y el jugador sensato, que no lee los tics, gana menos a los que juegan mejor que él: a Rubén, un 39 % en lugar de cerca del 47 %. Quien se fije en los tics también los aprovecha durante más manos. De momento no toco los parámetros de los rivales: se comprueba jugando, y si se hace cuesta arriba, se bajan.
+- **Órdago del rival con buenas cartas, desde la mitad de las piedras** (`IA.ordago.desdeAvance`). A 40 piedras y sin esta regla, el 43 % de los duelos contra Chema acababan por órdago y 1 de cada 7 duraba una o dos manos; con ella, el 17 % y ninguno. El de farol, de quien va perdiendo de 8 o más, no espera, y tú puedes tirar el tuyo cuando quieras. También vale para el duelo suelto. En la calle no hay que esperar: es una sola mano.
+- **El duelo suelto sigue a 20:** es la partida rápida, y ahí no hay arena que se quede corta.
+- **La fiesta patronal, en proporción:** la cuarta parte de las piedras del duelo. Con 5 fijas, a 40 piedras apenas se notaba.
+- **Los reales:** una arena da unos 31 reales en lugar de 26 (un 19 % más), porque lo que se cobra por ganar no cambia y solo suben los envites y los faroles. No hace falta tocar los precios de la taberna; se comprueba jugando.
+- **Para más adelante:** las fases de tics de Don Rodrigo (a 10 y a 15 piedras) y el Caldo de la abuela hablan de piedras concretas. Cuando se programen el casino y la Montaña Palentina habrá que ponerlos en proporción.
+
+Otras formas de alargarla, que no he hecho porque cambian más el juego: jugar cada duelo al mejor de tres (como las vacas del mus de siempre) o poner más niveles por arena. Si estos números no le convencen, son las siguientes que probar.
+
+## La partida en la calle (4 de noviembre de 2026)
+
+El documento decía «una mano suelta contra un vecino. Si la ganas, 3 reales; si la pierdes, nada». Lo que no decía, elegido por fidelidad al mus y por ese «nada»:
+
+- **Quién gana la mano:** quien más piedras se lleve en ella; si empatan, la mano, como en todos los empates del mus.
+- **Se puede decir que no**, como al forastero y al timador.
+- **No cuenta para la Cara, ni vale la bolsa ni el compañero.** «Si la pierdes, nada» tiene que ser nada de verdad.
+- **El vecino no tiene tics** ni se apunta en la Libreta, y no sale en la lista de los duelos sueltos. Parámetros en `datos/rivales.ts`; sale con marcador hasta que David lo dibuje.
+- **Si sales a medias,** al volver empieza la misma mano de nuevo.
+
+## «Rubén le avisa» (4 de noviembre de 2026)
+
+David pidió programar lo que se avisan secuaces y jefes, que había dejado para más adelante. Lo que no decía el documento:
+
+- **Cuánto le dura a Chema estar arrugado.** «Empieza arrugado» a secas no decía hasta cuándo. Primero se le pasaba al ponerse por delante, y en la simulación no cambiaba nada: se le pasaba en la primera mano. **Se le pasa cuando te saca 5 piedras**, justo cuando se crecería. Medido: ganarle a Chema pasa del 37 % al 41 % con el jugador sensato, y del 39 % al 43 % con uno que se fija (no le quiere sin cartas y le farolea más). Uno que farolea mucho sin fijarse no gana nada. Es un premio pequeño y se puede subir si David lo ve flojo. Sale en 6 de cada 10 duelos que le ganas a Rubén.
+- **Solo la primera vez:** si Chema te gana, en la revancha ya no está arrugado.
+- **Dónde se ve:** en el mapa, ante Rubén, qué pasa si le ganas de 10 o más; después del duelo, que se va a contárselo; en el mapa, ante Chema, que está avisado; y en la mesa, la etiqueta ARRUGADO y un aviso.
+- **«Aurelio le invita» y «Se conocen de toda la vida»** son de arenas que aún no existen: se programan con ellas.
+
+## El bar (4 de noviembre de 2026)
+
+David pidió seguir con el bar. Las fichas de [La gira](gira.md) ya lo decían casi todo; esto es lo que he tenido que decidir:
+
+- **Una parada antes de la arena nueva.** El documento decía que tras el premio «se abre la siguiente arena». Sin parada no se podía gastar lo ganado hasta después del primer duelo, así que, después del premio, se elige taberna, plaza o era como entre dos duelos.
+- **Las mismas piedras y los mismos reales que en la facultad** (25, 30, 35 y 40; 4, 5, 6 y 10). Solo cambian los rivales. Es lo más sencillo de ajustar si el bar se hace corto o fácil.
+- **Manolo achispado:** lo que dice su ficha, con una pose nueva, *achispado*, para cuando David lo dibuje. Sus cortes de mus (también con pareja de reyes, y alguno de farol) no los fijaba la ficha: es lo que le pega a alguien que empieza tranquilo. El trago a la caña solo sale en el lance de Juego, porque significa que lleva juego.
+- **«Aurelio le invita»:** basta con ganarle, por lo que sea, y vale también en la revancha contra Manolo: la ronda ya se la ha tomado. El aviso de Rubén, en cambio, solo vale la primera vez.
+- **Ocho objetos más, solo desde el bar**, para que la taberna no se quede corta con dos arenas y la primera siga siendo sencilla. Elegí los que le pegan al bar y no piden otra pantalla: la Copa de anís, el Café de puchero, Invitar a una ronda, Hacerle la pelota, la Ristra de ajos, el Yesquero, la Hucha de barro y la Navaja de Albacete. La Gaseosa, el Pañuelo de hierbas y las barajas se quedan para después: piden cosas nuevas en la mesa.
+- **La Navaja de Albacete:** «los órdagos que ganas» son los que te dan el duelo, porque un órdago querido lo acaba. Por eso son 1 de Honra como mucho en cada duelo.
+- **Los compañeros siguen siendo dos:** los otros nueve piden guardar lo desbloqueado entre giras, y eso es otro trabajo. De premio se ofrece el otro de los dos.
+
+**Lo que dicen las simulaciones** (300 duelos de cada uno, jugador sensato):
+
+| | Ganas | Manos | Reales |
+| --- | --- | --- | --- |
+| Toño, a 25 | 50 % | 6,8 | 6,5 |
+| Agustín, a 30 | 42 % | 4,8 | 7,0 |
+| Aurelio, a 35 | 42 % | 6,5 | 7,9 |
+| Manolo, a 40 | 43 % | 7,0 | 10,2 |
+
+- **Dura lo mismo que la facultad** (25 manos) y da lo mismo (32 reales).
+- **Cuesta más o menos lo mismo.** Contra Manolo se gana más que contra Chema (43 % frente a 37 %), aunque sea el jefe de una arena posterior. Es porque el jugador sensato siempre juzga por sus cartas, y a un rival que farolea muchísimo eso le sale caro. Alguien que se asuste de sus envites le ganará bastante menos, y eso es justo lo que enseña la arena: atreverse a querer. **Si David lo nota fácil, lo siguiente es endurecer a Manolo**, o subir las piedras en esta arena.
+- **Que Aurelio le invite** apenas cambia nada (44 % frente a 43 %): da más manos achispado, en las que farolea más pero se le ven los tics.
+- **Lo que vale cada objeto** (duelos de cada cien que se ganan de más contra los cuatro del bar, con el jugador sensato, a 20 piedras): los de un uso, entre +0,3 y +1,1 (Hacerle la pelota +0,3, Café de puchero +0,6, Copa de anís +0,8, Invitar a una ronda +1,1), y los amuletos, alrededor de +1 (Yesquero +1,0, Ristra de ajos +0,9). Con 800 duelos, la medida tiene un margen de casi 2 puntos, así que solo dice que ninguno se dispara, y el jugador sensato no aprovecha del todo la Pelota. **La Jarra de Manolo sí se nota: +7,8**, porque cada «no quiero» da una piedra más. La dejo así por ser el premio de un jefe y porque en duelos largos una piedra pesa menos, pero si se ve excesiva es la primera en bajar. La Hucha y la Navaja no se pueden medir así: actúan fuera del duelo.
+
 ## Dudas para fases posteriores
 
 No afectan a lo hecho. Se resolverán al llegar a su fase, preguntando antes. Cada una lleva una propuesta, explicada con un ejemplo en el documento de diseño («Preguntas abiertas»).

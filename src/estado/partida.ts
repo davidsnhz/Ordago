@@ -1,10 +1,11 @@
 import { CARA } from '../datos/cara';
 import type { IdCompanero } from '../datos/companeros';
 import { COMPANEROS } from '../datos/companeros';
-import { GIRA } from '../datos/gira';
+import { piedrasDeFiesta, type IdAviso } from '../datos/gira';
 import { IA } from '../datos/ia';
 import type { IdObjeto } from '../datos/objetos';
-import { animoDe, RIVALES, ticsActivos, type AnimoRival, type IdRival, type PerfilRival } from '../datos/rivales';
+import { REGLAS_BASE, type Reglas } from '../datos/reglas';
+import { animoDe, estaAchispado, manoDeLaCana, parametrosEnLaMano, RIVALES, ticsActivos, type AnimoRival, type IdRival, type PerfilRival } from '../datos/rivales';
 import { Azar, estadoDesdeSemilla, type EstadoAzar } from '../nucleo/azar';
 import { aplicarCambiosDeCara, cambiosDeCara, type CambioCara } from '../nucleo/cara';
 import { mismaCarta, rango, type Carta } from '../nucleo/carta';
@@ -41,6 +42,14 @@ export interface ExtrasPartida {
   cartasVistasMano: number;
   /** Darle conversación: en esta mano el rival no puede tirar órdago ni subir (0 si no). */
   sinOrdagoMano: number;
+  /** Copa de anís: en esta mano ganas los empates (0 si no). */
+  anisMano: number;
+  /** Café de puchero: en esta mano hay una ronda más de mus (0 si no). */
+  cafeMano: number;
+  /** Invitar a una ronda: rechaza tu próximo envite, lleve lo que lleve. */
+  invitado: boolean;
+  /** Hacerle la pelota: hasta esta mano te quiere más los envites (0 si no). */
+  pelotaHastaMano: number;
   /** Los Apuntes de Chema: el próximo tic se explica. */
   explicarTic: boolean;
   apuntesUsados: boolean;
@@ -48,6 +57,8 @@ export interface ExtrasPartida {
   cartaEnsenada: { mano: number; carta: Carta } | null;
   /** La Recaudadora: si ganas el próximo órdago, cobras el triple. */
   triplicaOrdago: boolean;
+  /** Su secuaz le ha avisado de cómo juegas: arrugado hasta que se crezca. */
+  aviso?: IdAviso | null;
 }
 
 /** Un tic que se vio y luego se vieron las cartas: va a la Libreta. */
@@ -89,7 +100,7 @@ export interface Partida {
 
 /** Lo que se acaba de usar de la bolsa, para contarlo en el acta. */
 export type EfectoUsado =
-  | { tipo: 'orujo' | 'chato' | 'conversacion' | 'apuntes' | 'recaudadora' }
+  | { tipo: 'orujo' | 'chato' | 'conversacion' | 'apuntes' | 'recaudadora' | 'copaAnis' | 'cafePuchero' | 'invitarRonda' | 'pelota' }
   | { tipo: 'lazarillo'; carta: Carta };
 
 /** Lo que ha pasado con una acción, para que la interfaz lo enseñe. */
@@ -111,6 +122,10 @@ export interface Novedades {
   efecto: EfectoUsado | null;
   /** La Medalla de la Virgen acaba de librar un farol pillado. */
   medalla: boolean;
+  /** El duelo empieza con el jefe avisado. */
+  aviso: IdAviso | null;
+  /** Manolo se acaba de achispar. */
+  seAchispa: boolean;
 }
 
 export interface ResultadoPartida {
@@ -130,6 +145,8 @@ const sinNovedades = (): Novedades => ({
   animo: null,
   efecto: null,
   medalla: false,
+  aviso: null,
+  seAchispa: false,
 });
 
 export function extrasVacios(): ExtrasPartida {
@@ -140,6 +157,10 @@ export function extrasVacios(): ExtrasPartida {
     fiesta: false,
     cartasVistasMano: 0,
     sinOrdagoMano: 0,
+    anisMano: 0,
+    cafeMano: 0,
+    invitado: false,
+    pelotaHastaMano: 0,
     explicarTic: false,
     apuntesUsados: false,
     cartaEnsenada: null,
@@ -157,6 +178,10 @@ export interface ConQueJuegas {
   amuletos?: readonly IdObjeto[];
   /** Fiesta patronal: los dos empiezan con piedras. */
   fiesta?: boolean;
+  /** Lo que cambian las reglas en este duelo: a cuántas piedras, una sola mano… */
+  reglas?: Partial<Reglas>;
+  /** Su secuaz le ha avisado de cómo juegas. */
+  aviso?: IdAviso | null;
 }
 
 export function nuevaPartida(
@@ -171,10 +196,17 @@ export function nuevaPartida(
     companero: trae.companero ?? null,
     amuletos: [...(trae.amuletos ?? [])],
     fiesta: trae.fiesta ?? false,
+    aviso: trae.aviso ?? null,
   };
-  const modificadores: Modificador[] = extras.fiesta ? [{ id: 'fiesta', piedrasIniciales: () => GIRA.plaza.fiesta }] : [];
+  const enFiesta = piedrasDeFiesta(trae.reglas?.piedrasParaGanar ?? REGLAS_BASE.piedrasParaGanar);
+  const modificadores: Modificador[] = extras.fiesta ? [{ id: 'fiesta', piedrasIniciales: () => enFiesta }] : [];
   // La Casa: Don Rodrigo es mano en el primer reparto.
-  const { estado, eventos } = crearDuelo({ semilla, quienEsMano: perfil.casa ? 'rival' : undefined, modificadores });
+  const { estado, eventos } = crearDuelo({
+    semilla,
+    quienEsMano: perfil.casa ? 'rival' : undefined,
+    modificadores,
+    ...(trae.reglas ? { reglas: trae.reglas } : {}),
+  });
   const partida: Partida = {
     version: VERSION_PARTIDA,
     semilla,
@@ -188,7 +220,8 @@ export function nuevaPartida(
     estadisticas: estadisticasVacias(),
     ticsDeLaMano: [],
   };
-  return procesar(partida, eventos, new Azar(partida.azarIA), {});
+  const inicio = procesar(partida, eventos, new Azar(partida.azarIA), {});
+  return { ...inicio, novedades: { ...inicio.novedades, aviso: extras.aviso ?? null } };
 }
 
 export function leTocaAlRival(partida: Partida): boolean {
@@ -233,7 +266,12 @@ export function jugarRival(partida: Partida): ResultadoPartida {
 
   const vista = vistaDe(duelo, 'rival');
   const distraido = partida.extras.sinOrdagoMano === duelo.numeroMano;
-  const decision = decidirRival(vista, { perfil, memoria: partida.memoria, caraJugador: partida.caraJugador, senal, distraido }, azar);
+  // Con la pelota hecha, te quiere como si tu Cara estuviera más baja.
+  const caraQueVe = partida.extras.pelotaHastaMano >= duelo.numeroMano ? Math.max(CARA.minimo, partida.caraJugador - CARA.pelota) : partida.caraJugador;
+  const decidida = decidirRival(vista, { perfil, memoria: partida.memoria, caraJugador: caraQueVe, senal, distraido, avisado: Boolean(partida.extras.aviso) }, azar);
+  // Le has invitado a una ronda: rechaza tu próximo envite, lleve lo que lleve.
+  const rechaza = partida.extras.invitado && decidida.tipo === 'envite' && vista.envite?.envidador === 'jugador';
+  const decision: DecisionRival = rechaza ? { ...decidida, accion: { tipo: 'noQuiero', lado: 'rival' } } : decidida;
 
   // Los tics pueden escaparse justo al decidir un envite.
   const ticsAlDecidir =
@@ -252,7 +290,8 @@ export function jugarRival(partida: Partida): ResultadoPartida {
       : [];
 
   const { estado, eventos } = aplicarAccion(duelo, decision.accion, modificadoresDe(partida, tiradaTrato));
-  return procesar({ ...partida, duelo: estado }, eventos, azar, {
+  const extras = rechaza ? { ...partida.extras, invitado: false } : partida.extras;
+  return procesar({ ...partida, duelo: estado, extras }, eventos, azar, {
     decision,
     ticsPrevios: ticsAlDecidir,
     seTeNota: senal === 'seNota',
@@ -283,6 +322,14 @@ export function puedeUsarObjeto(partida: Partida, id: IdObjeto): boolean {
       return manoEnCurso(duelo) && extras.sinOrdagoMano !== duelo.numeroMano;
     case 'apuntesChema':
       return extras.amuletos.includes('apuntesChema') && !extras.apuntesUsados && !extras.explicarTic;
+    case 'copaAnis':
+      return manoEnCurso(duelo) && extras.anisMano !== duelo.numeroMano;
+    case 'cafePuchero':
+      return (duelo.fase === 'mus' || duelo.fase === 'descarte') && extras.cafeMano !== duelo.numeroMano;
+    case 'invitarRonda':
+      return !extras.invitado;
+    case 'pelota':
+      return extras.pelotaHastaMano < duelo.numeroMano;
     default:
       return false;
   }
@@ -309,6 +356,17 @@ export function usarObjeto(partida: Partida, id: IdObjeto): ResultadoPartida {
         partida: { ...partida, extras: { ...extras, sinOrdagoMano: duelo.numeroMano } },
         novedades: { ...novedades, efecto: { tipo: 'conversacion' } },
       };
+    case 'copaAnis':
+      return { partida: { ...partida, extras: { ...extras, anisMano: duelo.numeroMano } }, novedades: { ...novedades, efecto: { tipo: 'copaAnis' } } };
+    case 'cafePuchero':
+      return { partida: { ...partida, extras: { ...extras, cafeMano: duelo.numeroMano } }, novedades: { ...novedades, efecto: { tipo: 'cafePuchero' } } };
+    case 'invitarRonda':
+      return { partida: { ...partida, extras: { ...extras, invitado: true } }, novedades: { ...novedades, efecto: { tipo: 'invitarRonda' } } };
+    case 'pelota': {
+      // Vale para la mano en curso y la siguiente; entre manos, para las dos que vienen.
+      const pelotaHastaMano = duelo.numeroMano + (manoEnCurso(duelo) ? 1 : 2);
+      return { partida: { ...partida, extras: { ...extras, pelotaHastaMano } }, novedades: { ...novedades, efecto: { tipo: 'pelota' } } };
+    }
     default:
       return {
         partida: { ...partida, extras: { ...extras, explicarTic: true } },
@@ -370,6 +428,13 @@ function modificadoresDe(partida: Partida, tiradaTrato: number): Modificador[] {
   const mods: Modificador[] = [];
   // La Boina va antes que la Casa: en la Grande de Don Rodrigo manda su casa.
   if (partida.extras.amuletos.includes('boina')) mods.push({ id: 'boina', ganaEmpate: () => 'jugador' });
+  const { anisMano, cafeMano, amuletos } = partida.extras;
+  if (anisMano) mods.push({ id: 'copaAnis', ganaEmpate: (lado, _lance, estado) => (estado.numeroMano === anisMano ? 'jugador' : lado) });
+  if (cafeMano) mods.push({ id: 'cafePuchero', rondasMus: (rondas, estado) => (estado.numeroMano === cafeMano ? rondas + 1 : rondas) });
+  if (amuletos.includes('jarraManolo')) mods.push({ id: 'jarraManolo', ajustarDeje: (piedras, ganador) => (ganador === 'jugador' ? piedras + 1 : piedras) });
+  if (amuletos.includes('yesquero')) {
+    mods.push({ id: 'yesquero', ajustarDeje: (piedras, ganador, ordago) => (ganador === 'jugador' && ordago ? piedras + 2 : piedras) });
+  }
   const { casa, penitencia } = perfil;
   if (casa) {
     mods.push({ id: 'casa', ganaEmpate: (lado, lance) => (casa.lances.includes(lance) ? 'rival' : lado) });
@@ -451,10 +516,21 @@ function sortearTicsDelRival(
   const perfil = RIVALES[partida.rivalId];
   const { duelo, memoria } = partida;
   if (memoria.ofendidaHastaMano >= duelo.numeroMano) return [];
-  const tics = ticsActivos(perfil, Math.max(duelo.marcador.jugador, duelo.marcador.rival));
+  const avisado = Boolean(partida.extras.aviso);
+  const todos = ticsActivos(perfil, Math.max(duelo.marcador.jugador, duelo.marcador.rival));
+  // La Ristra de ajos: los tics que no significan nada no salen.
+  const tics = partida.extras.amuletos.includes('ristra') ? todos.filter((t) => t.disparador !== 'ninguno') : todos;
   return sortearTics(
     tics,
-    { cartas, modo: duelo.reglas.modoReyes, momento, decision, caraJugador: partida.caraJugador, faroleo: perfil.parametros.faroleo },
+    {
+      cartas,
+      modo: duelo.reglas.modoReyes,
+      momento,
+      decision,
+      caraJugador: partida.caraJugador,
+      faroleo: parametrosEnLaMano(perfil, duelo.numeroMano, avisado).faroleo,
+      siempreConMotivo: estaAchispado(perfil, duelo.numeroMano, avisado),
+    },
     azar,
   );
 }
@@ -545,10 +621,17 @@ function procesar(
     ticsDeLaMano = [];
   }
 
+  // El aviso se le pasa en cuanto se crece.
+  const avisadoAntes = Boolean(extras.aviso);
+  if (extras.aviso && animoDe(perfil, diferenciaDelRival(duelo.marcador)) === 'crecido') extras = { ...extras, aviso: null };
+
   // Rubén y Chema se vienen arriba (o se arrugan) según el marcador.
-  const antes = animoDe(perfil, diferenciaDelRival(extra.marcadorAntes ?? duelo.marcador));
-  const despues = animoDe(perfil, diferenciaDelRival(duelo.marcador));
+  const antes = animoDe(perfil, diferenciaDelRival(extra.marcadorAntes ?? duelo.marcador), avisadoAntes);
+  const despues = animoDe(perfil, diferenciaDelRival(duelo.marcador), Boolean(extras.aviso));
   const animo = antes !== despues && duelo.fase !== 'finDuelo' ? { antes, despues } : null;
+  // Manolo: con el reparto de esta mano le cae la caña de más.
+  const cana = manoDeLaCana(perfil, avisadoAntes);
+  const seAchispa = todos.some((e) => e.tipo === 'reparto' && e.numeroMano === cana);
 
   return {
     partida: {
@@ -573,6 +656,7 @@ function procesar(
       seTeNota: extra.seTeNota ?? false,
       animo,
       medalla,
+      seAchispa,
     },
   };
 }

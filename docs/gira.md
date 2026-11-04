@@ -1,6 +1,6 @@
 # Órdago — La gira
 
-24 de octubre de 2026 · @david · *versión 11: la facultad, ya dibujada entera: Miguel, el novato (en lugar de Lucía), Dani y Rubén (con el pulgar en lugar de la gorra)*
+4 de noviembre de 2026 · @david · *versión 13: el bar, ya en el juego, con ocho objetos nuevos en la taberna*
 
 > **Para qué sirve este documento.** Es el catálogo de ideas de la gira: las arenas, quién juega en cada nivel, las paradas, los objetos y los compañeros. Está hecho para cambiarlo: quita, añade o retoca lo que quieras. Las reglas de fondo (las apuestas, los tics, la Cara, la IA) están en el [documento de diseño](diseno-juego.md); aquí va el contenido.
 >
@@ -19,24 +19,25 @@
 > - los objetos raros;
 > - lo que hace cada compañero.
 >
-> **[cambiado] Para más adelante (decidido por David):** lo que pasa «En la gira» entre secuaces y jefes («Rubén le avisa», «Aurelio le invita», «Se conocen de toda la vida»). De momento no se programa; si la gira resulta demasiado fácil, o David lo ve bien, se añadirá.
+> **[cambiado] Lo que pasa «En la gira» entre secuaces y jefes:** David pidió programarlo el 4 de noviembre de 2026. «Rubén le avisa» y «Aurelio le invita» ya están en el juego; «Se conocen de toda la vida» se programará con su arena.
 >
 > Los números (precios, reales, parámetros) son un punto de partida: se ajustan jugando.
 
-> **[cambiado] Lo que ya se puede jugar (fase 4).** La primera arena entera, la facultad: **[cambiado]** Miguel, Dani, Rubén y Chema con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de Chema y el final de la gira. En la taberna hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte, más los Apuntes de Chema como premio. Los compañeros son el Lazarillo y la Recaudadora. En la plaza salen el forastero, la fiesta patronal, el timador y la monja; la partida en la calle, todavía no. Lo que pasa «En la gira» entre secuaces y jefes tampoco está: queda para más adelante. Al ganar a Chema, la gira acaba con victoria hasta que esté el bar.
+> **[cambiado] Lo que ya se puede jugar.** Las dos primeras arenas enteras: la facultad (Miguel, Dani, Rubén y Chema) y **[nuevo]** el bar (Toño, Agustín, Aurelio y Manolo), con sus tics y sus reglas, el mapa, la mesa con la bolsa, la taberna, la plaza, la era, el premio de cada jefe y el final de la gira. En la taberna de la facultad hay cinco objetos: el Orujo, el Chato de vino, Darle conversación, la Medalla de la Virgen y la Boina de la suerte. **[nuevo]** Desde el bar se añaden ocho: la Copa de anís, el Café de puchero, Invitar a una ronda, Hacerle la pelota, la Ristra de ajos, el Yesquero, la Hucha de barro y la Navaja de Albacete. De premio, los Apuntes de Chema y **[nuevo]** la Jarra de Manolo. Los compañeros son el Lazarillo y la Recaudadora. **[cambiado]** En la plaza salen el forastero, la fiesta patronal, el timador, la monja y la partida en la calle. De lo que pasa «En la gira» entre secuaces y jefes están «Rubén le avisa» y **[nuevo]** «Aurelio le invita». **[cambiado]** Al ganar a Manolo, la gira acaba con victoria hasta que esté la Montaña Palentina.
 
 ## 1. Cómo es una gira
 
-- **La gira es la partida entera:** 5 arenas, una detrás de otra y en este orden: la facultad (donde se aprende a jugar), el bar, la Montaña Palentina, las fiestas del pueblo y el casino de la capital. Son 20 duelos, más los que repitas, y dura algo más de una hora.
-- **Cada duelo es una partida corta:** a 20 piedras, entre 2 y 4 minutos, como una partida de Clash Royale.
+- **La gira es la partida entera:** 5 arenas, una detrás de otra y en este orden: la facultad (donde se aprende a jugar), el bar, la Montaña Palentina, las fiestas del pueblo y el casino de la capital. Son 20 duelos, más los que repitas, y **[cambiado]** dura unas dos horas.
+- **[cambiado] Cada nivel pide más piedras que el anterior, como las ciegas de Balatro:** en la gira se juega a **25, 30, 35 y 40 piedras**, y el del jefe es el duelo más largo de la arena. Cada duelo dura entre 3 y 7 minutos. El duelo suelto sigue siendo a 20, para una partida rápida.
+  - *Por qué:* David notó la arena corta jugando. Medido, a 20 piedras una arena eran 15 manos, y el duelo contra el jefe era el más corto de todos (3,4 manos, frente a las 4,1 de Miguel), porque Rubén y Chema apuestan más fuerte. Ahora son 25 manos y el jefe se juega como el mus de verdad, a 40.
 - **Cada arena tiene 4 niveles**, como las ciegas de Balatro: tres secuaces y su jefe. Se juegan en orden, de menos a más:
 
 | Nivel | Quién | Cómo es |
 | --- | --- | --- |
-| 1 | Primer secuaz | El más flojo. Pocos tics y claros. Sirve para calentar |
-| 2 | Segundo secuaz | Más tics y alguna manía |
-| 3 | La mano derecha del jefe | Juega parecido a su jefe; a menudo su manía anuncia la regla del jefe |
-| 4 | El jefe | El mejor de la arena, con su regla especial completa |
+| 1 | Primer secuaz | El más flojo. Pocos tics y claros. Sirve para calentar. **[cambiado]** A 25 piedras |
+| 2 | Segundo secuaz | Más tics y alguna manía. **[cambiado]** A 30 piedras |
+| 3 | La mano derecha del jefe | Juega parecido a su jefe; a menudo su manía anuncia la regla del jefe. **[cambiado]** A 35 piedras |
+| 4 | El jefe | El mejor de la arena, con su regla especial completa. **[cambiado]** A 40 piedras |
 
 - **Al entrar en una arena ya ves al jefe y su regla**, como en Balatro, que te enseña la ciega jefe desde el principio. Así preparas la taberna. *Ejemplo: sabes que el tío Arturo casi no hace tics, así que te guardas un Chato de vino para su duelo.*
 - **Entre duelo y duelo eliges una parada:** la taberna (comprar), la plaza (pasa algo) o la era (recuperas Cara). Ver el apartado 3.
@@ -45,7 +46,7 @@
   - Perder contra el jefe te quita 1 de Honra y **vuelves a jugar contra él** hasta que le ganes o te quedes sin Honra. Antes de repetir puedes pasar por una parada, por ejemplo la taberna, para prepararte mejor.
   - Al quedarte sin Honra vuelves al principio, desde cero. Solo te llevas la Libreta (lo que has aprendido de cada rival) y lo que hayas desbloqueado.
 - **Reales por duelo ganado:** 4 el primer secuaz, 5 el segundo, 6 la mano derecha y 10 el jefe. Se suman los de siempre: +1 por envite aceptado y ganado, +1 por farol que cuela y +5 por órdago ganado. Perder un duelo da 2 de consolación.
-- **Ganar al jefe:** eliges un premio entre tres (un compañero, el objeto raro de ese jefe, o +1 de Honra si te falta) y se abre la siguiente arena.
+- **Ganar al jefe:** eliges un premio entre tres (un compañero, el objeto raro de ese jefe, o +1 de Honra si te falta) y se abre la siguiente arena. **[nuevo]** Antes de su primer duelo eliges parada, como entre dos duelos cualesquiera: así puedes gastarte lo ganado.
 - **Fuera la idea de «pasar de largo»:** si te pudieras saltar a los secuaces, no compensaría jugar contra ellos.
 
 ### El mapa
@@ -118,7 +119,8 @@ La cafetería de una universidad pública en una ciudad castellana (Salamanca, p
   - Cuando va ganando por 5 o más, se crece (sale *¡CRECIDO!*): farolea el doble y te lo quiere todo.
   - Cuando va perdiendo por 5 o más, se arruga (*ARRUGADO*): no farolea y casi no quiere.
   - *Ejemplo: va 12 a 6 y te envida cinco: puede ser un farol, así que quiérelo si llevas algo. Va 4 a 11 y te envida: lleva cartas.*
-- **[cambiado] Para más adelante · En la gira, «Rubén le avisa»:** si le ganaste a Rubén por 10 piedras o más, Chema empieza el duelo arrugado.
+- **[cambiado] En la gira, «Rubén le avisa» (ya en el juego):** si le ganaste a Rubén por 10 piedras o más, Chema empieza el duelo arrugado (no farolea y casi no quiere) y no se le pasa hasta que te saque 5 piedras; entonces se crece, como siempre. Solo vale la primera vez: si te gana, en la revancha ya no te tiene miedo. Pasa en 6 de cada 10 duelos que le ganas a Rubén.
+  - *Ejemplo: le ganas a Rubén 35 a 22. En el mapa pone que Chema está avisado y en la mesa sale ARRUGADO desde el principio. Va 3 a 3 y te envida: lleva cartas. Y si le envidas tú, es fácil que no quiera, así que es un buen momento para farolear.*
 - **Premio, su objeto raro:** los Apuntes de Chema.
 - **Frase:** «Yo aquí he aprendido más que en clase. Bueno, en clase no he estado.»
 
@@ -128,7 +130,7 @@ La cafetería de una universidad pública en una ciudad castellana (Salamanca, p
 
 El bar de toda la vida: barra de zinc, servilletas por el suelo, raciones en la vitrina, la tele con el fútbol y la tragaperras en la esquina. Ahora juegas contra adultos, que mienten mejor que los estudiantes. Aquí se farolea mucho, y más según van cayendo las cañas: se aprende a atreverse a querer.
 
-#### Nivel 1 · Toño, el Camarero
+#### Nivel 1 · Toño, el Camarero **[nuevo] (ya en el juego)**
 
 - **Idea de aspecto:** camisa blanca, chaleco negro, el paño al hombro y la bandeja bajo el brazo.
 - **Cómo juega:** echa la partida entre ronda y ronda. Farolea poco. · A 5 · F 2 · M 4 · Me 2 · O 3
@@ -152,7 +154,7 @@ El bar de toda la vida: barra de zinc, servilletas por el suelo, raciones en la 
 - **Regla, «Trato»:** una vez por duelo, antes del recuento, te propone retirar los envites queridos y repartiros las piedras. La impar es para él.
 - **Frase:** «Esta mula vale lo que yo diga que vale. Y esta mano, también.»
 
-#### Nivel 4 · Manolo, el Rey de la barra (jefe)
+#### Nivel 4 · Manolo, el Rey de la barra (jefe) **[nuevo] (ya en el juego)**
 
 - **Idea de aspecto:** cuarenta y tantos, medio calvo con cuatro pelos peinados de lado y barriga cervecera. Polo del equipo del pueblo, cadena de oro, un palillo en la boca y la caña en la mano.
 - **Cómo juega:** empieza con mucha calma y, caña a caña, se va soltando. · A 6 · F 5 · M 4 · Me 4 · O 5 (cambian con la bebida: ver su regla)
@@ -164,7 +166,7 @@ El bar de toda la vida: barra de zinc, servilletas por el suelo, raciones en la 
   - **Las dos primeras manos juega con mucha calma:** casi no farolea, envida solo con buenas cartas y quiere poco (A 4 · F 1).
   - **Desde la tercera, por culpa de la bebida, juega a lo loco** (sale *¡ACHISPADO!*): farolea muchísimo, sube más y tira órdagos sin nada (A 9 · F 9 · M 2). Y, como va achispado, se le notan más los tics: salen siempre que tienen motivo.
   - *Ejemplo: en la primera mano te envida cinco: respétalo, que lleva cartas. En la cuarta te envida cinco: puede ser cualquier cosa, así que, si llevas algo, quiérelo.*
-- **[cambiado] Para más adelante · En la gira, «Aurelio le invita»:** si le ganaste a Aurelio, para consolarse le paga una ronda a Manolo, y Manolo se suelta una mano antes (desde la segunda).
+- **[cambiado] En la gira, «Aurelio le invita» (ya en el juego):** si le ganaste a Aurelio, por lo que sea, para consolarse le paga una ronda a Manolo, y Manolo se suelta una mano antes (desde la segunda). Vale también en la revancha: la ronda ya se la ha tomado.
 - **Premio, su objeto raro:** la Jarra de Manolo.
 - **Frase:** «Aquí, el que no quiere, paga la ronda.»
 
@@ -264,7 +266,7 @@ Las fiestas del pueblo: farolillos, casetas, la orquesta al fondo, olor a churro
 - **Cómo juega:** lleva toda la vida ganando este concurso. Casi no se le ve nada y él lo ve todo. · A 6 · F 6 · M 7 · Me 8 · O 9
 - **Tic:** solo uno: se le escapa media sonrisa → lleva duples o 31 (9 de cada 10).
 - **Regla, «Cara de piedra»:** casi no hace tics (solo ese, y solo con lo mejor), y te lee a ti: con él se te nota con la Cara por debajo de 20.
-- **[cambiado] Para más adelante · En la gira, «Se conocen de toda la vida»:** Don Agapito le cuenta lo que ha visto. Si con él se te notó, empiezas el duelo con 10 menos de Cara.
+- **[cambiado] Se programará con las fiestas · En la gira, «Se conocen de toda la vida»:** Don Agapito le cuenta lo que ha visto. Si con él se te notó, empiezas el duelo con 10 menos de Cara.
 - **Premio, su objeto raro:** la Baraja del concurso.
 - **Frase:** «Siéntate, chaval, que no muerdo. Pero te voy a ganar.»
 
@@ -349,10 +351,13 @@ Funciona como la tienda de Balatro:
 Sale una cosa al azar:
 
 - **Un forastero apuesta contigo:** te juegas 5 reales a que ganas el próximo duelo sin perder ni un lance de Grande. Si lo consigues, cobras 15.
-- **Fiesta patronal:** en el próximo duelo, los dos empezáis con 5 piedras. Duelo más corto y más loco.
+- **Fiesta patronal:** en el próximo duelo, los dos empezáis con **[cambiado]** la cuarta parte de las piedras a las que se juega (antes, 5 de 20). Si es a 40, empezáis con 10. Duelo más corto y más loco.
 - **Un timador** te vende un amuleto a mitad de precio. Uno de cada tres es falso: en cuanto te lo da, se rompe y desaparece (y los reales, con él).
 - **Una monja te da su bendición:** +1 de Honra, aunque ya tengas las tres (puedes llegar a 4). Sale la mitad de veces que las demás, y si te sale una vez, ya no vuelve a salir en esa gira; solo cuando empiezas otra.
-- **Una partida en la calle:** una mano suelta contra un vecino. Si la ganas, 3 reales; si la pierdes, nada.
+- **[cambiado] Una partida en la calle (ya en el juego):** una mano suelta contra un vecino. Si la ganas, 3 reales; si la pierdes, nada. Puedes decir que no.
+  - Se juega en la mesa, con las reglas de siempre, y gana quien más piedras se lleve en esa mano; si empatan, gana la mano, como en todos los empates del mus.
+  - El vecino no tiene tics: es una sola mano y no se apunta en la Libreta.
+  - No vale la bolsa ni el compañero, y no cuenta para la Cara: lo que pase con el vecino se queda en la plaza.
 
 *(Quito la idea del cura que te bendecía: ahora hace lo mismo la Medalla de la Virgen.)*
 
@@ -370,6 +375,8 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Objetos raros | El premio de cada jefe | Toda la gira | Los mismos 2 (salvo la Baraja del concurso, que va en el de baraja) |
 | Barajas | Cambian la baraja | Toda la gira | 1 |
 
+> **[nuevo] Cuáles están ya en el juego (4 de noviembre de 2026).** En la taberna de la facultad, los cinco de siempre. Desde el bar, además, la Copa de anís, el Café de puchero, Invitar a una ronda, Hacerle la pelota, la Ristra de ajos, el Yesquero, la Hucha de barro y la Navaja de Albacete. Los demás, todavía no.
+
 ### Bebidas (a tu favor)
 
 | Objeto | Qué hace | Precio |
@@ -380,7 +387,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Gaseosa | La que rebaja el vino… y lo que pierdes. Después de ver las cartas en el recuento, si has perdido un envite que tú quisiste, haces como si hubieras dicho «no quiero»: pagas lo del «no quiero» en vez de todo lo apostado. No vale para órdagos. *Ejemplo: quisiste un envite de ocho a la Grande y en el recuento ves que el rival lleva tres reyes: con la gaseosa pagas 1 en vez de 8* | 6 |
 | Copa de anís | En esta mano ganas los empates, aunque no seas mano | 3 |
 | Agua del botijo | Se te quita el «se te nota» durante 3 manos | 2 |
-| Caldo de la abuela | Si el rival llega a 20, el duelo no se acaba: se juega hasta 30, así que todavía puedes remontar (o no). No vale si pierdes por un órdago | 8 |
+| Caldo de la abuela | **[cambiado]** Si el rival llega a las piedras del duelo, no se acaba: se juega hasta 10 más, así que todavía puedes remontar (o no). No vale si pierdes por un órdago | 8 |
 
 ### Jugarretas (contra el rival)
 
@@ -398,7 +405,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
 | Boina de la suerte | Ganas los empates aunque no seas mano | **[cambiado]** 12 (antes 8) |
-| Navaja de Albacete | Los órdagos que ganas dan +1 de Honra (máximo 3) | 12 |
+| Navaja de Albacete | **[cambiado]** Si ganas un duelo con un órdago, recuperas 1 de Honra (máximo 3) | 12 |
 | Pañuelo de hierbas | Ves si el rival tiene pares antes de que lo declare | 9 |
 | Reloj de bolsillo | **[cambiado] Por rehacer:** era mirar al rival el doble de tiempo sin que se diera cuenta, y ya no se puede mirar (22 de octubre de 2026). | 3, baratillo |
 | Gafas de culo de vaso | +1 nota automática en la Libreta por duelo | 6 |
@@ -410,7 +417,7 @@ Descansas: **+20 de Cara.** Si tu Cara está a 0, además se te quita el «se te
 
 | Objeto | Qué hace | Precio |
 | --- | --- | --- |
-| Ristra de ajos | Los rivales no hacen tics falsos: Aurelio deja de golpear la vara, y en la familia nadie hace señas de mentira (ni Fernando ni el abuelo) | 7 |
+| Ristra de ajos | Los rivales no hacen tics que no significan nada: Aurelio deja de golpear la vara, y en la familia nadie hace señas de mentira (ni Fernando ni el abuelo) | 7 |
 | Gorra calada | No se te ve la cara: los rivales tienen 3 menos de Ojo (te pillan menos cuando haces trampas con el Tahúr) | 7 |
 | Carta del gobernador | Los jefes pierden su regla especial: Chema ni se crece ni se arruga, Manolo juega con calma todo el duelo, el abuelo no hace señas falsas, el tío Arturo hace sus tics como cualquiera y no te lee antes de tiempo, y Don Rodrigo ni tiene casa ni cambia cartas. Es el más caro de la taberna | 15 |
 
@@ -486,7 +493,7 @@ Para que lo vayas planeando. **[cambiado]** Cómo se hace cada personaje, paso a
 | Las fiestas: Doña Ignacia, Don Francisco, Don Agapito y el tío Arturo | 4 | Más adelante |
 | El casino: Sergio, Doña Isabel, Don Pelayo y Don Rodrigo | 4 | Más adelante |
 | Compañeros | 11 (el Lazarillo y la Recaudadora ya se juegan) | Con la facultad los dos primeros |
-| La tabernera de la taberna y la monja de la plaza | 2 | Con la facultad la tabernera |
+| La tabernera de la taberna, la monja de la plaza y **[nuevo]** el vecino de la partida en la calle | 3 | Con la facultad la tabernera |
 | Iconos de objetos | Unos 30 | Con la facultad los seis primeros |
 | Fondos de cada arena para el mapa | 5 | Fase 5 (pulido) |
 
@@ -514,3 +521,5 @@ Para que lo vayas planeando. **[cambiado]** Cómo se hace cada personaje, paso a
 - **Versión 7 (15 de octubre de 2026).** Chema ya tiene dibujo (el de David) y su tic del café pasa a ser un trago de refresco: significa lo mismo, que va de farol.
 - **Versión 10 (22 de octubre de 2026).** Precios y efectos de la taberna, medidos con una simulación de 1.000 duelos por objeto: el Chato de vino pasa de 4 a 8, el Orujo de 4 a 2 y la Boina de 8 a 12; la Medalla de la Virgen libra todos los faroles pillados y, con Darle conversación, el rival tampoco puede subir. Lo pidió y lo eligió David.
 - **Versión 11 (24 de octubre de 2026).** Lucía, la de primero, deja su sitio a **Miguel, el novato**, que juega igual que ella. Lo dibujó David (cinco imágenes: reposo, su tic y tres caras) y ya sale en el juego. Su tic es limpiarse los mocos con un pañuelo, sonriendo: significa lo mismo que el boli de Lucía, que lleva pares o mejor. **Rubén** también tiene ya dibujo (siete imágenes): su tic del 31 pasa de ajustarse la gorra a levantar el pulgar, que significa lo mismo. Y **Dani** (seis imágenes), con los tics de siempre: la bandurria y las cintas. La facultad ya está dibujada entera.
+- **Versión 12 (4 de noviembre de 2026).** Lo que pidió David después de jugar: la partida en la calle y «Rubén le avisa», ya programados, y una arena menos corta. Cada nivel se juega ahora a más piedras que el anterior (25, 30, 35, 40), como las ciegas de Balatro, y la fiesta patronal se ajusta a eso (la cuarta parte de las piedras del duelo).
+- **Versión 13 (4 de noviembre de 2026).** El bar, entero en el juego: Toño, Agustín, Aurelio y Manolo, con «Una caña más» y «Aurelio le invita», y la Jarra de Manolo de premio. Después del premio del jefe hay una parada antes de la siguiente arena. La taberna añade ocho objetos desde el bar.

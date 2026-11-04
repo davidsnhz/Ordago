@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { vaSiemprePuesto } from '../src/datos/objetos';
 import { RIVALES } from '../src/datos/rivales';
 import { apuntar, cargarLibreta, guardarLibreta, libretaVacia, nivelDe, textoNota } from '../src/estado/libreta';
 import {
@@ -65,6 +66,105 @@ function jugarMano(partida: Partida, envidaGrande: boolean): { partida: Partida;
   }
   return { partida: p, resultados };
 }
+
+describe('los objetos que se añaden en el bar', () => {
+  /** Da las piedras que se ha llevado cada uno por los «no quiero». */
+  const dejesDe = (resultados: ResultadoPartida[], lado: Lado) =>
+    resultados.flatMap((r) => r.novedades.eventos).flatMap((e) => (e.tipo === 'deje' && e.lado === lado ? [e.piedras] : []));
+
+  it('la Copa de anís gana los empates de esa mano, aunque no seas mano', () => {
+    const empate = { jugador: 'R 7 6 5', rival: 'R 7 6 5' };
+    const inicial = partidaCon('lucia', empate, {}, 'rival');
+    expect(puedeUsarObjeto(inicial, 'copaAnis')).toBe(true);
+    const ganadorGrande = (p: Partida) => {
+      const recuento = jugarMano(p, false).resultados.flatMap((r) => r.novedades.eventos).find((e) => e.tipo === 'recuento');
+      return recuento?.tipo === 'recuento' ? recuento.ganadores.grande : undefined;
+    };
+    expect(ganadorGrande(inicial)).toBe('rival');
+    const conCopa = usarObjeto(inicial, 'copaAnis').partida;
+    expect(puedeUsarObjeto(conCopa, 'copaAnis')).toBe(false);
+    expect(ganadorGrande(conCopa)).toBe('jugador');
+  });
+
+  it('el Café de puchero da una ronda más de mus en esa mano, y solo antes de la Grande', () => {
+    const masRondas = (conCafe: boolean) => {
+      let maximo = 0;
+      for (let s = 0; s < 30; s++) {
+        let p = nuevaPartida(`cafe-${s}`, 'dani').partida;
+        if (conCafe) p = usarObjeto(p, 'cafePuchero').partida;
+        for (let n = 0; n < 40 && (p.duelo.fase === 'mus' || p.duelo.fase === 'descarte'); n++) {
+          if (leTocaAlRival(p)) p = jugarRival(p).partida;
+          else if (p.duelo.fase === 'mus') p = jugarJugador(p, { tipo: 'mus', lado: 'jugador' }).partida;
+          else p = jugarJugador(p, { tipo: 'descartar', lado: 'jugador', cartas: [p.duelo.cartas.jugador[0]!] }).partida;
+          maximo = Math.max(maximo, p.duelo.rondasMus);
+        }
+      }
+      return maximo;
+    };
+    expect(masRondas(false)).toBe(2);
+    expect(masRondas(true)).toBe(3);
+    const inicial = nuevaPartida('cafe', 'dani').partida;
+    expect(puedeUsarObjeto(inicial, 'cafePuchero')).toBe(true);
+    expect(puedeUsarObjeto(usarObjeto(inicial, 'cafePuchero').partida, 'cafePuchero')).toBe(false);
+    expect(puedeUsarObjeto({ ...inicial, duelo: { ...inicial.duelo, fase: 'envite' as const } }, 'cafePuchero')).toBe(false);
+  });
+
+  it('Invitar a una ronda: rechaza tu próximo envite aunque lleve la mejor mano, y solo ese', () => {
+    const manos = { jugador: 'C 7 6 5', rival: 'R R R R' };
+    const inicial = usarObjeto(partidaCon('ruperto', manos), 'invitarRonda').partida;
+    expect(inicial.extras.invitado).toBe(true);
+    expect(puedeUsarObjeto(inicial, 'invitarRonda')).toBe(false);
+    const { partida, resultados } = jugarMano(inicial, true);
+    const respuestas = resultados.flatMap((r) => r.novedades.eventos).filter((e) => e.tipo === 'envite' && e.lado === 'rival');
+    expect(respuestas[0]).toMatchObject({ accion: { tipo: 'noQuiero' } });
+    expect(partida.extras.invitado).toBe(false);
+  });
+
+  it('Hacerle la pelota dura dos manos, y entretanto ve tu Cara 30 puntos más baja', () => {
+    const inicial = nuevaPartida('pelota', 'lucia').partida;
+    const r = usarObjeto(inicial, 'pelota');
+    expect(r.partida.extras.pelotaHastaMano).toBe(inicial.duelo.numeroMano + 1);
+    expect(puedeUsarObjeto(r.partida, 'pelota')).toBe(false);
+    const entreManos = usarObjeto({ ...inicial, duelo: { ...inicial.duelo, fase: 'finMano' as const } }, 'pelota');
+    expect(entreManos.partida.extras.pelotaHastaMano).toBe(inicial.duelo.numeroMano + 2);
+  });
+
+  it('la Ristra de ajos quita los tics que no significan nada: Aurelio deja de golpear la vara', () => {
+    const vara = (trae: ConQueJuegas) => {
+      let veces = 0;
+      for (let s = 0; s < 40; s++) {
+        const { resultados } = jugarMano(nuevaPartida(`ristra-${s}`, 'fulgencio', 60, trae).partida, false);
+        veces += resultados.flatMap((r) => r.novedades.tics).filter((t) => t.id === 'golpeaVara').length;
+      }
+      return veces;
+    };
+    expect(vara({})).toBeGreaterThan(0);
+    expect(vara({ amuletos: ['ristra'] })).toBe(0);
+  });
+
+  it('la Jarra de Manolo: cuando el rival no quiere, cobras 1 piedra más; cuando no quieres tú, no', () => {
+    const manos = { jugador: 'R 7 6 5', rival: 'A 4 5 6' };
+    const invitado = (trae: ConQueJuegas) => usarObjeto(partidaCon('ruperto', manos, trae), 'invitarRonda').partida;
+    const sin = dejesDe(jugarMano(invitado({}), true).resultados, 'jugador');
+    const con = dejesDe(jugarMano(invitado({ amuletos: ['jarraManolo'] }), true).resultados, 'jugador');
+    expect(con[0]).toBe(sin[0]! + 1);
+    // Va siempre puesta: en la bolsa no se usa, como los Apuntes de Chema.
+    expect(vaSiemprePuesto('jarraManolo')).toBe(true);
+    expect(vaSiemprePuesto('apuntesChema')).toBe(false);
+  });
+
+  it('el Yesquero: si tiras un órdago y no te lo quieren, cobras 2 piedras más', () => {
+    const manos = { jugador: 'R 7 6 5', rival: 'A 4 5 6' };
+    const tiro = (trae: ConQueJuegas) => {
+      let p = usarObjeto(partidaCon('ruperto', manos, trae), 'invitarRonda').partida;
+      p = jugarJugador(p, { tipo: 'corto', lado: 'jugador' }).partida;
+      if (leTocaAlRival(p)) p = jugarRival(p).partida;
+      p = jugarJugador(p, { tipo: 'ordago', lado: 'jugador' }).partida;
+      return dejesDe([jugarRival(p)], 'jugador')[0]!;
+    };
+    expect(tiro({ amuletos: ['yesquero'] })).toBe(tiro({}) + 2);
+  });
+});
 
 describe('objetos de un uso', () => {
   it('el orujo sube 15 la Cara', () => {

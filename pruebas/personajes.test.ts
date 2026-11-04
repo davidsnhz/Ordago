@@ -11,7 +11,7 @@ const leer = <T>(ruta: string): T => JSON.parse(fs.readFileSync(path.join(CARPET
 const indice = leer<{ personajes: string[] }>('indice.json');
 
 /** Animaciones que no son tics: el reposo, el parpadeo, las posturas (poseDelRival) y las caras (reaccionDe). */
-const POSTURAS = ['reposo', 'parpadeo', 'crecido', 'arrugado', 'enfadado', 'sorprendido', 'riendo'];
+const POSTURAS = ['reposo', 'parpadeo', 'crecido', 'arrugado', 'achispado', 'enfadado', 'sorprendido', 'riendo'];
 
 /** Todos los tics que puede hacer un rival, también los de las fases de Don Rodrigo. */
 const ticsDe = (id: IdRival) => {

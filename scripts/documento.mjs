@@ -1,5 +1,6 @@
 // Genera los PDF de los documentos: el de diseño, el de la gira y el de cómo hacer los personajes (npm run documento).
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { execFileSync } from 'child_process';
 import { marked } from 'marked';
@@ -13,7 +14,11 @@ const DOCUMENTOS = [
 // En el PDF, los enlaces entre documentos apuntan al otro PDF.
 const ENLACES = Object.fromEntries(DOCUMENTOS.map((d) => [path.basename(d.md), encodeURI(path.basename(d.pdf))]));
 
-const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+// Con perfil propio: si el navegador ya está abierto, sin él le pasa el encargo al abierto y no imprime.
+const NAVEGADORES = ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C:/Program Files/Google/Chrome/Application/chrome.exe'].filter((n) =>
+  fs.existsSync(n),
+);
+const perfil = fs.mkdtempSync(path.join(os.tmpdir(), 'ordago-pdf-'));
 
 for (const doc of DOCUMENTOS) {
   let cuerpo = marked.parse(fs.readFileSync(doc.md, 'utf8'));
@@ -42,18 +47,33 @@ a { color: #8C3A22; }
 li { margin: 2px 0; }
 </style></head><body>${cuerpo}</body></html>`;
 
-  // Edge sin interfaz imprime el HTML a PDF.
+  // Un navegador sin interfaz imprime el HTML a PDF.
   const temporal = doc.md.replace(/\.md$/, '.html');
   fs.writeFileSync(temporal, html);
   const pdf = path.resolve(doc.pdf);
   const antes = fs.existsSync(pdf) ? fs.statSync(pdf).mtimeMs : 0;
-  execFileSync(edge, ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', `--print-to-pdf=${pdf}`, 'file:///' + path.resolve(temporal).split(path.sep).join('/')], { stdio: 'ignore' });
+  const escrito = () => fs.existsSync(pdf) && fs.statSync(pdf).mtimeMs !== antes;
+  for (const navegador of NAVEGADORES) {
+    try {
+      execFileSync(navegador, ['--headless=new', '--disable-gpu', `--user-data-dir=${perfil}`, '--no-pdf-header-footer', `--print-to-pdf=${pdf}`, 'file:///' + path.resolve(temporal).split(path.sep).join('/')], { stdio: 'ignore' });
+    } catch {
+      // Se prueba con el siguiente.
+    }
+    // A veces el navegador vuelve antes de haber acabado: se le da un rato.
+    for (let espera = 0; espera < 40 && !escrito(); espera++) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 500);
+    if (escrito()) break;
+  }
   fs.unlinkSync(temporal);
-  // Edge no dice nada si no puede escribir (por ejemplo, si el PDF está abierto en otro programa).
-  if (!fs.existsSync(pdf) || fs.statSync(pdf).mtimeMs === antes) {
+  // El navegador no dice nada si no puede escribir (por ejemplo, si el PDF está abierto en otro programa).
+  if (!escrito()) {
     console.warn(`OJO: no se ha podido escribir ${path.basename(pdf)}. ¿Está abierto en otro programa? Ciérralo y vuelve a lanzar npm run documento.`);
     process.exitCode = 1;
     continue;
   }
   console.log('PDF:', pdf);
+}
+try {
+  fs.rmSync(perfil, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 });
+} catch {
+  // Si el navegador aún no lo ha soltado, se queda en la carpeta temporal.
 }

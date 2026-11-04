@@ -17,6 +17,7 @@ import { ganadorLance, type Lance } from './lances';
 import { tieneJuego, tienePares } from './mano';
 import {
   ajustarCobros,
+  ajustarDeje,
   piedrasIniciales,
   quienGanaEmpate,
   quienOfreceTrato,
@@ -362,7 +363,10 @@ function envidar(ctx: Contexto, lado: Lado, accion: AccionEnvite): void {
   switch (resultado.tipo) {
     case 'noQuerido': {
       // El deje se apunta en el momento, y si llega a la meta el duelo acaba aquí.
-      const { ganador, piedras } = resultado;
+      const { ganador } = resultado;
+      const piedras = ajustarDeje(ctx.mods, resultado.piedras, ganador, envite.ordago, e);
+      // La casilla del lance cuenta lo que se ha cobrado de verdad.
+      if (piedras !== resultado.piedras) jugado.envite = { ...envite, resultado: { ...resultado, piedras } };
       e.marcador[ganador] += piedras;
       emitir(ctx, { tipo: 'deje', lance, lado: ganador, piedras, marcador: { ...e.marcador } });
       registrarLance(ctx, jugado);
@@ -455,6 +459,12 @@ function hacerRecuento(ctx: Contexto): void {
 
   if (resultado.ganador) {
     terminarDuelo(ctx, resultado.ganador, 'piedras');
+    return;
+  }
+  if (e.reglas.unaSolaMano) {
+    // Si empatan a piedras, gana la mano, como en todos los empates del mus.
+    const { jugador, rival } = e.marcador;
+    terminarDuelo(ctx, jugador === rival ? e.quienEsMano : jugador > rival ? 'jugador' : 'rival', 'piedras');
     return;
   }
   e.fase = 'finMano';

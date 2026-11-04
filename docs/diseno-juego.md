@@ -1,6 +1,6 @@
 # Órdago — Documento de diseño
 
-24 de octubre de 2026 · @david · *versión 31: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7), las arenas nuevas con la Honra (v8), los nombres nuevos (v9), la fase 4, con la primera arena ya en el juego (v10), las conexiones entre secuaces y jefes, para más adelante (v11), los dibujos de antes, borrados (v12), Chema, el primero con dibujo nuevo (v13), la mesa viva, un prototipo de movimiento y sonido (v14), la mesa nueva, sin acta a la vista (v15), fuera mirar al rival (v16) la letra nueva (v17) Bitter Black en los botones (v18) Doña Ignacia, ofendida por un órdago temprano (v19), los reales del resultado, solo los de ahora (v20), el Chato de vino a 8 reales (v21) los demás objetos de la taberna, ajustados (v22), Bitter Black en lugar de Alfa Slab One (v23) una sola mesa, la nueva (v24), la portada con fondo ilustrado (v25) el progreso de la gira dentro de su botón (v26) la portada rehecha, con el letrero colgado (v27), el título en Bitter Black (v28) el fondo nuevo, más apagado (v29), cinco lemas que se turnan en la portada (v30) y la facultad dibujada entera, con Miguel, el novato, en lugar de Lucía (v31)*
+4 de noviembre de 2026 · @david · *versión 33: los rivales ya tienen cara (v4), ajustes de equilibrio y de la mesa (v5), el acta narrada (v6), la visión del juego con la gira en arenas de cuatro niveles (v7), las arenas nuevas con la Honra (v8), los nombres nuevos (v9), la fase 4, con la primera arena ya en el juego (v10), las conexiones entre secuaces y jefes, para más adelante (v11), los dibujos de antes, borrados (v12), Chema, el primero con dibujo nuevo (v13), la mesa viva, un prototipo de movimiento y sonido (v14), la mesa nueva, sin acta a la vista (v15), fuera mirar al rival (v16) la letra nueva (v17) Bitter Black en los botones (v18) Doña Ignacia, ofendida por un órdago temprano (v19), los reales del resultado, solo los de ahora (v20), el Chato de vino a 8 reales (v21) los demás objetos de la taberna, ajustados (v22), Bitter Black en lugar de Alfa Slab One (v23) una sola mesa, la nueva (v24), la portada con fondo ilustrado (v25) el progreso de la gira dentro de su botón (v26) la portada rehecha, con el letrero colgado (v27), el título en Bitter Black (v28) el fondo nuevo, más apagado (v29), cinco lemas que se turnan en la portada (v30) la facultad dibujada entera, con Miguel, el novato, en lugar de Lucía (v31), duelos más largos en la gira, con la partida en la calle y el aviso de Rubén (v32), y el bar, la segunda arena (v33)*
 
 > **Estado del proyecto.** Las fases 1 (motor de mus), 2 (duelo contra Agustín), 3 (IA completa, la Cara y los cinco rivales) y **[nuevo] 4 (la gira, con la primera arena entera)** están hechas, el juego es **vertical** y se ha hecho una ronda de retoques y depuración a fondo antes de la gira. **[cambiado]** Los personajes se dibujan de nuevo desde cero: los dibujos de antes se han borrado y, hasta que estén los nuevos, los rivales salen con un marcador. **[nuevo]** El primero ya está: **Chema**, con sus ocho imágenes (reposo, sus dos tics, crecido, arrugado y tres caras). **[nuevo]** Después, **Miguel, el novato**, que ocupa el sitio de Lucía en la facultad, con cinco (reposo, su tic y tres caras), **Rubén**, con siete (reposo, sus dos tics, crecido y tres caras), y **Dani**, con seis (reposo, sus dos tics y tres caras): la facultad, entera. Cómo hacerlos, paso a paso, en **[Cómo hacer los personajes](personajes.md)** (también en PDF). Se puede jugar en **https://ordago-game.vercel.app**. Lo siguiente es jugarla, ajustar números y, después, la fase 5: el pulido. **[nuevo]** De esa fase ya hay un adelanto para probar: **la mesa viva** (ver «Plataforma y controles»), que se enciende y se apaga en la portada para compararla con la de antes. **[nuevo]** Y una segunda: **la mesa nueva**, sin el acta a la vista; la portada deja elegir entre las tres. **[nuevo]** El contenido de la gira (las arenas con sus secuaces y su jefe, la taberna, los objetos y los compañeros) está en un documento aparte para ir cambiándolo: **[La gira](gira.md)** (también en PDF, *Órdago — La gira.pdf*). Primero se comprueba que es divertido y luego se pone bonito: el pulido a fondo (animaciones, arte, sonido) va después de la gira. Los cambios de las versiones 4 a 25 van marcados con **[nuevo]** o **[cambiado]**; lo que cambió en cada versión está al final, en «Historial de versiones».
 
@@ -9,8 +9,8 @@
 **[cambiado]** La visión del juego, contada por David y ordenada:
 
 - **Qué es.** Un roguelike inspirado en el mus, el juego de cartas español. Eres **un forastero que se adentra en Castilla** jugándose el mus con la gente de cada sitio: estudiantes, los del bar, una familia de pueblo, los veteranos de las fiestas y los caciques.
-- **Uno contra uno.** No es el mus de siempre, dos contra dos: juegas **tú solo contra un rival, a 20 piedras**.
-- **Partidas cortas.** Cada duelo a 20 piedras dura lo que una partida de Clash Royale: unos pocos minutos. La gira entera, que encadena muchos duelos, dura algo más de una hora.
+- **Uno contra uno.** No es el mus de siempre, dos contra dos: juegas **tú solo contra un rival**, **[cambiado]** en la gira a 25, 30, 35 y 40 piedras según el nivel (antes, siempre a 20).
+- **Partidas cortas.** Cada duelo dura unos pocos minutos. **[cambiado]** David lo pensó como una partida de Clash Royale, a 20 piedras, pero jugando notó la arena corta: ahora cada nivel pide más, como las ciegas de Balatro, y cada duelo dura de 3 a 7 minutos. La gira entera, que encadena muchos duelos, dura unas dos horas.
 - **El camino.** El mapa se inspira en las arenas de Clash Royale, pero cada arena es **un sitio de España**: la cafetería de la facultad, el bar de toda la vida, una casa de la Montaña Palentina, las fiestas del pueblo y el casino de la capital. Cada arena tiene **cuatro niveles**, como en Balatro: tres secuaces y su jefe. Los rivales son gente típica de Castilla, cada uno con su forma de jugar.
 - **Leer al rival.** Cada rival tiene **tics**: gestos que se le escapan y que te ayudan a saber si está mintiendo o si lleva buena mano en ese lance. Ninguno acierta siempre.
 - **Mentir.** Como en el mus de verdad, tú también puedes **farolear**: envidar sin nada y que el rival se lo crea, o no. Lo que te creen se mide con **la Cara**, el medidor que está debajo del marcador. Con la Cara alta te tienen miedo y se retiran; con la Cara baja te lo quieren todo.
@@ -36,7 +36,7 @@ Lo que la gente disfruta del mus no son las reglas, son cuatro momentos: que te 
 | Núcleo | Construir manos y multiplicar puntos | Jugar mus reglamentario | Apostar, farolear y leer al rival |
 | Rival | No hay rival, solo objetivos de puntos | Parejas de IA o jugadores online | Personajes con personalidad y tics |
 | Progresión | Comodines que cambian la puntuación | Ranking y partidas | Compañeros y objetos que dan información, ventajas en el envite o fastidian al rival |
-| Formato | Partidas largas | 2 contra 2 a 40 piedras | Duelos 1 contra 1 a 20 piedras dentro de una gira |
+| Formato | Partidas largas | 2 contra 2 a 40 piedras | **[cambiado]** Duelos 1 contra 1 de 25 a 40 piedras dentro de una gira |
 
 La frase que resume el juego: **«No gana quien lleva mejores cartas, gana quien hace creer que las lleva.»**
 
@@ -65,7 +65,7 @@ La gira recorre sitios reconocibles de España, cada uno con su identidad visual
 - **La mesa en el centro.** Vista frontal: el rival sentado enfrente, ocupando el centro de la pantalla vertical. Tus cartas abajo y los botones al pie, al alcance del pulgar.
 - **Maquetación vertical:** escenario de 390 × 844, como un móvil. En ordenador se ve centrado con bandas, y si giras el móvil sale un aviso para ponerlo en vertical. De arriba abajo:
   1. **La cabecera [cambiado]**, en un solo panel bajito (opción «H3 · Tu careto», en versión compacta, elegida por David entre prototipos que están en `referencias/prototipos-cabecera/`):
-     - **Arriba**, los nombres (el rival a la izquierda, tú a la derecha) y en medio *a 20 piedras*.
+     - **Arriba**, los nombres (el rival a la izquierda, tú a la derecha) y en medio **[cambiado]** a cuántas piedras se juega (*a 30 piedras*) o, en la calle, *una sola mano*.
      - **En medio**, los dos números grandes, la insignia **MANO** junto al de quien lo es y **los lances como pasos**: los jugados con ✓ y apagados, el que se juega relleno de rojo y los que faltan con borde de puntos (*✓ Grande · Chica · Pares · Juego*). Si nadie tiene juego, el último paso es *Punto*.
      - **Abajo, tu Cara:** tu **careto** de tinta (sudando si te pillan, serio si te creen, con media sonrisa si te temen), qué significa ahora en pocas palabras (*te creen: a veces cuela*), su número, una barra fina de tres zonas con la marca y el botón **«?»**. Arriba ya no sale el nombre de la comarca.
      - **Cuando la Cara cambia**, la cifra (*+8*, *−12*) sube un momento sobre la marca y se va; el motivo queda apuntado en el acta. Antes salía un aviso debajo de la barra que tapaba la cara del rival, justo donde están sus tics. Cuando se te nota el pulso, la etiqueta *SE TE NOTA* parpadea.
@@ -116,9 +116,9 @@ Humor costumbrista y un punto de picaresca. Los rivales hablan con refranes y fr
 
 | Nivel | Qué es | Duración aproximada |
 | --- | --- | --- |
-| Gira | La partida completa: 4 arenas + el casino final | 60–80 min (más si repites contra algún jefe) |
-| **[cambiado]** Arena | Un paisaje: 3 secuaces y su jefe | 12–16 min |
-| Duelo | Un enfrentamiento a 20 piedras contra un rival: **la partida corta** del juego, como una de Clash Royale | 2–4 min |
+| Gira | La partida completa: 4 arenas + el casino final | **[cambiado]** Unas 2 horas (más si repites contra algún jefe) |
+| **[cambiado]** Arena | Un paisaje: 3 secuaces y su jefe | 20–30 min |
+| Duelo | **[cambiado]** Un enfrentamiento contra un rival, de 25 a 40 piedras según el nivel: **la partida corta** del juego | 3–7 min |
 | Mano | Reparto, mus, los cuatro lances y el recuento | 30–60 s |
 
 ### Recursos de la gira
@@ -142,7 +142,7 @@ Los secuaces son versiones más sencillas de la idea de su jefe. Quién es cada 
 Entre duelo y duelo eliges una parada:
 
 - **La taberna:** tienda de objetos y compañeros.
-- **La plaza:** un evento aleatorio (un forastero te propone una apuesta, una fiesta patronal, un timador).
+- **La plaza:** un evento aleatorio (un forastero te propone una apuesta, una fiesta patronal, un timador, **[nuevo]** una mano suelta contra un vecino).
 - **La era:** descansas y recuperas Cara.
 
 Ganar al jefe te da un premio a elegir entre tres (un compañero, su objeto raro o +1 de Honra si te falta) y abre la siguiente arena.
@@ -153,7 +153,7 @@ Tras el casino final, ganar a Don Rodrigo completa la gira y desbloquea la dific
 
 ## Reglas del duelo
 
-El duelo usa el mus de verdad, con los cuatro lances, a 8 reyes y a 20 piedras. Se respeta todo lo que hace reconocible al mus y se recorta lo que alarga la partida en un 1 contra 1.
+El duelo usa el mus de verdad, con los cuatro lances, a 8 reyes y a 20 piedras (**[cambiado]** en la gira, a las piedras de cada nivel; ver «Fin del duelo»). Se respeta todo lo que hace reconocible al mus y se recorta lo que alarga la partida en un 1 contra 1.
 
 ### La baraja
 
@@ -207,7 +207,7 @@ Lo que el reglamento no dejaba claro se ha resuelto con la opción más fiel al 
 
 ### Fin del duelo
 
-Gana quien llega antes a 20 piedras, o quien gana un órdago. Los tantos se cuentan en el orden de los lances, así que puede ganarse en el recuento antes de cobrar los últimos.
+Gana quien llega antes a las piedras del duelo, o quien gana un órdago. **[cambiado]** En la gira, cada nivel pide más: 25, 30, 35 y 40 piedras, como las ciegas de Balatro. El duelo suelto es a 20. Los tantos se cuentan en el orden de los lances, así que puede ganarse en el recuento antes de cobrar los últimos.
 
 ## Sistema de apuestas
 
@@ -229,7 +229,7 @@ Habla primero quien es mano. En su turno, cada jugador elige una acción:
 
 ### Piedras y amarracos
 
-Los tantos del duelo se cuentan en **piedras**, como en el mus. Visualmente, cada 5 piedras se convierten en un **amarraco** sobre la mesa. Se gana a 20 piedras: 4 amarracos.
+Los tantos del duelo se cuentan en **piedras**, como en el mus. Visualmente, cada 5 piedras se convierten en un **amarraco** sobre la mesa. **[cambiado]** Se gana a las piedras del duelo: a 40, 8 amarracos.
 
 Las piedras son del duelo. Los **reales** son la moneda de la gira y se cobran al terminar cada duelo:
 
@@ -255,7 +255,7 @@ El órdago es el clímax y tiene su propia puesta en escena:
 
 **Cómo se tira:** el botón de órdago es pequeño y está aparte, en la esquina de la barra de acciones. Hay que **mantenerlo pulsado un segundo** mientras se llena; si lo sueltas antes, no se tira.
 
-Un órdago se puede tirar en cualquier lance. Para que no se convierta en un botón de «todo o nada» constante, cada rival tiene una forma distinta de responder a él (ver rivales e IA).
+**[nuevo]** Tú puedes tirarlo cuando quieras. El rival, con buenas cartas, espera a que alguien lleve la mitad de las piedras del duelo, para que el clímax no llegue en la primera mano (ver «IA de los rivales»). Un órdago se puede tirar en cualquier lance. Para que no se convierta en un botón de «todo o nada» constante, cada rival tiene una forma distinta de responder a él (ver rivales e IA).
 
 ## Faroles, tics y la Cara
 
@@ -353,7 +353,7 @@ Los objetos se compran con reales en la taberna y son la segunda capa de constru
 | Barajas | Cambian la baraja | Toda la gira | 1 |
 | **[nuevo]** Objetos raros | El premio de cada jefe (los Apuntes de Chema, la Jarra de Manolo…) | Toda la gira | Los mismos 2 que los amuletos |
 
-**[nuevo] En el juego** están los cinco de la primera taberna: el Orujo (+15 de Cara; **[cambiado]** 2 reales, antes 4), el Chato de vino (el rival canta su mano: sus cartas se ven boca arriba esa mano; **[cambiado]** cuesta 8 reales, antes 4), Darle conversación (esa mano no puede tirar órdago **[cambiado]** ni subir), la Medalla de la Virgen (**[cambiado]** todos los faroles pillados, no solo el primero) y la Boina de la suerte (**[cambiado]** 12 reales, antes 8); y los Apuntes de Chema como premio. Las bebidas y jugarretas se usan desde la bolsa, en cualquier momento de una mano (el Orujo, también entre manos).
+**[nuevo] En el juego** están los cinco de la primera taberna: el Orujo (+15 de Cara; **[cambiado]** 2 reales, antes 4), el Chato de vino (el rival canta su mano: sus cartas se ven boca arriba esa mano; **[cambiado]** cuesta 8 reales, antes 4), Darle conversación (esa mano no puede tirar órdago **[cambiado]** ni subir), la Medalla de la Virgen (**[cambiado]** todos los faroles pillados, no solo el primero) y la Boina de la suerte (**[cambiado]** 12 reales, antes 8); y los Apuntes de Chema como premio. **[nuevo]** Desde el bar se añaden ocho más, y la Jarra de Manolo de premio (ver [La gira](gira.md)). Las bebidas y jugarretas se usan desde la bolsa, en cualquier momento de una mano (el Orujo, también entre manos).
 
 **[cambiado] El catálogo de objetos, con su efecto y su precio, está en [La gira](gira.md)**, junto con cómo funciona la taberna (cuatro cosas a la venta, «otra ronda» para cambiarlas y vender por la mitad). **[cambiado]** Decididos por David: la Medalla de la Virgen (la primera vez en cada duelo que te pillan un farol, tu Cara no baja; 9 reales), el Chato de vino (el rival canta su mano; **[cambiado]** 8 reales desde el 22 de octubre de 2026, antes 4), el Caldo de la abuela (si el rival llega a 20, se juega hasta 30), la Ristra de ajos (los rivales no hacen tics falsos) y la Gorra calada (7 reales). La Gaseosa y el Reloj de bolsillo, rehechos para que sirvan de algo.
 
@@ -523,7 +523,7 @@ La cantidad sube con la fuerza y la agresividad: 2 piedras de base, más 1 por c
 
 **Aceptar un órdago:** la misma fórmula, pero el umbral pasa de 0,5 a 0,5 + 0,04·M. Si el rival va perdiendo por 8 piedras o más, el umbral baja 0,1 (desesperación).
 
-**Tirar un órdago:** con F > 0,85 y probabilidad **0,03·A** (antes 0,1·A), o como farol con probabilidad 0,01·B cuando va perdiendo de 8 o más. Con 0,1·A Agustín tiraba órdago en la mitad de las manos y el 64 % de los duelos acababan así; con 0,03·A lo tira en 1 de cada 6 manos y acaban así el 22 %.
+**Tirar un órdago:** con F > 0,85 y probabilidad **0,03·A** (antes 0,1·A), **[nuevo]** desde que alguien lleve la mitad de las piedras del duelo, o como farol con probabilidad 0,01·B cuando va perdiendo de 8 o más (ese no espera). Con 0,1·A Agustín tiraba órdago en la mitad de las manos y el 64 % de los duelos acababan así; con 0,03·A lo tira en 1 de cada 6 manos y acaban así el 22 %.
 
 **Subir («más»):** sube si su fuerza pasa en 0,2 su umbral de envidar, con probabilidad 0,1·A y nunca por encima de 10 piedras. No responde a un envite con órdago. *Ejemplo: le envidas dos a la Grande y Agustín lleva F 0,8 (su umbral es 0,56): ocho de cada diez veces sube cuatro más.*
 
@@ -609,6 +609,7 @@ Con esto el rival parece tener carácter: el Herrero envida siempre que lleva al
 | Rubén | 58 % | 3,5 | 16 % | 46 % | 2,0 |
 | Chema | 60 % | 3,4 | 17 % | 41 % | 1,8 |
 
+- **[nuevo] A las piedras de cada nivel** (25, 30, 35 y 40; 250 duelos de cada uno, 4 de noviembre de 2026): el rival gana el 51, 46, 61 y 63 % contra el jugador sensato, con 5,4, 6,3, 6,3 y 6,9 manos por duelo. Las cifras de esta tabla son de cuando todos se jugaban a 20.
 - **Contra el farolero** que envida dos en todos los lances, ninguno de los cuatro se deja: el farolero gana lo mismo que el sensato (50 % contra Miguel, 47 % contra Dani, 48 % contra Rubén y 46 % contra Chema).
 - **Hay que comprobarlo jugando.** El sensato no lee tics, y los de la facultad hacen muchos y muy claros (Miguel y Chema, casi dos por mano), así que a una persona que se fije le costarán menos. Dani hace pocos porque solo los dispara el 31 y los duples.
 
@@ -660,15 +661,15 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 1. ✅ **Hecho. Motor de mus:** baraja, reparto, mus, los cuatro lances y el recuento. Sin gráficos: TypeScript puro con pruebas. Probar que las reglas son correctas.
 2. ✅ **Hecho. Un duelo jugable:** interfaz fea, el Herrero con sus 2 tics como rectángulos que parpadean, envites y órdago. **Esta es la prueba clave:** si un duelo de 5 minutos ya es divertido, hay juego.
 3. ✅ **Hecho. IA completa y la Cara:** los 5 parámetros, la memoria y el medidor de Cara, con los cinco rivales y sus reglas. Además, la mesa se ha pasado a vertical.
-4. ✅ **[cambiado] Hecho. Estructura de gira:** la primera arena completa, **[cambiado]** la facultad, con sus 3 secuaces (**[cambiado]** Miguel, Dani y Rubén) y su jefe (Chema); la taberna con 5 objetos (al menos uno contra el rival) y 2 compañeros (el Lazarillo y la Recaudadora); el mapa en vertical como las arenas; la Libreta, los reales y la Honra. Los cuatro son nuevos, así que salen con marcador hasta que estén sus dibujos. **[nuevo]** Hecho el 13 de octubre de 2026, con la portada, el duelo suelto, la plaza (sin la partida en la calle), la era, el premio de Chema y el final; lo que pasa «En la gira» entre secuaces y jefes queda para más adelante (**[cambiado]** decidido por David: se añadirá si la gira resulta demasiado fácil). Mientras no esté el bar, ganar a Chema acaba la gira con victoria.
+4. ✅ **[cambiado] Hecho. Estructura de gira:** la primera arena completa, **[cambiado]** la facultad, con sus 3 secuaces (**[cambiado]** Miguel, Dani y Rubén) y su jefe (Chema); la taberna con 5 objetos (al menos uno contra el rival) y 2 compañeros (el Lazarillo y la Recaudadora); el mapa en vertical como las arenas; la Libreta, los reales y la Honra. Los cuatro son nuevos, así que salen con marcador hasta que estén sus dibujos. **[nuevo]** Hecho el 13 de octubre de 2026, con la portada, el duelo suelto, la plaza (sin la partida en la calle), la era, el premio de Chema y el final; **[cambiado]** después, el 4 de noviembre, la partida en la calle y «Rubén le avisa», lo que pasa «En la gira» entre un secuaz y su jefe. **[cambiado]** Ganar a Chema ya abre el bar; ganar a Manolo acaba la gira con victoria hasta que esté la Montaña Palentina.
 5. ⏭️ **Siguiente, después de jugar la gira y ajustar sus números. Arte y sonido de la primera arena:** retratos animados, mesa, cartas propias, música. Esto sirve como demo vertical. **[cambiado]** Adelantado: los cinco rivales ya tienen retrato y parte de sus tics (ver «Los tics del rival»). **[cambiado]** Aquí va el pulido a fondo (animaciones, arte de los rivales como en un juego profesional, la escena del órdago): David decidió el 12 de octubre de 2026 comprobar primero que la gira es divertida y luego ponerla bonita. **[nuevo]** Adelanto, el 22 de octubre de 2026: el prototipo de **la mesa viva** (movimiento, sellos, piedras que vuelan, la escena del órdago, fondo vivo y sonido provisional), para que David lo compare con la mesa de antes. **[nuevo]** Después, la mesa nueva: sin acta a la vista, con los lances en casillas y el recuento hecho sobre la mesa.
-6. **Resto del contenido:** las otras 4 arenas, todos los compañeros y objetos, progresión y dificultades.
+6. **[cambiado] En marcha. Resto del contenido:** las otras 4 arenas, todos los compañeros y objetos, progresión y dificultades. **El bar ya está** (4 de noviembre de 2026), con ocho objetos más. Faltan la Montaña Palentina, las fiestas y el casino, los compañeros por desbloquear y el resto de objetos.
 
 ### Preguntas abiertas
 
 - ¿Habrá un modo 2 contra 2 con un compañero que juegue cartas? Se descarta para la primera versión por complejidad, pero encaja como modo extra.
 - ¿Modelo de negocio: pago único o gratis con demo? Un pago único sin anuncios encaja mejor con un roguelike sin conexión.
-- **[cambiado] El duelo a 20 piedras es la partida corta del juego** (decidido por David): cuando habla de «partidas cortas como Clash Royale» se refiere a cada duelo, no a la gira. En las simulaciones dura unas 3–4 manos, unos 2–3 minutos. Falta comprobarlo jugando.
+- **[cambiado] El duelo es la partida corta del juego** (decidido por David): cuando habla de «partidas cortas como Clash Royale» se refiere a cada duelo, no a la gira. A 20 piedras duraba 3–4 manos, unos 2–3 minutos, y jugándolo se le hizo corto. **Desde el 4 de noviembre de 2026**, en la gira cada nivel pide más piedras (25, 30, 35, 40) y dura de 5 a 7 manos.
 
 **Decididas por David el 12 de octubre de 2026 [nuevo]:**
 
@@ -685,7 +686,7 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **La plaza:** el timador engaña una de cada tres veces (el amuleto falso se rompe nada más dártelo), y una monja puede darte +1 de Honra. Sale menos que el resto, y solo una vez por gira.
 - **Objetos:** los precios y efectos que están en «Objetos de taberna y economía».
 
-**[nuevo] Decidido por David el 13 de octubre de 2026, después de la fase 4:** las conexiones entre secuaces y jefes («Rubén le avisa» y demás) no se programan de momento. Si la gira resulta demasiado fácil, o David lo ve bien, se añadirán.
+**[cambiado] Decidido por David el 13 de octubre de 2026, después de la fase 4:** las conexiones entre secuaces y jefes («Rubén le avisa» y demás) no se programaban de momento. **El 4 de noviembre pidió programarlas:** «Rubén le avisa» ya está; las otras dos, con sus arenas.
 
 **Decididas por David el 13 de octubre de 2026, al revisar la versión 2 de la gira [nuevo]:**
 
@@ -735,3 +736,5 @@ El orden de construcción prioriza comprobar que el núcleo es divertido antes d
 - **Versión 29 (24 de octubre de 2026).** El fondo de la portada, cambiado por otra versión de la misma ilustración que mandó David: igual de composición y de tamaño (941 × 1670), con los colores más apagados. El canto de la mesa, ajustado a sus marrones.
 - **Versión 30 (24 de octubre de 2026).** El lema de la portada deja de ser «No gana quien lleva mejores cartas…» (que sigue siendo la frase que resume el juego, arriba) y pasan a ser cinco que se turnan, uno cada vez que se abre el juego; los eligió David entre varias propuestas que unen Castilla y el mus.
 - **Versión 31 (24 de octubre de 2026).** Lucía, la de primero, deja su sitio en la facultad a **Miguel, el novato**, que juega igual que ella (no farolea y tiene un solo tic). Lo dibujó David: cinco imágenes, que son reposo, su tic (se limpia los mocos con un pañuelo, sonriendo: lleva pares o mejor), sorprendido, riendo y enfadado. Sale en la mesa con sus caras y en el mapa con la suya. No cambia de ánimo, así que no lleva crecido ni arrugado. Lo que la Libreta tuviera de Lucía no pasa a Miguel: es otro personaje y su tic se aprende de nuevo. **Rubén** también tiene dibujo: siete imágenes de David (reposo, el mordisco al bocadillo, el pulgar arriba, crecido, sorprendido, riendo y enfadado). Su tic de la gorra pasa a ser levantar el pulgar (significa lo mismo, que lleva 31, y lo apuntado de la gorra pasa al pulgar). En el mapa, el candado de los discos con cara va ahora a la medida del disco, para que en los pequeños no tape media cara. Y **Dani**, con seis (reposo con la barbilla en el puño y el vaso en la mesa, la bandurria, las cintas, sorprendido, riendo y enfadado): con él, los cuatro de la facultad tienen dibujo.
+- **Versión 32 (4 de noviembre de 2026).** David notó la arena corta jugando y pidió seguir programando lo que faltaba. Cada nivel de la gira se juega a más piedras que el anterior (25, 30, 35, 40), como las ciegas de Balatro; a 20 piedras el jefe era el duelo más corto de la arena. El rival, con buenas cartas, no tira órdago hasta que alguien lleve la mitad de las piedras. La partida en la calle (una mano suelta contra un vecino, 3 reales si la ganas) y «Rubén le avisa» (si le ganas de 10 o más, Chema empieza arrugado) ya están en el juego. El duelo suelto sigue a 20.
+- **Versión 33 (4 de noviembre de 2026).** El bar, la segunda arena: Toño (corta siempre), Agustín, Aurelio y Manolo (dos manos de calma y luego achispado). «Aurelio le invita», la Jarra de Manolo y ocho objetos nuevos en la taberna desde el bar. Después del premio del jefe hay una parada antes de la arena siguiente.

@@ -5,7 +5,7 @@ import type { EventoDuelo } from '../nucleo/eventos';
 import type { DecisionRival } from '../nucleo/ia/rival';
 import type { TicDisparado } from '../nucleo/ia/tics';
 import { tieneJuego, tienePares } from '../nucleo/mano';
-import { animoDe, RIVALES } from '../datos/rivales';
+import { animoDe, estaAchispado, RIVALES } from '../datos/rivales';
 import { ES, nombreCarta, type TextosRival } from '../textos/es';
 import { efectosDe, type EfectoMesa } from './efectos';
 import type { Partida, ResultadoPartida } from './partida';
@@ -195,6 +195,11 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
     dice('rival', M.narra.ofendida(textos.nombre), textos.frases.ofendida);
     avisa(M.acta.ofendida);
   }
+  if (novedades.aviso) avisa(ES.gira.avisos[novedades.aviso].mesa);
+  if (novedades.seAchispa) {
+    dice('rival', M.narra.achispado(textos.nombre), textos.frases.achispado);
+    avisa(M.acta.achispado);
+  }
   if (novedades.animo) {
     const { despues } = novedades.animo;
     const quiereTodo = Boolean(RIVALES[partida.rivalId].seVieneArriba);
@@ -215,6 +220,10 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
     if (e.tipo === 'apuntes') avisa(N.apuntes);
     if (e.tipo === 'lazarillo') avisa(N.lazarillo(textos.nombre, nombreCarta(e.carta).toLowerCase()));
     if (e.tipo === 'recaudadora') avisa(N.recaudadora);
+    if (e.tipo === 'copaAnis') avisa(N.copaAnis, 'jugador');
+    if (e.tipo === 'cafePuchero') avisa(N.cafePuchero, 'jugador');
+    if (e.tipo === 'invitarRonda') avisa(N.invitarRonda(textos.nombre));
+    if (e.tipo === 'pelota') avisa(N.pelota(textos.nombre));
   }
   if (novedades.medalla) avisa(ES.gira.narra.medalla);
   if (novedades.seTeNota) {
@@ -249,8 +258,8 @@ export function aplicarNovedades(previo: EstadoMesa, { partida, novedades }: Res
 /** Cara que pone el rival un momento, o hasta el final si se acaba el duelo. */
 export type ReaccionRival = 'sorprendido' | 'riendo' | 'enfadado';
 
-/** Cómo está el rival mientras dura: crecido o arrugado (Rubén y Chema), enfadado (Agustín, Doña Ignacia). */
-export type PoseRival = 'crecido' | 'arrugado' | 'enfadado';
+/** Cómo está el rival mientras dura: crecido o arrugado (Rubén y Chema), enfadado (Agustín, Doña Ignacia), achispado (Manolo). */
+export type PoseRival = 'crecido' | 'arrugado' | 'enfadado' | 'achispado';
 
 /**
  * La cara que pone el rival por lo que acaba de pasar: se ríe si gana el duelo o te pilla un
@@ -270,9 +279,10 @@ export function reaccionDe(eventos: readonly EventoDuelo[], partida: Partida): {
 export function poseDelRival(partida: Partida): PoseRival | null {
   const { duelo, memoria } = partida;
   if (duelo.fase === 'finDuelo') return null;
-  const animo = animoDe(RIVALES[partida.rivalId], duelo.marcador.rival - duelo.marcador.jugador);
+  const animo = animoDe(RIVALES[partida.rivalId], duelo.marcador.rival - duelo.marcador.jugador, Boolean(partida.extras.aviso));
   if (animo) return animo;
   if (memoria.manosEnfadado > 0 || memoria.ofendidaHastaMano >= duelo.numeroMano) return 'enfadado';
+  if (estaAchispado(RIVALES[partida.rivalId], duelo.numeroMano, Boolean(partida.extras.aviso))) return 'achispado';
   return null;
 }
 

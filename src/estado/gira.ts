@@ -1,7 +1,7 @@
 import { CARA } from '../datos/cara';
 import { COMPANEROS, COMPANEROS_INICIALES, type IdCompanero } from '../datos/companeros';
-import { ARENAS, GIRA, NIVEL_JEFE } from '../datos/gira';
-import { CATALOGO_TABERNA, esDeUnUso, OBJETOS, type IdObjeto } from '../datos/objetos';
+import { ARENAS, GIRA, NIVEL_JEFE, type IdAviso } from '../datos/gira';
+import { catalogoDe, esDeUnUso, OBJETOS, type IdObjeto } from '../datos/objetos';
 import type { IdRival } from '../datos/rivales';
 import { Azar, estadoDesdeSemilla, type EstadoAzar } from '../nucleo/azar';
 import { ErrorJugada, type PorLado } from '../nucleo/comun';
@@ -28,7 +28,7 @@ export interface Bolsa {
 
 export type ResultadoNivel = 'ganado' | 'perdido';
 
-export type ConceptoReales = 'duelo' | 'consolacion' | 'envites' | 'faroles' | 'ordagos' | 'triple' | 'recaudadora' | 'forastero';
+export type ConceptoReales = 'duelo' | 'consolacion' | 'envites' | 'faroles' | 'ordagos' | 'triple' | 'recaudadora' | 'forastero' | 'hucha';
 
 export interface LineaReales {
   concepto: ConceptoReales;
@@ -52,6 +52,8 @@ export interface ResumenDuelo {
   forastero: 'ganada' | 'perdida' | null;
   /** Notas de la Libreta que han subido. */
   libreta: CambioNota[];
+  /** Le has ganado de sobra y va a contárselo a su jefe. */
+  aviso: IdAviso | null;
   /** Lo que viene: elegir parada, el premio del jefe o el final (sin Honra). */
   siguiente: 'paradas' | 'premio' | 'fin';
 }
@@ -69,7 +71,9 @@ export type EventoPlaza =
   | { tipo: 'fiesta' }
   /** El amuleto es falso o no se sabe hasta comprarlo. */
   | { tipo: 'timador'; objeto: IdObjeto; precio: number; falso: boolean }
-  | { tipo: 'monja' };
+  | { tipo: 'monja' }
+  /** Un vecino te reta a una mano suelta. */
+  | { tipo: 'calle' };
 
 export type DesenlacePlaza =
   | 'apuestaAceptada'
@@ -78,7 +82,10 @@ export type DesenlacePlaza =
   | 'timadorFalso'
   | 'timadorBueno'
   | 'timadorRechazado'
-  | 'monja';
+  | 'monja'
+  | 'calleGanada'
+  | 'callePerdida'
+  | 'calleRechazada';
 
 export type Momento =
   | { tipo: 'companero' }
@@ -87,8 +94,11 @@ export type Momento =
   | { tipo: 'resultado'; resumen: ResumenDuelo }
   | { tipo: 'taberna'; oferta: OfertaTaberna }
   | { tipo: 'plaza'; evento: EventoPlaza; desenlace: DesenlacePlaza | null }
+  /** La partida en la calle: una mano en la mesa, sin bolsa y sin que cuente para la Cara. */
+  | { tipo: 'calle'; partida: Partida }
   | { tipo: 'era'; antes: number; despues: number }
-  | { tipo: 'premio' }
+  /** `resumen`: el del duelo contra el jefe, para seguir desde él (las giras de antes no lo traen). */
+  | { tipo: 'premio'; resumen?: ResumenDuelo }
   | { tipo: 'fin'; victoria: boolean };
 
 export interface Gira {
@@ -108,8 +118,8 @@ export interface Gira {
   bolsa: Bolsa;
   /** La monja solo sale una vez por gira. */
   monjaUsada: boolean;
-  /** Lo que la plaza deja para el siguiente duelo. */
-  pendiente: { forastero: boolean; fiesta: boolean };
+  /** Lo que la plaza y los secuaces dejan para el siguiente duelo. */
+  pendiente: { forastero: boolean; fiesta: boolean; aviso?: IdAviso | null };
   /** Para el resumen del final. */
   cuenta: { duelos: number; ganados: number; reales: number };
   momento: Momento;
@@ -170,9 +180,12 @@ export function empezarDuelo(gira: Gira): { gira: Gira; inicio: ResultadoPartida
     companero: gira.companero,
     amuletos: gira.bolsa.amuletos,
     fiesta: gira.pendiente.fiesta,
+    aviso: gira.pendiente.aviso ?? null,
+    reglas: { piedrasParaGanar: GIRA.piedrasPorNivel[gira.nivel]! },
   });
   return {
-    gira: { ...gira, pendiente: { ...gira.pendiente, fiesta: false }, momento: { tipo: 'duelo', partida: inicio.partida } },
+    // El aviso solo vale la primera vez: si te gana, ya no te tiene miedo.
+    gira: { ...gira, pendiente: { ...gira.pendiente, fiesta: false, aviso: null }, momento: { tipo: 'duelo', partida: inicio.partida } },
     inicio,
   };
 }
@@ -224,7 +237,9 @@ export function terminarDuelo(gira: Gira, partida: Partida, libreta: Libreta): {
   const ganado = duelo.ganador === 'jugador';
   const { lineas, forastero } = cuentaDeReales(gira, partida, ganado);
   const total = lineas.reduce((suma, l) => suma + l.reales, 0);
-  const honra = ganado ? gira.honra : gira.honra - 1;
+  // La Navaja de Albacete: el órdago que le ganas te devuelve Honra, sin pasar del máximo.
+  const conNavaja = ganado && partida.estadisticas.ordagosGanados > 0 && gira.bolsa.amuletos.includes('navaja') && gira.honra < GIRA.honraMaxima;
+  const honra = ganado ? gira.honra + (conNavaja ? 1 : 0) : gira.honra - 1;
 
   const apuntado = apuntar(libreta, partida.rivalId, partida.estadisticas.observaciones, gira.companero === 'lazarillo' ? 2 : 1);
 
@@ -235,6 +250,7 @@ export function terminarDuelo(gira: Gira, partida: Partida, libreta: Libreta): {
   const nivel = jefe ? gira.nivel : gira.nivel + 1;
   const intento = jefe && !ganado ? gira.intento + 1 : 0;
   const siguiente: ResumenDuelo['siguiente'] = honra <= 0 ? 'fin' : jefe && ganado ? 'premio' : 'paradas';
+  const aviso = avisoDe(gira, ganado, duelo.marcador);
 
   const resumen: ResumenDuelo = {
     rival: partida.rivalId,
@@ -248,6 +264,7 @@ export function terminarDuelo(gira: Gira, partida: Partida, libreta: Libreta): {
     cara: partida.caraJugador,
     forastero,
     libreta: apuntado.cambios,
+    aviso,
     siguiente,
   };
   return {
@@ -259,7 +276,7 @@ export function terminarDuelo(gira: Gira, partida: Partida, libreta: Libreta): {
       honra,
       reales: gira.reales + total,
       cara: partida.caraJugador,
-      pendiente: { ...gira.pendiente, forastero: false },
+      pendiente: { ...gira.pendiente, forastero: false, aviso },
       cuenta: { duelos: gira.cuenta.duelos + 1, ganados: gira.cuenta.ganados + (ganado ? 1 : 0), reales: gira.cuenta.reales + total },
       momento: { tipo: 'resultado', resumen },
     },
@@ -267,11 +284,18 @@ export function terminarDuelo(gira: Gira, partida: Partida, libreta: Libreta): {
   };
 }
 
+/** Si la mano derecha del jefe, a la que acabas de ganar de sobra, va a contárselo. */
+function avisoDe(gira: Gira, ganado: boolean, marcador: PorLado<number>): IdAviso | null {
+  const aviso = ARENAS[gira.arena]?.aviso;
+  if (!aviso || !ganado || gira.nivel !== NIVEL_JEFE - 1) return null;
+  return marcador.jugador - marcador.rival >= aviso.ganandoPor ? aviso.id : null;
+}
+
 /** Desde el resumen: al final (sin Honra) o al premio del jefe. Las paradas se eligen con `elegirParada`. */
 export function seguirDesdeResultado(gira: Gira): Gira {
   const momento = exigir(gira, 'resultado');
   if (momento.resumen.siguiente === 'fin') return { ...gira, momento: { tipo: 'fin', victoria: false } };
-  if (momento.resumen.siguiente === 'premio') return { ...gira, momento: { tipo: 'premio' } };
+  if (momento.resumen.siguiente === 'premio') return { ...gira, momento: { tipo: 'premio', resumen: momento.resumen } };
   throw new ErrorJugada('Toca elegir parada');
 }
 
@@ -309,9 +333,10 @@ export function volverAlMapa(gira: Gira): Gira {
 
 /** Dos cosas de un uso, un amuleto que no lleves y, a veces, el otro compañero. */
 function surtirTaberna(gira: Gira, azar: Azar): CosaEnVenta[] {
-  const deUnUso = azar.barajar(CATALOGO_TABERNA.filter(esDeUnUso)).slice(0, GIRA.taberna.deUnUso);
+  const catalogo = catalogoDe(gira.arena);
+  const deUnUso = azar.barajar(catalogo.filter(esDeUnUso)).slice(0, GIRA.taberna.deUnUso);
   const amuletos = azar
-    .barajar(CATALOGO_TABERNA.filter((id) => !esDeUnUso(id) && !gira.bolsa.amuletos.includes(id)))
+    .barajar(catalogo.filter((id) => !esDeUnUso(id) && !gira.bolsa.amuletos.includes(id)))
     .slice(0, GIRA.taberna.amuletos);
   const cosas: CosaEnVenta[] = [...deUnUso, ...amuletos].map((id) => ({ tipo: 'objeto', id, vendida: false }));
   const otros = COMPANEROS_INICIALES.filter((id) => id !== gira.companero);
@@ -383,11 +408,12 @@ export function otraRonda(gira: Gira): Gira {
 
 function sortearPlaza(gira: Gira, azar: Azar): EventoPlaza {
   const pesos = GIRA.plaza.pesos;
-  const amuletosLibres = CATALOGO_TABERNA.filter((id) => !esDeUnUso(id) && !gira.bolsa.amuletos.includes(id));
+  const amuletosLibres = catalogoDe(gira.arena).filter((id) => !esDeUnUso(id) && !gira.bolsa.amuletos.includes(id));
   const posibles: [EventoPlaza['tipo'], number][] = [
     ['forastero', pesos.forastero],
     ['fiesta', pesos.fiesta],
     ...(amuletosLibres.length > 0 ? ([['timador', pesos.timador]] as [EventoPlaza['tipo'], number][]) : []),
+    ['calle', pesos.calle],
     ...(!gira.monjaUsada ? ([['monja', pesos.monja]] as [EventoPlaza['tipo'], number][]) : []),
   ];
   const total = posibles.reduce((s, [, p]) => s + p, 0);
@@ -445,7 +471,34 @@ export function responderPlaza(gira: Gira, acepta: boolean): Gira {
     case 'monja':
       // La monja sí puede pasar de la Honra máxima.
       return con({ honra: gira.honra + 1, monjaUsada: true }, 'monja');
+    case 'calle':
+      if (acepta) throw new ErrorJugada('A la partida en la calle se va con empezarCalle');
+      return con({}, 'calleRechazada');
   }
+}
+
+/** Aceptas la partida en la calle: una mano contra el vecino, sin bolsa ni compañero. */
+export function empezarCalle(gira: Gira): { gira: Gira; inicio: ResultadoPartida } {
+  const momento = exigir(gira, 'plaza');
+  if (momento.evento.tipo !== 'calle' || momento.desenlace) throw new ErrorJugada('Ahora no hay partida en la calle');
+  const semilla = `${gira.semilla}/calle-a${gira.arena}n${gira.nivel}i${gira.intento}`;
+  const inicio = nuevaPartida(semilla, 'vecino', gira.cara, { reglas: { unaSolaMano: true } });
+  return { gira: { ...gira, momento: { tipo: 'calle', partida: inicio.partida } }, inicio };
+}
+
+/** Acaba la mano en la calle: si la ganas, cobras; si la pierdes, nada (tampoco en la Cara). */
+export function terminarCalle(gira: Gira, partida: Partida): Gira {
+  exigir(gira, 'calle');
+  const { duelo } = partida;
+  if (duelo.fase !== 'finDuelo' || !duelo.ganador) throw new ErrorJugada('La mano no ha terminado');
+  const ganada = duelo.ganador === 'jugador';
+  const premio = ganada ? GIRA.plaza.calle.premio : 0;
+  return {
+    ...gira,
+    reales: gira.reales + premio,
+    cuenta: { ...gira.cuenta, reales: gira.cuenta.reales + premio },
+    momento: { tipo: 'plaza', evento: { tipo: 'calle' }, desenlace: ganada ? 'calleGanada' : 'callePerdida' },
+  };
 }
 
 // ——— El premio del jefe y el final ———
@@ -468,12 +521,18 @@ export function premioDisponible(gira: Gira, premio: Premio): boolean {
   }
 }
 
+/** La Hucha de barro: lo que da al acabar la arena con estos reales ahorrados. */
+export function realesDeHucha(gira: Gira, reales: number): number {
+  if (!gira.bolsa.amuletos.includes('hucha')) return 0;
+  return Math.min(GIRA.hucha.maximo, Math.floor(reales / GIRA.hucha.cadaReales));
+}
+
 /**
- * El premio del jefe. Mientras solo esté hecha la facultad, después del premio la gira acaba
- * con victoria; cuando estén las demás arenas, se abrirá la siguiente.
+ * El premio del jefe. Después se abre la siguiente arena, con una parada antes de su primer duelo;
+ * si todavía no está hecha, la gira acaba con victoria.
  */
 export function elegirPremio(gira: Gira, premio: Premio): Gira {
-  exigir(gira, 'premio');
+  const momento = exigir(gira, 'premio');
   if (!premioDisponible(gira, premio)) throw new ErrorJugada('Ese premio no está disponible');
   let { companero, reales, bolsa, honra } = gira;
   if (premio === 'companero') {
@@ -484,22 +543,39 @@ export function elegirPremio(gira: Gira, premio: Premio): Gira {
   } else {
     honra += 1;
   }
+  const hucha = realesDeHucha({ ...gira, bolsa }, reales);
+  reales += hucha;
+  const cuenta = { ...gira.cuenta, reales: gira.cuenta.reales + hucha };
   const siguiente = gira.arena + 1;
   if (ARENAS[siguiente]?.niveles) {
+    const { resumen } = momento;
     return {
       ...gira,
       companero,
       reales,
       bolsa,
       honra,
+      cuenta,
       arena: siguiente,
       nivel: 0,
       intento: 0,
       resultados: [null, null, null, null],
-      momento: { tipo: 'mapa' },
+      momento: resumen
+        ? {
+            tipo: 'resultado',
+            resumen: {
+              ...resumen,
+              siguiente: 'paradas',
+              lineas: hucha > 0 ? [...resumen.lineas, { concepto: 'hucha', reales: hucha }] : resumen.lineas,
+              total: resumen.total + hucha,
+              reales: { ...resumen.reales, despues: reales },
+              honra: { ...resumen.honra, despues: honra },
+            },
+          }
+        : { tipo: 'mapa' },
     };
   }
-  return { ...gira, companero, reales, bolsa, honra, momento: { tipo: 'fin', victoria: true } };
+  return { ...gira, companero, reales, bolsa, honra, cuenta, momento: { tipo: 'fin', victoria: true } };
 }
 
 // ——— Guardado ———
@@ -525,7 +601,8 @@ function esGira(valor: unknown): valor is Gira {
     typeof g.momento.tipo === 'string' &&
     !!ARENAS[g.arena]?.niveles;
   if (!ok) return false;
-  return g.momento!.tipo !== 'duelo' || esPartida(g.momento!.partida);
+  const m = g.momento!;
+  return (m.tipo !== 'duelo' && m.tipo !== 'calle') || esPartida(m.partida);
 }
 
 export function guardarGira(gira: Gira, almacen: Almacen | null = almacenDelNavegador()): boolean {

@@ -4,7 +4,7 @@
 
 ## Documentos (léelos antes de escribir código)
 
-- `docs/diseno-juego.md` — **reglas y sistemas**: mus a 8 reyes y a 20 piedras, apuestas, la Cara, tics, Libreta, compañeros, objetos, los 5 rivales, la IA y el plan de prototipo. Es la fuente de verdad del diseño de juego y **el documento que explica el proyecto**. Su versión en PDF es `docs/Órdago — Documento de diseño.pdf`.
+- `docs/diseno-juego.md` — **reglas y sistemas**: mus a 8 reyes y a 20 piedras (en la gira, de 25 a 40 según el nivel), apuestas, la Cara, tics, Libreta, compañeros, objetos, los 5 rivales, la IA y el plan de prototipo. Es la fuente de verdad del diseño de juego y **el documento que explica el proyecto**. Su versión en PDF es `docs/Órdago — Documento de diseño.pdf`.
 - `docs/gira.md` — **el contenido de la gira**: las 5 arenas con sus 4 niveles (tres secuaces y su jefe), la taberna, la plaza, los objetos (también los que van contra el rival) y los compañeros. Es el catálogo de ideas que David va cambiando; las reglas de fondo siguen en `diseno-juego.md`. Su PDF es `docs/Órdago — La gira.pdf`.
 - **Regla fija:** cada cambio del proyecto (reglas, números, interfaz, fases) se refleja en `docs/diseno-juego.md` (o en `docs/gira.md`, si es contenido de la gira) en la misma tarea, marcado con [nuevo] o [cambiado], y se regeneran los PDF con `npm run documento`.
 - `docs/personajes.md` — **cómo hacer los personajes** con IA (ficha, estilo, bocetos, diseño final y poses), para David. Su PDF es `docs/Órdago — Cómo hacer los personajes.pdf`.
@@ -35,7 +35,7 @@ src/
     baraja.ts, carta.ts, mano.ts
     lances.ts        # Grande, Chica, Pares, Juego, Punto: evaluar y comparar
     apuestas.ts      # envido, quiero, no quiero, más, órdago, en paso
-    duelo.ts         # máquina de estados de un duelo a 20 piedras
+    duelo.ts         # máquina de estados de un duelo (a 20 piedras, o las que pida la gira)
     recuento.ts
     azar.ts          # generador con semilla: partidas reproducibles en pruebas
     ia/              # fuerza de mano, decisiones, memoria, tics
@@ -72,7 +72,7 @@ Sigue el plan de prototipo del documento y no avances de fase sin que la anterio
 3. **IA completa y la Cara**, con los cinco rivales. Añade un modo de depuración que muestre la fuerza F y la decisión de la IA.
 4. **Estructura de gira** (hecha): la primera arena completa (3 secuaces y su jefe) con taberna, 5 objetos y 2 compañeros.
 5. **Pantallas** de título, mapa, órdago y taberna, más sonido provisional.
-6. **Resto del contenido** y progresión.
+6. **Resto del contenido** y progresión. **En marcha:** el bar ya está; lo siguiente es la Montaña Palentina.
 
 Los botones Rival y Depurar son herramientas del modo de pruebas (`npm run dev` o `?pruebas` en la dirección); el juego normal no los enseña.
 
